@@ -162,7 +162,7 @@ wquery.setParameter("updatedDate",new Date() );
 	public List loadPendingDrawing(SciWorkorderMaster wmaster) {
 		// TODO Auto-generated method stub
 		Query qry = em.createQuery("from SciWoDesgDocs d   where" +
-				" d.sciWorkorderMaster =:sciWorkorderMaster )");
+				" d.sciWorkorderMaster =:sciWorkorderMaster ");
 		
 		qry.setParameter("sciWorkorderMaster", wmaster);
 		List mylist = qry.getResultList();
