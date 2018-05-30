@@ -329,7 +329,7 @@
 
 
 				<fo:flow flow-name="xsl-region-body">
-<xsl:variable name=""></xsl:variable>
+<xsl:variable name="tempvar1"></xsl:variable>
 	
 						<xsl:for-each select="items">
 						
