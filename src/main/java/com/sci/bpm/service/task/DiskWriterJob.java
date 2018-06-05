@@ -63,7 +63,7 @@ public  Connection getConnection() throws Exception {
 		Class.forName("oracle.jdbc.driver.OracleDriver");
 		Connection conn = null;
 		try {
-			 conn = DriverManager.getConnection("jdbc:oracle:thin:@"+host+":"+port+":xe","scigenics","scigenics");
+			 conn = DriverManager.getConnection("jdbc:oracle:thin:@//"+host+":"+port+"/xe.oraslim.com","scigenics","scigenics");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

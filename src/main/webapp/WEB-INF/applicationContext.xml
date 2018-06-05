@@ -65,8 +65,8 @@
 		</property>
 	</bean>
 	<bean name="diskjob" class="com.sci.bpm.service.task.DiskWriterJob">
-		<property name="host" value="localhost"></property>
-		<property name="port" value="1521"></property>
+		<property name="host" value="192.168.1.115"></property>
+		<property name="port" value="32771"></property>
 		<property name="diskfileloc" value="/home/scigenics/datafolder/"></property>
 	</bean>
 
