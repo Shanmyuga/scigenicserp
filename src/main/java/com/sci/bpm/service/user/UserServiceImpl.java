@@ -13,7 +13,11 @@ import com.sci.bpm.db.model.ScigenicsUserMaster;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-	
+
+	public ScigenicsUserMaster findById(Long id) {
+		return daoimpl.findById(id);
+	}
+
 	@Autowired
 	private IScigenicsUserMasterDAO daoimpl;
 

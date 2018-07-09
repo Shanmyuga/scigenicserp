@@ -98,7 +98,7 @@ public interface IScigenicsUserMasterDAO {
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public ScigenicsUserMaster update(ScigenicsUserMaster entity);
+	public void update(ScigenicsUserMaster entity);
 
 	public ScigenicsUserMaster findById(Long id);
 

@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Repository;
 
 import com.sci.bpm.db.model.ScigenicsRoleMaster;
@@ -32,7 +33,7 @@ public class UserMasterDAO implements IScigenicsUserMasterDAO {
 
 	public ScigenicsUserMaster findById(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return em.find(ScigenicsUserMaster.class,id);
 	}
 
 	public List<ScigenicsUserMaster> findByPassword(Object password,
@@ -77,9 +78,9 @@ public class UserMasterDAO implements IScigenicsUserMasterDAO {
 		em.persist(entity);
 
 	}
-	public ScigenicsUserMaster update(ScigenicsUserMaster entity) {
-		
-		return em.merge(entity);
+	public void update(ScigenicsUserMaster entity) {
+
+		 em.merge(entity);
 	}
 
 	public List selectUserList() {

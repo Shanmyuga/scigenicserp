@@ -100,14 +100,8 @@ List<String> roles = new ArrayList<String>();
 		String userid = mybean.getSelectedUserID();
 		List<ScigenicsUserMaster> userlist = (List) context.getFlowScope().get(
 				"userlist");
-		ScigenicsUserMaster userbean = null;
-		for (ScigenicsUserMaster um : userlist) {
-			if (um.getSeqUserId().toString().equals(userid)) {
-				userbean = um;
+		ScigenicsUserMaster userbean = userService.findById(new Long(userid));
 
-				break;
-			}
-		}
 		if (!StringUtils.isBlank(mybean.getPassword())) {
 			userbean.setPassword(mybean.getPassword());
 		}
@@ -128,7 +122,7 @@ List<String> roles = new ArrayList<String>();
 		mybean.setUserStatus("");
 		return success();
 	}
-	
+
 	public Event checkUserExists(RequestContext context) throws Exception {
 		UserMasterBean mybean = (UserMasterBean) getFormObject(context);
 		ScigenicsUserMaster master = userService.findUser(mybean.getUserId());

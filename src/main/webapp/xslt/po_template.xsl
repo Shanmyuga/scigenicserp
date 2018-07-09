@@ -981,7 +981,7 @@
 							
 							</xsl:when>
 							<xsl:otherwise>
-							<xsl:if test="(position() mod 3) =0">
+							<xsl:if test="(position() mod 5) =0">
 							<xsl:choose>
 							<xsl:when test="position() != last()">
 							<fo:block page-break-before="always"/>

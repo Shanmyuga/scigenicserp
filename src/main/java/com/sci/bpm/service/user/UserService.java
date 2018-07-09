@@ -12,6 +12,8 @@ public interface UserService {
 	
 	public boolean updateUser(ScigenicsUserMaster user);
 
+	public ScigenicsUserMaster findById(Long id);
+
 	public ScigenicsRoleMaster generateRole(Long roleID);
 	
 	public ScigenicsUserMaster findUser(String userID);
