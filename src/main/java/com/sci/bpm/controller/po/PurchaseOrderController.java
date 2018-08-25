@@ -477,7 +477,7 @@ public class PurchaseOrderController extends SciBaseController {
 		
 		context.getExternalContext().getSessionMap()
 				.put("poxml", "<purchaseOrder>"+poxml);
-		context.getFlowScope().put("poxml_flow",poxml);
+		context.getFlowScope().put("poxml_flow","<purchaseOrder>"+poxml);
 		return success();
 	}
 
@@ -526,7 +526,7 @@ public class PurchaseOrderController extends SciBaseController {
 //transformer.setURIResolver(uriResolver);
 			//Make sure the XSL transformation's result is piped through to FOP
 			Result res = new SAXResult(fop.getDefaultHandler());
-
+			System.out.println(poxml);
 			//Setup input
 			Source src = new StreamSource(new StringReader(poxml));
 
@@ -536,9 +536,11 @@ public class PurchaseOrderController extends SciBaseController {
 
 			//Send content to Browser
 			sendEmail("purchase@scigenics.in",vendorEmailId,"Purchase Order From Scigenics","Dear Sir \n Please find the attached purchase order from Scigenics India Pvt Ltd. \n\n\n Thanks and Regards \n Scigenics Purchase Manager \n email : purchase@scigenics.in ",pdfarray);
+			context.getFlashScope().put("mailMessage","Mail Successfully sent");
 		}
 		catch(Exception e) {
-
+		 e.printStackTrace();
+            context.getFlashScope().put("mailMessage","Mail failed due to an error");
 		}
 		}
 

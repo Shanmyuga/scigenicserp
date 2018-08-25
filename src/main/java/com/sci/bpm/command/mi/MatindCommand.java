@@ -69,8 +69,17 @@ public class MatindCommand implements Serializable {
 	private String status;
 	public String[] purStatusarr;
 	private Date sentDate;
-	private Date receivedDate;
 
+	public Long getSeqWorkorderId() {
+		return seqWorkorderId;
+	}
+
+	public void setSeqWorkorderId(Long seqWorkorderId) {
+		this.seqWorkorderId = seqWorkorderId;
+	}
+
+	private Date receivedDate;
+	private Long seqWorkorderId;
 
 
 	public static long getSerialVersionUID() {

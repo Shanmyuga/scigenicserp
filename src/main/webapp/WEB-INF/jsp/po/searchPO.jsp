@@ -83,6 +83,7 @@
 
             <div style="float:left;width:750px;padding:10px;margin-top:50px">
 
+                <c:out value="${mailMessage}"/>
                 <display:table export="true" sort="list"   pagesize="10" name="pomastlist"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
 
                     <display:column sortable="true"   title="Select" media="html"   >

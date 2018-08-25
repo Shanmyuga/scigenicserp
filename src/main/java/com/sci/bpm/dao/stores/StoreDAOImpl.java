@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.sci.bpm.command.mi.MatindCommand;
 import org.springframework.stereotype.Repository;
 
 import com.sci.bpm.command.stores.StoresBean;
@@ -607,10 +608,40 @@ public class StoreDAOImpl implements StoresDAO {
 		return qry.getResultList();
 	}
 
-	public List loadissueAcceptance() {
-		Query qry = em.createQuery("from SciStoreissueMaster m where m.issueAcceptance ='N'");
-		
-		return qry.getResultList();
+	public List loadissueAcceptance(MatindCommand command) {
+		String query = "Select m from SciStoreissueMaster m ,SciMattypeMaster mt where mt.matCode  = substr(m.matcode,1,2) and m.issueAcceptance ='N'";
+		Map parameters = new HashMap();
+		String whereClause = "";
+
+		if (command.getMatCategory() != null && !"".equals(command.getMatCategory())) {
+			whereClause = whereClause + " and substr(m.matcode,3,2) = :matcat ";
+			parameters.put("matcat", command.getMatCategory());
+		}
+		if (command.getMatDept() != null && !"".equals(command.getMatDept())) {
+			whereClause = whereClause + " and mt.matDept = :matdept ";
+			parameters.put("matdept", command.getMatDept());
+		}
+
+		if (command.getSeqWorkorderId() != null && command.getSeqWorkorderId() != 0) {
+			whereClause = whereClause + " and m.strequest.sciMiMaster.sciWorkorderMaster.seqWorkId = :wm ";
+			parameters.put("wm", command.getSeqWorkorderId());
+		}
+
+		Query wquery = null;
+		if (parameters.size() > 0) {
+			wquery = em.createQuery(query
+					+ whereClause.replaceAll("where and", "where"));
+		} else {
+			wquery = em.createQuery(query);
+		}
+
+		Iterator keyset = parameters.keySet().iterator();
+
+		while (keyset.hasNext()) {
+			String key = (String) keyset.next();
+			wquery.setParameter(key, parameters.get(key));
+		}
+		return wquery.getResultList();
 	}
 
 	public void updateIssueMaster(SciStoreissueMaster issuemaster) {

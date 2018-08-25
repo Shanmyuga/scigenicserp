@@ -129,8 +129,8 @@ public class MaterialStoresRequestController extends SciBaseController {
 	}
 	
 	public Event loadIssueAcceptance(RequestContext context) throws Exception {
-
-		List issueList = sservice.loadissueAcceptance();
+		MatindCommand command = (MatindCommand) getFormObject(context);
+		List issueList = sservice.loadissueAcceptance(command);
 		context.getFlowScope().put("issueAcceptance",issueList);
 		return success();
 	}

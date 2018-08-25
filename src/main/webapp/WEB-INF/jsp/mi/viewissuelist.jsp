@@ -9,7 +9,56 @@
 <p style="padding-left:20px" align="center"><font color="#0080ff" size="4" face="Baskerville Old Face"> Search  Issued Items </font></p>
 <p style="padding-left:20px" align="center"></p>
 <div width="787px"  style="float:left;">
-<form:form modelAttribute="matindbean" name="matindbean">
+ <form:form modelAttribute="matindbean" name="matindbean">
+  <div width="787px"  style="float:left;">
+   <table  cellspacing="5" cellpadding="5" align="left" border="0" >
+    <tr>
+
+
+
+     <td> Material Dept</td>
+     <td>
+      <form:select path="matDept" size="1" id="matDept" onchange="eventdirect('loadCategory')">
+       <form:option value="">All</form:option>
+       <form:options items="${matdeptlist}" />
+      </form:select>
+     </td>
+
+     <td>Material Category</td>
+     <td  ><form:select path="matCategory" size="1" id="matCategory">
+      <form:option value="">All</form:option>
+      <form:options items="${matcatitems}" itemValue="matcatCode" itemLabel="matcatType"/>
+     </form:select>
+     </td>
+    </tr>
+
+    <tr>
+
+
+
+
+     <td>Work Order</td>
+     <td  ><form:select path="seqWorkorderId" size="1" id="seqWorkorderId">
+      <form:option value="0">All</form:option>
+      <form:options items="${workmastlist}" itemValue="seqWorkId" itemLabel="jobDesc"/>
+     </form:select>
+     </td>
+
+     <td>Set Max results</td>
+     <td><form:input path="searchMax" id="searchMax"  />
+     </td>
+    <tr>
+     <td colspan="4"> <input  type="button" value="Search Issue Items" onclick="eventdirect('searchIssue')"/> </td>
+
+    </tr>
+
+
+   </table>
+
+  </div>
+
+
+
 
 
 <div style="float:left;width:750px;padding:10px;margin-top:50px">
@@ -110,6 +159,6 @@ function eventdirect(event) {
 
 document.getElementById('_eventId').value = event;
 
-document.storesbean.submit();
+document.matindbean.submit();
 }
 </script>

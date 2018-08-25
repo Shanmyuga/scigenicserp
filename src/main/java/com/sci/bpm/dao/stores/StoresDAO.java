@@ -2,6 +2,7 @@ package com.sci.bpm.dao.stores;
 
 import java.util.List;
 
+import com.sci.bpm.command.mi.MatindCommand;
 import com.sci.bpm.command.stores.StoresBean;
 import com.sci.bpm.db.model.SciAvailableMaterials;
 import com.sci.bpm.db.model.SciMatindMaster;
@@ -26,7 +27,7 @@ public List<SciMatindMaster> selectMis(SciPurchItemMaster seqitemid);
 public void updateMi(SciMatindMaster mi);
 public void issueItems(SciStoreissueMaster master);
 public List<SciAvailableMaterials> viewStore(StoresBean command);
-public List loadissueAcceptance();
+public List loadissueAcceptance(MatindCommand command);
 public List getMatItems(SciPurchItemMaster master);
 public void updateIssueMaster(SciStoreissueMaster issuemaster);
 public void updateQCData(SciStoreMiMaster stmi,SciQcMiMaster qcdata,SciAvailableMaterials availmat,Long mistatus);

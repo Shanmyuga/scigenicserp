@@ -2,6 +2,7 @@ package com.sci.bpm.service.stores;
 
 import java.util.List;
 
+import com.sci.bpm.command.mi.MatindCommand;
 import com.sci.bpm.command.stores.StoresBean;
 import com.sci.bpm.db.model.SciAvailableMaterials;
 import com.sci.bpm.db.model.SciMatindMaster;
@@ -36,7 +37,7 @@ public interface StoreService {
 	public List getQCUpdateS();
 	public List loadStoreissueList(StoresBean bean);
 	public List loadReturnRequest(StoresBean bean);
-	public List loadissueAcceptance();
+	public List loadissueAcceptance(MatindCommand command);
 	public void updateIssueMaster(SciStoreissueMaster issuemaster);
 	public void cancelStoresRequest(SciStoresRequest request);
 	public List loadReturnupdates();

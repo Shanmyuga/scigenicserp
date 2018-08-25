@@ -2,6 +2,7 @@ package com.sci.bpm.service.stores;
 
 import java.util.List;
 
+import com.sci.bpm.command.mi.MatindCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -237,9 +238,9 @@ public class StoreServiceImpl implements StoreService {
 
 
 
-	public List loadissueAcceptance() {
+	public List loadissueAcceptance(MatindCommand command) {
 		// TODO Auto-generated method stub
-		return dao.loadissueAcceptance();
+		return dao.loadissueAcceptance(command);
 	}
 
 
