@@ -497,7 +497,7 @@ public class PurchaseOrderController extends SciBaseController {
 	}
 
 
-	public void sendEmail( RequestContext context) throws Exception{
+	public Event sendEmail( RequestContext context) throws Exception{
 
 		ServletContext externalContext =
 				(ServletContext)context.getExternalContext().getNativeContext();
@@ -542,6 +542,7 @@ public class PurchaseOrderController extends SciBaseController {
 		 e.printStackTrace();
             context.getFlashScope().put("mailMessage","Mail failed due to an error");
 		}
+		return success();
 		}
 
 	public Event cancelPO(RequestContext context) throws Exception {
