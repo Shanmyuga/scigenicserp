@@ -151,7 +151,17 @@ public class PurchaseOrderController extends SciBaseController {
 		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
 		if (selected.getPurchaseStatus().intValue() == getLookupservice()
 				.loadIDData("PO_CREATED").intValue()) {
-			context.getFlowScope().put("OPENSTATUS", "Y");
+			context.getFlashScope().put("OPENSTATUS", "Y");
+		}
+		if (selected.getPurchaseStatus().intValue() == getLookupservice()
+				.loadIDData("PO_APPROVED_DIRECTOR").intValue()) {
+			context.getFlashScope().put("APPROVED", "Y");
+		}
+
+		if (selected.getPurchaseStatus().intValue() == getLookupservice()
+				.loadIDData("PO_APPROVAL_PENDING").intValue()) {
+			context.getFlashScope().put("APPROVAL_PENDING", "Y");
+
 		}
 		loadPOStoresStatus(context);
 
@@ -521,7 +531,7 @@ public class PurchaseOrderController extends SciBaseController {
 			}
 
 			//Setup TransformerRequestContext rc = RequestContextHolder.getRequestContext();
-			Source xsltSrc = new StreamSource(new File(externalContext.getRealPath("/") + "/xslt/po_template.xsl"));
+			Source xsltSrc = new StreamSource(new File(externalContext.getRealPath("/") + "/xslt/po_template_sign.xsl"));
 			Transformer transformer = tFactory.newTransformer(xsltSrc);
 //transformer.setURIResolver(uriResolver);
 			//Make sure the XSL transformation's result is piped through to FOP
@@ -561,8 +571,38 @@ public class PurchaseOrderController extends SciBaseController {
 		return success();
 	}
 
-	
+	public Event approvalDirector(RequestContext context) throws Exception {
 
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
+				.getFlowScope().get("pomastlist");
+		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
+
+		selected.setPurchaseStatus(getLookupservice()
+				.loadIDData("PO_APPROVAL_PENDING"));
+		selected.setUpdatedBy(getUserPreferences().getUserID());
+		selected.setUpdatedDate(new Date());
+		service.updatePOStatus(selected);
+		context.getFlowScope().remove("pomastlist");
+		resetForm(context);
+		return success();
+	}
+	public Event approvedDirector(RequestContext context) throws Exception {
+
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
+				.getFlowScope().get("pomastlist");
+		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
+
+		selected.setPurchaseStatus(getLookupservice()
+				.loadIDData("PO_APPROVED_DIRECTOR"));
+		selected.setUpdatedBy(getUserPreferences().getUserID());
+		selected.setUpdatedDate(new Date());
+		service.updatePOStatus(selected);
+		context.getFlowScope().remove("pomastlist");
+		resetForm(context);
+		return success();
+	}
 	public Event despatchPO(RequestContext context) throws Exception {
 
 		POCommand command = (POCommand) getFormObject(context);

@@ -453,6 +453,77 @@
 						<fo:table-body>
 							<fo:table-row>
 								<fo:table-cell border-style="solid" border-color="black"
+											   border-width="1pt" number-columns-spanned="5">
+									<fo:block line-height="12pt" font-size="10pt"
+											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"
+											  keep-together="always" text-align="center">Items total price
+									</fo:block>
+								</fo:table-cell>
+
+								<fo:table-cell border-style="solid" border-color="black"
+											   border-width="1pt" number-columns-spanned="2">
+									<fo:block line-height="12pt" font-weight="bold"
+											  font-size="10pt" space-before.optimum="1.5pt"
+											  space-after.optimum="1.5pt" keep-together="always" text-align="center">
+										<fo:inline white-space-collapse="false" >
+										</fo:inline>
+									</fo:block>
+								</fo:table-cell>
+								<fo:table-cell border-style="solid" border-color="black"
+											   border-width="1pt">
+									<fo:block line-height="12pt" font-weight="bold"
+											  font-size="10pt" space-before.optimum="1.5pt"
+											  space-after.optimum="1.5pt" keep-together="always" text-align="center">
+										<fo:inline white-space-collapse="false" />
+
+
+									</fo:block>
+								</fo:table-cell>
+								<fo:table-cell border-style="solid" border-color="black"
+											   border-width="1pt">
+									<fo:block line-height="12pt" font-size="10pt"
+											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"
+											  keep-together="always" text-align="center">
+										<fo:inline white-space-collapse="false" />
+
+									</fo:block>
+								</fo:table-cell>
+								<fo:table-cell border-style="solid" border-color="black"
+											   border-width="1pt">
+									<fo:block line-height="12pt" font-size="10pt"
+											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"
+											  keep-together="always" text-align="center">
+										<fo:inline white-space-collapse="false" />
+
+									</fo:block>
+								</fo:table-cell>
+								<fo:table-cell border-style="solid" border-color="black"
+											   border-width="1pt" number-columns-spanned="2">
+									<fo:block line-height="12pt" font-size="10pt"
+											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"
+											  keep-together="always" text-align="center">
+										<fo:inline white-space-collapse="false" ><xsl:value-of select="/purchaseOrder/itemtotal"></xsl:value-of></fo:inline>
+
+									</fo:block>
+								</fo:table-cell>
+								<fo:table-cell border-style="solid" border-color="black"
+											   border-width="1pt">
+									<fo:block line-height="12pt" font-size="10pt"
+											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"
+											  keep-together="always" text-align="center">
+										<fo:inline white-space-collapse="false" ><xsl:value-of select="/purchaseOrder/itemtotalpaise"></xsl:value-of></fo:inline>
+
+									</fo:block>
+								</fo:table-cell>
+								<fo:table-cell border-style="solid" border-color="black"
+											   border-width="1pt">
+									<fo:block line-height="12pt" font-size="10pt"
+											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"
+											  keep-together="always" text-align="center" />
+								</fo:table-cell>
+							</fo:table-row>
+							<fo:table-row>
+								<fo:table-cell border-style="solid" border-color="black"
 									border-width="1pt" number-columns-spanned="5">
 									<fo:block line-height="12pt" font-size="10pt"
 										space-before.optimum="1.5pt" space-after.optimum="1.5pt"

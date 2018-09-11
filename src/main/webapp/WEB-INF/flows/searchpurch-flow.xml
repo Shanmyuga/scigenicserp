@@ -31,7 +31,18 @@
             <webflow:evaluate expression="pocont.bind"/>
             <webflow:evaluate expression="pocont.despatchPO"/>
         </webflow:transition>
-         <webflow:transition on="generatePDF" to="viewPDFPage">
+    <webflow:transition on="approvalDirector" to="entersearch">
+        <webflow:evaluate expression="pocont.bind"/>
+        <webflow:evaluate expression="pocont.approvalDirector"/>
+    </webflow:transition>
+    <webflow:transition on="approvePO" to="entersearch">
+        <webflow:evaluate expression="pocont.bind"/>
+        <webflow:evaluate expression="pocont.approvedDirector"/>
+    </webflow:transition>
+
+
+
+    <webflow:transition on="generatePDF" to="viewPDFPage">
             <webflow:evaluate expression="pocont.bind"/>
             <webflow:evaluate expression="pocont.viewPOPDF"/>
         </webflow:transition>

@@ -33,6 +33,14 @@
                             </form:select>
                         </td>
                         </c:when>
+                        <c:when test="${userPreferences.roleName == 'admin'}">
+                            <form:select path="purchaseType" size="1" id="purchaseType">
+                                <form:option value="">All</form:option>
+                                <form:option value="vendor">Vendor Purchase Order</form:option>
+                                <form:option value="subcontract">Sub Contract Order</form:option>
+                            </form:select>
+                            </td>
+                        </c:when>
                         <c:otherwise>
                             <form:select path="purchaseType" size="1" id="purchaseType">
 
@@ -151,13 +159,16 @@
                 <div style="padding-left:10px;width:787px;float:left">
                     <input type="button"  value="View Purchase Order " onclick="eventdirect('openPurchaseOrder')"/>
                     <input type="button"  value="Generate Purchase Order PDF" onclick="eventdirect('generatePDF')"/>
-
+            <c:if test="${APPROVED != null}">
                     <input type="button"  value="Send email Purchase Order PDF" onclick="eventdirect('generateEmail')"/>
+            </c:if>
                     <input type="button"  value="Close Purchase Order " onclick="eventdirect('closePo')"/>
                     <input type="button"  value="Cancel PO " onclick="eventdirect('cancelPO')"/>
-
+                    <c:if test="${userPreferences.roleName == 'admin'}">
+                    <input type="button"  value="Approve PO " onclick="eventdirect('approvePO')"/>
+                    </c:if>
                     <c:if test="${OPENSTATUS != null}">
-                        <input type="button"  value="Send Purchase to Vendor " onclick="eventdirect('senttovendor')"/>
+                        <input type="button"  value="Send Purchase  Approval to Director " onclick="eventdirect('approvalDirector')"/>
 
                     </c:if>
                 </div>

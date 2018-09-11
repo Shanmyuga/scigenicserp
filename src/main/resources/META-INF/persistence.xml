@@ -49,7 +49,7 @@
 			<property name="hibernate.connection.driver_class"
 				value="oracle.jdbc.driver.OracleDriver" />
 			<property name="hibernate.connection.url"
-				value="jdbc:oracle:thin:@//192.168.1.115:32771/xe.oraslim.com" />
+				value="jdbc:oracle:thin:@//192.168.2.112:32769/ORCLCDB.localdomain" />
 			<property name="hibernate.connection.username"
 				value="scigenics" />
 			<property name="hibernate.connection.password"
