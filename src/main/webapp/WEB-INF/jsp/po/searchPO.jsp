@@ -33,6 +33,14 @@
                             </form:select>
                         </td>
                         </c:when>
+                        <c:when test="${userPreferences.roleName == 'purchasemanager'}">
+                            <form:select path="purchaseType" size="1" id="purchaseType">
+                                <form:option value="">All</form:option>
+                                <form:option value="vendor">Vendor Purchase Order</form:option>
+                                <form:option value="subcontract">Sub Contract Order</form:option>
+                            </form:select>
+                            </td>
+                        </c:when>
                         <c:when test="${userPreferences.roleName == 'admin'}">
                             <form:select path="purchaseType" size="1" id="purchaseType">
                                 <form:option value="">All</form:option>
@@ -167,10 +175,12 @@
                     <c:if test="${userPreferences.roleName == 'admin'}">
                     <input type="button"  value="Approve PO " onclick="eventdirect('approvePO')"/>
                     </c:if>
+            <c:if test="${userPreferences.roleName == 'purchasemanager'}">
                     <c:if test="${OPENSTATUS != null}">
                         <input type="button"  value="Send Purchase  Approval to Director " onclick="eventdirect('approvalDirector')"/>
 
                     </c:if>
+            </c:if>
                 </div>
             </c:if>
         </form:form>

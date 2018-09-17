@@ -545,7 +545,7 @@ public class PurchaseOrderController extends SciBaseController {
 			byte[] pdfarray = out.toByteArray();
 
 			//Send content to Browser
-			sendEmail("purchase@scigenics.in",vendorEmailId,"Purchase Order From Scigenics","Dear Sir \n Please find the attached purchase order from Scigenics India Pvt Ltd. \n\n\n Thanks and Regards \n Scigenics Purchase Manager \n email : purchase@scigenics.in ",pdfarray);
+			sendEmail("purchase@scigenics.in",vendorEmailId,"Purchase Order From Scigenics","Dear Sir/Madam \n Please find the attached purchase order from Scigenics India Pvt Ltd. \n\n\n Thanks and Regards \n Scigenics Purchase Manager \n email : purchase@scigenics.in ",pdfarray);
 			context.getFlashScope().put("mailMessage","Mail Successfully sent");
 		}
 		catch(Exception e) {
@@ -584,6 +584,7 @@ public class PurchaseOrderController extends SciBaseController {
 		selected.setUpdatedDate(new Date());
 		service.updatePOStatus(selected);
 		context.getFlowScope().remove("pomastlist");
+		context.getFlowScope().remove("podetails");
 		resetForm(context);
 		return success();
 	}
@@ -600,6 +601,7 @@ public class PurchaseOrderController extends SciBaseController {
 		selected.setUpdatedDate(new Date());
 		service.updatePOStatus(selected);
 		context.getFlowScope().remove("pomastlist");
+		context.getFlowScope().remove("podetails");
 		resetForm(context);
 		return success();
 	}
@@ -616,6 +618,7 @@ public class PurchaseOrderController extends SciBaseController {
 		selected.setPurchaseCreatedDt(new Date());
 		service.despatchPO(selected);
 		context.getFlowScope().remove("pomastlist");
+		context.getFlowScope().remove("podetails");
 		resetForm(context);
 		return success();
 	}
@@ -810,8 +813,13 @@ public Event loadbillDetails(RequestContext context) throws Exception {
 			for(int i=0;i<addressarray.length;i++) {
 				address[i] = new InternetAddress(addressarray[i]);
 			}
+			String[] ccAddress = new String[]{"purchase@scigenics.in"};
+			InternetAddress[] ccaddress = new InternetAddress[addressarray.length];
+			for(int i=0;i<ccAddress.length;i++) {
+				ccaddress[i] = new InternetAddress(ccAddress[i]);
+			}
 			message.addRecipients(javax.mail.internet.MimeMessage.RecipientType.TO, address);
-
+			message.addRecipients(javax.mail.internet.MimeMessage.RecipientType.CC, ccaddress);
 			message.setSubject(aSubject);
 
 			MimeBodyPart mbp1 = new MimeBodyPart();
