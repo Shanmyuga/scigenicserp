@@ -173,9 +173,12 @@ public class SearchWorkOrder extends SciBaseController{
 		wmaster.setUpdatedBy(getUserPreferences().getUserID());
 		wmaster.setUpdatedDt(new Date());
 		service.closeWO(wmaster,getLookupservice().loadIDData("MI_CLOSED_WO_ORDER"));
+
 		return success();
 
 	}
+
+
 	public Event dormantWO(RequestContext context) {
 
 		SciWorkorderMaster wmaster = (SciWorkorderMaster) context

@@ -29,6 +29,8 @@ public List<SciAmendmentMaster> searchAmend(SciWorkorderMaster master);
 	
 	public void closeWO(SciWorkorderMaster wm,Long seqLovID);
 
+	public void cancelApprovedMi(Long seqWorkID ,Long seqLovID);
+
 	public List<ChartModel> getWorkOrderCostStats(Long seqWorkId);
 	
 }

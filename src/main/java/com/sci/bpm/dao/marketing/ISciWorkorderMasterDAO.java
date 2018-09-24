@@ -149,6 +149,7 @@ public interface ISciWorkorderMasterDAO {
 	public SciCustomerMaster loadCustomer(Long seqCustID);
 	
 	public void updateWO(SciWorkorderMaster wm,Long seqLovID);
+	public void cancelApprovedMi(Long seqWorkID ,Long seqLovID);
 
 	public List<ChartModel> getWorkOrderCostStats(Long seqWorkId);
 

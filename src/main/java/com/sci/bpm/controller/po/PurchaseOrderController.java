@@ -583,9 +583,9 @@ public class PurchaseOrderController extends SciBaseController {
 		selected.setUpdatedBy(getUserPreferences().getUserID());
 		selected.setUpdatedDate(new Date());
 		service.updatePOStatus(selected);
-		context.getFlowScope().remove("pomastlist");
-		context.getFlowScope().remove("podetails");
-		resetForm(context);
+		List<SciPurchaseMast> masterlist = service.searchPOs(command);
+		context.getFlowScope().put("pomastlist", masterlist);
+		
 		return success();
 	}
 	public Event approvedDirector(RequestContext context) throws Exception {
@@ -600,9 +600,8 @@ public class PurchaseOrderController extends SciBaseController {
 		selected.setUpdatedBy(getUserPreferences().getUserID());
 		selected.setUpdatedDate(new Date());
 		service.updatePOStatus(selected);
-		context.getFlowScope().remove("pomastlist");
-		context.getFlowScope().remove("podetails");
-		resetForm(context);
+		List<SciPurchaseMast> masterlist = service.searchPOs(command);
+		context.getFlowScope().put("pomastlist", masterlist);
 		return success();
 	}
 	public Event despatchPO(RequestContext context) throws Exception {
@@ -617,9 +616,9 @@ public class PurchaseOrderController extends SciBaseController {
 		selected.setUpdatedDate(new Date());
 		selected.setPurchaseCreatedDt(new Date());
 		service.despatchPO(selected);
-		context.getFlowScope().remove("pomastlist");
-		context.getFlowScope().remove("podetails");
-		resetForm(context);
+		List<SciPurchaseMast> masterlist = service.searchPOs(command);
+		context.getFlowScope().put("pomastlist", masterlist);
+
 		return success();
 	}
 
@@ -729,7 +728,7 @@ public Event loadQuotationsDetails(RequestContext context) throws Exception {
 		
 		POCommand command = (POCommand) getFormObject(context);
 		List<SciPurchaseMast> details  = service.loadPODetails(command.getSeqVendorId());
-		context.getFlowScope().put("poDetailsList", details);
+		context.getFlashScope().put("poDetailsList", details);
 		return success();
 	}
 	public Event addPayMentDetails(RequestContext context) throws Exception {

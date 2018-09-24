@@ -79,7 +79,12 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 		daoimpl.updateWO(wm,seqLovID);
 	}
 
-	@Override
+	public void cancelApprovedMi(Long seqWorkID, Long seqLovID) {
+
+	}
+
+
+
 	public List<ChartModel> getWorkOrderCostStats(Long seqWorkId) {
 		return daoimpl.getWorkOrderCostStats(seqWorkId);
 	}

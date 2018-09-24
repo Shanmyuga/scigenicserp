@@ -24,6 +24,7 @@ import com.sci.bpm.db.model.SciWorkordInst;
 import com.sci.bpm.db.model.SciWorkorderMaster;
 
 @Repository
+
 public class WorkOrderMasterDAO implements ISciWorkorderMasterDAO {
 
 	@PersistenceContext
@@ -137,6 +138,10 @@ public class WorkOrderMasterDAO implements ISciWorkorderMasterDAO {
 		
 		}
 		em.merge(wm);
+	}
+
+	public void cancelApprovedMi(Long seqWorkID, Long seqLovID) {
+
 	}
 
 	@Override

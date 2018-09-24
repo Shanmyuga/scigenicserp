@@ -51,8 +51,16 @@
                <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewworkorder-flow">View Work Order Docs</a></td>
               </tr>
-
-
+                 <tr> 
+                <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=searchmi-flow">Create Subcontract Items</a></td>
+              </tr>
+               <tr> 
+                <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=searchItem-flow">Create Subcontract Purchase Order</a></td>
+              </tr>
+                  <tr> 
+                <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=searchpurch-flow">View Subcontract Purchase Order</a></td>
+                
+              </tr>
                <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addreturn-flow">Return Materials</a></td>
                 
