@@ -10,6 +10,11 @@
             <webflow:evaluate expression="searchworkcont.selectWorder"/>
             <webflow:evaluate expression="micont.setupForm"/>
         </webflow:transition>
+    <webflow:transition on="filterReport" to="entersearch">
+        <webflow:evaluate expression="searchworkcont.bind"/>
+        <webflow:evaluate expression="searchworkcont.filterReport"/>
+
+    </webflow:transition>
     </webflow:view-state>
 <webflow:view-state id="updateMI" view="mi.update">
         <webflow:on-entry>

@@ -615,7 +615,7 @@ public class PurchaseOrderController extends SciBaseController {
 		selected.setUpdatedBy(getUserPreferences().getUserID());
 		selected.setUpdatedDate(new Date());
 		selected.setPurchaseCreatedDt(new Date());
-		service.despatchPO(selected);
+		service.updatePOStatus(selected,getLookupservice().loadIDData("MI_PO_ORDERED"));
 		List<SciPurchaseMast> masterlist = service.searchPOs(command);
 		context.getFlowScope().put("pomastlist", masterlist);
 
