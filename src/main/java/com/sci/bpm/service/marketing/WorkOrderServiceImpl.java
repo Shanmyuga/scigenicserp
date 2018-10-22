@@ -44,6 +44,10 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 		return daoimpl.searchWork();
 	}
 
+	public List<SciWorkorderMaster> searchAllWorkOrder() {
+		return daoimpl.searchAllWork();
+	}
+
 	public void addAmendment(SciAmendmentMaster master) {
 		// TODO Auto-generated method stub
 		daoimpl.addAmendment(master);

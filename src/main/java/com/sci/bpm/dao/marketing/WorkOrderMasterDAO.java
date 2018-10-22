@@ -67,6 +67,10 @@ public class WorkOrderMasterDAO implements ISciWorkorderMasterDAO {
 		return em.createQuery("from SciWorkorderMaster m where m.woStatus = 'Y' ").getResultList();
 	}
 
+	public List<SciWorkorderMaster> searchAllWork() {
+		return em.createQuery("from SciWorkorderMaster m").getResultList();
+	}
+
 	public List<SciWorkorderMaster> findAll(int... rowStartIdxAndCount) {
 		// TODO Auto-generated method stub
 		return null;

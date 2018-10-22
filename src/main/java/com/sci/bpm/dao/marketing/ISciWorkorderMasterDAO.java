@@ -136,7 +136,7 @@ public interface ISciWorkorderMasterDAO {
 	public List<SciWorkorderMaster> findAll(int... rowStartIdxAndCount);
 	
 	public List<SciWorkorderMaster> searchWork();
-	
+	public List<SciWorkorderMaster> searchAllWork();
 	public List<SciAmendmentMaster> searchAmend(SciWorkorderMaster master);
 	
 	public void addAmendment(SciAmendmentMaster master);

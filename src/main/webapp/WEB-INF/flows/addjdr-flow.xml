@@ -4,7 +4,7 @@
         <webflow:evaluate expression="searchworkcont.setupForm"/>
         <webflow:evaluate expression="lookupbean.getDropDownList('wodoc_key')" result="flowScope.woDocTypeList"/>
         
-        <webflow:evaluate expression="searchworkcont.searchWorkOrder"/>
+        <webflow:evaluate expression="searchworkcont.searchAllWorkOrder"/>
     </webflow:on-start>
 <webflow:view-state id="entersearch" view="workorder.jdrview">
         <webflow:transition on="addjdr" to="addjdr">

@@ -40,7 +40,17 @@ public class SearchWorkOrder extends SciBaseController{
 		context.getFlowScope().put("workorderlistNames", builder.toString());
 		return success();
 	}
+	public Event searchAllWorkOrder(RequestContext context) {
 
+		List<SciWorkorderMaster> mylist = service.searchAllWorkOrder();
+		context.getFlowScope().put("workorderlist", mylist);
+		StringBuilder builder = new StringBuilder();
+		for(SciWorkorderMaster wm:mylist) {
+			builder.append(wm.getJobDesc()+"|");
+		}
+		context.getFlowScope().put("workorderlistNames", builder.toString());
+		return success();
+	}
 
 	public List<SciWorkorderMaster> searchWorkOrderList(RequestContext context) {
 

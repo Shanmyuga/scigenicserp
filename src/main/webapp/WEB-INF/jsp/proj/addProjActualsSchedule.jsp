@@ -84,6 +84,7 @@
 </div>
 
 <div width="787px"  style="float:left;padding-left:10px;padding-right:600px;margin-top:50px">
+    <c:out value="${ERROR_MSG}" />
 <c:if test="${projschebean.phaseidx != null && completeTask != 'Y'}">
 
 <table border="0" width="787px" cellpadding="10x" >
@@ -107,7 +108,17 @@
 <tr>
 <td align="left"  class="datatext"><span style="color:red;">*</span>Task Description (Work Done today)</td>
 <td ><form:textarea path="taskDesc" />
-<td align="left" ><input type="button" value="Add Hours for this Task" onclick="eventdirect('addProj')"/></td>
+    <td align="left" class="datatext">Task Date</td>
+    <td ><form:input path="taskDate" />
+
+        <a href="javascript:show_calendar('document.projschebean.taskDate', document.projschebean.taskDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
+        <span style="color:red;">*</span>
+
+    </td>
+
+</tr>
+    <tr>
+<td colspan="2" align="left" ><input type="button" value="Add Hours for this Task" onclick="eventdirect('addProj')"/></td>
 
 
 </tr>

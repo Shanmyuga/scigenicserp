@@ -23,12 +23,15 @@ public class ProjectTrackCommand implements Serializable {
 	private Date fromdate;
 
 	private Date todate;
-	
+	private Date taskDate;
 	private String subPhaseName;
 	
 	private Date subEstStart;
 	private Date subEstEnd;
 	private Date subActStdate;
+
+
+
 	private Date subActEnd;
 	private Long phaseidx;
 	private Long woTrackId;
@@ -203,5 +206,13 @@ public class ProjectTrackCommand implements Serializable {
 
 	public void setSeqWorkId(Long seqWorkId) {
 		this.seqWorkId = seqWorkId;
+	}
+
+	public Date getTaskDate() {
+		return taskDate;
+	}
+
+	public void setTaskDate(Date taskDate) {
+		this.taskDate = taskDate;
 	}
 }

@@ -14,7 +14,7 @@ public interface WorkOrderService {
 	public void createWorkOrder(SciWorkorderMaster workMaster);
 	
 	public List<SciWorkorderMaster> searchWorkOrder();
-	
+	public List<SciWorkorderMaster> searchAllWorkOrder();
 public List<SciAmendmentMaster> searchAmend(SciWorkorderMaster master);
 	
 	public void addAmendment(SciAmendmentMaster master);
