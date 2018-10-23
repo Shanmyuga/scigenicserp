@@ -2,7 +2,7 @@
 <webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="entersearch">
 <webflow:on-start>
         <webflow:evaluate expression="searchworkcont.setupForm"/>
-        <webflow:evaluate expression="searchworkcont.searchWorkOrder"/>
+        <webflow:evaluate expression="searchworkcont.searchAllWorkOrder"/>
     </webflow:on-start>
 <webflow:view-state id="entersearch" view="workorder.view">
         <webflow:transition on="viewworkdocs" to="entersearch">
