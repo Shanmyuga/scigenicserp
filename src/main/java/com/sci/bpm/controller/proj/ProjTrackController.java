@@ -1,10 +1,8 @@
 package com.sci.bpm.controller.proj;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import com.sci.bpm.command.proj.ProjectReportView;
 import org.apache.commons.beanutils.BeanUtils;
@@ -46,11 +44,7 @@ public class ProjTrackController extends SciBaseController {
                 .getFlowScope().get("selectedwo");
         List wophases = (List) context.getFlowScope().get("wophases");
         SciWoTrackMaster master = selectWoTrack(wophases, command.getPhaseidx());
-        long previousDay = System.currentTimeMillis() - 1000*60*60*24;
-        if (command.getTaskDate() != null && command.getTaskDate().before(new Date(previousDay))) {
-            fail = true;
-            error = " Task  dates can be only previous date";
-        }
+
         if (command.getTaskDate() != null && command.getTaskDate().after(new Date())) {
             fail = true;
             error = " Task  date can be only current date";
