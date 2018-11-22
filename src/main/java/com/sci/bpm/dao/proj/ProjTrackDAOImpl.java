@@ -85,11 +85,11 @@ public class ProjTrackDAOImpl implements ProjTrackDao {
         String query = "select to_char(wtd.inserted_date,'YYYY') as YEAR, to_char(wtd.inserted_date,'MM') as Month,to_char(TRUNC(wtd.inserted_date, 'iw'),'yyyymmdd')  AS iso_week_start_date, to_char(TRUNC(wtd.inserted_date, 'iw') + 7 - 1/86400,'yyyymmdd') AS iso_week_end_date , wm.CLIENT_DETAILS,wm.JOB_DESC,wt.phase_detail, wt.phase_desc,to_char(wt.est_man_hours)  as estimated_hours,to_char(sum(wtd.actual_man_hours)) as actual_hours  from SCI_WO_TRACK_MASTER wt,SCI_WORKORDER_MASTER wm ,SCI_WO_TRK_DETAIL wtd where wt.SEQ_WO_TRK_ID = wtd.SEQ_WO_TRK_ID and wt.SEQ_WORK_ID = wm.SEQ_WORK_ID   ";
         Map<String,Object> parameters = new HashMap<String,Object>();
         if(command.getFromdate() != null) {
-            query = query + " AND wtd.updatedDate >= :fromdate";
+            query = query + " AND wtd.UPDATED_DATE >= :fromdate";
             parameters.put("fromdate",command.getFromdate());
         }
         if(command.getTodate() != null) {
-            query = query + " AND wtd.updatedDate <= :todate";
+            query = query + " AND wtd.UPDATED_DATE <= :todate";
             parameters.put("todate",command.getTodate());
         }
         if(command.getSeqWorkId() != null && !"".equals(command.getSeqWorkId())) {
