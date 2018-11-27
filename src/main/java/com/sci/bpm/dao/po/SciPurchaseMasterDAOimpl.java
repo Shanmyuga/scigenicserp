@@ -1,5 +1,6 @@
 package com.sci.bpm.dao.po;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -39,8 +40,8 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 	}
 
 	public SciPurchaseMast findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		SciPurchaseMast pm = em.find(SciPurchaseMast.class,id);
+		return pm;
 	}
 
 	public List<SciPurchaseMast> findByProperty(String propertyName,
@@ -143,6 +144,25 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 		}
 
 		return wquery.getResultList();
+	}
+
+	public List searchMatCodePO(POCommand command) {
+
+		String myquery ="Select distinct pm.SEQ_PURCH_ID from  SCI_PURCHASE_MAST pm, SCI_PURCHASE_ITEMDETAILS_ pi, SCI_PURCH_ITEM_MASTER im, SCI_ITEMMI_DETAILS itmi, SCI_MATIND_MASTER mi  where mi.SEQ_MI_ID = itmi.SEQ_MI_ID and " +
+				" itmi.SEQ_PURITEM_ID = im.SEA_PURITEM_ID and im.SEA_PURITEM_ID = pi.SEQ_ITEM_ID and pi.SEQ_PURCH_ID = pm.SEQ_PURCH_ID and mi.matcode = ( select mmi.matcode from  SCI_MATIND_MASTER mmi where mmi.seq_mi_id =:seq_mi_id ) "+
+		        " order by pm.SEQ_PURCH_ID desc";
+		Query q = em.createNativeQuery(myquery);
+		q.setParameter("seq_mi_id",command.getSeqMaterialId());
+		List arrayList = q.getResultList();
+		List<SciPurchaseMast> polist = new ArrayList();
+
+		for (int idx = 0; idx < arrayList.size(); idx++) {
+
+			BigDecimal arr = (BigDecimal) arrayList.get(idx);
+			SciPurchaseMast comma = findById(((BigDecimal) arr).longValue());
+			polist.add(comma);
+		}
+		return polist;
 	}
 
 	public List closePO(POCommand command) {
@@ -350,5 +370,8 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 		qry.setParameter("matCategory", matCategory);
 		return qry.getResultList();
 	}
+
+
+
 
 }

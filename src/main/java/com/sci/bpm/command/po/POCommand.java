@@ -56,7 +56,7 @@ public class POCommand implements Serializable {
 	private Double billAmount;
 	private String billNo;
 	private Double poId;
-	
+	private Long seqMaterialId;
 	private Double matCost;
 	
 	private String specDetails;
@@ -515,6 +515,11 @@ public class POCommand implements Serializable {
 		this.quotationDate = quotationDate;
 	}
 
-	
+	public Long getSeqMaterialId() {
+		return seqMaterialId;
+	}
 
+	public void setSeqMaterialId(Long seqMaterialId) {
+		this.seqMaterialId = seqMaterialId;
+	}
 }

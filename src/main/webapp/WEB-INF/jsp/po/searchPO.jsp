@@ -99,7 +99,13 @@
                         </form:select>
 
                         </td>
-                        <td colspan="2" align="right"><input type="submit" value="Search PO"/></td>
+                        <td>MI ID</td>
+                        <td><form:input path="seqMaterialId"/></td>
+
+                    </tr>
+                    <tr>
+
+                        <td colspan="4" align="right"><input type="submit" value="Search PO"/></td>
                     </tr>
                 </table>
 

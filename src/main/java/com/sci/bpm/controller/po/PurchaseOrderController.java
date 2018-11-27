@@ -138,7 +138,13 @@ public class PurchaseOrderController extends SciBaseController {
 	public Event searchPO(RequestContext context) throws Exception {
 
 		POCommand command = (POCommand) getFormObject(context);
-		List<SciPurchaseMast> masterlist = service.searchPOs(command);
+		List<SciPurchaseMast> masterlist = new ArrayList<SciPurchaseMast>();
+		if(command.getSeqMaterialId() == null) {
+		 masterlist = service.searchPOs(command);
+		}
+		else {
+			masterlist = service.searchMatCodePO(command);
+		}
 		context.getFlowScope().put("pomastlist", masterlist);
 		return success();
 	}

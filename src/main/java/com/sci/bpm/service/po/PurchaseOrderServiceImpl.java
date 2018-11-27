@@ -73,6 +73,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		return this.dao.searchPO(command);
 	}
 
+	public List searchMatCodePO(POCommand command) {
+		return this.dao.searchMatCodePO(command);
+	}
+
 	public List<SciPurchItemMaster> loadPODetails(SciPurchaseMast master) {
 
 		return itemdao.loadPODetails(master);

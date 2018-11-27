@@ -117,6 +117,7 @@ public interface ISciPurchaseMastDAO {
 	public List<SciPurchaseMast> findAll();
 	public void cancelPO(SciPurchaseMast master);
 	public List searchPO(POCommand command);
+	public List searchMatCodePO(POCommand command);
 	public List closePO(POCommand command);
 	public List viewRejected(POCommand command);
 	public void updateReject(SciRejectedMaterials mater,SciRejectMaterialAudit audit);

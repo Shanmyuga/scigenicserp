@@ -22,7 +22,7 @@ public interface PurchaseOrderService {
 	public  void addPurchOrder(SciPurchaseMast master,List<SciPurchItemMaster> itemlist) ;
 	public  void addPurchOrder(SciPurchaseMast master,List<SciPurchItemMaster> itemlist,Long mistatus) ;
 	public List<SciPurchaseMast> searchPOs(POCommand command);
-	
+	public List searchMatCodePO(POCommand command);
 	public List<SciPurchItemMaster> loadPODetails(SciPurchaseMast master);
 	public void cancelPO(SciPurchaseMast master);
 	public void updatePOStatus(SciPurchaseMast master);
