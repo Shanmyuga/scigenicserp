@@ -190,7 +190,7 @@
                     <c:if test="${userPreferences.roleName == 'admin'}">
                     <input type="button"  value="Approve PO " onclick="eventdirect('approvePO')"/>
                     </c:if>
-            <c:if test="${userPreferences.roleName == 'purchasemanager' ||  userPreferences.roleName == 'subcontract'}">
+            <c:if test="${userPreferences.roleName == 'purchasemanager' ||  userPreferences.roleName == 'subcontract' || userPreferences.roleName == 'admin' }">
                     <c:if test="${OPENSTATUS != null}">
                         <input type="button"  value="Send Purchase  Approval to Director " onclick="eventdirect('approvalDirector')"/>
 
