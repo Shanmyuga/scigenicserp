@@ -123,6 +123,10 @@
 <display:column sortable="true"  title="File Name"  >
 <c:out value="${row.seqQCDoc.originalFile}" />
 </display:column>
+
+ <display:column sortable="true"  title="QC Reference ID"  >
+  <c:out value="${row.seqQCDoc.qcRefID}" />
+ </display:column>
 <display:column sortable="true"  title="Uploaded File"  media="html" >
 <a href="javascript:openfile('<c:out value="${row.seqQCDoc.seqQcDocId}"/>')"><c:out value="${row.seqQCDoc.originalFile}" /></a>
 </display:column>

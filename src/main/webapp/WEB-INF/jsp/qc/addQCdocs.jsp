@@ -159,10 +159,12 @@
 <table >
 
 <tr>
-<td>QC Upload File </td>
+
 </tr>
 <tr>
 <td><input type="file" name="filedoc" id="filedoc"/><span style="color:red;">*</span></td>
+ <td>QC Reference ID </td>
+ <td><form:input path="qcRefID" /><span style="color:red;">*</span></td>
 </tr>
 
 </table>

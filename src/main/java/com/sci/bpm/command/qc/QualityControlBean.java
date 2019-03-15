@@ -56,7 +56,7 @@ public class QualityControlBean implements Serializable {
 	private String matDept;
 	private String seqWorkId;
 	private String ocStatus;
-	
+	private String qcRefID;
 	private String maxResults  = "500";
 	
 	public String getQcTestsApproval() {
@@ -288,6 +288,12 @@ public class QualityControlBean implements Serializable {
 	public void setIssueCnt(String issueCnt) {
 		this.issueCnt = issueCnt;
 	}
-	
-	
+
+	public String getQcRefID() {
+		return qcRefID;
+	}
+
+	public void setQcRefID(String qcRefID) {
+		this.qcRefID = qcRefID;
+	}
 }

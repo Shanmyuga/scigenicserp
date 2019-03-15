@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
@@ -59,8 +60,11 @@ public class QualityController extends SciBaseController {
 		MultipartFile file = bean.getFiledoc();
 		SciQcDocs master = new SciQcDocs();
  		master.setDataFile(bean.getFiledoc().getBytes());
-		
-		
+		if(StringUtils.isBlank(bean.getQcRefID())) {
+			throw new Exception("Qc Ref ID cannot be blank");
+		}
+		master.setQcRefID(bean.getQcRefID());
+
 		master.setOriginalFile(file.getOriginalFilename());
 		master.setDocCnttype(file.getContentType());
 		master.setUpdatedBy(getUserPreferences().getUserID());

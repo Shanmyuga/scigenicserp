@@ -29,6 +29,7 @@ public class SciQcDocs implements java.io.Serializable {
 	private String updatedBy;
 	private Date updatedDt;
 	private Long seqQcId;
+	private String qcRefID;
 
 	// Constructors
 
@@ -95,6 +96,14 @@ public class SciQcDocs implements java.io.Serializable {
 
 	public void setDocCnttype(String docCnttype) {
 		this.docCnttype = docCnttype;
+	}
+	@Column(name = "QC_REF_ID", length = 20)
+	public String getQcRefID() {
+		return qcRefID;
+	}
+
+	public void setQcRefID(String qcRefID) {
+		this.qcRefID = qcRefID;
 	}
 
 	@Column(name = "DOC_VERSION", length = 2)
