@@ -87,9 +87,9 @@
 <c:out value="${row1.subContVendor}" />
 </c:forEach>
 </display:column>
-<display:column title="Qc Docs">
+<display:column title="Qc Ref ID's">
 <c:forEach items="${nestedName }" var="row1" varStatus="table">
-<c:out value="${row1.originalFile}" />/
+<c:out value="${row1.qcRefID}" />/
 </c:forEach>
 </display:column>
 <display:column title="Qc Docs links" media="html">
@@ -103,9 +103,9 @@
 </c:forEach>
 </display:column>
 
-<display:column title="Raw Qc Docs">
+<display:column title="Raw Qc Ref ID's">
 <c:forEach items="${nestedmyName }" var="row1" varStatus="table">
-<c:out value="${row1.originalFile}" />/
+<c:out value="${row1.qcRefID}" />/
 </c:forEach>
 </display:column>
 <display:column title="Raw Qc Docs links" media="html">
