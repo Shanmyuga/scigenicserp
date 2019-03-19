@@ -68,7 +68,12 @@
 <display:column sortable="true"  title="Dimen"  property="matDimesion">
 
 </display:column>
+ <display:column sortable="true"  title="Remarks"  property="recommend">
 
+ </display:column>
+ <display:column sortable="true"  title="MI Created By"  property="insertedBy">
+
+ </display:column>
 <display:column sortable="true"  title="Due Date"  >
 <fmt:formatDate value="${row.matDuedate}" pattern="dd-MM-yyyy"/>
 <form:input path="matList[${row_rowNum%10}].matDuedatestr" />
