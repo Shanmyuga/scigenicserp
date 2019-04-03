@@ -87,7 +87,7 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 			wmaster = em.find(SciWorkorderMaster.class, new Long(command.getSeqWorkId()));
 		}
 
-		String query = "select  m.seqMiId,m.matType,m.matSpec,m.matDesc,m.matQty,m.matDimesion,m.recommend,m.purStatus,m.preparedBy,m.estUnintCost,m.matcode,(select CASE WHEN (count(r.seqStreqId) >= 1) then 'Request Issued' ELSE 'NR' END from SciStoresRequest r,SciStoreissueMaster im  where r.seqStreqId=im.strequest.seqStreqId and r.sciMiMaster.seqMiId =m.seqMiId ),(select r.prodApproval from SciStoresRequest r where r.sciMiMaster.seqMiId =m.seqMiId),(select r.purchApproval from SciStoresRequest r where r.sciMiMaster.seqMiId =m.seqMiId),m.insertedBy,m.insertedDate,(select wm.jobDesc from SciWorkorderMaster wm where wm.seqWorkId=m.sciWorkorderMaster.seqWorkId),(select  max(pm.seqPurchId) from SciPurchaseMast pm,SciPurchItemMaster im,SciItemmiDetails immi,SciPurchaseItemdetails pmmd where immi.seqMiId =m.seqMiId and immi.sciPurchItemMaster.seaPuritemId=im.seaPuritemId and im.seaPuritemId=pmmd.seqItemId and pm.seqPurchId=pmmd.sciPurchaseMast.seqPurchId) from SciMatindMaster m ,SciMattypeMaster mt  where mt.matCode  = substr(m.matcode,1,2)  ";
+		String query = "select  m.seqMiId,m.matType,m.matSpec,m.matDesc,m.matQty,m.matDimesion,m.recommend,m.purStatus,m.preparedBy,m.estUnintCost,m.matcode,(select CASE  WHEN requestStatus = 'Y' then 'Request Issued' WHEN requestStatus = 'N' then 'Request Not Issued'   WHEN requestStatus = 'C' then 'Request Cancelled by Stores'  WHEN requestStatus = 'R' then 'Request Rejected' ELSE 'Not raised' END from SciStoresRequest r  where  r.sciMiMaster.seqMiId =m.seqMiId ),(select r.prodApproval from SciStoresRequest r where r.sciMiMaster.seqMiId =m.seqMiId),(select r.purchApproval from SciStoresRequest r where r.sciMiMaster.seqMiId =m.seqMiId),m.insertedBy,m.insertedDate,(select wm.jobDesc from SciWorkorderMaster wm where wm.seqWorkId=m.sciWorkorderMaster.seqWorkId),(select  max(pm.seqPurchId) from SciPurchaseMast pm,SciPurchItemMaster im,SciItemmiDetails immi,SciPurchaseItemdetails pmmd where immi.seqMiId =m.seqMiId and immi.sciPurchItemMaster.seaPuritemId=im.seaPuritemId and im.seaPuritemId=pmmd.seqItemId and pm.seqPurchId=pmmd.sciPurchaseMast.seqPurchId) from SciMatindMaster m ,SciMattypeMaster mt  where mt.matCode  = substr(m.matcode,1,2)  ";
 		// Query query = em.createQuery("Select * from SciMatindMaster m ");
 		Map parameters = new HashMap();
 		String whereClause = "";
@@ -96,6 +96,11 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 			// parameters.add(command.getMatDuedate());
 			parameters.put("duedate", command.getMatDuedate());
 		}
+        if (command.getCreatedDate() != null) {
+            whereClause = whereClause + " and  m.insertedDate < :insertedDate ";
+            // parameters.add(command.getMatDuedate());
+            parameters.put("insertedDate", command.getCreatedDate());
+        }
 		if (command.getFromdate() != null) {
 			whereClause = whereClause + " and  m.insertedDate > :fromdate ";
 			// parameters.add(command.getMatDuedate());
@@ -160,6 +165,26 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		if ("Y".equals(command.getFilterIssued()))  {
 			whereClause = whereClause + " and not exists (select 1 from SciStoresRequest r,SciStoreissueMaster im  where r.seqStreqId=im.strequest.seqStreqId and r.sciMiMaster.seqMiId =m.seqMiId) ";
 			
+		}
+		if ("Y".equals(command.getStstatus()))  {
+			whereClause = whereClause + " and  exists (select 1 from SciStoresRequest r  where  r.sciMiMaster.seqMiId =m.seqMiId and r.requestStatus = 'Y') ";
+
+		}
+		if ("N".equals(command.getStstatus()))  {
+			whereClause = whereClause + " and  exists (select 1 from SciStoresRequest r  where  r.sciMiMaster.seqMiId =m.seqMiId and r.requestStatus = 'N') ";
+
+		}
+		if ("C".equals(command.getStstatus()))  {
+			whereClause = whereClause + " and  exists (select 1 from SciStoresRequest r  where  r.sciMiMaster.seqMiId =m.seqMiId and r.requestStatus = 'C') ";
+
+		}
+		if ("P".equals(command.getStstatus()))  {
+			whereClause = whereClause + " and  not exists (select 1 from SciStoresRequest r  where  r.sciMiMaster.seqMiId =m.seqMiId) ";
+
+		}
+		if ("R".equals(command.getStstatus()))  {
+			whereClause = whereClause + " and  exists (select 1 from SciStoresRequest r  where  r.sciMiMaster.seqMiId =m.seqMiId and r.requestStatus = 'R') ";
+
 		}
 		if ("Y".equals(command.getFilterRejected()))  {
 			whereClause = whereClause + " and  exists (select 1 from SciStoresRequest r  where   r.sciMiMaster.seqMiId =m.seqMiId and (r.prodApproval <> 'R' and r.purchApproval <> 'R')) ";

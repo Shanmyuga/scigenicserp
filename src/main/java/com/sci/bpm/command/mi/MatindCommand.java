@@ -22,6 +22,7 @@ public class MatindCommand implements Serializable {
 	private String matDesc;
 	private BigDecimal matQty;
 	private Date matDuedate;
+	private Date createdDate;
 	private String matDimesion;
 	private String recommend;
 	private Long purStatus;
@@ -696,4 +697,11 @@ public class MatindCommand implements Serializable {
 		this.matDescription = matDescription;
 	}
 
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
 }

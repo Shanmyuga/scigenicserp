@@ -1,34 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="entersearch">
 <webflow:on-start>
-        <webflow:evaluate expression="searchworkcont.setupForm"/>
-        <webflow:evaluate expression="searchworkcont.searchWorkOrder"/>
+    <!-- WARNING: parameter-type is no longer supported.  Use <set name="temp" value="'mattype_key'" type="string" /> to convert the type before the evaluate action. --><webflow:evaluate expression="lookupbean.getDropDownList('mattype_key')" result="flowScope.matitems"/>
+    <!-- WARNING: parameter-type is no longer supported.  Use <set name="temp" value="'matstats_key'" type="string" /> to convert the type before the evaluate action. --><webflow:evaluate expression="lookupbean.getDropDownList('matstats_key')" result="flowScope.matstatitems"/>
+    <webflow:evaluate expression="lookupbean.getDropDownList('matdept_key')" result="flowScope.matdeptlist"/>
+    <webflow:evaluate expression="lookupbean.getDropDownList('workorder_key')" result="flowScope.workmastlist"/>
+
+    <webflow:evaluate expression="lookupbean.getDropDownList('denom_key')" result="flowScope.denomlist"/>
     </webflow:on-start>
 <webflow:view-state id="entersearch" view="workorder.miupdate">
-        <webflow:transition on="updateMI" to="updateMI">
-            <webflow:evaluate expression="searchworkcont.bind"/>
-            <webflow:evaluate expression="searchworkcont.selectWorder"/>
-            <webflow:evaluate expression="micont.setupForm"/>
+
+    <webflow:on-render>
+        <webflow:evaluate expression="micont.setupForm"/>
+        <webflow:evaluate expression="micont.loadProducts"/>
+    </webflow:on-render>
+    <webflow:transition on="searchMI" to="entersearch">
+        <webflow:evaluate expression="micont.bind"/>
+        <webflow:evaluate expression="micont.searchMI"/>
+    </webflow:transition>
+    <webflow:transition on="loadCategory" to="entersearch">
+        <webflow:evaluate expression="micont.bind"/>
+        <webflow:evaluate expression="micont.loadMatCatItems"/>
+
+    </webflow:transition>
+        <webflow:transition on="updateMI" to="entersearch">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.selectcancelMI"/>
+            <webflow:evaluate expression="micont.searchMI"/>
+
         </webflow:transition>
     <webflow:transition on="filterReport" to="entersearch">
         <webflow:evaluate expression="searchworkcont.bind"/>
         <webflow:evaluate expression="searchworkcont.filterReport"/>
 
     </webflow:transition>
+
+
+    <webflow:transition on="updateRemarks" to="entersearch">
+        <webflow:evaluate expression="micont.bind"/>
+        <webflow:evaluate expression="micont.updateRemarks"/>
+        <webflow:evaluate expression="micont.searchMI"/>
+    </webflow:transition>
     </webflow:view-state>
-<webflow:view-state id="updateMI" view="mi.update">
-        <webflow:on-entry>
-            <webflow:evaluate expression="micont.resetForm"/>
-            <webflow:evaluate expression="micont.loadOpenMIList"/>
-        </webflow:on-entry>
-        <webflow:transition on="updateMI" to="updateMI">
-            <webflow:evaluate expression="micont.bind"/>
-            <webflow:evaluate expression="micont.selectcancelMI"/>
-        </webflow:transition>
-        <webflow:transition on="updateRemarks" to="updateMI">
-            <webflow:evaluate expression="micont.bind"/>
-            <webflow:evaluate expression="micont.updateRemarks"/>
-        </webflow:transition>
-    </webflow:view-state>
+
 <webflow:exception-handler bean="exceptionresol"/>
 </webflow:flow>

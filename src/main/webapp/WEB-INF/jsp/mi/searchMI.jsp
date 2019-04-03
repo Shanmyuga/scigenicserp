@@ -15,9 +15,9 @@
 
 <tr>
 
-<td>Material due date</td>
-<td><form:input path="matDuedate" />
-<a href="javascript:show_calendar('document.matindbean.matDuedate', document.matindbean.matDuedate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
+<td>Material Created date</td>
+<td><form:input path="createdDate" />
+<a href="javascript:show_calendar('document.matindbean.createdDate', document.matindbean.createdDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
 </td>
 <td>Approved MI</td>
 <td><form:checkbox path="approvalStatus" value="Y"/>
@@ -52,8 +52,19 @@
 <form:options items="${matstatitems}" itemValue="seqLovId" itemLabel="lovDescription"/>
 </form:select>
 </td>
-<td  colspan="2" >&nbsp;</td>
+ <td>Stores request Status</td>
+ <td  ><form:select path="ststatus" size="1" id="matType">
+  <form:option value="">All</form:option>
+  <form:option value="Y">Request Created and Issued</form:option>
+  <form:option value="N">Request Created but not Issued</form:option>
+  <form:option value="P">Request Not Created and Pending</form:option>
+  <form:option value="C">Request created but Cancelled by Stores </form:option>
+  <form:option value="R">Request created but rejected by managers </form:option>
+ </form:select>
+ </td>
 </tr>
+
+
 <tr>
  <td>Work Order</td>
 <td><form:select path="seqWorkId"    >
@@ -120,12 +131,20 @@ Cannot select different material code to create items.
 <display:column sortable="true"   title="Material Status"  >
 <c:out value='${lovmap[row.purStatus]}'/>
 </display:column>
+ <display:column sortable="true"  title="Stores Request Status"  >
+  <c:if test="${not empty row.requestStatus }">
+   <c:out value='${row.requestStatus}'/>
+  </c:if>
+  <c:if test="${ empty row.requestStatus }">
+   'Not Raised'
+  </c:if>
+ </display:column>
 </display:table>
 </div>
 <input type="hidden" name="_flowExecutionKey"  value="<c:out value="${flowExecutionKey}"/>" />
  <input type="hidden" name="_eventId"  id="_eventId" value="searchMI" >
 
- <c:if test="${matindbean.approvalStatus != null}">
+
  <c:if test="${fn:length(milist) > 0 && (matindbean.purStatus == Openmi || matindbean.purStatus == approveMI)}" >
 <div style="padding-left:10px;width:787px;float:left">
  <input type="button"  value="Create Item " onclick="eventdirect('createitem')"/>
@@ -133,7 +152,7 @@ Cannot select different material code to create items.
   
  </div>
  </c:if>
- </c:if>
+
  <c:out value="${openMI}"></c:out>
 </form:form>
 </div>
