@@ -460,16 +460,14 @@ public class MaterialIndentController extends SciBaseController {
 
 	public Event selectcancelMI(RequestContext context) throws Exception {
 		MatindCommand command = (MatindCommand) getFormObject(context);
-		List<SciMatindMaster> masterList = (List<SciMatindMaster>) context.getFlowScope().get("workmis");
+		List<SciMatindMaster> masterList = (List<SciMatindMaster>) context.getFlowScope().get("milist");
 		SciMatindMaster master = selectMI(masterList, command.getMiindexID());
 		master = service.loadMI(master.getSeqMiId());
 		master.setUpdatedBy(getUserPreferences().getUserID());
 		master.setPurStatus(getLookupservice().loadIDData("MI_CANCEL"));
 		
 		master.setUpdatedDate(new Date());
-		SciWorkorderMaster wmaster = (SciWorkorderMaster) context
-				.getFlowScope().get("selectedwo");
-		
+		SciWorkorderMaster wmaster = master.getSciWorkorderMaster();
 		service.cancelMI(master);
 		
 		List rolenames = new ArrayList();
@@ -494,9 +492,7 @@ public class MaterialIndentController extends SciBaseController {
 				SciIssueDetails issueDetails = new SciIssueDetails();
 				issueDetails.setIssueSubject("MI CANCELED");
 
-				issueDetails.setIssueDetails("MI CANCELED in workorder "
-						+ wmaster.getJobDesc()
-						+ ". Please check the MI Cancellation list");
+				issueDetails.setIssueDetails("MI CANCELED in workorder ");
 				issueDetails.setAssignedDate(new java.util.Date());
 				issueDetails.setIssueStatus(SciDataConstans.TASK_OPEN_STATUS);
 				issueDetails.setAssignedFrom(userpref.getUserID());
