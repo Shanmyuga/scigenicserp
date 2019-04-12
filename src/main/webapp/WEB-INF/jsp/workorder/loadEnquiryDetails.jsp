@@ -184,7 +184,7 @@
    </display:column>
 
    <display:column sortable="true"  title="Uploaded File"   >
-    <a href="javascript:openfile('<c:out value="${row.seqJdrId}"/>')"><c:out value="${row.originalDoc}" /></a>
+    <a href="javascript:openfile('<c:out value="${row.seqEnquiryDocId}"/>')"><c:out value="${row.originalDoc}" /></a>
    </display:column>
    <display:column sortable="true"  title="Date uploaded"   >
     <c:out value="${row.updatedDate}" />
