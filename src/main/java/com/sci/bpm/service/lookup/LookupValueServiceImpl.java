@@ -3,17 +3,12 @@ package com.sci.bpm.service.lookup;
 import java.util.List;
 import java.util.Map;
 
+import com.sci.bpm.db.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sci.bpm.dao.lookup.LookupValueDAO;
-import com.sci.bpm.db.model.SciCustomerMaster;
-import com.sci.bpm.db.model.SciLookupMaster;
-import com.sci.bpm.db.model.SciMasterItem;
-import com.sci.bpm.db.model.SciMatspecMaster;
-import com.sci.bpm.db.model.SciReportConfiguration;
-import com.sci.bpm.db.model.SciVendorMaster;
 
 @Service
 @Transactional
@@ -38,8 +33,12 @@ public class LookupValueServiceImpl implements LookUpValueService {
 	public Long loadIDData(String lovName) {
 		return daoimpl.lookupId(lovName);
 	}
-	
-	
+
+	public List<SciClientOrgMaster> loadOrgNames() {
+		return daoimpl.loadOrgNames();
+	}
+
+
 	public Long loadIDDestc(String lovName) {
 		return daoimpl.lookupId(lovName);
 	}
@@ -59,6 +58,11 @@ public class LookupValueServiceImpl implements LookUpValueService {
 		daoimpl.addNewCustomer(custmaster);
 		
 	}
+
+	public void addNewClientOrg(SciClientOrgMaster orgMaster) {
+		daoimpl.addNewClientOrg(orgMaster);
+	}
+
 	public void addNewMatSpec(SciMatspecMaster specmaster) {
 		daoimpl.addNewMatSpec(specmaster);
 		
@@ -76,6 +80,10 @@ public class LookupValueServiceImpl implements LookUpValueService {
 	@Override
 	public void updateCustomer(SciCustomerMaster customerMaster) {
 		daoimpl.updateCustomer(customerMaster);
+	}
+
+	public void updateCLientOrg(SciClientOrgMaster clientOrg) {
+		daoimpl.updateCLientOrg(clientOrg);
 	}
 
 	@Override

@@ -4,6 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sci.bpm.command.marketing.WorkOrderCommand;
+import com.sci.bpm.db.model.*;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +15,6 @@ import org.springframework.webflow.execution.RequestContext;
 
 import com.sci.bpm.command.LookupValueBean;
 import com.sci.bpm.controller.base.SciBaseController;
-import com.sci.bpm.db.model.SciCustomerMaster;
-import com.sci.bpm.db.model.SciLookupMaster;
-import com.sci.bpm.db.model.SciMasterItem;
-import com.sci.bpm.db.model.SciMatspecMaster;
-import com.sci.bpm.db.model.SciReportConfiguration;
-import com.sci.bpm.db.model.SciVendorMaster;
 import com.sci.bpm.service.lookup.LookUpValueService;
 import com.sci.bpm.service.task.TaskService;
 
@@ -73,6 +69,22 @@ public class LookupValueController extends SciBaseController {
 
 		return success();
 	}
+	public Event addNewClientOrg(RequestContext context) throws Exception {
+		LookupValueBean value = (LookupValueBean)getFormObject(context);
+		SciClientOrgMaster master = new SciClientOrgMaster();
+
+		BeanUtils.copyProperties(master, value);
+		master.setUpdatedDate(new java.util.Date());
+		master.setUpdatedBy(getUserPreferences().getUserID());
+		master.setInsertedBy(getUserPreferences().getUserID());
+		master.setInsertedDate(new java.util.Date());
+		if(StringUtils.isBlank(master.getOrgName())) {
+			throw new Exception("Org name cannot be blank");
+		}
+		service.addNewClientOrg(master);
+
+		return success();
+	}
 	public Event addNewVendor(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		SciVendorMaster master = new SciVendorMaster();
@@ -99,6 +111,13 @@ public class LookupValueController extends SciBaseController {
 		service.updateCustomer(customerMaster);
 		return success();
 	}
+	public Event editClientOrg(RequestContext context) throws Exception {
+		LookupValueBean value = (LookupValueBean)getFormObject(context);
+		SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope().get("selectedClientOrg");
+		BeanUtils.copyProperties(clientOrgMaster,value);
+		service.updateCLientOrg(clientOrgMaster);
+		return success();
+	}
 	public Event selectVendor(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		List<SciVendorMaster> vendors = (List<SciVendorMaster>) context.getFlowScope().get("vendordroplist");
@@ -110,10 +129,20 @@ public class LookupValueController extends SciBaseController {
 
 	public Event selectCustomer(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
-		List<SciCustomerMaster> customers = (List<SciCustomerMaster>) context.getFlowScope().get("customerList");
+		List<SciCustomerMaster> customers = (List<SciCustomerMaster>) context.getFlowScope().get("selectedCustomers");
 		SciCustomerMaster customerMaster = filterCustomer(customers,value.getSeqCustId());
 		BeanUtils.copyProperties(value,customerMaster);
 		context.getFlowScope().put("selectedCustomer",customerMaster);
+		return success();
+	}
+
+	public Event selectClientOrg(RequestContext context) throws Exception {
+		LookupValueBean value = (LookupValueBean)getFormObject(context);
+		List<SciClientOrgMaster> clientOrgs = (List<SciClientOrgMaster>) context.getFlowScope().get("clientorglist");
+		SciClientOrgMaster clientOrgMaster = filterClientOrg(clientOrgs,value.getSeqClientOrgId());
+		BeanUtils.copyProperties(value,clientOrgMaster);
+		context.getFlowScope().put("selectedClientOrg",clientOrgMaster);
+		context.getFlowScope().put("selectedCustomers",clientOrgMaster.getSciCustomerMasters());
 		return success();
 	}
 	public Event addNewMatSpec(RequestContext context) throws Exception {
@@ -222,6 +251,31 @@ public class LookupValueController extends SciBaseController {
 
 		return selected;
 	}
+	private SciClientOrgMaster filterClientOrg(List<SciClientOrgMaster> master,Long seqClientOrgId) {
+		SciClientOrgMaster selected = null;
+		for(SciClientOrgMaster m : master) {
+			if(m.getSeqClientOrgId().intValue() == seqClientOrgId.intValue()) {
+				selected = m;
+			}
+		}
+
+		return selected;
+	}
+
+	public Event filterReportByClientOrgName(RequestContext context) throws Exception {
+		LookupValueBean value = (LookupValueBean)getFormObject(context);
+		List<SciClientOrgMaster> clientOrgMasters = service.loadOrgNames();
+		List<SciClientOrgMaster> clientOrgMastersList = null;
+		if(!StringUtils.isEmpty(value.getReportFilter())) {
+			clientOrgMastersList = selectClientOrgName(clientOrgMasters, value.getReportFilter());
+		}
+		else {
+			clientOrgMastersList = service.loadOrgNames();
+		}
+		context.getFlowScope().put("clientorglist", clientOrgMastersList);
+
+		return success();
+	}
 	private List<SciReportConfiguration> selectReportBysubject(List<SciReportConfiguration> master,String reportSubject) {
 		System.out.println("filter " + reportSubject);
 		List<SciReportConfiguration> configurationList = new ArrayList<SciReportConfiguration>();
@@ -241,7 +295,17 @@ public class LookupValueController extends SciBaseController {
 		return reports;
 	}
 
+	public Event loadOrgNames(RequestContext context) throws Exception {
+		List<SciClientOrgMaster> reports =service.loadOrgNames();
 
+		StringBuilder builder = new StringBuilder();
+		for(SciClientOrgMaster wm:reports) {
+			builder.append(wm.getOrgName()+"|");
+		}
+		context.getFlowScope().put("clientOrgNames", builder.toString());
+
+		return success();
+	}
 
 	@Override
 	public Event setupForm(RequestContext context) throws Exception {
@@ -249,5 +313,17 @@ public class LookupValueController extends SciBaseController {
 
 		setFormObjectName("lookupvalbean");
 		return super.setupForm(context);
+	}
+
+	private List<SciClientOrgMaster> selectClientOrgName(List<SciClientOrgMaster> master,String filter) {
+		System.out.println("filter " + filter);
+		List<SciClientOrgMaster> configurationList = new ArrayList<SciClientOrgMaster>();
+		for(SciClientOrgMaster m : master) {
+			if(m.getOrgName().matches(".*"+filter+".*")) {
+				configurationList.add(m);
+			}
+		}
+
+		return configurationList;
 	}
 }

@@ -21,6 +21,9 @@ public class LookupValueBean implements Serializable{
 	private String customerEmail;
 	private String customerContact;
 	private Long customerState;
+private Long seqClientOrgId;
+private String orgName;
+private String orgAddress;
 
 	private String customerCountry;
 	
@@ -257,5 +260,29 @@ public class LookupValueBean implements Serializable{
 
 	public void setSeqCustId(Long seqCustId) {
 		this.seqCustId = seqCustId;
+	}
+
+	public Long getSeqClientOrgId() {
+		return seqClientOrgId;
+	}
+
+	public void setSeqClientOrgId(Long seqClientOrgId) {
+		this.seqClientOrgId = seqClientOrgId;
+	}
+
+	public String getOrgName() {
+		return orgName;
+	}
+
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
+	}
+
+	public String getOrgAddress() {
+		return orgAddress;
+	}
+
+	public void setOrgAddress(String orgAddress) {
+		this.orgAddress = orgAddress;
 	}
 }

@@ -3,12 +3,7 @@ package com.sci.bpm.service.lookup;
 import java.util.List;
 import java.util.Map;
 
-import com.sci.bpm.db.model.SciCustomerMaster;
-import com.sci.bpm.db.model.SciLookupMaster;
-import com.sci.bpm.db.model.SciMasterItem;
-import com.sci.bpm.db.model.SciMatspecMaster;
-import com.sci.bpm.db.model.SciReportConfiguration;
-import com.sci.bpm.db.model.SciVendorMaster;
+import com.sci.bpm.db.model.*;
 
 
 public interface LookUpValueService {
@@ -17,13 +12,17 @@ public interface LookUpValueService {
 	
 	public boolean addNewValue(SciLookupMaster master);
 	public Long loadIDData(String lovName);
+
+	public List<SciClientOrgMaster> loadOrgNames();
 	public boolean addNewItemValue(SciMasterItem master);
 	public Map loadIDDescription();
 	public void addNewMatSpec(SciMatspecMaster specmaster);
 	public void addNewCustomer(SciCustomerMaster custmaster);
+	public void addNewClientOrg(SciClientOrgMaster orgMaster);
 	public void addNewVendor(SciVendorMaster vendorMaster);
 	public void updateVendor(SciVendorMaster vendorMaster);
 	public void updateCustomer(SciCustomerMaster customerMaster);
+	public void updateCLientOrg(SciClientOrgMaster clientOrg);
 	public  SciVendorMaster loadVendor(Long seqVendorId);
 	public void addNewReport(SciReportConfiguration reportConfig);
 	public List<SciReportConfiguration> loadReports();

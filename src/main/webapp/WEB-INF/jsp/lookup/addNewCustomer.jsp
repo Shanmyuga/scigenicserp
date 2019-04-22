@@ -15,18 +15,18 @@ Data</font></p>
 
 <table border="0" width="100%" cellpadding="10x" height="70px">
 <tr>
-<td align="right" class="datatext">Customer Name</td>
-<td ><form:input path="customerName" maxlength="100" size="50"/></td>
-<td align="right" class="datatext">Customer Address</td>
-<td><form:textarea path="customerAddress"/></td>
+<td align="right" class="datatext">Org Name</td>
+<td ><c:out value="${selectedClientOrg.orgName}"/></td>
+<td align="right" class="datatext">Org Address</td>
+<td><c:out value="${selectedClientOrg.orgAddress}"/></td>
 </tr>
-<tr>
-<td align="right" class="datatext">Customer Address 1</td>
-<td><form:textarea path="customerAddress1" /></td>
+    <tr>
+        <td align="right" class="datatext">Customer Contact</td>
+        <td><form:input path="customerContact" maxlength="100" size="50"/></td>
+        <td  align="right" class="datatext">Customer City</td>
+        <td><form:input path="cusomterCity" maxlength="100" size="50"/></td>
+    </tr>
 
-<td  align="right" class="datatext">Customer City</td>
-<td><form:input path="cusomterCity" maxlength="100" size="50"/></td>
-</tr>
 <tr>
 <td class="datatext" align="right">Customer State</td>
 <td>
@@ -46,10 +46,7 @@ Data</font></p>
 <td align="right" class="datatext">Customer Email</td>
 <td><form:input path="customerEmail" maxlength="50" size="50"/></td>
 </tr>
-<tr>
-<td align="right" class="datatext">Customer Contact</td>
-<td><form:input path="customerContact" maxlength="100" size="50"/></td>
-</tr>
+
 <tr >
 <td align="right" >&nbsp;</td>
 <td><input type="submit" value="Add New Customer" /></td>
@@ -68,7 +65,7 @@ Data</font></p>
 
     <div style="float:left;width:780px;padding:10px">
 
-        <display:table export="true" sort="list"   pagesize="5" name="customerList"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+        <display:table export="true" sort="list"   pagesize="5" name="selectedCustomers"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
 
             <display:column sortable="true"  title="Select" media="html" >
 
@@ -77,30 +74,24 @@ Data</font></p>
             </display:column>
 
 
-            <display:column sortable="true"  title="customerName"  property="customerName" >
+            <display:column sortable="true"    property="customerContact" >
 
             </display:column>
-            <display:column sortable="true"    property="customerAddress" >
 
-            </display:column>
-            <display:column sortable="true"    property="customerAddress1" >
 
-            </display:column>
             <display:column sortable="true"    property="customerPhone" >
 
             </display:column>
             <display:column sortable="true"    property="customerEmail" >
 
             </display:column>
-            <display:column sortable="true"    property="customerContact" >
 
-            </display:column>
             <display:column sortable="true"    property="cusomterCity" >
 
             </display:column>
         </display:table>
 
-        <input type="button" value="Edit Customer"  onclick="eventdirect('editLookup')" />
+        <input type="button" value="Edit Customer"  onclick="eventdirect('selectCustomer')" />
     </div>
 </div>
 

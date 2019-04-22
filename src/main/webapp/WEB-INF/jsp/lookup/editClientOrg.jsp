@@ -5,7 +5,7 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
  <div width="787px"  style="float:left;height: 150px;">
 <br>
-<p style="padding-left:20px" align="center"><font color="#0080ff" size="4" face="Baskerville Old Face"> Edit  Customer
+<p style="padding-left:20px" align="center"><font color="#0080ff" size="4" face="Baskerville Old Face"> Edit  Org
 Data</font></p>
 
 
@@ -14,37 +14,16 @@ Data</font></p>
 <form:form modelAttribute="lookupvalbean" >
 
 <table border="0" width="100%" cellpadding="10x" height="70px">
-
 <tr>
-    <td align="right" class="datatext">Customer Contact</td>
-    <td><form:input path="customerContact" maxlength="100" size="50"/></td>
-
-<td  align="right" class="datatext">Customer City</td>
-<td><form:input path="cusomterCity" maxlength="100" size="50"/></td>
-</tr>
-<tr>
-<td class="datatext" align="right">Customer State</td>
-<td>
-<form:select path="customerState"  id="customerState" >
-
-<form:options items="${states}"  itemLabel="lovDescription" itemValue="seqLovId"/>
-</form:select>
-</td>
-
-<td  align="right" class="datatext">Customer Country</td>
-<td><form:input path="customerCountry" maxlength="50" size="50"/></td>
-</tr>
-<tr>
-<td align="right" class="datatext">Customer Phone</td>
-<td><form:input path="customerPhone" maxlength="50" size="50"/></td>
-
-<td align="right" class="datatext">Customer Email</td>
-<td><form:input path="customerEmail" maxlength="50" size="50"/></td>
+<td align="right" class="datatext">Organization Name</td>
+<td ><form:input path="orgName" maxlength="100" size="50"/></td>
+<td align="right" class="datatext">Organization Address</td>
+<td><form:textarea path="orgAddress"/></td>
 </tr>
 
 <tr >
 <td align="right" >&nbsp;</td>
-<td><input type="submit" value="Edit Customer" /></td>
+<td><input type="submit" value="Edit Organization" /></td>
 </tr>
 <form:errors >
 <c:forEach items="${messages}" var="message">

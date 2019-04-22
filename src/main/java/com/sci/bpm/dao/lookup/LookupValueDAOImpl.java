@@ -10,15 +10,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.sci.bpm.db.model.*;
 import org.springframework.dao.support.DaoSupport;
 import org.springframework.stereotype.Repository;
-
-import com.sci.bpm.db.model.SciCustomerMaster;
-import com.sci.bpm.db.model.SciLookupMaster;
-import com.sci.bpm.db.model.SciMasterItem;
-import com.sci.bpm.db.model.SciMatspecMaster;
-import com.sci.bpm.db.model.SciReportConfiguration;
-import com.sci.bpm.db.model.SciVendorMaster;
 
 @Repository
 public class LookupValueDAOImpl implements LookupValueDAO {
@@ -57,6 +51,9 @@ public class LookupValueDAOImpl implements LookupValueDAO {
 		return true;
 	}
 
+	public List<SciClientOrgMaster> loadOrgNames() {
+		return em.createQuery("from SciClientOrgMaster em").getResultList();
+	}
 
 
 	public Long lookupId(String lovname) {
@@ -91,6 +88,9 @@ public class LookupValueDAOImpl implements LookupValueDAO {
 		
 	}
 
+	public void addNewClientOrg(SciClientOrgMaster orgMaster) {
+		em.persist(orgMaster);
+	}
 
 
 	public void addNewMatSpec(SciMatspecMaster specmaster) {
@@ -141,6 +141,10 @@ public class LookupValueDAOImpl implements LookupValueDAO {
 	@Override
 	public void updateCustomer(SciCustomerMaster customerMaster) {
 		em.merge(customerMaster);
+	}
+
+	public void updateCLientOrg(SciClientOrgMaster clientOrg) {
+		em.merge(clientOrg);
 	}
 
 }
