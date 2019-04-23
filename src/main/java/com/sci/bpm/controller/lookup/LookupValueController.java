@@ -61,12 +61,15 @@ public class LookupValueController extends SciBaseController {
 	public Event addNewCustomer(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		SciCustomerMaster master = new SciCustomerMaster();
-
+SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope().get("selectedClientOrg");
 		BeanUtils.copyProperties(master, value);
 		master.setUpdatedDate(new java.util.Date());
 		master.setUpdatedBy(getUserPreferences().getUserID());
+		master.setSciClientOrgMaster(clientOrgMaster);
 		service.addNewCustomer(master);
-
+		List<SciCustomerMaster> customers = service.loadCustomerforOrg(clientOrgMaster.getSeqClientOrgId());
+		context.getFlowScope().put("selectedCustomers",customers);
+		resetForm(context);
 		return success();
 	}
 	public Event addNewClientOrg(RequestContext context) throws Exception {
@@ -140,9 +143,10 @@ public class LookupValueController extends SciBaseController {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		List<SciClientOrgMaster> clientOrgs = (List<SciClientOrgMaster>) context.getFlowScope().get("clientorglist");
 		SciClientOrgMaster clientOrgMaster = filterClientOrg(clientOrgs,value.getSeqClientOrgId());
-		BeanUtils.copyProperties(value,clientOrgMaster);
+		List<SciCustomerMaster> customers = service.loadCustomerforOrg(clientOrgMaster.getSeqClientOrgId());
+
 		context.getFlowScope().put("selectedClientOrg",clientOrgMaster);
-		context.getFlowScope().put("selectedCustomers",clientOrgMaster.getSciCustomerMasters());
+		context.getFlowScope().put("selectedCustomers",customers);
 		return success();
 	}
 	public Event addNewMatSpec(RequestContext context) throws Exception {
@@ -303,7 +307,7 @@ public class LookupValueController extends SciBaseController {
 			builder.append(wm.getOrgName()+"|");
 		}
 		context.getFlowScope().put("clientOrgNames", builder.toString());
-
+		context.getFlowScope().put("clientorglist", reports);
 		return success();
 	}
 

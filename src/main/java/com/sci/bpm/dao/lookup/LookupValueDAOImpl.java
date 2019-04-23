@@ -44,6 +44,12 @@ public class LookupValueDAOImpl implements LookupValueDAO {
 		return em.createQuery(query).getResultList();
 	}
 
+	public List<SciCustomerMaster> loadCustomerforOrg(Long seqClientOrgId) {
+		Query qry = em.createQuery("from SciCustomerMaster cm where cm.sciClientOrgMaster.seqClientOrgId=:seqClientOrgId");
+		qry.setParameter("seqClientOrgId",seqClientOrgId);
+
+		return qry.getResultList();
+	}
 
 
 	public boolean addNewValue(SciLookupMaster master) {

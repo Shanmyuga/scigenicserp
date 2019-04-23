@@ -4,7 +4,6 @@
         <webflow:evaluate expression="lookupcontbean.setupForm"/>
     <webflow:evaluate expression="lookupcontbean.loadOrgNames"/>
     <webflow:evaluate expression="lookupbean.getDropDownList('state_key')" result="flowScope.states"/>
-    <webflow:evaluate expression="lookupbean.getDropDownList('clientorg_key')" result="flowScope.clientorglist"/>
     </webflow:on-start>
 <webflow:view-state id="addlookup" view="clientorg.search">
 
@@ -28,7 +27,7 @@
             <webflow:evaluate expression="lookupcontbean.selectCustomer"/>
         </webflow:transition>
 
-        <webflow:transition on="addlookup" to="addsuccess">
+        <webflow:transition on="addlookup" to="editlookup">
             <webflow:evaluate expression="lookupcontbean.bind"/>
             <webflow:evaluate expression="lookupcontbean.addNewCustomer"/>
         </webflow:transition>

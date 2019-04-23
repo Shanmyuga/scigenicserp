@@ -12,7 +12,7 @@ public interface LookUpValueService {
 	
 	public boolean addNewValue(SciLookupMaster master);
 	public Long loadIDData(String lovName);
-
+    public List<SciCustomerMaster> loadCustomerforOrg(Long seqClientOrgId);
 	public List<SciClientOrgMaster> loadOrgNames();
 	public boolean addNewItemValue(SciMasterItem master);
 	public Map loadIDDescription();

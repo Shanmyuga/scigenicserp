@@ -67,9 +67,9 @@ Data</font></p>
 
         <display:table export="true" sort="list"   pagesize="5" name="selectedCustomers"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
 
-            <display:column sortable="true"  title="Select" media="html" >
+            <display:column sortable="true"  title="Select"  >
 
-                <form:radiobutton  path="seqCustId"  value="${row.seqCustId}"/>
+                <form:radiobutton  path="seqCustId" value="${row.seqCustId}"  />
 
             </display:column>
 

@@ -9,7 +9,8 @@ public interface LookupValueDAO {
 
 	
 	public List getDropDownList(String query);
-	
+	public List<SciCustomerMaster> loadCustomerforOrg(Long seqClientOrgId);
+
 	public boolean addNewValue(SciLookupMaster master);
 	public List<SciClientOrgMaster> loadOrgNames();
 	public Long lookupId(String lovname);

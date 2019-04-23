@@ -34,6 +34,10 @@ public class LookupValueServiceImpl implements LookUpValueService {
 		return daoimpl.lookupId(lovName);
 	}
 
+	public List<SciCustomerMaster> loadCustomerforOrg(Long seqClientOrgId) {
+		return daoimpl.loadCustomerforOrg(seqClientOrgId);
+	}
+
 	public List<SciClientOrgMaster> loadOrgNames() {
 		return daoimpl.loadOrgNames();
 	}
