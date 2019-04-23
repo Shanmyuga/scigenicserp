@@ -187,7 +187,7 @@
             </c:if>
                     <input type="button"  value="Close Purchase Order " onclick="eventdirect('closePo')"/>
                     <input type="button"  value="Cancel PO " onclick="eventdirect('cancelPO')"/>
-                    <c:if test="${userPreferences.roleName == 'admin'}">
+                    <c:if test="${userPreferences.roleName == 'admin' ||  userPreferences.roleName == 'purchasemanager' }">
                     <input type="button"  value="Approve PO " onclick="eventdirect('approvePO')"/>
                     </c:if>
             <c:if test="${userPreferences.roleName == 'purchasemanager' ||  userPreferences.roleName == 'subcontract' || userPreferences.roleName == 'admin' }">
