@@ -54,6 +54,9 @@
                 <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewrecditems-flow">View Received Items</a></td>
               </tr>
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewqcapproveditems-flow">View QC Approved Items</a></td>
+              </tr>
                  <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewqcresults-flow">View QC Docs</a></td>
               </tr>

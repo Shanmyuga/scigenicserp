@@ -326,6 +326,12 @@
      
       <put-attribute name="body" value="/WEB-INF/jsp/stores/viewrecdlist.jsp" />
   </definition>
+    <definition name="stores.viewqcapprovedlist"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/stores/viewqcapprovedlist.jsp" />
+    </definition>
+
     <definition name="stores.addsucces"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
   <put-attribute name="menu" value="usermenu.jsp" />
      

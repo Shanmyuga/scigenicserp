@@ -209,6 +209,16 @@ public class StoresManagerController extends SciBaseController {
         return success();
     }
 
+
+    public Event viewApprovedQC(RequestContext context) throws Exception {
+        StoresBean bean = (StoresBean) getFormObject(context);
+
+        List<SciQcMiMaster> stlist = service.viewApprovedQCs(bean);
+
+        System.out.println("qc" + stlist.size());
+        context.getFlowScope().put("qcapprovedlist", stlist);
+        return success();
+    }
     public Event getMatIndItems(RequestContext context) throws Exception {
         StoresBean bean = (StoresBean) getFormObject(context);
         List<SciPurchItemMaster> master = (List<SciPurchItemMaster>) context

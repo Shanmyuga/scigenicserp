@@ -138,6 +138,61 @@ public class StoreDAOImpl implements StoresDAO {
 		return milist;
 	}
 
+	public List<SciQcMiMaster> viewApprovedQCs(StoresBean command) {
+		String query = "Select distinct m from SciQcMiMaster m ,SciMattypeMaster mt ,SciPurchaseMast pm where mt.matCode  = substr(m.matCode,1,2) and pm.seqPurchId = m.poId  and m.qcTestsApproval = 'Y' ";
+		// Query query = em.createQuery("Select * from SciMatindMaster m ");
+		Map parameters = new HashMap();
+		String whereClause = "";
+		if (command.getFromdate() != null) {
+			whereClause = whereClause + " and  m.qcApprovalDate >= :fromdate ";
+			// parameters.add(command.getMatDuedate());
+			parameters.put("fromdate", command.getFromdate());
+		}
+		if (command.getSeqVendorID() != null) {
+			whereClause = whereClause + " and  pm.sciVendorMaster.seqVendorId = :seqvendorID ";
+			// parameters.add(command.getMatDuedate());
+			parameters.put("seqvendorID", command.getSeqVendorID());
+		}
+		if (command.getSeqmiid() != null) {
+			whereClause = whereClause + " and m.sciMiMaster.seqMiId =:seqMiId ";
+			parameters.put("seqMiId", command.getSeqmiid());
+		}
+		if (command.getTodate() != null ) {
+			whereClause = whereClause + " and m.qcApprovalDate <= :todate ";
+			parameters.put("todate", command.getTodate());
+		}
+
+		if (command.getMatCategory() != null && !"".equals(command.getMatCategory())) {
+			whereClause = whereClause + " and substr(m.matcode,3,2) = :matcat ";
+			parameters.put("matcat", command.getMatCategory());
+		}
+		if (command.getMatcode() != null && !"".equals(command.getMatcode().trim())) {
+			whereClause = whereClause + " and m.matcode =:matcode ";
+			parameters.put("matcode", command.getMatcode());
+		}
+		if (command.getMatDept() != null && !"".equals(command.getMatDept())) {
+			whereClause = whereClause + " and mt.matDept = :matdept ";
+			parameters.put("matdept", command.getMatDept());
+		}
+
+		Query wquery = null;
+		if (parameters.size() > 0) {
+			wquery = em.createQuery(query
+					+ whereClause.replaceAll("where and", "where"));
+		} else {
+			wquery = em.createQuery(query);
+		}
+		Iterator keyset = parameters.keySet().iterator();
+
+		while (keyset.hasNext()) {
+			String key = (String) keyset.next();
+			wquery.setParameter(key, parameters.get(key));
+		}
+		List<SciQcMiMaster> milist = wquery.getResultList();
+		return wquery.getResultList();
+
+	}
+
 	public void updateMi(SciMatindMaster mi) {
 		// TODO Auto-generated method stub
 		em.merge(mi);

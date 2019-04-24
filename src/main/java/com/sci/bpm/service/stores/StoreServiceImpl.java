@@ -177,8 +177,9 @@ public class StoreServiceImpl implements StoreService {
 		return dao.viewrecd(command);
 	}
 
-
-
+	public List<SciQcMiMaster> viewApprovedQCs(StoresBean bean) {
+		return dao.viewApprovedQCs(bean);
+	}
 
 
 	public List loadReturnRequest(StoresBean bean) {

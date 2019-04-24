@@ -144,7 +144,8 @@ SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope()
 		List<SciClientOrgMaster> clientOrgs = (List<SciClientOrgMaster>) context.getFlowScope().get("clientorglist");
 		SciClientOrgMaster clientOrgMaster = filterClientOrg(clientOrgs,value.getSeqClientOrgId());
 		List<SciCustomerMaster> customers = service.loadCustomerforOrg(clientOrgMaster.getSeqClientOrgId());
-
+		 value.setOrgAddress(clientOrgMaster.getOrgAddress());
+		 value.setOrgName(clientOrgMaster.getOrgName());
 		context.getFlowScope().put("selectedClientOrg",clientOrgMaster);
 		context.getFlowScope().put("selectedCustomers",customers);
 		return success();

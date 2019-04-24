@@ -29,6 +29,8 @@ public interface StoreService {
 	public List getMatItems(SciPurchItemMaster master);
 	public List<SciAvailableMaterials> viewStore(StoresBean command);
 	public List<SciRecdMaterials> viewrecd(StoresBean command);
+	public List<SciQcMiMaster> viewApprovedQCs(StoresBean bean);
+
 	public void addNewtoStores(SciStoreMiMaster master ,SciQcMiMaster qcmi,String qcstatus,SciRecdMaterials recd);
 	public void updateQCData(SciStoreMiMaster stmi,SciQcMiMaster qcdata,SciAvailableMaterials availmat,Long miStatus);
 	public List<SciAvailableMaterials> getMiData(Long seqMiId,String matCode);
