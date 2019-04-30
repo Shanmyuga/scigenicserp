@@ -51,6 +51,7 @@ public class QualityControlBean implements Serializable {
 	private String failedStatus = "N";
 	private Long seqQcMiId;
 	private Date fromdate;
+	private String issueDate;
 	private Date todate;
 	private String matCategory;
 	private String matDept;
@@ -295,5 +296,13 @@ public class QualityControlBean implements Serializable {
 
 	public void setQcRefID(String qcRefID) {
 		this.qcRefID = qcRefID;
+	}
+
+	public String getIssueDate() {
+		return issueDate;
+	}
+
+	public void setIssueDate(String issueDate) {
+		this.issueDate = issueDate;
 	}
 }

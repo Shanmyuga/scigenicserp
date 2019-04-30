@@ -259,22 +259,48 @@ public class QCDaoImpl implements QCDao {
 	}
 
 	public List loadAllListIssueDocs(QualityControlBean bean) {
-		Query myquery = em.createNativeQuery("SELECT ism.SEQ_MI_ID  AS ISSUE_MI,    req.SEQ_MI_ID       AS REQUEST_MI,    ism.matcode         AS mat_code,    mi.RECOMMEND        AS REMARKS,    ism.ISSUE_DATE      AS issue_date,    ism.MAT_SPEC        AS ISSUE_MAT,    ISSUE_CNT_MOD -(select nvl(sum(ret_quantity),0) from sci_returnitems_request rt where rt.seq_stissue_id = ism.seq_stissue_id and rt.request_status = 'Y')    AS issue_CNT,    ism.ISSUE_DIMENSION AS issue_dim,    qc.SEQ_QC_MI_ID,    qc.qc_tests_cond,    qc.mat_spec,    wm.job_desc       AS Job_Desc,    wm.client_details AS Client_details,    mi.mi_for_type    AS mifortype,    (select mat_type from sci_mattype_master mt where mt.mat_code = substr(ism.MATCODE,1,2)) as mat_type   FROM SCI_STOREISSUE_MASTER ism,    sci_matind_master mi,    SCI_STORES_REQUEST req,    sci_qc_mi_master qc,    sci_Workorder_master wm  WHERE ism.SEQ_STREQ_ID = req.SEQ_STREQ_ID  AND qc.SEQ_MI_ID       = ism.SEQ_MI_ID  AND mi.SEQ_MI_ID       = req.SEQ_MI_ID  AND mi.seq_work_id     = wm.seq_work_id  AND mi.seq_work_id     =:seq_work_id ");
-		
-		myquery.setParameter("seq_work_id", bean.getSeqWorkId());
-		
-		return loadItemsList(myquery.getResultList());
+		String query = "SELECT ism.SEQ_MI_ID  AS ISSUE_MI,    req.SEQ_MI_ID       AS REQUEST_MI,    ism.matcode         AS mat_code,    mi.RECOMMEND        AS REMARKS,    to_char(ism.ISSUE_DATE,'dd-MM-yyyy')      AS issue_date,    ism.MAT_SPEC        AS ISSUE_MAT,    ISSUE_CNT_MOD -(select nvl(sum(ret_quantity),0) from sci_returnitems_request rt where rt.seq_stissue_id = ism.seq_stissue_id and rt.request_status = 'Y')    AS issue_CNT,    ism.ISSUE_DIMENSION AS issue_dim,    qc.SEQ_QC_MI_ID,    qc.qc_tests_cond,    qc.mat_spec,    wm.job_desc       AS Job_Desc,    wm.client_details AS Client_details,    mi.mi_for_type    AS mifortype,    (select mat_type from sci_mattype_master mt where mt.mat_code = substr(ism.MATCODE,1,2)) as mat_type   FROM SCI_STOREISSUE_MASTER ism,    sci_matind_master mi,    SCI_STORES_REQUEST req,    sci_qc_mi_master qc,    sci_Workorder_master wm ,sci_mattype_master mt1 WHERE  substr(ism.matcode,1,2) = mt1.mat_code and ism.SEQ_STREQ_ID = req.SEQ_STREQ_ID  AND qc.SEQ_MI_ID       = ism.SEQ_MI_ID  AND mi.SEQ_MI_ID       = req.SEQ_MI_ID  AND mi.seq_work_id     = wm.seq_work_id  ";
+		Map parameters = new HashMap();
+		String whereClause = "";
+		Query wquery = null;
+
+
+		if (bean.getDept() != null && !"".equals(bean.getDept())) {
+			whereClause = whereClause + " and mt1.mat_dept = :matdept ";
+			parameters.put("matdept", bean.getDept());
+		}
+
+		if (bean.getSeqWorkId() != null && !"".equals(bean.getSeqWorkId())) {
+			whereClause = whereClause + " and mi.seq_work_id = :seqworkid ";
+			parameters.put("seqworkid", bean.getSeqWorkId());
+		}
+		if (parameters.size() > 0) {
+			wquery = em.createNativeQuery(query
+					+ whereClause.replaceAll("where and", "where"));
+		} else {
+			wquery = em.createNativeQuery(query);
+		}
+		Iterator keyset = parameters.keySet().iterator();
+
+		while (keyset.hasNext()) {
+			String key = (String) keyset.next();
+			wquery.setParameter(key, parameters.get(key));
+		}
+
+		return loadItemsList(wquery.getResultList());
 	}
 	
 	private List<QualityControlBean> loadItemsList(List<Object[]> queryList) {
 		List<QualityControlBean> mylist = new ArrayList<QualityControlBean>();
 		for(Object[] row:queryList) {
 			QualityControlBean bean = new QualityControlBean();
-			
+
 			bean.setIssueMI(row[0].toString());
 			bean.setRequestMI(row[1].toString());
 			bean.setMaterialCode(row[2].toString());
 			bean.setMirecommend(row[3]==null?"":row[3].toString());
+
+			bean.setIssueDate(row[4]==null?"":row[4].toString());
 			bean.setSeqQcMiId(new Long(row[8].toString()));
 			bean.setQcTestsCond(row[9]==null?"":row[9].toString());
 			bean.setMaterSpec(row[10]==null?"":row[10].toString());

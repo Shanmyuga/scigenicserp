@@ -154,7 +154,7 @@ private String miForType;
 			Object object4, Object object5, Object object6, Object object7,
 			Object object8, Object object9, Object object10, Object object11,
 			Object object12, Object object13, Object object14, Object object15,
-			Object object16,Object object17,Object object18) {
+			Object object16,Object object17,Object object18,Object object19) {
 		// TODO Auto-generated constructor stub
 		
 		this.seqMiId = (Long) object;
@@ -175,6 +175,7 @@ private String miForType;
 		this.insertedDate = (Date) object16;
 		this.workorderDesc = (String)object17;
 		this.poID = (Long)object18;
+		this.matDuedate = (Date)object19;
 	}
 
 	// Property accessors

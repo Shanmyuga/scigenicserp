@@ -138,6 +138,9 @@
 <display:column sortable="true"  title="Dimen"  property="matDimesion">
 
 </display:column>
+    <display:column sortable="true"  title="MI Due Date"  property="matDuedate">
+
+    </display:column>
 
 <display:column sortable="true"  title="PO ID"  property="poID" >
 

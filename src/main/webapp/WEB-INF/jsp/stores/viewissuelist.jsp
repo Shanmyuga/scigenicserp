@@ -70,6 +70,9 @@
 <td>Set Max results</td>
 <td><form:input path="searchMax" id="searchMax"  />
 </td>
+    <td>MI ID</td>
+    <td><form:input path="seqmiid" id="seqmiid"  />
+    </td>
 <tr>
 <td colspan="4"> <input  type="button" value="Search Issue Items" onclick="eventdirect('searchIssue')"/> </td>
 

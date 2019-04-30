@@ -20,7 +20,7 @@
 <tr>
  <td>Work Order</td>
 <td><form:select path="seqWorkId"    >
-<form:option value="">All</form:option>
+
 <form:options items="${workmastlist}" itemLabel="jobDesc" itemValue="seqWorkId"/>
 </form:select>
 
@@ -28,6 +28,21 @@
  
 
 </tr>
+ <tr>
+  <td>Mechanical</td>
+  <td><form:radiobutton path="dept" value="MECH"  />
+
+  </td>
+  <td>Electronics</td>
+  <td><form:radiobutton path="dept" value="E&I"  />
+  <td>All</td>
+  <td><form:radiobutton path="dept" value=""  />
+
+
+  </td>
+
+
+ </tr>
 <tr>
  <td colspan="4" align="right"><input type="button" value="Search QC" onclick="eventdirect('searchQC')"/></td>
 
@@ -65,6 +80,12 @@
 
 
 </display:column>
+
+ <display:column sortable="true"  title="Issue Date" property="issueDate" >
+
+
+
+ </display:column>
 <display:column sortable="true"   title="Material Code" property="materialCode"  >
 </display:column>
 <display:column sortable="true"   title="Material Category" property="matCategory"  >

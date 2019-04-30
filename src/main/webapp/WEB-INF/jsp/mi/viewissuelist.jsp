@@ -47,6 +47,7 @@
      <td>Set Max results</td>
      <td><form:input path="searchMax" id="searchMax"  />
      </td>
+
     <tr>
      <td colspan="4"> <input  type="button" value="Search Issue Items" onclick="eventdirect('searchIssue')"/> </td>
 

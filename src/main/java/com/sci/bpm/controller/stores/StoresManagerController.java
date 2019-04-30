@@ -273,7 +273,7 @@ public class StoresManagerController extends SciBaseController {
                     "MI_INSTORES"));
         } else {
             service.updateQCData(storemi, qcdata, null, getLookupservice().loadIDData(
-                    "MI_INSTORES"));
+                    "MI_QC_REJECTED_ITEMS"));
         }
         resetForm(context);
         return success();
