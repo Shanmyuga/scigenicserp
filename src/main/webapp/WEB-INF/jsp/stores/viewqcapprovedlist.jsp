@@ -98,9 +98,13 @@
 </display:column>
 
 
-<display:column sortable="true"  title="qcApprovalDate" property="qcApprovalDate" >
+<display:column sortable="true"  title="QC Approved Date" property="qcApprovalDate" >
 
 </display:column>
+ <display:column sortable="true"  title="QC Received Date" property="insertedDate" >
+
+ </display:column>
+
 <display:column sortable="true"  title="Puchase Order ID" property="poId" >
 
 </display:column>
