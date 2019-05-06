@@ -107,7 +107,21 @@
 
 </tr>
 
+    <tr>
+        <td align="left" class="datatext">Credit Timeline Number of days</td>
+        <td ><td ><form:select path="creditTimeline"  id="creditTimeline" >
+        <form:option value="0">0</form:option>
+        <form:option value="15">15</form:option>
+        <form:option value="30">30</form:option>
+        <form:option value="45">45</form:option>
+        <form:option value="60">60</form:option>
+        <form:option value="90">90</form:option>
+        <form:option value="120">120</form:option>
+    </form:select>
+    </td>
+        </td>
 
+    </tr>
 <tr>
 <td align="left" class="datatext">Packing and Forwarding Charges</td>
 <td ><form:input path="packingFrwdCharges"  />

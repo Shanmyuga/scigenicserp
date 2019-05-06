@@ -68,7 +68,10 @@ public class POCommand implements Serializable {
 	private Double frieghtCharges;
 	private Date quotationDate;
 	private Long seqWorkId;
-	
+	private Double  creditTimeline;
+	private String poPaidFully;
+	private Date poPaidDate;
+
 	private Double gst = new Double(0);
 	private Double gstCharges = new Double(0);
 	
@@ -521,5 +524,29 @@ public class POCommand implements Serializable {
 
 	public void setSeqMaterialId(Long seqMaterialId) {
 		this.seqMaterialId = seqMaterialId;
+	}
+
+	public Double getCreditTimeline() {
+		return creditTimeline;
+	}
+
+	public void setCreditTimeline(Double creditTimeline) {
+		this.creditTimeline = creditTimeline;
+	}
+
+	public String getPoPaidFully() {
+		return poPaidFully;
+	}
+
+	public void setPoPaidFully(String poPaidFully) {
+		this.poPaidFully = poPaidFully;
+	}
+
+	public Date getPoPaidDate() {
+		return poPaidDate;
+	}
+
+	public void setPoPaidDate(Date poPaidDate) {
+		this.poPaidDate = poPaidDate;
 	}
 }

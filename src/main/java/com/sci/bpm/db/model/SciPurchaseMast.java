@@ -67,6 +67,9 @@ public class SciPurchaseMast implements java.io.Serializable {
 	private String subContVendor;
 	private Double gst;
 	private Double gstCharges;
+	private Double creditTimeline;
+	private String poPaidFully;
+	private Date poPaidDate;
 	
 	// Constructors
 
@@ -429,6 +432,31 @@ private String insertedBy;
 		this.subContVendor = subContVendor;
 	}
 
-	
+	@Column(name = "CREDIT_TIMELINE", precision = 5, scale = 2)
+	public Double getCreditTimeline() {
+		return creditTimeline;
+	}
 
+	public void setCreditTimeline(Double creditTimeline) {
+		this.creditTimeline = creditTimeline;
+	}
+
+	@Column(name = "PURCHASE_PAID_FULLY", length = 20)
+	public String getPoPaidFully() {
+		return poPaidFully;
+	}
+
+	public void setPoPaidFully(String poPaidFully) {
+		this.poPaidFully = poPaidFully;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "PURCHASE_PAID_DATE", nullable = true, length = 7)
+	public Date getPoPaidDate() {
+		return poPaidDate;
+	}
+
+	public void setPoPaidDate(Date poPaidDate) {
+		this.poPaidDate = poPaidDate;
+	}
 }
