@@ -70,6 +70,7 @@ public class SciPurchaseMast implements java.io.Serializable {
 	private Double creditTimeline;
 	private String poPaidFully;
 	private Date poPaidDate;
+	public Integer paymentPercentage;
 	
 	// Constructors
 
@@ -458,5 +459,14 @@ private String insertedBy;
 
 	public void setPoPaidDate(Date poPaidDate) {
 		this.poPaidDate = poPaidDate;
+	}
+
+	@Column(name = "PURCHASE_PARTPAYMENT", precision =3, scale = 0)
+	public Integer getPaymentPercentage() {
+		return paymentPercentage;
+	}
+
+	public void setPaymentPercentage(Integer paymentPercentage) {
+		this.paymentPercentage = paymentPercentage;
 	}
 }

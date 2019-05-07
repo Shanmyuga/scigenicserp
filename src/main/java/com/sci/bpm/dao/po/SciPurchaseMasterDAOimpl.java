@@ -115,6 +115,13 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 			parameters.put("purchasefromdate", command.getFromdate());
 		}
 
+		if (command.getPoPaidFully() != null && !"".equals(command.getPoPaidFully())) {
+			whereClause = whereClause
+					+ " and m.poPaidFully = :poPaidFully ";
+			// parameters.add(command.getMatDuedate());
+			parameters.put("poPaidFully", command.getPoPaidFully());
+		}
+
 		if (command.getTodate() != null) {
 			whereClause = whereClause
 					+ " and m.purchaseCreatedDt <=:purchasetodate ";

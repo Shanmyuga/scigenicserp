@@ -104,9 +104,20 @@
 
                     </tr>
                     <tr>
+                        <td>PO Paid Fully</td>
+                        <td><form:select path="poPaidFully"    >
+                            <form:option value="">ALL</form:option>
+                            <form:option value="N">N</form:option>
+                            <form:option value="Y">Y</form:option>
+                        </form:select>
 
-                        <td colspan="4" align="right"><input type="submit" value="Search PO"/></td>
+                        </td>
+
+                        <td colspan="2" align="left"><input type="submit" value="Search PO"/></td>
                     </tr>
+
+
+
                 </table>
 
             </div>
@@ -186,6 +197,7 @@
                     <input type="button"  value="Send email Purchase Order PDF" onclick="eventdirect('generateEmail')"/>
             </c:if>
                     <input type="button"  value="Close Purchase Order " onclick="eventdirect('closePo')"/>
+                    <input type="button"  value="Paid Fully " onclick="eventdirect('paidFully')"/>
                     <input type="button"  value="Cancel PO " onclick="eventdirect('cancelPO')"/>
                     <c:if test="${userPreferences.roleName == 'admin' ||  userPreferences.roleName == 'purchasemanager' }">
                     <input type="button"  value="Approve PO " onclick="eventdirect('approvePO')"/>

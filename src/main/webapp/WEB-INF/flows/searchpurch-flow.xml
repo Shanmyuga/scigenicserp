@@ -23,6 +23,10 @@
             <webflow:evaluate expression="pocont.bind"/>
             <webflow:evaluate expression="pocont.closePo"/>
         </webflow:transition>
+    <webflow:transition on="paidFully" to="entersearch">
+        <webflow:evaluate expression="pocont.bind"/>
+        <webflow:evaluate expression="pocont.paidFully"/>
+    </webflow:transition>
           <webflow:transition on="cancelPO" to="entersearch">
             <webflow:evaluate expression="pocont.bind"/>
             <webflow:evaluate expression="pocont.cancelPO"/>

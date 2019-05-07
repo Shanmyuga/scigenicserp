@@ -628,6 +628,19 @@ public class PurchaseOrderController extends SciBaseController {
 		return success();
 	}
 
+	public Event paidFully(RequestContext context) throws Exception {
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
+				.getFlowScope().get("pomastlist");
+		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
+		selected.setPoPaidFully("Y");
+		selected.setPoPaidDate(new Date());
+		selected.setUpdatedBy(getUserPreferences().getUserID());
+		selected.setUpdatedDate(new Date());
+		service.updatePOStatus(selected);
+		return success();
+	}
+
 	public Event cancelPOStatus(RequestContext context) throws Exception {
 
 		POCommand command = (POCommand) getFormObject(context);
