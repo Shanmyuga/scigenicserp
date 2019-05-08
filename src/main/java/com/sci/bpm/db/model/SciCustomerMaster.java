@@ -25,7 +25,7 @@ public class SciCustomerMaster implements java.io.Serializable {
 	private String customerContact;
 	private String customerDetails;
 	private Long customerState;
-
+	private String customerCityCode;
 
 	private SciClientOrgMaster sciClientOrgMaster;
 	private String customerCountry;
@@ -206,6 +206,12 @@ public class SciCustomerMaster implements java.io.Serializable {
 	public void setSciClientOrgMaster(SciClientOrgMaster sciClientOrgMaster) {
 		this.sciClientOrgMaster = sciClientOrgMaster;
 	}
+	@Column(name = "CITY_CODE", length = 20)
+	public String getCustomerCityCode() {
+		return customerCityCode;
+	}
 
-
+	public void setCustomerCityCode(String customerCityCode) {
+		this.customerCityCode = customerCityCode;
+	}
 }
