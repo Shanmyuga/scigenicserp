@@ -24,6 +24,8 @@ public class SciClientOrgMaster implements java.io.Serializable {
 	private Date insertedDate;
 	private String updatedBy;
 	private Date updatedDate;
+	private String orgCode;
+	private String orgHqStateCode;
 
 
 	private Set<SciCustomerMaster> sciCustomerMasters = new HashSet<SciCustomerMaster>(
@@ -115,4 +117,21 @@ public class SciClientOrgMaster implements java.io.Serializable {
 		this.sciCustomerMasters = sciCustomerMasters;
 	}
 
+	@Column(name = "ORG_CODE", length = 20)
+	public String getOrgCode() {
+		return orgCode;
+	}
+
+	public void setOrgCode(String orgCode) {
+		this.orgCode = orgCode;
+	}
+
+	@Column(name = "ORG_HQ_STATE_CODE", length = 20)
+	public String getOrgHqStateCode() {
+		return orgHqStateCode;
+	}
+
+	public void setOrgHqStateCode(String orgHqStateCode) {
+		this.orgHqStateCode = orgHqStateCode;
+	}
 }

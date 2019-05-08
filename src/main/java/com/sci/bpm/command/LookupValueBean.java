@@ -24,7 +24,8 @@ public class LookupValueBean implements Serializable{
 private Long seqClientOrgId;
 private String orgName;
 private String orgAddress;
-
+	private String orgCode;
+	private String orgHqStateCode;
 	private String customerCountry;
 	
 	private Long seqVendorId;
