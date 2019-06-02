@@ -41,10 +41,12 @@
             <display:column sortable="true"    property="orgAddress" >
 
             </display:column>
+            <display:column sortable="true"    property="orgCode" >
 
+            </display:column>
         </display:table>
 
-        <input type="button" value="Add Customer"  onclick="eventdirect('editLookup')" />
+        <input type="button" value="Select Organisation"  onclick="eventdirect('editLookup')" />
     </div>
 </div>
 

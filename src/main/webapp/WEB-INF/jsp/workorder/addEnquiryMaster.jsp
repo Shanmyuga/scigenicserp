@@ -8,30 +8,15 @@
 <br>
 <p style="padding-left:20px" align="center"><font color="#0080ff" size="4" face="Baskerville Old Face"> Add New Enquiry </font></p>
 
-<div width="787px"  style="float:left;">
+<p>Organization Name - <c:out value="${selectedClientOrg.orgName}"/></p>
+     <p>Organization Code  - <c:out value="${selectedClientOrg.orgCode}"/></p>
+     <p>Customer code - <c:out value="${selectedCustomer.customerCode}"/></p>
+     <p>Customer city code - <c:out value="${selectedCustomer.customerCityCode}"/></p>
+     <div width="787px"  style="float:left;">
 <form:form modelAttribute="enqbean" name="enqbean" >
 
 <table border="1" width="100%" cellpadding="3x" >
-<tr>
-<td align="right" class="datatext">Client Details</td>
-<td ><form:select path="seqCustomerId" >
-    <form:options items="${custstats}" itemLabel="customerDetails" itemValue="seqCustId"/>
-</form:select>
 
-<span style="color:red;">*</span></td></tr>
-<tr>
-<td align="right" class="datatext">Customer Dept</td>
-<td ><form:select path="customerDept" >
-<form:options items="${customerDepts}" itemLabel="lovDescription" itemValue="seqLovId"/>
-</form:select>
-
-<span style="color:red;">*</span></td>
-</tr>
-<tr>
-<td align="right" class="datatext">Customer Contact</td>
-<td ><form:textarea path="customerContact" /></td>
-</tr>
-<tr>
 <td align="right" class="datatext">Enquiry Details</td>
 <td ><form:textarea path="enqDetails" /></td>
 </tr>

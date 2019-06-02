@@ -98,4 +98,8 @@ public class EnquiryServiceImpl implements EnquiryService {
 		return dao.loadEnquiryDocs(enquiryMaster);
 	}
 
+	public Long findEnqCode(String customerCode) {
+		return dao.findEnqCode(customerCode);
+	}
+
 }

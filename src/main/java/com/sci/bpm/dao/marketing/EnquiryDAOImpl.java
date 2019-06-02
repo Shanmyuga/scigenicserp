@@ -109,4 +109,19 @@ public class EnquiryDAOImpl implements EnquiryDAO {
         return qry.getResultList();
     }
 
+    public Long findEnqCode(String customerCode) {
+        Long result = new Long(0);
+        Query qry =  em.createQuery("Select max(enquiryCode) from SciEnquiryMaster em where em.enqCustomerCode =:enq_customer_code" );
+       qry.setParameter("enq_customer_code",customerCode);
+       List results = qry.getResultList();
+       if(results.size() ==0 ) {
+           return result;
+       }
+       else {
+            result = (Long) results.get(0);
+
+       }
+        return result;
+    }
+
 }

@@ -50,15 +50,17 @@ public class EnquiryController extends SciBaseController {
 		EnqBean bean = (EnqBean) getFormObject(context);
 		SciEnquiryMaster emaster = new SciEnquiryMaster();
 		BeanUtils.copyProperties(emaster, bean);
-		List customerlist = (List) context.getFlowScope().get("custstats");
-		SciCustomerMaster cmaster = selectCustom(customerlist, bean.getSeqCustomerId());
+       SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope().get("selectedClientOrg");
+		SciCustomerMaster cmaster = (SciCustomerMaster) context.getFlowScope().get("selectedCustomer");
 		emaster.setSciCustomerMaster(cmaster);
 		emaster.setEnqStatus("O");
 		emaster.setInsertedBy(getUserPreferences().getUserID());
 		emaster.setInsertedDate(new Date());
 		emaster.setUdpatedBy(getUserPreferences().getUserID());
 		emaster.setUpdatedDate(new Date());
-		
+		emaster.setEnqCustomerCode(clientOrgMaster.getOrgCode()+cmaster.getCustomerCityCode()+cmaster.getCustomerCode());
+		Long enqCode = service.findEnqCode(clientOrgMaster.getOrgCode()+cmaster.getCustomerCityCode()+cmaster.getCustomerCode());
+		emaster.setEnquiryCode(enqCode);
 		if(StringUtils.isBlank(emaster.getEnqAttendee()) || emaster.getEnqDate() == null ) {
 			throw new Exception();
 		}

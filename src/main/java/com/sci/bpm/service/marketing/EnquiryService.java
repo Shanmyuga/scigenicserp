@@ -23,4 +23,5 @@ public interface EnquiryService {
 
 	public void addEnquiryDocMaster(SciEnquiryDocs enquiryDocs);
 	public List loadEnquiryDocs(SciEnquiryMaster enquiryMaster);
+	public Long findEnqCode(String customerCode);
 }

@@ -49,6 +49,8 @@ public class SciEnquiryMaster implements java.io.Serializable {
 	private Date enqFollowUpDate;
 	
 	private String customerContact;
+	private Long enquiryCode;
+	private String enqCustomerCode;
 	private Set<SciEnquiryDetails> sciEnquiryDetailses = new HashSet<SciEnquiryDetails>(
 			0);
 
@@ -264,4 +266,22 @@ public class SciEnquiryMaster implements java.io.Serializable {
 	public void setEnqFollowUpDate(Date enqFollowUpDate) {
 		this.enqFollowUpDate = enqFollowUpDate;
 	}
+
+    @Column(name = "ENQ_CODE", precision = 9, scale = 0)
+    public Long getEnquiryCode() {
+        return enquiryCode;
+    }
+
+    public void setEnquiryCode(Long enquiryCode) {
+        this.enquiryCode = enquiryCode;
+    }
+
+    @Column(name = "ENQ_CUSTOMER_CODE", length = 50)
+    public String getEnqCustomerCode() {
+        return enqCustomerCode;
+    }
+
+    public void setEnqCustomerCode(String enqCustomerCode) {
+        this.enqCustomerCode = enqCustomerCode;
+    }
 }

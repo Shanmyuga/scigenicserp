@@ -21,10 +21,11 @@ public class LookupValueBean implements Serializable{
 	private String customerEmail;
 	private String customerContact;
 	private String customerCityCode;
+	private String customerCode;
 	private Long customerState;
-private Long seqClientOrgId;
-private String orgName;
-private String orgAddress;
+	private Long seqClientOrgId;
+	private String orgName;
+	private String orgAddress;
 	private String orgCode;
 	private String orgHqStateCode;
 	private String customerCountry;
@@ -303,4 +304,12 @@ private String orgAddress;
 	public void setOrgCode(String orgCode) {
 		this.orgCode = orgCode;
 	}
+
+    public String getCustomerCode() {
+        return customerCode;
+    }
+
+    public void setCustomerCode(String customerCode) {
+        this.customerCode = customerCode;
+    }
 }

@@ -26,7 +26,7 @@ public class SciCustomerMaster implements java.io.Serializable {
 	private String customerDetails;
 	private Long customerState;
 	private String customerCityCode;
-
+	private String customerCode;
 	private SciClientOrgMaster sciClientOrgMaster;
 	private String customerCountry;
 	private Set<SciWorkorderMaster> sciWorkorderMasters = new HashSet<SciWorkorderMaster>(
@@ -213,5 +213,15 @@ public class SciCustomerMaster implements java.io.Serializable {
 
 	public void setCustomerCityCode(String customerCityCode) {
 		this.customerCityCode = customerCityCode;
+	}
+
+
+	@Column(name = "CUSTOMER_CODE", length = 20)
+	public String getCustomerCode() {
+		return customerCode;
+	}
+
+	public void setCustomerCode(String customerCode) {
+		this.customerCode = customerCode;
 	}
 }

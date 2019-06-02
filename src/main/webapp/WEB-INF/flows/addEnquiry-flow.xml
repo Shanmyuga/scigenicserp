@@ -1,15 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="entersearch">
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="addlookup">
 <webflow:on-start>
         <webflow:evaluate expression="enqcont.setupForm"/>
+    <webflow:evaluate expression="lookupcontbean.setupForm"/>
         <webflow:evaluate expression="lookupbean.getDropDownList('customer_key')" result="flowScope.custstats"/>
     <webflow:evaluate expression="lookupbean.getDropDownList('customer_name_key')" result="flowScope.customerNames"/>
+    <webflow:evaluate expression="lookupcontbean.loadOrgNames"/>
          <webflow:evaluate expression="lookupbean.getDropDownList('enq_types_key')" result="flowScope.enqtypes"/>
     <webflow:evaluate expression="lookupbean.getDropDownList('enq_priority_key')" result="flowScope.enqpriorities"/>
          <webflow:evaluate expression="lookupbean.getDropDownList('enq_categ_key')" result="flowScope.enqCategories"/>
              <webflow:evaluate expression="lookupbean.getDropDownList('customer_dept_key')" result="flowScope.customerDepts"/>
     </webflow:on-start>
-    
+    <webflow:view-state id="addlookup" view="clientorg.search">
+
+
+        <webflow:transition on="filterReport" to="addlookup">
+            <webflow:evaluate expression="lookupcontbean.bind"/>
+            <webflow:evaluate expression="lookupcontbean.filterReportByClientOrgName"/>
+
+        </webflow:transition>
+        <webflow:transition on="editLookup" to="editlookup">
+            <webflow:evaluate expression="lookupcontbean.bind"/>
+            <webflow:evaluate expression="lookupcontbean.selectClientOrg"/>
+        </webflow:transition>
+
+    </webflow:view-state>
+
+    <webflow:view-state id="editlookup" view="customer.search">
+        <webflow:transition on="selectCustomer" to="addview">
+            <webflow:evaluate expression="lookupcontbean.bind"/>
+            <webflow:evaluate expression="lookupcontbean.selectCustomer"/>
+        </webflow:transition>
+
+        <webflow:transition on="addlookup" to="editlookup">
+            <webflow:evaluate expression="lookupcontbean.bind"/>
+            <webflow:evaluate expression="lookupcontbean.addNewCustomer"/>
+        </webflow:transition>
+    </webflow:view-state>
+
    <webflow:view-state id="entersearch" view="enq.loadview">
  
         <webflow:transition on="addEnq" to="addview">
