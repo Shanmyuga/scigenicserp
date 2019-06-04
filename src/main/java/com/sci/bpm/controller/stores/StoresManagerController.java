@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.webflow.execution.Event;
@@ -116,7 +117,9 @@ public class StoresManagerController extends SciBaseController {
                 .getFlowScope().get("matitemlist");
         SciMatindMaster mast = selectMI(master, bean.getSeqSelectMIID());
         SciStoreMiMaster storems = service.getStoreData(mast.getSeqMiId());
-
+        if (!NumberUtils.isNumber(bean.getReceivedCnt())) {
+                throw new Exception("the received quantity is not a number");
+        }
         if (storems == null) {
             storems = new SciStoreMiMaster();
         }
@@ -156,9 +159,7 @@ public class StoresManagerController extends SciBaseController {
         recdmat.setSciMiMaster(mast);
         recdmat.setMatSpec(mast.getMatSpec());
         recdmat.setMatType(mast.getMatType());
-        if (Float.parseFloat(bean.getReceivedCnt()) > 0) {
 
-        }
         recdmat.setRecdQuantity(bean.getReceivedCnt());
         recdmat.setRecdDimension(bean.getReceivedDimen());
         recdmat.setRecdDate(new Date());

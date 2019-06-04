@@ -71,10 +71,17 @@
                 <td><img src="images/arrow.jpg" width="20" height="20" ><a href="springtest.htm?_flowId=changerole-flow">Change my role</a></td>
               </tr>
                <tr> 
-                <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=addEnquiry-flow">Enquiry Details</a> </td>
+                <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=addEnquiry-flow">Add New Enquiry </a> </td>
               </tr>
-            <tr> 
-                <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=changepass-flow">Change Password</a></td>
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=addEnquiry-updates-flow">Add  Enquiry updates </a> </td>
+              </tr>
+            <tr>
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=searchEnquiry-flow">Search  Enquiry  </a> </td>
+              </tr>
+              <tr>
+              <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=changepass-flow">Change Password</a></td>
               </tr>
                <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20" ><a href="springtest.htm?_flowId=logout-flow">Logout</a></td>
