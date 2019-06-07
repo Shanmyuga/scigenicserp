@@ -164,4 +164,12 @@ public class LookupValueDAOImpl implements LookupValueDAO {
 		return (String) em.createNativeQuery("select to_char(seq_org_code.nextval) from dual").getSingleResult();
 	}
 
+	public String selectCustomerCode(String seq_client_org_id) {
+		Query qry = em.createNativeQuery("select to_char(nvl(max(CUSTOMER_CODE),0) +1,'00') from sci_customer_master where seq_client_org_id =:seq_client_org_id ");
+		qry.setParameter("seq_client_org_id",seq_client_org_id);
+
+		return (String) qry.getSingleResult();
+
+	}
+
 }

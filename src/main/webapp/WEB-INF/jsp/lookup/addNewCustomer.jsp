@@ -30,9 +30,9 @@ Data</font></p>
         <td align="right" class="datatext">Customer Address</td>
         <td><form:input path="customerAddress" maxlength="100" size="50"/></td>
         <td  align="right" class="datatext">Customer City Code</td>
-        <td><form:select path="stateCode"  id="stateCode" onchange="eventdirect('loadCity')" >
+        <td><form:select path="customerCityCode"  id="customerCityCode"  >
 
-            <form:options items="${states}"  itemLabel="lovName" itemValue="lovType"/>
+            <form:options items="${stateCityList}"  itemLabel="cityName" itemValue="cityCode"/>
         </form:select></td>
     </tr>
 <tr>
@@ -95,6 +95,10 @@ Data</font></p>
             </display:column>
 
             <display:column sortable="true"    property="cusomterCity" >
+
+            </display:column>
+
+            <display:column sortable="true"    property="customerCode" >
 
             </display:column>
         </display:table>

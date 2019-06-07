@@ -30,6 +30,8 @@ public interface LookupValueDAO {
 	public void updateCustomer(SciCustomerMaster customerMaster);
 	public void updateCLientOrg(SciClientOrgMaster clientOrg);
 	public String selectOrgCode();
+	public String selectCustomerCode(String seq_client_org_id);
+
 
 
 }

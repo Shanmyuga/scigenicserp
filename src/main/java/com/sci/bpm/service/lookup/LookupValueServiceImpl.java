@@ -119,5 +119,9 @@ public class LookupValueServiceImpl implements LookUpValueService {
 		return daoimpl.selectOrgCode();
 	}
 
+	public String selectCustomerCode(String seq_client_org_id) {
+		return daoimpl.selectCustomerCode(seq_client_org_id);
+	}
+
 
 }

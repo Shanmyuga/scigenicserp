@@ -1,10 +1,11 @@
 package com.sci.bpm.db.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "SCI_STATE_CITY_MASTER", schema = "SCIGENICS", catalog = "")
-public class SciStateCityMasterEntity {
+public class SciStateCityMasterEntity implements Serializable {
     private long seqStateCtId;
     private String stateName;
     private String stateCode;

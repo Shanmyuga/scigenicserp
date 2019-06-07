@@ -29,4 +29,5 @@ public interface LookUpValueService {
 	public void updateStatus(SciReportConfiguration config);
 	public List<SciStateCityMasterEntity> loadCities(String stateCode);
 	public String selectOrgCode();
+	public String selectCustomerCode(String seq_client_org_id);
 }
