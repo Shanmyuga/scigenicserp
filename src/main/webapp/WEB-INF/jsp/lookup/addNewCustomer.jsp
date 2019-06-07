@@ -30,14 +30,17 @@ Data</font></p>
         <td align="right" class="datatext">Customer Address</td>
         <td><form:input path="customerAddress" maxlength="100" size="50"/></td>
         <td  align="right" class="datatext">Customer City Code</td>
-        <td><form:input path="customerCityCode" maxlength="2" size="2"/></td>
+        <td><form:select path="stateCode"  id="stateCode" onchange="eventdirect('loadCity')" >
+
+            <form:options items="${states}"  itemLabel="lovName" itemValue="lovType"/>
+        </form:select></td>
     </tr>
 <tr>
 <td class="datatext" align="right">Customer State</td>
 <td>
 <form:select path="stateCode"  id="stateCode" onchange="eventdirect('loadCity')" >
 
-<form:options items="${states}"  itemLabel="stateName" itemValue="stateCode"/>
+<form:options items="${states}"  itemLabel="lovName" itemValue="lovType"/>
 </form:select>
 </td>
 

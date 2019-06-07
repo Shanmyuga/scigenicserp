@@ -13,11 +13,7 @@
         <webflow:evaluate expression="lookupcontbean.filterReportByClientOrgName"/>
 
     </webflow:transition>
-    <webflow:transition on="loadCity" to="addlookup">
-        <webflow:evaluate expression="lookupcontbean.bind"/>
-        <webflow:evaluate expression="lookupcontbean.loadCities"/>
 
-    </webflow:transition>
     <webflow:transition on="editLookup" to="editlookup">
         <webflow:evaluate expression="lookupcontbean.bind"/>
         <webflow:evaluate expression="lookupcontbean.selectClientOrg"/>
@@ -29,6 +25,12 @@
         <webflow:transition on="selectCustomer" to="editCustomerView">
             <webflow:evaluate expression="lookupcontbean.bind"/>
             <webflow:evaluate expression="lookupcontbean.selectCustomer"/>
+        </webflow:transition>
+
+        <webflow:transition on="loadCity" to="editlookup">
+            <webflow:evaluate expression="lookupcontbean.bind"/>
+            <webflow:evaluate expression="lookupcontbean.loadCities"/>
+
         </webflow:transition>
 
         <webflow:transition on="addlookup" to="editlookup">

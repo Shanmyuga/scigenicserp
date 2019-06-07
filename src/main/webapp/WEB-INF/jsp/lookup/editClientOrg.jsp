@@ -19,8 +19,7 @@ Data</font></p>
 <td ><form:input path="orgName" maxlength="100" size="50"/></td>
 <td align="right" class="datatext">Organization Address</td>
 <td><form:textarea path="orgAddress"/></td>
-    <td align="right" class="datatext">Organization Code</td>
-    <td><form:input path="orgCode"/></td>
+
 </tr>
 
 <tr >
