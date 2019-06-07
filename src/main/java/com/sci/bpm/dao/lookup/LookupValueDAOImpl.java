@@ -36,6 +36,13 @@ public class LookupValueDAOImpl implements LookupValueDAO {
 	}
 
 
+	public List<SciStateCityMasterEntity> loadCities(String stateCode) {
+
+		Query qry  = em.createQuery("Select cm from SciStateCityMasterEntity cm where cm.stateCode = :stateCode");
+		qry.setParameter("stateCode",stateCode);
+		return  qry.getResultList();
+
+	}
 
 	public List getDropDownList(String querykey) {
 		
@@ -151,6 +158,10 @@ public class LookupValueDAOImpl implements LookupValueDAO {
 
 	public void updateCLientOrg(SciClientOrgMaster clientOrg) {
 		em.merge(clientOrg);
+	}
+
+	public String selectOrgCode() {
+		return (String) em.createNativeQuery("select to_char(seq_org_code.nextval) from dual").getSingleResult();
 	}
 
 }

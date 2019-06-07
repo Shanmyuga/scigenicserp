@@ -35,9 +35,9 @@ Data</font></p>
 <tr>
 <td class="datatext" align="right">Customer State</td>
 <td>
-<form:select path="customerState"  id="customerState" >
+<form:select path="stateCode"  id="stateCode" onchange="eventdirect('loadCity')" >
 
-<form:options items="${states}"  itemLabel="lovDescription" itemValue="seqLovId"/>
+<form:options items="${states}"  itemLabel="stateName" itemValue="stateCode"/>
 </form:select>
 </td>
 

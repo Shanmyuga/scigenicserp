@@ -29,7 +29,7 @@ public class LookupValueBean implements Serializable{
 	private String orgCode;
 	private String orgHqStateCode;
 	private String customerCountry;
-	
+	private String stateCode;
 	private Long seqVendorId;
 	private String vendorName;
 	private String vendorAddress1;
@@ -58,7 +58,15 @@ public class LookupValueBean implements Serializable{
      private String specCode;
 
      private String matDept;
-	
+
+	public LookupValueBean() {
+	}
+	public LookupValueBean(String lovName,String lovType) {
+
+		this.lovName = lovName;
+		this.lovType = lovType;
+	}
+
 	public String getLovName() {
 		return lovName;
 	}
@@ -312,4 +320,12 @@ public class LookupValueBean implements Serializable{
     public void setCustomerCode(String customerCode) {
         this.customerCode = customerCode;
     }
+
+	public String getStateCode() {
+		return stateCode;
+	}
+
+	public void setStateCode(String stateCode) {
+		this.stateCode = stateCode;
+	}
 }

@@ -7,7 +7,8 @@ import com.sci.bpm.db.model.*;
 
 public interface LookupValueDAO {
 
-	
+	public List<SciStateCityMasterEntity> loadCities(String stateCode);
+
 	public List getDropDownList(String query);
 	public List<SciCustomerMaster> loadCustomerforOrg(Long seqClientOrgId);
 
@@ -28,5 +29,7 @@ public interface LookupValueDAO {
 	public  SciVendorMaster loadVendor(Long seqVendorId);
 	public void updateCustomer(SciCustomerMaster customerMaster);
 	public void updateCLientOrg(SciClientOrgMaster clientOrg);
+	public String selectOrgCode();
+
 
 }

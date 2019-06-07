@@ -20,8 +20,7 @@ Data</font></p>
 <td align="right" class="datatext">Client Organization Address</td>
 <td><form:textarea path="orgAddress"/></td>
 
-    <td align="right" class="datatext">Organization Code</td>
-    <td><form:input path="orgCode"/></td>
+
 </tr>
 
     <tr >
@@ -64,7 +63,9 @@ Data</font></p>
             <display:column sortable="true"    property="orgAddress" >
 
             </display:column>
+            <display:column sortable="true"    property="orgCode" >
 
+            </display:column>
         </display:table>
 
         <input type="button" value="Edit Organization"  onclick="eventdirect('editLookup')" />

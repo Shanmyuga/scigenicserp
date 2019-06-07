@@ -3,7 +3,7 @@
 <webflow:on-start>
         <webflow:evaluate expression="lookupcontbean.setupForm"/>
     <webflow:evaluate expression="lookupcontbean.loadOrgNames"/>
-    <webflow:evaluate expression="lookupbean.getDropDownList('state_key')" result="flowScope.states"/>
+    <webflow:evaluate expression="lookupbean.getDropDownList('state_unique_key')" result="flowScope.states"/>
     </webflow:on-start>
 <webflow:view-state id="addlookup" view="clientorg.search">
 
@@ -13,7 +13,11 @@
         <webflow:evaluate expression="lookupcontbean.filterReportByClientOrgName"/>
 
     </webflow:transition>
+    <webflow:transition on="loadCity" to="addlookup">
+        <webflow:evaluate expression="lookupcontbean.bind"/>
+        <webflow:evaluate expression="lookupcontbean.loadCities"/>
 
+    </webflow:transition>
     <webflow:transition on="editLookup" to="editlookup">
         <webflow:evaluate expression="lookupcontbean.bind"/>
         <webflow:evaluate expression="lookupcontbean.selectClientOrg"/>

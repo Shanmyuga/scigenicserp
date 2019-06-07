@@ -110,6 +110,14 @@ public class LookupValueServiceImpl implements LookUpValueService {
 		// TODO Auto-generated method stub
 		daoimpl.updateStatus(config);
 	}
-	
-	
+
+	public List<SciStateCityMasterEntity> loadCities(String stateCode) {
+		return daoimpl.loadCities(stateCode);
+	}
+
+	public String selectOrgCode() {
+		return daoimpl.selectOrgCode();
+	}
+
+
 }

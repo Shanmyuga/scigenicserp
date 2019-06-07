@@ -78,6 +78,8 @@ SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope()
 
 		BeanUtils.copyProperties(master, value);
 		master.setUpdatedDate(new java.util.Date());
+		String orgCode = service.selectOrgCode();
+		master.setOrgCode(orgCode);
 		master.setUpdatedBy(getUserPreferences().getUserID());
 		master.setInsertedBy(getUserPreferences().getUserID());
 		master.setInsertedDate(new java.util.Date());
@@ -97,6 +99,14 @@ SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope()
 		master.setUpdatedBy(getUserPreferences().getUserID());
 		service.addNewVendor(master);
 
+		return success();
+	}
+
+	public Event loadCities(RequestContext context) throws Exception {
+		LookupValueBean value = (LookupValueBean)getFormObject(context);
+		List<SciStateCityMasterEntity> cityList = service.loadCities(value.getStateCode());
+
+		context.getFlowScope().put("stateCityList",cityList);
 		return success();
 	}
 	public Event editVendor(RequestContext context) throws Exception {
