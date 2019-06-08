@@ -147,6 +147,8 @@ SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope()
 		List<SciCustomerMaster> customers = (List<SciCustomerMaster>) context.getFlowScope().get("selectedCustomers");
 		SciCustomerMaster customerMaster = filterCustomer(customers,value.getSeqCustId());
 		BeanUtils.copyProperties(value,customerMaster);
+		value.setCustomerCityCode(customerMaster.getCustomerCityCode());
+
 		context.getFlowScope().put("selectedCustomer",customerMaster);
 		return success();
 	}

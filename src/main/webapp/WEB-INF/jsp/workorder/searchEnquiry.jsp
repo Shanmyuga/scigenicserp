@@ -18,26 +18,53 @@
 
 
             <tr>
-                <td> Customer Name </td>
+                <td> Org Name </td>
                 <td>
-                    <form:select path="seqCustomerId" size="1" id="seqCustomerId" >
+                    <form:select path="seqClientOrgId" size="1" id="seqClientOrgId" onchange="eventdirect('loadcustomers')" >
                         <form:option value="">All</form:option>
-                        <form:options items="${custstats}" itemLabel="customerDetails" itemValue="seqCustId" />
+                        <form:options items="${clientorglist}" itemLabel="orgName" itemValue="seqClientOrgId" />
+                    </form:select>
+                </td>
+
+            </tr>
+
+
+            <tr>
+                <td> Customers for the Org </td>
+                <td>
+                    <form:select path="seqCustomerId" size="1" id="seqCustomerId"  >
+                        <form:option value="">All</form:option>
+                        <form:options items="${selectedCustomers}" itemLabel="customerContact" itemValue="seqCustomerId" />
+                    </form:select>
+                </td>
+
+            </tr>
+            <tr>
+
+                <td class="datatext" align="right">Customer State</td>
+                <td>
+                    <form:select path="stateCode"  id="stateCode" onchange="eventdirect('loadCity')" >
+                        <form:option value="">Select</form:option>
+                        <form:options items="${states}"  itemLabel="lovName" itemValue="lovType"/>
                     </form:select>
                 </td>
 
 
-                <td>Enquiry Status</td>
-                <td  ><form:select path="enqStatus" size="1" id="enqStatus">
-                    <form:option value="">All</form:option>
-                    <form:option value="O">Open</form:option>
-                    <form:option value="C">Close</form:option>
-                </form:select>
-                </td>
-                <td>Enquiry ID</td>
-                <td  ><form:input path="seqEnqMasterId" id="seqEnqMasterId"></form:input>
-                </td>
+            </tr>
+            <tr>
+                <td  align="right" class="datatext">Customer City Code</td>
+                <td><form:select path="customerCityCode"  id="customerCityCode"  >
 
+                    <form:options items="${stateCityList}"  itemLabel="cityName" itemValue="cityCode"/>
+                </form:select></td>
+
+            </tr>
+                <tr>
+                <td>Enquiry Code/td>
+                <td  ><form:input path="orgStateCityCode" id="orgStateCityCode"></form:input>
+                </td>
+            </tr>
+            <tr>
                 <td align="right" class="datatext">Enquiry Priority</td>
                 <td ><form:select path="enqPriority" >
                     <form:option value="">Select</form:option>

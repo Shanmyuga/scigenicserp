@@ -3,7 +3,9 @@ package com.sci.bpm.controller.marketing;
 import java.util.Date;
 import java.util.List;
 
+import com.sci.bpm.command.LookupValueBean;
 import com.sci.bpm.db.model.*;
+import com.sci.bpm.service.lookup.LookUpValueService;
 import com.sci.bpm.service.task.DiskWriterJob;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
@@ -32,7 +34,8 @@ public class EnquiryController extends SciBaseController {
 
 	@Autowired
 	private EnquiryService service;
-
+	@Autowired
+	private LookUpValueService lservice;
 	@Autowired
 	private DiskWriterJob diskwriter;
 	
@@ -44,7 +47,35 @@ public class EnquiryController extends SciBaseController {
 	
 		return success();
 	}
-	
+	public Event selectClientOrg(RequestContext context) throws Exception {
+		EnqBean value = (EnqBean)getFormObject(context);
+		List<SciClientOrgMaster> clientOrgs = (List<SciClientOrgMaster>) context.getFlowScope().get("clientorglist");
+		SciClientOrgMaster clientOrgMaster = filterClientOrg(clientOrgs,value.getSeqClientOrgId());
+		List<SciCustomerMaster> customers = lservice.loadCustomerforOrg(clientOrgMaster.getSeqClientOrgId());
+
+		context.getFlowScope().put("selectedClientOrg",clientOrgMaster);
+		context.getFlowScope().put("selectedCustomers",customers);
+		return success();
+	}
+
+	private SciClientOrgMaster filterClientOrg(List<SciClientOrgMaster> master,Long seqClientOrgId) {
+		SciClientOrgMaster selected = null;
+		for(SciClientOrgMaster m : master) {
+			if(m.getSeqClientOrgId().intValue() == seqClientOrgId.intValue()) {
+				selected = m;
+			}
+		}
+
+		return selected;
+	}
+
+	public Event loadCities(RequestContext context) throws Exception {
+		EnqBean value = (EnqBean)getFormObject(context);
+		List<SciStateCityMasterEntity> cityList = lservice.loadCities(value.getStateCode());
+
+		context.getFlowScope().put("stateCityList",cityList);
+		return success();
+	}
 	public Event addEnquiryMaster(RequestContext context) throws Exception {
 		System.out.println("inside enquiry master");
 		EnqBean bean = (EnqBean) getFormObject(context);

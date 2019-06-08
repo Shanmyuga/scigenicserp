@@ -12,6 +12,7 @@ public class EnqBean implements Serializable {
     private String enqDetails;
     private Date enqDate;
     private Long enqType;
+    private Long seqClientOrgId;
 
     private String customerName;
 
@@ -30,6 +31,22 @@ public class EnqBean implements Serializable {
     private Long seqEnqMasterId;
     private Long customerDept;
     private String enqDocDesc;
+
+    private String orgCode;
+
+    private String orgName;
+
+    private String customerCityCode;
+
+    private String stateCode;
+
+    private String rawOrgCode;
+
+    private String rawstateCode;
+
+    private String rawcustomerCityCode;
+
+    private String orgStateCityCode;
 
     private MultipartFile fileDoc;
 
@@ -219,5 +236,77 @@ public class EnqBean implements Serializable {
 
     public void setEnqDocDesc(String enqDocDesc) {
         this.enqDocDesc = enqDocDesc;
+    }
+
+    public String getOrgCode() {
+        return orgCode;
+    }
+
+    public void setOrgCode(String orgCode) {
+        this.orgCode = orgCode;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public String getCustomerCityCode() {
+        return customerCityCode;
+    }
+
+    public void setCustomerCityCode(String customerCityCode) {
+        this.customerCityCode = customerCityCode;
+    }
+
+    public String getStateCode() {
+        return stateCode;
+    }
+
+    public void setStateCode(String stateCode) {
+        this.stateCode = stateCode;
+    }
+
+    public String getRawOrgCode() {
+        return rawOrgCode;
+    }
+
+    public void setRawOrgCode(String rawOrgCode) {
+        this.rawOrgCode = rawOrgCode;
+    }
+
+    public String getRawstateCode() {
+        return rawstateCode;
+    }
+
+    public void setRawstateCode(String rawstateCode) {
+        this.rawstateCode = rawstateCode;
+    }
+
+    public String getRawcustomerCityCode() {
+        return rawcustomerCityCode;
+    }
+
+    public void setRawcustomerCityCode(String rawcustomerCityCode) {
+        this.rawcustomerCityCode = rawcustomerCityCode;
+    }
+
+    public String getOrgStateCityCode() {
+        return orgStateCityCode;
+    }
+
+    public void setOrgStateCityCode(String orgStateCityCode) {
+        this.orgStateCityCode = orgStateCityCode;
+    }
+
+    public Long getSeqClientOrgId() {
+        return seqClientOrgId;
+    }
+
+    public void setSeqClientOrgId(Long seqClientOrgId) {
+        this.seqClientOrgId = seqClientOrgId;
     }
 }

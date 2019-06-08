@@ -44,6 +44,13 @@
             <webflow:evaluate expression="lookupcontbean.bind"/>
             <webflow:evaluate expression="lookupcontbean.editCustomer"/>
         </webflow:transition>
+
+        <webflow:transition on="loadCity" to="editCustomerView">
+            <webflow:evaluate expression="lookupcontbean.bind"/>
+            <webflow:evaluate expression="lookupcontbean.loadCities"/>
+
+        </webflow:transition>
+
     </webflow:view-state>
 <webflow:view-state id="addsuccess" view="lookup.success"/>
 <webflow:exception-handler bean="exceptionresol"/>
