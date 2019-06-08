@@ -67,7 +67,7 @@
                 <td><img src="images/arrow.jpg" width="20" height="20" ><a href="springtest.htm?_flowId=changerole-flow">Change my role</a></td>
               </tr>
                <tr> 
-                <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=addEnquiry-flow">Enquiry Details</a> </td>
+                <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=oldenquiry-flow">Old Enquiry Details</a> </td>
               </tr>
             <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=changepass-flow">Change Password</a></td>
