@@ -51,7 +51,7 @@
 			<property name="hibernate.connection.url"
                 value="jdbc:oracle:thin:@//192.168.1.115:32771/xe.oraslim.com" />
 			<!-- <property name="hibernate.connection.url"
-                       value="jdbc:oracle:thin:@//210.18.138.222:8055/xe.oraslim.com" />-->
+                       value="jdbc:oracle:thin:@//210.18.138.222:8055/xe.oraslim.com" /> -->
              <property name="hibernate.connection.username"
                  value="scigenics" />
              <property name="hibernate.connection.password"

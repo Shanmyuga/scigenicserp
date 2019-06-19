@@ -13,13 +13,22 @@
 
 <table border="1" width="100%" cellpadding="3x" height="70px">
 <tr>
-<td align="right" class="datatext">Client Details</td>
-<td ><form:select path="seqCustId" >
-<form:options items="${customerData}" itemLabel="customerName" itemValue="seqCustId"/>
+<td align="right" class="datatext">Organization Details</td>
+<td ><form:select path="seqClientOrgId"  onchange="changeDtd('loadCustomers')">
+<form:options items="${clientorglist}" itemLabel="orgName" itemValue="seqClientOrgId"/>
 </form:select>
 
 <span style="color:red;">*</span></td></tr>
 <tr>
+
+    <tr>
+        <td align="right" class="datatext">Customer Details</td>
+        <td ><form:select path="seqCustId" >
+            <form:options items="${selectedCustomers}" itemLabel="customerContact" itemValue="seqCustId"/>
+        </form:select>
+
+            <span style="color:red;">*</span></td></tr>
+    <tr>
 <td align="right" class="datatext">Work Order Type</td>
 <td ><form:select path="wordOrderType" size="1" id="worktype" onchange="changeDtd('changeWtype')">
 

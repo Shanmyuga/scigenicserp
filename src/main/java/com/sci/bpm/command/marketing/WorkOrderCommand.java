@@ -47,6 +47,7 @@ public class WorkOrderCommand implements Serializable {
 	private String basis;
 
 	private Long seqCustId;
+	private Long seqClientOrgId;
 	public String getAmendDetails() {
 		return amendDetails;
 	}
@@ -256,5 +257,13 @@ public class WorkOrderCommand implements Serializable {
 
 	public void setReportFilter(String reportFilter) {
 		this.reportFilter = reportFilter;
+	}
+
+	public Long getSeqClientOrgId() {
+		return seqClientOrgId;
+	}
+
+	public void setSeqClientOrgId(Long seqClientOrgId) {
+		this.seqClientOrgId = seqClientOrgId;
 	}
 }
