@@ -51,6 +51,12 @@ public class SciEnquiryMaster implements java.io.Serializable {
 	private String customerContact;
 	private Long enquiryCode;
 	private String enqCustomerCode;
+	private String enqStateCityCode;
+
+	private String enqOrgCode;
+
+	private String enqFullCode;
+
 	private Set<SciEnquiryDetails> sciEnquiryDetailses = new HashSet<SciEnquiryDetails>(
 			0);
 
@@ -284,4 +290,29 @@ public class SciEnquiryMaster implements java.io.Serializable {
     public void setEnqCustomerCode(String enqCustomerCode) {
         this.enqCustomerCode = enqCustomerCode;
     }
+	@Column(name = "ENQ_STATECITY_CODE", length = 20)
+	public String getEnqStateCityCode() {
+		return enqStateCityCode;
+	}
+
+	public void setEnqStateCityCode(String enqStateCityCode) {
+		this.enqStateCityCode = enqStateCityCode;
+	}
+	@Column(name = "ENQ_ORG_CODE", length = 20)
+	public String getEnqOrgCode() {
+		return enqOrgCode;
+	}
+
+	public void setEnqOrgCode(String enqOrgCode) {
+		this.enqOrgCode = enqOrgCode;
+	}
+
+	@Column(name = "ENQ_FULL_CODE", length = 20)
+	public String getEnqFullCode() {
+		return enqFullCode;
+	}
+
+	public void setEnqFullCode(String enqFullCode) {
+		this.enqFullCode = enqFullCode;
+	}
 }

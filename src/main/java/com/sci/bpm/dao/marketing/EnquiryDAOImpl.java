@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.sci.bpm.db.model.SciEnquiryDocs;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.sci.bpm.command.marketing.EnqBean;
@@ -67,7 +68,18 @@ public class EnquiryDAOImpl implements EnquiryDAO {
             whereClause = whereClause + " and m.enqPriority = :enqPriority ";
             parameters.put("enqPriority", command.getEnqPriority());
         }
-
+        if (command.getOrgCode() != null && !StringUtils.isEmpty(command.getOrgCode())) {
+            whereClause = whereClause + " and m.enqOrgCode = :enqOrgCode ";
+            parameters.put("enqOrgCode", command.getOrgCode());
+        }
+        if (command.getStateCode() != null && !StringUtils.isEmpty(command.getStateCode())) {
+            whereClause = whereClause + " and SUBSTRING(m.enqStateCityCode,1,2) = :enqStateCityCode ";
+            parameters.put("enqStateCityCode", command.getStateCode());
+        }
+        if (command.getCustomerCityCode() != null && !StringUtils.isEmpty(command.getCustomerCityCode())) {
+            whereClause = whereClause + " and m.enqStateCityCode = :enqCityCode ";
+            parameters.put("enqCityCode", command.getCustomerCityCode());
+        }
         Query wquery = null;
         if (parameters.size() > 0) {
             wquery = em.createQuery(query

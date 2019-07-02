@@ -36,6 +36,8 @@ public class EnqBean implements Serializable {
 
     private String orgName;
 
+    private String enqFullCode;
+
     private String customerCityCode;
 
     private String stateCode;
@@ -308,5 +310,13 @@ public class EnqBean implements Serializable {
 
     public void setSeqClientOrgId(Long seqClientOrgId) {
         this.seqClientOrgId = seqClientOrgId;
+    }
+
+    public String getEnqFullCode() {
+        return enqFullCode;
+    }
+
+    public void setEnqFullCode(String enqFullCode) {
+        this.enqFullCode = enqFullCode;
     }
 }

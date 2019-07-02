@@ -50,7 +50,7 @@ public class EnquiryController extends SciBaseController {
 	public Event selectClientOrg(RequestContext context) throws Exception {
 		EnqBean value = (EnqBean)getFormObject(context);
 		List<SciClientOrgMaster> clientOrgs = (List<SciClientOrgMaster>) context.getFlowScope().get("clientorglist");
-		SciClientOrgMaster clientOrgMaster = filterClientOrg(clientOrgs,value.getSeqClientOrgId());
+		SciClientOrgMaster clientOrgMaster = filterClientOrg(clientOrgs,value.getOrgCode());
 		List<SciCustomerMaster> customers = lservice.loadCustomerforOrg(clientOrgMaster.getSeqClientOrgId());
 
 		context.getFlowScope().put("selectedClientOrg",clientOrgMaster);
@@ -58,10 +58,11 @@ public class EnquiryController extends SciBaseController {
 		return success();
 	}
 
-	private SciClientOrgMaster filterClientOrg(List<SciClientOrgMaster> master,Long seqClientOrgId) {
+	private SciClientOrgMaster filterClientOrg(List<SciClientOrgMaster> master,String orgCode) {
 		SciClientOrgMaster selected = null;
 		for(SciClientOrgMaster m : master) {
-			if(m.getSeqClientOrgId().intValue() == seqClientOrgId.intValue()) {
+
+			if(m.getOrgCode() != null && m.getOrgCode().equals(orgCode)) {
 				selected = m;
 			}
 		}

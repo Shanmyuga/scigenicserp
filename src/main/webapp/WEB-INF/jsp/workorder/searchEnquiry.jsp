@@ -20,9 +20,9 @@
             <tr>
                 <td> Org Name </td>
                 <td>
-                    <form:select path="seqClientOrgId" size="1" id="seqClientOrgId" onchange="eventdirect('loadcustomers')" >
+                    <form:select path="orgCode" size="1" id="orgCode" onchange="eventdirect('loadcustomers')" >
                         <form:option value="">All</form:option>
-                        <form:options items="${clientorglist}" itemLabel="orgName" itemValue="seqClientOrgId" />
+                        <form:options items="${clientorglist}" itemLabel="orgName" itemValue="orgCode" />
                     </form:select>
                 </td>
 
@@ -34,7 +34,7 @@
                 <td>
                     <form:select path="seqCustomerId" size="1" id="seqCustomerId"  >
                         <form:option value="">All</form:option>
-                        <form:options items="${selectedCustomers}" itemLabel="customerContact" itemValue="seqCustomerId" />
+                        <form:options items="${selectedCustomers}" itemLabel="customerContact" itemValue="seqCustId" />
                     </form:select>
                 </td>
 
@@ -60,8 +60,8 @@
 
             </tr>
                 <tr>
-                <td>Enquiry Code/td>
-                <td  ><form:input path="orgStateCityCode" id="orgStateCityCode"></form:input>
+                <td>Enquiry Full Code</td>
+                <td  ><form:input path="enqFullCode" id="enqFullCode"></form:input>
                 </td>
             </tr>
             <tr>
@@ -133,16 +133,23 @@
 
             </display:column>
 
-            <display:column sortable="true"  property="enqStatus" >
+            <display:column sortable="true"  property="enqOrgCode" >
 
             </display:column>
+            <display:column sortable="true"  property="enqStateCityCode" >
 
+            </display:column>
+            <display:column sortable="true"  property="enqCustomerCode" >
+
+            </display:column>
+            <display:column sortable="true"  property="enqFullCode" >
+
+            </display:column>
         </display:table>
         <div style="float:left;width:787px;padding: 10px" >
             <input type="hidden" name="_flowExecutionKey" value='<c:out value="${flowExecutionKey}"/>'>
             <input type="hidden" name="_eventId"  id="_eventId" value="addEnq" >
-            <input type="button" value="Add New Enquiry" onclick="eventdirect('addEnq')"/>
-            <input type="button" value="Close Enquiry" onclick="eventdirect('closeenq')"/>
+
         </div>
     </div>
     <c:if test="${fn:length(openenqlist) > 0 }" >
