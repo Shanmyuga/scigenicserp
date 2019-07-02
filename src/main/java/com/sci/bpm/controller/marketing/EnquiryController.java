@@ -48,13 +48,16 @@ public class EnquiryController extends SciBaseController {
 		return success();
 	}
 	public Event selectClientOrg(RequestContext context) throws Exception {
-		EnqBean value = (EnqBean)getFormObject(context);
+		EnqBean value = (EnqBean) getFormObject(context);
 		List<SciClientOrgMaster> clientOrgs = (List<SciClientOrgMaster>) context.getFlowScope().get("clientorglist");
-		SciClientOrgMaster clientOrgMaster = filterClientOrg(clientOrgs,value.getOrgCode());
-		List<SciCustomerMaster> customers = lservice.loadCustomerforOrg(clientOrgMaster.getSeqClientOrgId());
+		SciClientOrgMaster clientOrgMaster = filterClientOrg(clientOrgs, value.getOrgCode());
+		if (clientOrgMaster != null) {
+			List<SciCustomerMaster> customers = lservice.loadCustomerforOrg(clientOrgMaster.getSeqClientOrgId());
 
-		context.getFlowScope().put("selectedClientOrg",clientOrgMaster);
-		context.getFlowScope().put("selectedCustomers",customers);
+			context.getFlowScope().put("selectedClientOrg", clientOrgMaster);
+
+		context.getFlowScope().put("selectedCustomers", customers);
+		}
 		return success();
 	}
 
@@ -62,7 +65,7 @@ public class EnquiryController extends SciBaseController {
 		SciClientOrgMaster selected = null;
 		for(SciClientOrgMaster m : master) {
 
-			if(m.getOrgCode() != null && m.getOrgCode().equals(orgCode)) {
+			if(m.getOrgCode() != null && orgCode != null && m.getOrgCode().equals(orgCode)) {
 				selected = m;
 			}
 		}
@@ -93,6 +96,12 @@ public class EnquiryController extends SciBaseController {
 		emaster.setEnqCustomerCode(clientOrgMaster.getOrgCode()+cmaster.getCustomerCityCode()+cmaster.getCustomerCode());
 		Long enqCode = service.findEnqCode(clientOrgMaster.getOrgCode()+cmaster.getCustomerCityCode()+cmaster.getCustomerCode());
 		emaster.setEnquiryCode(enqCode);
+		emaster.setEnqStateCityCode(cmaster.getCustomerCityCode());
+		emaster.setEnqOrgCode(clientOrgMaster.getOrgCode());
+		emaster.setEnqCustomerCode(cmaster.getCustomerCode());
+		if(StringUtils.isNotBlank(clientOrgMaster.getOrgCode()) && StringUtils.isNotBlank(cmaster.getCustomerCityCode()) && StringUtils.isNotBlank(cmaster.getCustomerCode()) ) {
+			emaster.setEnqFullCode(clientOrgMaster.getOrgCode() + cmaster.getCustomerCityCode() + cmaster.getCustomerCode()+String.valueOf(enqCode));
+		}
 		if(StringUtils.isBlank(emaster.getEnqAttendee()) || emaster.getEnqDate() == null ) {
 			throw new Exception();
 		}

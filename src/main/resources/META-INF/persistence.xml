@@ -48,20 +48,20 @@
 		<properties>
 			<property name="hibernate.connection.driver_class"
 				value="oracle.jdbc.driver.OracleDriver" />
+				<property name="hibernate.connection.url"
+                    value="jdbc:oracle:thin:@//192.168.1.115:32771/xe.oraslim.com" />
 			<!--	<property name="hibernate.connection.url"
-                    value="jdbc:oracle:thin:@//192.168.1.115:32771/xe.oraslim.com" />-->
-			<property name="hibernate.connection.url"
-                      value="jdbc:oracle:thin:@//210.18.138.222:8055/xe.oraslim.com" />
-        <property name="hibernate.connection.username"
-            value="scigenics" />
-        <property name="hibernate.connection.password"
-            value="scigenics" />
-            <property name="hibernate.show_sql"
-            value="false" />
-            <property name="hibernate.dialect"  value="org.hibernate.dialect.Oracle10gDialect"/>
-        <property name="hibernate.event.merge.entity_copy_observer" value="allow"/>
-    </properties>
+                          value="jdbc:oracle:thin:@//210.18.138.222:8055/xe.oraslim.com" />-->
+            <property name="hibernate.connection.username"
+                value="scigenics" />
+            <property name="hibernate.connection.password"
+                value="scigenics" />
+                <property name="hibernate.show_sql"
+                value="false" />
+                <property name="hibernate.dialect"  value="org.hibernate.dialect.Oracle10gDialect"/>
+            <property name="hibernate.event.merge.entity_copy_observer" value="allow"/>
+        </properties>
 
-</persistence-unit>
+    </persistence-unit>
 
-</persistence>
+    </persistence>

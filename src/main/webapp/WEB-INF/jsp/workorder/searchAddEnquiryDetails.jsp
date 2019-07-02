@@ -179,29 +179,77 @@
                 </display:column>
 
             </display:table>
-            <div style="float:left;width:900px">
-                <display:table export="true" sort="list"   pagesize="10" name="enqdoclist"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+            <div width="787px" style="float:left;height:150px">
+                <p> Action Detail on the Enquiry</p>
+                <table>
+                    <tr>
+                        <td align="right" class="datatext">Action Taken till date</td>
+                        <td ><form:textarea path="actionTaken" /></td>
 
-                    <display:column sortable="true"   title="Document Name" property="enqDocName" >
+                        <td align="right" class="datatext">Action Date</td>
+                        <td ><form:input path="actionDate" />
+                            <a href="javascript:show_calendar('document.enqbean.actionDate', document.enqbean.actionDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right" class="datatext">Action to be taken</td>
+                        <td ><form:textarea path="purpose" /></td>
 
-                    </display:column>
-                    <display:column sortable="true"  title="Document Desc" property="enqDocDesc" >
+                        <td align="right" class="datatext">Bring Forward Date</td>
+                        <td ><form:input path="bringForwardDate" />
+                            <a href="javascript:show_calendar('document.enqbean.bringForwardDate', document.enqbean.bringForwardDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
+                        </td>
+                        <td align="right" class="datatext">Enquiry Type</td>
+                        <td ><form:select path="enqmasterType" >
+                            <form:options items="${enqtypes}" itemLabel="lovDescription" itemValue="seqLovId"/>
+                        </form:select>
 
-                    </display:column>
-
-                    <display:column sortable="true"  title="Uploaded File"   >
-                        <a href="javascript:openfile('<c:out value="${row.seqEnquiryDocId}"/>')"><c:out value="${row.originalDoc}" /></a>
-                    </display:column>
-                    <display:column sortable="true"  title="Date uploaded"   >
-                        <c:out value="${row.updatedDate}" />
-                    </display:column>
-
-
-                </display:table>
+                            <span style="color:red;">*</span></td>
+                    </tr>
+                </table>
+                <input type="button" value="Add Enquiry Details" onclick="eventdirect('addEnqdet')"/>
             </div>
         </div>
 
+        <div style="float:left;width:900px">
+            <display:table export="true" sort="list"   pagesize="10" name="enqdoclist"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
 
+                <display:column sortable="true"   title="Document Name" property="enqDocName" >
+
+                </display:column>
+                <display:column sortable="true"  title="Document Desc" property="enqDocDesc" >
+
+                </display:column>
+
+                <display:column sortable="true"  title="Uploaded File"   >
+                    <a href="javascript:openfile('<c:out value="${row.seqEnquiryDocId}"/>')"><c:out value="${row.originalDoc}" /></a>
+                </display:column>
+                <display:column sortable="true"  title="Date uploaded"   >
+                    <c:out value="${row.updatedDate}" />
+                </display:column>
+
+
+            </display:table>
+            <div style="padding-left:10px;width:787px;float:left">
+
+                <table >
+
+                    <tr>
+                        <td>Enquiry Upload File </td>
+                    </tr>
+                    <tr>
+                        <td align="right" class="datatext">Document  Description</td>
+                        <td ><form:textarea path="enqDocDesc" /><span style="color:red;">*</span></td>
+                        <td colspan="2">&nbsp</td>
+                    </tr>
+                    <tr>
+                        <td><input type="file" name="fileDoc" id="fileDoc"/><span style="color:red;">*</span></td>
+                    </tr>
+
+                </table>
+                <input type="button"  value="Add Enquiry Docs" onclick="eventdirect('addEnquirydoc')"/>
+            </div>
+        </div>
     </c:if>
     </div>
 
