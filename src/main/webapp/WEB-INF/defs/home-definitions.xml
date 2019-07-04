@@ -55,6 +55,11 @@
 
         <put-attribute name="body" value="/WEB-INF/jsp/workorder/searchEnquiry.jsp" />
     </definition>
+    <definition name="enquiry.update" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/workorder/searchAddEnquiryDetails.jsp" />
+    </definition>
     <definition name="customer.edit" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
     <put-attribute name="menu" value="usermenu.jsp" />
 
