@@ -123,6 +123,7 @@ SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope()
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		SciCustomerMaster customerMaster = (SciCustomerMaster) context.getFlowScope().get("selectedCustomer");
 		BeanUtils.copyProperties(customerMaster,value);
+		  customerMaster.setCustomerState(Long.parseLong(value.getStateCode()));
 		service.updateCustomer(customerMaster);
 		return success();
 	}
@@ -148,7 +149,11 @@ SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope()
 		SciCustomerMaster customerMaster = filterCustomer(customers,value.getSeqCustId());
 		BeanUtils.copyProperties(value,customerMaster);
 		value.setCustomerCityCode(customerMaster.getCustomerCityCode());
+		value.setStateCode(String.valueOf(customerMaster.getCustomerState()));
 
+		List<SciStateCityMasterEntity> cityList = service.loadCities(value.getStateCode());
+
+		context.getFlowScope().put("stateCityList",cityList);
 		context.getFlowScope().put("selectedCustomer",customerMaster);
 		return success();
 	}

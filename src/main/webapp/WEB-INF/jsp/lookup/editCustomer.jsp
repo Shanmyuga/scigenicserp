@@ -52,8 +52,7 @@ Data</font></p>
     <tr>
         <td align="right" class="datatext">Customer Address</td>
         <td><form:input path="customerAddress" maxlength="50" size="50"/></td>
-    <td align="right" class="datatext">Customer City code</td>
-    <td><form:input path="customerCityCode" maxlength="2" size="2"/></td>
+
 </tr>
 
 <tr >
