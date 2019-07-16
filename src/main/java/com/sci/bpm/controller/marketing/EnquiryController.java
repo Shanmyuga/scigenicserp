@@ -85,7 +85,7 @@ public class EnquiryController extends SciBaseController {
 		EnqBean bean = (EnqBean) getFormObject(context);
 		SciEnquiryMaster emaster = new SciEnquiryMaster();
 		BeanUtils.copyProperties(emaster, bean);
-       SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope().get("selectedClientOrg");
+        SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope().get("selectedClientOrg");
 		SciCustomerMaster cmaster = (SciCustomerMaster) context.getFlowScope().get("selectedCustomer");
 		emaster.setSciCustomerMaster(cmaster);
 		emaster.setEnqStatus("O");
@@ -93,14 +93,17 @@ public class EnquiryController extends SciBaseController {
 		emaster.setInsertedDate(new Date());
 		emaster.setUdpatedBy(getUserPreferences().getUserID());
 		emaster.setUpdatedDate(new Date());
-		emaster.setEnqCustomerCode(clientOrgMaster.getOrgCode()+cmaster.getCustomerCityCode()+cmaster.getCustomerCode());
-		Long enqCode = service.findEnqCode(clientOrgMaster.getOrgCode()+cmaster.getCustomerCityCode()+cmaster.getCustomerCode());
+		emaster.setEnqCustomerCode(cmaster.getCustomerCode());
+		Long enqCode = service.findEnqCode(clientOrgMaster.getOrgCode(),cmaster.getCustomerCityCode(),cmaster.getCustomerCode());
 		emaster.setEnquiryCode(enqCode);
 		emaster.setEnqStateCityCode(cmaster.getCustomerCityCode());
 		emaster.setEnqOrgCode(clientOrgMaster.getOrgCode());
 		emaster.setEnqCustomerCode(cmaster.getCustomerCode());
 		if(StringUtils.isNotBlank(clientOrgMaster.getOrgCode()) && StringUtils.isNotBlank(cmaster.getCustomerCityCode()) && StringUtils.isNotBlank(cmaster.getCustomerCode()) ) {
 			emaster.setEnqFullCode(clientOrgMaster.getOrgCode() + cmaster.getCustomerCityCode() + cmaster.getCustomerCode()+String.valueOf(enqCode));
+		}
+		else {
+			throw new Exception("Cannot generATE fULL CODE");
 		}
 		if(StringUtils.isBlank(emaster.getEnqAttendee()) || emaster.getEnqDate() == null ) {
 			throw new Exception();

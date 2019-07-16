@@ -121,18 +121,23 @@ public class EnquiryDAOImpl implements EnquiryDAO {
         return qry.getResultList();
     }
 
-    public Long findEnqCode(String customerCode) {
+
+    @Override
+    public Long findEnqCode(String orgCode, String stateCode, String customerCode) {
         Long result = new Long(0);
-        Query qry =  em.createQuery("Select max(enquiryCode) from SciEnquiryMaster em where em.enqCustomerCode =:enq_customer_code" );
-       qry.setParameter("enq_customer_code",customerCode);
-       List results = qry.getResultList();
-       if(results.size() ==0 ) {
-           return result;
-       }
-       else {
+        Query qry =  em.createNativeQuery("select nvl(max(enq_code),0)+1 from sci_enquiry_master where enq_customer_code =:customer_code and enq_statecity_code =:statecode and enq_org_code=:orgCode" );
+        qry.setParameter("customer_code",customerCode);
+        qry.setParameter("statecode",stateCode);
+        qry.setParameter("orgCode",orgCode);
+
+        List results = qry.getResultList();
+        if(results.size() ==0 ) {
+            return result;
+        }
+        else {
             result = (Long) results.get(0);
 
-       }
+        }
         return result;
     }
 

@@ -23,7 +23,8 @@ public interface EnquiryDAO {
 
 	public List loadEnquiryDocs(SciEnquiryMaster enquiryMaster);
 
-	public Long findEnqCode(String customerCode);
+
+	public Long findEnqCode(String orgCode,String stateCode,String customerCode);
 
 
 
