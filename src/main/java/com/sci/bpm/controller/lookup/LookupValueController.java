@@ -64,7 +64,7 @@ public class LookupValueController extends SciBaseController {
 SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope().get("selectedClientOrg");
 		BeanUtils.copyProperties(master, value);
 		String customerCode = service.selectCustomerCode(String.valueOf(clientOrgMaster.getSeqClientOrgId()));
-		master.setCustomerCode(customerCode);
+		master.setCustomerCode(StringUtils.trim(customerCode));
 		master.setUpdatedDate(new java.util.Date());
 		master.setUpdatedBy(getUserPreferences().getUserID());
 		master.setSciClientOrgMaster(clientOrgMaster);

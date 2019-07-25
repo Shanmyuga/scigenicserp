@@ -1,5 +1,6 @@
 package com.sci.bpm.dao.marketing;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -135,7 +136,7 @@ public class EnquiryDAOImpl implements EnquiryDAO {
             return result;
         }
         else {
-            result = (Long) results.get(0);
+            result = ((BigDecimal) results.get(0)).longValue();
 
         }
         return result;
