@@ -63,6 +63,9 @@ public class LookupValueController extends SciBaseController {
 		SciCustomerMaster master = new SciCustomerMaster();
 SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope().get("selectedClientOrg");
 		BeanUtils.copyProperties(master, value);
+		if(StringUtils.isBlank(master.getCustomerPhone()) || StringUtils.isBlank(master.getCustomerEmail() )|| StringUtils.isBlank(master.getCusomterCity())) {
+			throw new Exception("Customer phone ,email and city codes are mandatory");
+		}
 		String customerCode = service.selectCustomerCode(String.valueOf(clientOrgMaster.getSeqClientOrgId()));
 		master.setCustomerCode(StringUtils.trim(customerCode));
 		master.setUpdatedDate(new java.util.Date());
@@ -343,7 +346,7 @@ SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope()
 		System.out.println("filter " + filter);
 		List<SciClientOrgMaster> configurationList = new ArrayList<SciClientOrgMaster>();
 		for(SciClientOrgMaster m : master) {
-			if(m.getOrgName().matches(".*"+filter+".*")) {
+			if(m.getOrgName().toLowerCase().contains(filter.toLowerCase())) {
 				configurationList.add(m);
 			}
 		}

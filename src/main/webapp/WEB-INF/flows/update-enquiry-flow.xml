@@ -20,6 +20,11 @@
             <webflow:evaluate expression="enqcont.selectClientOrg"/>
         </webflow:transition>
 
+        <webflow:transition on="filterReport" to="addlookup">
+            <webflow:evaluate expression="lookupcontbean.bind"/>
+            <webflow:evaluate expression="lookupcontbean.filterReportByClientOrgName"/>
+
+        </webflow:transition>
         <webflow:transition on="loadCity" to="addlookup">
             <webflow:evaluate expression="enqcont.bind"/>
             <webflow:evaluate expression="enqcont.loadCities"/>

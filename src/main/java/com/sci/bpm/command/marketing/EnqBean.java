@@ -51,6 +51,7 @@ public class EnqBean implements Serializable {
     private String orgStateCityCode;
 
     private MultipartFile fileDoc;
+    private String reportFilter;
 
     public Long getSeqEnqMasterId() {
         return seqEnqMasterId;
@@ -318,5 +319,13 @@ public class EnqBean implements Serializable {
 
     public void setEnqFullCode(String enqFullCode) {
         this.enqFullCode = enqFullCode;
+    }
+
+    public String getReportFilter() {
+        return reportFilter;
+    }
+
+    public void setReportFilter(String reportFilter) {
+        this.reportFilter = reportFilter;
     }
 }

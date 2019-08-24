@@ -14,6 +14,14 @@
 
 <form:form modelAttribute="enqbean" name="enqbean"  enctype="multipart/form-data">
     <div width="787px"  style="float:left;">
+        <table>
+            <tr><td colspan="2">
+                <label for="tags">Select Organization by Name: </label></td>  </tr>
+            <tr><td>
+                <form:input path="reportFilter" size="100" /></td><td>
+                <input type="button" value="Filter Client" onclick="eventdirect('filterReport')"/></td>  </tr>
+
+        </table>
         <table  cellspacing="5" cellpadding="5" align="left" border="0" >
 
 
@@ -222,4 +230,13 @@
     }
 
 
+</script>
+<script>
+    $( function() {
+        var temp = "<c:out value='${clientOrgNames}'/>";
+        var availableTags =temp.split('|');
+        $( "#reportFilter" ).autocomplete({
+            source: availableTags
+        });
+    } );
 </script>
