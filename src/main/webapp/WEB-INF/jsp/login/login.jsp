@@ -6,7 +6,7 @@
 <% System.out.println("shanmuga"); %>
 
 </div>
-<div width="787px"  style="float:left;height:87px;padding-left:200px">
+<div width="787px" class="form-group" style="float:left;height:87px;padding-left:200px">
 <form:form modelAttribute="loginbean" >
 
 <table border="0" width="100%" cellpadding="10x" height="70px" >

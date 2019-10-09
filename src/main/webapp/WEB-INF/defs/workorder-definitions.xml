@@ -224,6 +224,12 @@
      
       <put-attribute name="body" value="/WEB-INF/jsp/mi/stworkorder.jsp" />
   </definition>
+
+    <definition name="sprintjob.add"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/mi/addSprintJobDesc.jsp" />
+    </definition>
   <definition name="mi.update"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
   <put-attribute name="menu" value="usermenu.jsp" />
      
