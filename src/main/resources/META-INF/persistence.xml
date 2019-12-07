@@ -48,14 +48,14 @@
 		<properties>
 			<property name="hibernate.connection.driver_class"
 				value="oracle.jdbc.driver.OracleDriver" />
-			<!-- <property name="hibernate.connection.url"
+			 <property name="hibernate.connection.url"
              value="jdbc:oracle:thin:@//192.168.1.115:32771/xe.oraslim.com" />
 
 
-<property name="hibernate.connection.url"
-               value="jdbc:oracle:thin:@//localhost:1521/XE" />-->
+<!--<property name="hibernate.connection.url"
+               value="jdbc:oracle:thin:@//localhost:1521/XE" />
    <property name="hibernate.connection.url"
-             value="jdbc:oracle:thin:@//210.18.138.222:8055/xe.oraslim.com" />
+             value="jdbc:oracle:thin:@//210.18.138.222:8055/xe.oraslim.com" />-->
               <property name="hibernate.connection.username"
                   value="scigenics" />
               <property name="hibernate.connection.password"

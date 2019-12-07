@@ -1,6 +1,7 @@
 package com.sci.bpm.controller.po;
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -325,6 +326,8 @@ public class PurchaseOrderController extends SciBaseController {
 		List poitemlist = new ArrayList();
 		int idx = 1;
 		HashMap<String, String> itemkeymap = new HashMap();
+		DecimalFormat df = new DecimalFormat("#.##");
+
 		for (int count = 1; count <= itemlist.size(); count++) {
 			SciPurchItemMaster itemmaster = itemlist.get(count - 1);
 
@@ -338,7 +341,7 @@ public class PurchaseOrderController extends SciBaseController {
 					itemmaster.getItemDescription());
 
 			String[] estimatedCost = StringUtils.splitByWholeSeparator(
-					String.valueOf(itemmaster.getItemEstimatedCost()), ".");
+					String.valueOf(df.format(itemmaster.getItemEstimatedCost())), ".");
 			System.out.println(estimatedCost.length);
 			System.out.println(itemmaster.getItemEstimatedCost());
 			if (estimatedCost.length > 1) {
@@ -355,8 +358,9 @@ public class PurchaseOrderController extends SciBaseController {
 			System.out.println(itemmaster.getItemQty());
 			Float itemunitCost = itemmaster.getItemEstimatedCost()
 					/ Float.parseFloat(itemmaster.getItemQty());
+
 			String[] unitcost = StringUtils.splitByWholeSeparator(
-					String.valueOf(itemunitCost), ".");
+					String.valueOf(df.format(itemunitCost)), ".");
 			if (unitcost.length > 1) {
 				items.setUnitprice(unitcost[0]);
 				if (unitcost[1].length() == 1) {
@@ -395,7 +399,7 @@ public class PurchaseOrderController extends SciBaseController {
 
 		if (selected.getItemTotalCost() != null) {
 			String[] itemTotalCost = StringUtils.splitByWholeSeparator(
-					String.valueOf(selected.getItemTotalCost()), ".");
+					String.valueOf(df.format(selected.getItemTotalCost())), ".");
 			if (itemTotalCost.length > 1) {
 				ptype.setItemtotal(itemTotalCost[0]);
 				if (itemTotalCost[1].length() == 1) {
@@ -409,7 +413,7 @@ public class PurchaseOrderController extends SciBaseController {
 		}
 		if (selected.getPoTotalcost() != null) {
 			String[] poTotalCost = StringUtils.splitByWholeSeparator(
-					String.valueOf(selected.getPoTotalcost()), ".");
+					String.valueOf(df.format(selected.getPoTotalcost())), ".");
 			if (poTotalCost.length > 1) {
 				ptype.setTotalCost(poTotalCost[0]);
 				if (poTotalCost[1].length() == 1) {

@@ -68,7 +68,7 @@ public class POFopProcessorServlet extends HttpServlet {
 			this.fopFactory.setURIResolver(this.uriResolver);
 			String poxml = (String) request.getSession(true)
 					.getAttribute("poxml");
-			
+			System.out.println(poxml);
 			if(poxml == null) {
 
 			}
