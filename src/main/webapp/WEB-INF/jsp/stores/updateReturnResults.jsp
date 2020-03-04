@@ -40,6 +40,8 @@
 </display:column>
 <display:column sortable="true"   title="Returned QTY" property="retQuantity"  >
 </display:column>
+<display:column sortable="true"   title="Returned Date" property="retDate"  >
+</display:column>
 <display:column sortable="true"   title="Estimated to be  Returned " property= "actualReturnQty"   >
 </display:column>
 
