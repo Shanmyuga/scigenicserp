@@ -207,7 +207,7 @@ public class StoreDAOImpl implements StoresDAO {
 		// TODO Auto-generated method stub
 
 		
-		String query = "Select distinct m from SciAvailableMaterials m ,SciMattypeMaster mt where mt.matCode  = substr(m.matcode,1,2) and m.availQty <> '0.0' ";
+		String query = "Select distinct m from SciAvailableMaterials m ,SciMattypeMaster mt where mt.matCode  = substr(m.matcode,1,2) and m.availQty not in ( '0.0','0')  ";
 		// Query query = em.createQuery("Select * from SciMatindMaster m ");
 		Map parameters = new HashMap();
 		String whereClause = "";
