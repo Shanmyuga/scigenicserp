@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -119,6 +120,9 @@ public class StoresManagerController extends SciBaseController {
         SciStoreMiMaster storems = service.getStoreData(mast.getSeqMiId());
         if (!NumberUtils.isNumber(bean.getReceivedCnt())) {
                 throw new Exception("the received quantity is not a number");
+        }
+        else {
+        	bean.setReceivedCnt(StringUtils.strip(bean.getReceivedCnt()));
         }
         if (storems == null) {
             storems = new SciStoreMiMaster();
