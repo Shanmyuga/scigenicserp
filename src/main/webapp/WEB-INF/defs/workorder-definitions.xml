@@ -85,7 +85,16 @@
      
       <put-attribute name="body" value="mi.add.body" />
   </definition>
-  
+   <definition name="mi.add"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+     
+      <put-attribute name="body" value="mi.add.body" />
+  </definition>
+    <definition name="mi.add.group"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/mi/addGroupMaterialIndent.jsp" />
+    </definition>
     <definition name="mi.add.body" template="/WEB-INF/jsp/mi/addMaterialIndent.jsp" >
  
      
@@ -96,6 +105,11 @@
      
       <put-attribute name="body" value="/WEB-INF/jsp/mi/viewMatSpecs.jsp" />
   </definition>
+    <definition name="mi.viewAddmatspec"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/mi/addAdditionalMaterialIndent.jsp" />
+    </definition>
   <definition name="mi.viewmilist"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
   <put-attribute name="menu" value="usermenu.jsp" />
      

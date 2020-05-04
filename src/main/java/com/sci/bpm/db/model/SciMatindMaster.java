@@ -44,6 +44,9 @@ public class SciMatindMaster implements java.io.Serializable {
 	private Date updatedDate;
 	private String designRef;
 	private String drawingRef;
+	private Long matGroupMiId;
+	
+	private String isGroupMiId;
 	
 	 private BigDecimal matEstcost;
 		private String approvedStatus;
@@ -520,5 +523,23 @@ private String miForType;
 		public void setMiForType(String miForType) {
 			this.miForType = miForType;
 		}
+		@Column(name = "MAT_GROUP_MI_ID",precision = 22)
+		public Long getMatGroupMiId() {
+			return matGroupMiId;
+		}
+
+		public void setMatGroupMiId(Long matGroupMiId) {
+			this.matGroupMiId = matGroupMiId;
+		}
+		@Column(name = "IS_GROUP_MI_ID", length = 1)
+		public String getIsGroupMiId() {
+			return isGroupMiId;
+		}
+
+		public void setIsGroupMiId(String isGroupMiId) {
+			this.isGroupMiId = isGroupMiId;
+		}
+		
+		
 		
 }

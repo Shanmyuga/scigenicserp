@@ -130,7 +130,14 @@
 </form:select>
 </td>
 
-
+ <td> Group MI</td>
+ <td>
+  <form:select path="isGroupMiId" size="1" id="isGroupMiId" >
+   <form:option value="">ALL</form:option>
+   <form:option value="Y">Yes</form:option>
+   <form:option value="N">No</form:option>
+  </form:select>
+ </td>
  <td colspan="2" align="right"><input type="button" value="Search MI" onclick="eventdirect('searchMI')"/></td>
 
 </tr>
@@ -141,7 +148,11 @@
 <form:radiobutton path="miindexID"  value='${row.seqMiId}'></form:radiobutton>
 </c:if>
 </display:column>
+<display:column sortable="true"  title="Select For Group MI "  media="html" >
 
+<form:radiobutton path="miindexID"  value='${row.seqMiId}'></form:radiobutton>
+
+</display:column>
 <display:column sortable="true"  title="Request Status"  property="requestStatus" >
 
 </display:column>
@@ -175,6 +186,12 @@
 <display:column sortable="true"  title="PO Remarks"  property="poDetails" >
 
 </display:column>
+ <display:column sortable="true"  title="IS Group MI"  property="isGroupMiId" >
+
+ </display:column>
+ <display:column sortable="true"  title="Parent Group MI ID"  property="matGroupMiId" >
+
+ </display:column>
 <display:column sortable="true"  title="PO Due Date"  property="podueDate" >
 
 </display:column>
@@ -192,6 +209,7 @@
  <c:if test="${fn:length(workmis) > 0}">
 <p align="left" style="padding-left:10px">
  <input type="button" value="Create Store Request" onclick="javascript:addRemarks('storerequest')"/>
+  <input type="button" value="Convert to Group MI" onclick="javascript:addRemarks('addGroupMI')"/>
  </p>
 </c:if>
 </form:form>

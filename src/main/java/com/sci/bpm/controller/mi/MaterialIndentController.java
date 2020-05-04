@@ -3,6 +3,7 @@ package com.sci.bpm.controller.mi;
 import java.math.BigDecimal;
 import java.util.*;
 
+import com.sci.bpm.command.mi.AdditionalInfoCommand;
 import com.sci.bpm.db.model.*;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
@@ -54,6 +55,8 @@ public class MaterialIndentController extends SciBaseController {
 
 			SciWorkorderMaster wmaster = (SciWorkorderMaster) wlist.get(Integer
 					.parseInt(wrkcommand.getWindex()) - 1);
+			SciMatindMaster groupMaster = (SciMatindMaster) context
+					.getFlowScope().get("groupMI");
 
 			for (MatCollectionCommand mi : matslist) {
 				SciMatindMaster master = new SciMatindMaster();
@@ -78,6 +81,8 @@ public class MaterialIndentController extends SciBaseController {
 	               String cat = getDelimitedTokens(mi.getProductCat(), 0);
 				master.setMatType(prservice.getMatType(cat, dept));
 				master.setApprovedStatus("N");
+				master.setIsGroupMiId("N");
+				master.setMatGroupMiId(groupMaster ==null ?null:groupMaster.getSeqMiId());
 				master.setMatSpec(mi.getMatSpec());
 				master.setPurStatus(getLookupservice().loadIDData("MI_OPEN"));
 				master.setUpdatedBy(getUserPreferences().getUserID());
@@ -185,6 +190,26 @@ public class MaterialIndentController extends SciBaseController {
 		master.setSciWorkorderMaster(wmaster);
 		List milist = service.searchMIWorkOrder(master,command);
 		context.getFlowScope().put("workmis", milist);
+		return success();
+	}
+	public Event backAddMI(RequestContext context) throws Exception {
+		context.getFlowScope().remove("groupMI");
+		context.getFlowScope().remove("workGroupmis");
+		return success();
+	}
+	public Event searchGroupMIWorkOrder(RequestContext context) throws Exception {
+		MatindCommand command = (MatindCommand) getFormObject(context);
+
+		SciMatindMaster master = new SciMatindMaster();
+		SciWorkorderMaster wmaster = (SciWorkorderMaster) context
+				.getFlowScope().get("selectedwo");
+		master.setSciWorkorderMaster(wmaster);
+		SciMatindMaster groupMaster = (SciMatindMaster) context
+				.getFlowScope().get("groupMI");
+		command.setIsGroupMiId("");
+		command.setMatGroupMiId(groupMaster.getSeqMiId());
+		List milist = service.searchMIWorkOrder(master,command);
+		context.getFlowScope().put("workGroupmis", milist);
 		return success();
 	}
 	public Event searchforApproveMI(RequestContext context) throws Exception {
@@ -598,7 +623,23 @@ public class MaterialIndentController extends SciBaseController {
 		}
 		return (String) mylist.get(position);
 	}
-	
+	public Event createGroupMI(RequestContext context) throws Exception {
+		MatindCommand command = (MatindCommand) getFormObject(context);
+		List<SciMatindMaster> masterList = (List<SciMatindMaster>) context.getFlowScope().get("workmis");
+		SciMatindMaster master = selectMI(masterList, command.getMiindexID());
+		if(master.getMatGroupMiId() != null) {
+			return  error();
+		}
+		if(!"Y".equalsIgnoreCase(master.getIsGroupMiId())) {
+			master.setIsGroupMiId("Y");
+			master.setUpdatedBy(getUserPreferences().getUserID());
+			master.setUpdatedDate(new Date());
+			service.updateMI(master);
+		}
+
+context.getFlowScope().put("groupMI",master);
+		return success();
+	}
 	public Event loadOpenMIList(RequestContext context) {
 	
 		SciMatindMaster master = new SciMatindMaster();
@@ -664,12 +705,20 @@ public class MaterialIndentController extends SciBaseController {
 			MatCollectionCommand comamnd1 = (MatCollectionCommand)matcollection.get(idx);
 			if(idx == Integer.parseInt(command.getSelectedIdx())) {
 			comamnd1.setProductSpecid(command.getMatCodeselected().substring(0, 5));
+				System.out.println(comamnd1.getProductSpecid());
 			comamnd1.setMatSpec(command.getMatCodeselected().substring(6, command.getMatCodeselected().length()));
 			}
 			
 		}
 		return success();
 		
+	}
+
+
+	public Event loadAddInfoMaster(RequestContext context) throws Exception {
+
+		return success();
+
 	}
 	private SciVendorMaster getVendorMaster(List<SciVendorMaster> master,
 			Long seqVendorID) {

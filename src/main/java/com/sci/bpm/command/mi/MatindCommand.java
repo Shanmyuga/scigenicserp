@@ -45,6 +45,7 @@ public class MatindCommand implements Serializable {
 	private String strapproval;
 	private String remarks;
 	private List<MatCollectionCommand> matList = new ArrayList();
+	private List<AdditionalInfoCommand> additionalInfoCommandList = new ArrayList();
 	private String dept;
 	private String specdesc;
 	private String selectedIdx;
@@ -70,6 +71,8 @@ public class MatindCommand implements Serializable {
 	private String status;
 	public String[] purStatusarr;
 	private Date sentDate;
+	private String isGroupMiId;
+	private Long matGroupMiId;
 
 	public Long getSeqWorkorderId() {
 		return seqWorkorderId;
@@ -703,5 +706,29 @@ public class MatindCommand implements Serializable {
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	public String getIsGroupMiId() {
+		return isGroupMiId;
+	}
+
+	public void setIsGroupMiId(String isGroupMiId) {
+		this.isGroupMiId = isGroupMiId;
+	}
+
+	public Long getMatGroupMiId() {
+		return matGroupMiId;
+	}
+
+	public void setMatGroupMiId(Long matGroupMiId) {
+		this.matGroupMiId = matGroupMiId;
+	}
+
+	public List<AdditionalInfoCommand> getAdditionalInfoCommandList() {
+		return additionalInfoCommandList;
+	}
+
+	public void setAdditionalInfoCommandList(List<AdditionalInfoCommand> additionalInfoCommandList) {
+		this.additionalInfoCommandList = additionalInfoCommandList;
 	}
 }

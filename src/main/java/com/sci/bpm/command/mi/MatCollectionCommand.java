@@ -8,11 +8,12 @@ import java.util.Date;
 
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 public class MatCollectionCommand implements Serializable {
 	
-private String  productCat ;
-private String  productType ;
+    private String  productCat ;
+    private String  productType ;
 	private Long seqprodID ;
 	
 	private BigDecimal matQty = null;
@@ -29,6 +30,7 @@ private String  productType ;
 	private String matindex;
 	private String matSpec;
 	private String matEstUnitCost;
+
 	
 	public String getMatEstUnitCost() {
 		return matEstUnitCost;
@@ -100,6 +102,7 @@ private String  productType ;
 		return null;
 	}
 	public void setMatDuedate(Date matDuedate) {
+
 		this.matDuedate = matDuedate;
 	}
 	
@@ -155,5 +158,7 @@ private String  productType ;
 	public void setMiForType(String miForType) {
 		this.miForType = miForType;
 	}
-	
+
+
+
 }

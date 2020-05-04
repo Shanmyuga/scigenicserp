@@ -295,6 +295,14 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 			whereClause = whereClause + " and m.purStatus = :purStatus ";
 			parameters.put("purStatus", command1.getPurStatus());
 		}
+		if (command1.getIsGroupMiId() != null &&  !"".equals(command1.getIsGroupMiId())) {
+			whereClause = whereClause + " and m.isGroupMiId = :isGroupMiId ";
+			parameters.put("isGroupMiId", command1.getIsGroupMiId());
+		}
+		if (command1.getMatGroupMiId() != null && command1.getMatGroupMiId() != 0) {
+			whereClause = whereClause + " and m.matGroupMiId = :matGroupMiId ";
+			parameters.put("matGroupMiId", command1.getMatGroupMiId());
+		}
 		wquery = em.createQuery(query + whereClause);
 		Iterator keyset = parameters.keySet().iterator();
 		while (keyset.hasNext()) {
@@ -403,13 +411,15 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 	}
 
 	public void updateMI(SciMatindMaster master) {
-		String query = "update SciMatindMaster set recommend = :reco ,updatedBy=:updatedBy ,updatedDate= :updatedDate "
+		String query = "update SciMatindMaster set isGroupMiId =:isGroupMiId ,recommend = :reco ,updatedBy=:updatedBy ,updatedDate= :updatedDate "
 			+ " where seqMiId = :seqmiid";
 	Query wquery = em.createQuery(query);
 	wquery.setParameter("reco", master.getRecommend());
 	wquery.setParameter("updatedBy", master.getUpdatedBy());
 	wquery.setParameter("updatedDate", new Date());
 	wquery.setParameter("seqmiid", master.getSeqMiId());
+
+		wquery.setParameter("isGroupMiId", master.getIsGroupMiId());
 	wquery.executeUpdate();
 
 		
