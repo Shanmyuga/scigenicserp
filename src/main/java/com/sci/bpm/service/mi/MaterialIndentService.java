@@ -3,6 +3,7 @@ package com.sci.bpm.service.mi;
 import java.util.List;
 
 import com.sci.bpm.command.mi.MatindCommand;
+import com.sci.bpm.db.model.SciMIAdditionalInfoDTO;
 import com.sci.bpm.db.model.SciMatindMaster;
 import com.sci.bpm.db.model.SciStoresRequest;
 import com.sci.bpm.db.model.SciSubcontJobstatus;
@@ -20,7 +21,7 @@ public interface MaterialIndentService {
 	public void updateMI(SciMatindMaster master);
 	public void mergeMI(SciMatindMaster master);
 	public void cancelMI(SciMatindMaster master);
-	
+	public List<SciMIAdditionalInfoDTO> loadAdditionalInfoMaster(String categoryId, String dept);
 	public List selectDesignDocs(SciMatindMaster command);
 	
 	public List loadOpenMI(SciMatindMaster command);

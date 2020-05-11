@@ -58,6 +58,7 @@ public class QualityControlBean implements Serializable {
 	private String seqWorkId;
 	private String ocStatus;
 	private String qcRefID;
+	private Long miindexID;
 	private String maxResults  = "500";
 	
 	public String getQcTestsApproval() {
@@ -304,5 +305,13 @@ public class QualityControlBean implements Serializable {
 
 	public void setIssueDate(String issueDate) {
 		this.issueDate = issueDate;
+	}
+
+	public Long getMiindexID() {
+		return miindexID;
+	}
+
+	public void setMiindexID(Long miindexID) {
+		this.miindexID = miindexID;
 	}
 }

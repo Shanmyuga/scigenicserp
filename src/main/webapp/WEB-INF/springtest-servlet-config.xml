@@ -64,7 +64,10 @@
     
 </bean>
 
-
+	<bean id="uploadTempDirResource"
+		  class="org.springframework.core.io.FileSystemResource">
+		<constructor-arg value="C:\\tools\\apache-tomcat-8.5.54\\apache-tomcat-8.5.54\\temp" />
+	</bean>
 
 	
 	

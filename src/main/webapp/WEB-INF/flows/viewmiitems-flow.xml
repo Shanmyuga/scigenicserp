@@ -18,6 +18,10 @@
             <webflow:evaluate expression="micont.bind"/>
             <webflow:evaluate expression="micont.loadMatCatItems"/>
         </webflow:transition>
+    <webflow:transition on="additionalInfo" to="entersearch">
+        <webflow:evaluate expression="micont.bind"/>
+        <webflow:evaluate expression="micont.viewAdditionalInfo"/>
+    </webflow:transition>
         <webflow:transition on="displaysubmit" to="entersearch">
             <webflow:evaluate expression="micont.bind"/>
             

@@ -64,12 +64,16 @@
 			</map>
 		</property>
 	</bean>
+	<!--<bean name="diskjob" class="com.sci.bpm.service.task.DiskWriterJob">
+		<property name="host" value="210.18.138.222"></property>
+		<property name="port" value="8055"></property>
+		<property name="diskfileloc" value="C:/temp/"></property>
+	</bean>-->
 	<bean name="diskjob" class="com.sci.bpm.service.task.DiskWriterJob">
 		<property name="host" value="192.168.1.115"></property>
 		<property name="port" value="32771"></property>
 		<property name="diskfileloc" value="/home/scigenics/datafolder/"></property>
 	</bean>
-
 	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
 		<property name="jobDetail" ref="exampleJob" />
 		<property name="startDelay" value="10000" />
@@ -137,12 +141,11 @@
 	<bean id="exceptionresol" class="com.sci.bpm.controller.base.Scigenics" />
 
 	<bean id="docfilelocation" class="com.sci.bpm.command.design.DocPropery">
-		 <property name="docfilelocation" value="/home/scigenics/datafolder/"></property>
-		
-		<!-- <property name="docfilelocation" value="d:/datafolder/"></property>-->
-		
-		
-	</bean>
-</beans>
-	
-	
+		<property name="docfilelocation" value="/home/scigenics/datafolder/"></property>
+
+		<!--<property name="docfilelocation" value="c:/temp/"></property>-->
+
+
+            </bean>
+        </beans>
+

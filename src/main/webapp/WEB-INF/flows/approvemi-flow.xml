@@ -14,6 +14,11 @@
             <webflow:evaluate expression="micont.selectapproveMI"/>
             
         </webflow:transition>
+    <webflow:transition on="additionalInfo" to="entersearch">
+        <webflow:evaluate expression="micont.bind"/>
+        <webflow:evaluate expression="micont.viewAdditionalInfo"/>
+
+    </webflow:transition>
          <webflow:transition on="rejectMI" to="entersearch">
             <webflow:evaluate expression="micont.bind"/>
             <webflow:evaluate expression="micont.selectRejectMI"/>

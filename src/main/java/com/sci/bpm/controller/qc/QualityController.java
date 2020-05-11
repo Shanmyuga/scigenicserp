@@ -3,6 +3,9 @@ package com.sci.bpm.controller.qc;
 import java.util.Date;
 import java.util.List;
 
+import com.sci.bpm.command.mi.MatindCommand;
+import com.sci.bpm.db.model.SciMatindMaster;
+import com.sci.bpm.service.mi.MaterialIndentService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +30,8 @@ public class QualityController extends SciBaseController {
 
 	@Autowired
 	private QCService service;
-
+	@Autowired
+	private MaterialIndentService materialIndentService;
 	@Autowired
 	private StoreService storeservice;
 	@Autowired
@@ -107,7 +111,16 @@ public class QualityController extends SciBaseController {
 		context.getFlowScope().put("qcallupdateditems", mylist);
 		return success();
 	}
-	
+	public Event viewAdditionalInfo(RequestContext context) throws Exception {
+		QualityControlBean command = (QualityControlBean) getFormObject(context);
+		SciMatindMaster master = this.materialIndentService.loadMI(command.getMiindexID());
+
+
+		context.getExternalContext().getSessionMap().put("addDocInfos", master.getMatInfoDocsEntities());
+		context.getFlowScope().put("addInfos",master.getMatInfos());
+		context.getFlowScope().put("addDocInfos",master.getMatInfoDocsEntities());
+		return success();
+	}
 	public Event loadAllQCItemsDocs(RequestContext context) throws Exception {
 		QualityControlBean bean = (QualityControlBean) getFormObject(context);
 		List mylist = service.loadAllListDocs(bean);

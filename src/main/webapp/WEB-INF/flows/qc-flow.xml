@@ -10,6 +10,12 @@
             <webflow:evaluate expression="qccont.loadQCItems"/>
       
        </webflow:transition>
+
+    <webflow:transition on="additionalInfo" to="entersearch">
+        <webflow:evaluate expression="qccont.bind"/>
+        <webflow:evaluate expression="qccont.viewAdditionalInfo"/>
+
+    </webflow:transition>
         <webflow:transition on="addQCResult" to="entersearch">
             <webflow:evaluate expression="qccont.bind"/>
             <webflow:evaluate expression="qccont.addQCResults"/>

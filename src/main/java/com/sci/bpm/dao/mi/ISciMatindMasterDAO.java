@@ -3,6 +3,7 @@ package com.sci.bpm.dao.mi;
 import java.util.List;
 
 import com.sci.bpm.command.mi.MatindCommand;
+import com.sci.bpm.db.model.SciMIAdditionalInfoDTO;
 import com.sci.bpm.db.model.SciMatindMaster;
 import com.sci.bpm.db.model.SciStoresRequest;
 import com.sci.bpm.db.model.SciSubcontJobstatus;
@@ -139,6 +140,6 @@ public interface ISciMatindMasterDAO {
 	public void addSubContStatus(SciSubcontJobstatus jobstatus);
 	public List<SciSubcontJobstatus> getRecentSubcontJobStatus(Long seqWorkID);
 	public List<SciSubcontJobstatus> getLoadDetails(Long jobCode,String jobType,Long seqWorkId);
-	
+	public List<SciMIAdditionalInfoDTO> loadAdditionalInfoMaster(String categoryId, String dept);
 	
 }

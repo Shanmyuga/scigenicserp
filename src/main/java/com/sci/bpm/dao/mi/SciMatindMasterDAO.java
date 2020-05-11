@@ -1,28 +1,17 @@
 package com.sci.bpm.dao.mi;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.sci.bpm.db.model.*;
 import org.springframework.stereotype.Repository;
 
 import com.sci.bpm.command.design.DrawingDetailsBean;
 import com.sci.bpm.command.mi.MatindCommand;
-import com.sci.bpm.db.model.SciDrawingRef;
-import com.sci.bpm.db.model.SciMatcatMaster;
-import com.sci.bpm.db.model.SciMatindMaster;
-import com.sci.bpm.db.model.SciStoreissueMaster;
-import com.sci.bpm.db.model.SciStoresRequest;
-import com.sci.bpm.db.model.SciSubcontJobstatus;
-import com.sci.bpm.db.model.SciWorkorderMaster;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -826,7 +815,18 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		return query.getResultList();
 	}
 
-	
-	
-	
+	@Override
+	public List<SciMIAdditionalInfoDTO> loadAdditionalInfoMaster(String categoryId, String dept) {
+		Query query = em.createQuery("Select m from SCI_MATERIAL_ADDINFO_MASTER m where m.materialCatDept=:matcatDept and m.materialCatId=:matcatId");
+
+		query.setParameter("matcatDept",dept);
+		query.setParameter("matcatId",categoryId);
+		List<SciMaterialAdditionalInfoMasterEntity> list = query.getResultList();
+		if(list.size() ==1) {
+			return new ArrayList<SciMIAdditionalInfoDTO>(Arrays.asList(list.get(0).getAdditionalInfo()));
+		}
+		return  null;
+	}
+
+
 }

@@ -42,6 +42,7 @@
             <webflow:evaluate expression="micont.bind"/>
             <webflow:evaluate expression="micont.createGroupMI"/>
         </webflow:transition>
+
         <webflow:transition on="loadSpecs" to="viewMispecs">
             <webflow:evaluate expression="micont.bind"/>
             <webflow:evaluate expression="micont.loadProductspecs"/>
@@ -50,6 +51,10 @@
             <webflow:evaluate expression="micont.bind"/>
             <webflow:evaluate expression="micont.loadCatProducts"/>
         </webflow:transition>
+    <webflow:transition on="additionalInfo" to="addMI">
+        <webflow:evaluate expression="micont.bind"/>
+        <webflow:evaluate expression="micont.viewAdditionalInfo"/>
+    </webflow:transition>
           <webflow:transition on="loadCategory" to="addMI">
             <webflow:evaluate expression="micont.bind"/>
             <webflow:evaluate expression="micont.loadMatCatItems"/>
@@ -93,15 +98,12 @@
         </webflow:transition>
     </webflow:view-state>
     <webflow:view-state id="viewMispecs" view="mi.viewmatspec"  >
-    <webflow:transition on="selectspec" to="addMI" >
+    <webflow:transition on="selectspec" to="viewAddMispecs" >
     <webflow:evaluate expression="micont.bind"/>
             <webflow:evaluate expression="micont.selectSpecs"/>
     </webflow:transition>
 
-        <webflow:transition on="additionalInfo" to="viewAddMispecs" >
-            <webflow:evaluate expression="micont.bind"/>
-            <webflow:evaluate expression="micont.selectSpecs"/>
-        </webflow:transition>
+
     </webflow:view-state>
     <webflow:view-state id="viewGroupMispecs" view="mi.viewmatspec"  >
         <webflow:transition on="selectspec" to="addGroupMI" >
@@ -112,7 +114,7 @@
     <webflow:view-state id="viewAddMispecs" view="mi.viewAddmatspec"  >
         <webflow:transition on="addAdditionalMaterialMI" to="addMI" >
             <webflow:evaluate expression="micont.bind"/>
-            <webflow:evaluate expression="micont.selectSpecs"/>
+            <webflow:evaluate expression="micont.reviewAdditionalInfo"/>
         </webflow:transition>
     </webflow:view-state>
 <webflow:view-state id="viewmipage" view="mi.add"/>

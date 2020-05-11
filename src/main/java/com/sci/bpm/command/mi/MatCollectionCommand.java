@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
@@ -30,7 +32,7 @@ public class MatCollectionCommand implements Serializable {
 	private String matindex;
 	private String matSpec;
 	private String matEstUnitCost;
-
+	private List<AdditionalInfoCommand> additionalInfoCommandList = new ArrayList();
 	
 	public String getMatEstUnitCost() {
 		return matEstUnitCost;
@@ -159,6 +161,11 @@ public class MatCollectionCommand implements Serializable {
 		this.miForType = miForType;
 	}
 
+	public List<AdditionalInfoCommand> getAdditionalInfoCommandList() {
+		return additionalInfoCommandList;
+	}
 
-
+	public void setAdditionalInfoCommandList(List<AdditionalInfoCommand> additionalInfoCommandList) {
+		this.additionalInfoCommandList = additionalInfoCommandList;
+	}
 }

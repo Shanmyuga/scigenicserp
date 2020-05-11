@@ -3,6 +3,7 @@ package com.sci.bpm.service.mi;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import com.sci.bpm.db.model.SciMIAdditionalInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,8 +61,13 @@ public class MaterialIndentServiceImpl implements MaterialIndentService {
 	public void cancelMI(SciMatindMaster master) {
 		daoimpl.cancelMI(master);
 	}
-	
-	
+
+	@Override
+	public List<SciMIAdditionalInfoDTO> loadAdditionalInfoMaster(String categoryId, String dept) {
+		return daoimpl.loadAdditionalInfoMaster(categoryId,dept);
+	}
+
+
 	public List selectDesignDocs(SciMatindMaster command) {
 		// TODO Auto-generated method stub
 		return daoimpl.selectDesignDocs(command);

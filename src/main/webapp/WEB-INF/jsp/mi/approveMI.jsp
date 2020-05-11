@@ -90,12 +90,32 @@
 </display:column>
 
 
+ <c:if test="${fn:length(addInfos) > 0}">
+  <display:table export="true" sort="list"   pagesize="10" name="addInfos"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+   <display:column sortable="true"  title="Label"  property="addInfoLabel" >
+
+   </display:column>
+   <display:column sortable="true"  title="Value"  property="addInfoValue" >
+
+   </display:column>
+  </display:table>
+ </c:if>
+ <c:if test="${fn:length(addDocInfos) > 0}">
+  <display:table export="true" sort="list"   pagesize="10" name="addDocInfos"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+   <display:column sortable="true"  title="Label"  property="addinfoLabel" >
+
+   </display:column>
+   <display:column sortable="true"  title="File"   >
+    <a href="javascript:openfile('<c:out value="${row.seqMiAddDocsId}"/>')"><c:out value="${row.originalDocName}" /></a>
+   </display:column>
+  </display:table>
+ </c:if>
 </display:table>
 
 </div>
 <input type="hidden" name="_flowExecutionKey"  value="<c:out value="${flowExecutionKey}"/>" />
  <input type="hidden" name="_eventId"  id="_eventId" value="searchMI" >
- 
+ <input type="hidden" name="miindexID"  id="miindexID" value="submit" >
  <c:if test="${fn:length(milist) > 0}" >
 <div style="padding-left:10px;width:787px;float:left">
 <input type="button"  value="Check All " onclick="checkAll('miindex',true)"/>
@@ -104,7 +124,14 @@
   <input type="button"  value="Reject MI " onclick="eventdirect('rejectMI')"/>
  </div>
  </c:if>
+
+
 </form:form>
+
+ <form name="myloginform" action="streamer.MIAddInfoDocOpener" method="post">
+  <input type="hidden" name="key" id="key" value="workdes"/>
+  <input type="hidden" name="idkey" id="idkey" value=""/>
+ </form>
 </div>
 <form name="myloginform" action="streamer.servlet" method="post">
 <input type="hidden" name="key" id="key" value="workdes"/>
@@ -130,8 +157,16 @@ for(i =0;i<chklist.length;i++) {
 
 }
 
+
+
+function viewAddInfo(seqMIid) {
+ document.matindbean._eventId.value = 'additionalInfo';
+ document.matindbean.miindexID.value = seqMIid;
+ document.matindbean.submit();
+}
+
 function openfile(idkeyval) {
-document.myloginform.idkey.value=idkeyval;
-document.myloginform.submit();
+ document.myloginform.idkey.value=idkeyval;
+ document.myloginform.submit();
 }
 </script>

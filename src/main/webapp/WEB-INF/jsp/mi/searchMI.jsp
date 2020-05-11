@@ -15,9 +15,9 @@
 
 <tr>
 
-<td>Material Created date</td>
-<td><form:input path="createdDate" />
-<a href="javascript:show_calendar('document.matindbean.createdDate', document.matindbean.createdDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
+<td>Material Created From date</td>
+<td><form:input path="fromdate" />
+<a href="javascript:show_calendar('document.matindbean.fromdate', document.matindbean.fromdate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
 </td>
 <td>Approved MI</td>
 <td><form:checkbox path="approvalStatus" value="Y"/>
@@ -93,10 +93,9 @@ Cannot select different material code to create items.
 <form:checkbox  path="miindex"  value="${row_rowNum}"/>
 
 </display:column>
-
-<display:column sortable="true"   title="MI ID"  property="seqMiId">
-
-</display:column>
+ <display:column sortable="true"   title="MI ID"  media="html">
+  <a href="#" onclick="viewAddInfo('<c:out value='${row.seqMiId}'/>')" ><c:out value='${row.seqMiId}'></c:out></a>
+ </display:column>
 <display:column sortable="true"   title="Material Code" property="matcode" >
 
 </display:column>
@@ -140,21 +139,49 @@ Cannot select different material code to create items.
   </c:if>
  </display:column>
 </display:table>
+
+
+ <c:if test="${fn:length(addInfos) > 0}">
+  <display:table export="true" sort="list"   pagesize="10" name="addInfos"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+   <display:column sortable="true"  title="Label"  property="addInfoLabel" >
+
+   </display:column>
+   <display:column sortable="true"  title="Value"  property="addInfoValue" >
+
+   </display:column>
+  </display:table>
+ </c:if>
+ <c:if test="${fn:length(addDocInfos) > 0}">
+  <display:table export="true" sort="list"   pagesize="10" name="addDocInfos"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+   <display:column sortable="true"  title="Label"  property="addinfoLabel" >
+
+   </display:column>
+   <display:column sortable="true"  title="File"   >
+    <a href="javascript:openfile('<c:out value="${row.seqMiAddDocsId}"/>')"><c:out value="${row.originalDocName}" /></a>
+   </display:column>
+  </display:table>
+ </c:if>
 </div>
 <input type="hidden" name="_flowExecutionKey"  value="<c:out value="${flowExecutionKey}"/>" />
  <input type="hidden" name="_eventId"  id="_eventId" value="searchMI" >
+ <input type="hidden" name="miindexID"  id="miindexID" value="submit" >
 
 
  <c:if test="${fn:length(milist) > 0 && (matindbean.purStatus == Openmi || matindbean.purStatus == approveMI)}" >
 <div style="padding-left:10px;width:787px;float:left">
  <input type="button"  value="Create Item " onclick="eventdirect('createitem')"/>
  <input type="button"  value="Stock MI " onclick="eventdirect('stockMI')"/>
-  
+
  </div>
  </c:if>
 
  <c:out value="${openMI}"></c:out>
 </form:form>
+
+ <form name="myloginform" action="streamer.MIAddInfoDocOpener" method="post">
+  <input type="hidden" name="key" id="key" value="workdes"/>
+  <input type="hidden" name="idkey" id="idkey" value=""/>
+ </form>
 </div>
 </div>
 
@@ -165,5 +192,16 @@ function eventdirect(event) {
 document.getElementById('_eventId').value = event;
 
 document.matindbean.submit();
+}
+
+function viewAddInfo(seqMIid) {
+ document.matindbean._eventId.value = 'additionalInfo';
+ document.matindbean.miindexID.value = seqMIid;
+ document.matindbean.submit();
+}
+
+function openfile(idkeyval) {
+ document.myloginform.idkey.value=idkeyval;
+ document.myloginform.submit();
 }
 </script>

@@ -105,10 +105,32 @@
 <c:out value='${row.sciMiMaster.sciWorkorderMaster.sciCustomerMaster.customerName}'/>
 </display:column>
 </display:table>
+
+
+ <c:if test="${fn:length(addInfos) > 0}">
+  <display:table export="true" sort="list"   pagesize="10" name="addInfos"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+   <display:column sortable="true"  title="Label"  property="addInfoLabel" >
+
+   </display:column>
+   <display:column sortable="true"  title="Value"  property="addInfoValue" >
+
+   </display:column>
+  </display:table>
+ </c:if>
+ <c:if test="${fn:length(addDocInfos) > 0}">
+  <display:table export="true" sort="list"   pagesize="10" name="addDocInfos"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+   <display:column sortable="true"  title="Label"  property="addinfoLabel" >
+
+   </display:column>
+   <display:column sortable="true"  title="File"   >
+    <a href="javascript:openfile('<c:out value="${row.seqMiAddDocsId}"/>')"><c:out value="${row.originalDocName}" /></a>
+   </display:column>
+  </display:table>
+ </c:if>
 </div>
 <input type="hidden" name="_flowExecutionKey"  value="<c:out value="${flowExecutionKey}"/>" />
  <input type="hidden" name="_eventId"  id="_eventId" value="searchItem" >
- 
+ <input type="hidden" name="miindexID"  id="miindexID" value="submit" >
   <c:if test="${fn:length(qcitemslist) > 0 }" >
 <div style="padding-left:10px;width:787px;float:left">
 <table >
@@ -139,6 +161,10 @@
  
  
 </form:form>
+ <form name="myloginform" action="streamer.MIAddInfoDocOpener" method="post">
+  <input type="hidden" name="key" id="key" value="workdes"/>
+  <input type="hidden" name="idkey" id="idkey" value=""/>
+ </form>
 </div>
 </div>
 
@@ -149,5 +175,15 @@ function eventdirect(event) {
 document.getElementById('_eventId').value = event;
 
 document.qcbean.submit();
+}
+function viewAddInfo(seqMIid) {
+ document.qcbean._eventId.value = 'additionalInfo';
+ document.qcbean.miindexID.value = seqMIid;
+ document.qcbean.submit();
+}
+
+function openfile(idkeyval) {
+ document.myloginform.idkey.value=idkeyval;
+ document.myloginform.submit();
 }
 </script>

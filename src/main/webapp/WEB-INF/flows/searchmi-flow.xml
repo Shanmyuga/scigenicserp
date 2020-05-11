@@ -17,6 +17,10 @@
             <webflow:evaluate expression="micont.bind"/>
             <webflow:evaluate expression="micont.searchMI"/>
         </webflow:transition>
+    <webflow:transition on="additionalInfo" to="entersearch">
+        <webflow:evaluate expression="micont.bind"/>
+        <webflow:evaluate expression="micont.viewAdditionalInfo"/>
+    </webflow:transition>
          <webflow:transition on="loadCategory" to="entersearch">
             <webflow:evaluate expression="micont.bind"/>
             <webflow:evaluate expression="micont.loadMatCatItems"/>

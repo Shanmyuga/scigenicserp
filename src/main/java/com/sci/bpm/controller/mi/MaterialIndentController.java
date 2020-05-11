@@ -1,15 +1,20 @@
 package com.sci.bpm.controller.mi;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.SQLOutput;
+import java.sql.Time;
 import java.util.*;
 
 import com.sci.bpm.command.mi.AdditionalInfoCommand;
 import com.sci.bpm.db.model.*;
+import com.sci.bpm.service.task.DiskWriterJob;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 
@@ -39,6 +44,9 @@ public class MaterialIndentController extends SciBaseController {
 	@Autowired
 	private ProductMasterService prservice;
 
+
+	@Autowired
+	private DiskWriterJob writerJob;
 	/**
 	 * @param context
 	 * @return
@@ -76,6 +84,41 @@ public class MaterialIndentController extends SciBaseController {
 				if(master.getMiForType() == null || "".equals(master.getMiForType() )) {
 					throw new Exception();
 				}
+				for(AdditionalInfoCommand additionalInfoCommand :mi.getAdditionalInfoCommandList()) {
+					if(!additionalInfoCommand.getAdditionalInfoType().equals("File")) {
+						SciMiMaterialAddinfoEntity entity = new SciMiMaterialAddinfoEntity();
+						entity.setSeqMiId(master);
+						entity.setAddInfoLabel(additionalInfoCommand.getAdditionalInfoLabel());
+						if(additionalInfoCommand.getAdditionalInfoType().equals("Check")) {
+							entity.setAddInfoValue(String.join(",",additionalInfoCommand.getAdditionalDropValues()));
+						}
+						else {
+							entity.setAddInfoValue(additionalInfoCommand.getAdditionalDetailText());
+						}
+						entity.setInsertedDate(new Time(Calendar.getInstance().getTime().getTime()));
+						entity.setInsertedBy(getUserPreferences().getUserID());
+						if (entity.getAddInfoValue() != null && !StringUtils.isBlank(entity.getAddInfoValue())) {
+							master.getMatInfos().add(entity);
+						}
+					}
+					else {
+						SciAddMatInfoDocsEntity addMatInfoDocsEntity = new SciAddMatInfoDocsEntity();
+
+						addMatInfoDocsEntity.setSeqMiId(master);
+						addMatInfoDocsEntity.setDocData(additionalInfoCommand.getFileData());
+						addMatInfoDocsEntity.setOriginalDocName(additionalInfoCommand.getOriginalDocName());
+						addMatInfoDocsEntity.setDocType(additionalInfoCommand.getDocType());
+						addMatInfoDocsEntity.setAddinfoLabel(additionalInfoCommand.getAdditionalInfoLabel());
+						addMatInfoDocsEntity.setInsertedBy(getUserPreferences().getUserID());
+						addMatInfoDocsEntity.setInsertedDate(new Time(Calendar.getInstance().getTime().getTime()));
+						master.getMatInfoDocsEntities().add(addMatInfoDocsEntity);
+
+
+					}
+
+
+				}
+
 				master.setDrawingRef(command.getDrawingRef());
 	               String dept = getDelimitedTokens(mi.getProductCat(), 1);
 	               String cat = getDelimitedTokens(mi.getProductCat(), 0);
@@ -93,16 +136,18 @@ public class MaterialIndentController extends SciBaseController {
 				  master.setInsertedBy(getUserPreferences().getUserID()) ;
 				    master.setInsertedDate(new java.util.Date());
 				    System.out.println("mi data" + master.getMatQty());
+
 				service.addNewMI(master);
 				mi.reset();
 			}
-
+			writerJob.writeMIAdditionalDocs();
 			SciMatindMaster master = new SciMatindMaster();
 			master.setSciWorkorderMaster(wmaster);
 			List milist = service.searchMIWorkOrder(master,command);
 			context.getFlowScope().put("workmis", milist);
 			context.getFlowScope().remove("productspecmap");
 			context.getFlowScope().remove("productcatmap");
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -111,6 +156,8 @@ public class MaterialIndentController extends SciBaseController {
 		// service.addNewMI(master)
 		return success();
 	}
+
+
 
 	public Event searchMI(RequestContext context) throws Exception {
 		MatindCommand command = (MatindCommand) getFormObject(context);
@@ -560,6 +607,12 @@ public class MaterialIndentController extends SciBaseController {
 		return success();
 	}
 
+	public Event additionalInfo(RequestContext context) throws Exception {
+		List myprodlist = prservice.selectProdType();
+		context.getFlowScope().put("producttype", myprodlist);
+		return success();
+	}
+
 	public Event loadCatProducts(RequestContext context) throws Exception {
 		MatindCommand command = (MatindCommand) getFormObject(context);
 
@@ -640,6 +693,17 @@ public class MaterialIndentController extends SciBaseController {
 context.getFlowScope().put("groupMI",master);
 		return success();
 	}
+
+	public Event viewAdditionalInfo(RequestContext context) throws Exception {
+		MatindCommand command = (MatindCommand) getFormObject(context);
+		SciMatindMaster master = this.service.loadMI(command.getMiindexID());
+
+
+		context.getExternalContext().getSessionMap().put("addDocInfos", master.getMatInfoDocsEntities());
+		context.getFlowScope().put("addInfos",master.getMatInfos());
+		context.getFlowScope().put("addDocInfos",master.getMatInfoDocsEntities());
+		return success();
+	}
 	public Event loadOpenMIList(RequestContext context) {
 	
 		SciMatindMaster master = new SciMatindMaster();
@@ -700,12 +764,22 @@ context.getFlowScope().put("groupMI",master);
 	public Event selectSpecs(RequestContext context) throws Exception {
 		MatindCommand command = (MatindCommand) getFormObject(context);
 		List<MatCollectionCommand> matcollection = command.getMatList();
-		
+		List<AdditionalInfoCommand> addcommands = command.getAdditionalInfoCommandList();
+		List<SciMIAdditionalInfoDTO> miAdditionalInfoDTOS = new ArrayList<SciMIAdditionalInfoDTO>();
 		for(int idx =0;idx<matcollection.size();idx++) {
 			MatCollectionCommand comamnd1 = (MatCollectionCommand)matcollection.get(idx);
 			if(idx == Integer.parseInt(command.getSelectedIdx())) {
 			comamnd1.setProductSpecid(command.getMatCodeselected().substring(0, 5));
 				System.out.println(comamnd1.getProductSpecid());
+				System.out.println(comamnd1.getProductCat());
+				String[] catDetails = StringUtils.split(comamnd1.getProductCat(),',');
+				List<SciMIAdditionalInfoDTO> addDtos = service.loadAdditionalInfoMaster(catDetails[0],catDetails[1]);
+				if(addDtos != null) {
+					addDtos.stream().forEach(dto -> System.out.println(dto.getDatatype()));
+					addDtos.stream().forEach(dto -> addcommands.add(new AdditionalInfoCommand()));
+					context.getFlowScope().put("addInfoMessages",addDtos);
+				}
+
 			comamnd1.setMatSpec(command.getMatCodeselected().substring(6, command.getMatCodeselected().length()));
 			}
 			
@@ -714,12 +788,68 @@ context.getFlowScope().put("groupMI",master);
 		
 	}
 
+	public Event reviewAdditionalInfo(RequestContext context) throws Exception {
+		MatindCommand command = (MatindCommand) getFormObject(context);
+		List<MatCollectionCommand> matcollection = command.getMatList();
+		command.getAdditionalInfoCommandList().stream().forEach(dto-> {
+			if(dto.getAdditionalInfoType().equals("File")) {
+				if (dto.getAdditionalFile() != null && !dto.getAdditionalFile().isEmpty()) {
+					dto.setDocType(dto.getAdditionalFile().getContentType());
+					try {
+						dto.setFileData(dto.getAdditionalFile().getBytes());
+					} catch (IOException e) {
+						throw new RuntimeException((e.getMessage()));
+					}
+					System.out.println(dto.getAdditionalFile().getName());
+					dto.setOriginalDocName(dto.getAdditionalFile().getOriginalFilename());
 
-	public Event loadAddInfoMaster(RequestContext context) throws Exception {
+				}
+			}
 
+		});
+		for(int idx =0;idx<matcollection.size();idx++) {
+			MatCollectionCommand comamnd1 = (MatCollectionCommand)matcollection.get(idx);
+			if(idx == Integer.parseInt(command.getSelectedIdx())) {
+
+			 comamnd1.setAdditionalInfoCommandList(command.getAdditionalInfoCommandList());
+			}
+
+		}
+		if(!verifyMandatoryAdditionalInfo(context)) {
+			return error();
+		}
+		context.getFlowScope().remove("errorMessages");
 		return success();
-
 	}
+private boolean verifyMandatoryAdditionalInfo(RequestContext context) throws Exception {
+List<String> errorMessages = new ArrayList<String>();
+	MatindCommand command = (MatindCommand) getFormObject(context);
+	command.getAdditionalInfoCommandList().stream().forEach( dto -> {
+		if(dto.getAdditionalInfoMandatory().equals("Yes")) {
+
+			if (dto.getAdditionalInfoType().equals("File") && dto.getAdditionalFile() != null && dto.getAdditionalFile().isEmpty()) {
+				errorMessages.add(dto.getAdditionalInfoLabel() + "  is mandatory.");
+			}
+			if (dto.getAdditionalInfoType().equals("Text") && StringUtils.isBlank(dto.getAdditionalDetailText())) {
+				errorMessages.add(dto.getAdditionalInfoLabel() + "  is mandatory.");
+			}
+			if (dto.getAdditionalInfoType().equals("DropDown") && StringUtils.isBlank(dto.getAdditionalDetailText())) {
+				errorMessages.add(dto.getAdditionalInfoLabel() + "  is mandatory.");
+			}
+			if (dto.getAdditionalInfoType().equals("Radio") && StringUtils.isBlank(dto.getAdditionalDetailText())) {
+				errorMessages.add(dto.getAdditionalInfoLabel() + "  is mandatory.");
+			}
+			if (dto.getAdditionalInfoType().equals("Check") && dto.getAdditionalDropValues().length ==0) {
+				errorMessages.add(dto.getAdditionalInfoLabel() + "  is mandatory.");
+			}
+		}
+		context.getFlowScope().put("errorMessages",errorMessages);
+	});
+	if(errorMessages.size() > 0) {
+		return  false;
+	}
+	return true;
+}
 	private SciVendorMaster getVendorMaster(List<SciVendorMaster> master,
 			Long seqVendorID) {
 

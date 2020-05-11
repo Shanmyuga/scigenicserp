@@ -31,6 +31,7 @@
 
 
 </tr>
+    <c:if test="${groupMI.approvedStatus !='Y'}">
 <c:forEach begin="0" end="9"   varStatus="rowcnt">
 
 <tr>
@@ -85,7 +86,7 @@
 </tr>
 <form:hidden path="matList[${rowcnt.index}].matSpec"/>
 </c:forEach>
-
+    </c:if>
 <form:errors >
 <c:forEach items="${messages}" var="message">
 		<tr><td colspan="2"><c:out value="${message}"></c:out></td></tr>
@@ -95,8 +96,9 @@
 </table>
 <input type="submit" value="Add New MI" />
  <input type="hidden" name="_flowExecutionKey" value='<c:out value="${flowExecutionKey}"/>'>
- <input type="hidden" name="_eventId"  id="_eventId"  value="addMaterialMI"> 
-  <form:hidden path="rowindex"/>  
+ <input type="hidden" name="_eventId"  id="_eventId"  value="addMaterialMI">
+    <input type="hidden" name="_eventId"  id="_eventId"  value="addMaterialMI">
+    <form:hidden path="rowindex"/>
 
 </div>
 </div>

@@ -281,4 +281,55 @@ public  void writejdr() throws SQLException  {
 			}
 		}
 	}
+
+	public  void writeMIAdditionalDocs() throws SQLException  {
+		Connection conn  = null;
+		try {
+			conn = getConnection();
+			String query = "Select * from scigenics.SCI_ADD_MAT_INFO_DOCS where DOC_DATA is not null";
+			ResultSet rst = conn.createStatement().executeQuery(query);
+			int idx =1;
+			while(rst.next()) {
+				String key  =rst.getString("SEQ_MI_ADD_DOCS_ID");
+				String filename = rst.getString("ORIGINAL_DOC_NAME");
+				Blob blob = rst.getBlob("DOC_DATA");
+				if(blob != null) {
+					BufferedInputStream bis =
+							new BufferedInputStream(blob.getBinaryStream());
+					BufferedOutputStream bo = new BufferedOutputStream(new FileOutputStream(new File(diskfileloc+"MIADDINFO_"+key+"_"+filename)));
+
+					byte[] buf = new byte[4096];
+					int n = 0;
+
+					while ((n = bis.read(buf, 0, 4096)) != -1) {
+						bo.write(buf, 0, n);
+					}
+
+					bo.flush();
+					bo.close();
+					bis.close();
+				}
+				idx++;
+				System.out.println(idx);
+			}
+			conn.createStatement().executeUpdate("UPDATE scigenics.SCI_ADD_MAT_INFO_DOCS d set DOC_DATA = null where DOC_DATA is not null");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}
 }

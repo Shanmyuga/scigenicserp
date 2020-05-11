@@ -731,4 +731,6 @@ public class MatindCommand implements Serializable {
 	public void setAdditionalInfoCommandList(List<AdditionalInfoCommand> additionalInfoCommandList) {
 		this.additionalInfoCommandList = additionalInfoCommandList;
 	}
+
+
 }

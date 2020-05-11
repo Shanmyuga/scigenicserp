@@ -1,20 +1,8 @@
 package com.sci.bpm.db.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+import java.util.*;
+import javax.persistence.*;
 
 /**
  * SciMatindMaster entity.
@@ -71,8 +59,8 @@ private Long poID;
 private String miForType;
 	// Constructors
 
-	
-
+	private Set<SciAddMatInfoDocsEntity> matInfoDocsEntities = new HashSet<SciAddMatInfoDocsEntity>();
+	private Set<SciMiMaterialAddinfoEntity> matInfos = new HashSet<SciMiMaterialAddinfoEntity>();
 	/** default constructor */
 	public SciMatindMaster() {
 	}
@@ -539,7 +527,21 @@ private String miForType;
 		public void setIsGroupMiId(String isGroupMiId) {
 			this.isGroupMiId = isGroupMiId;
 		}
-		
-		
-		
+
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, mappedBy = "seqMiId")
+	public Set<SciAddMatInfoDocsEntity> getMatInfoDocsEntities() {
+		return this.matInfoDocsEntities;
+	}
+
+	public void setMatInfoDocsEntities(Set<SciAddMatInfoDocsEntity> items) {
+		this.matInfoDocsEntities = items;
+	}
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, mappedBy = "seqMiId")
+	public Set<SciMiMaterialAddinfoEntity> getMatInfos() {
+		return matInfos;
+	}
+
+	public void setMatInfos(Set<SciMiMaterialAddinfoEntity> matInfos) {
+		this.matInfos = matInfos;
+	}
 }

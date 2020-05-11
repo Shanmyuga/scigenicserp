@@ -143,12 +143,12 @@
 </tr>
 </table>
 <display:table export="true" sort="list"   pagesize="10" name="workmis"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
-<display:column sortable="true"  title="Select"  media="html" >
+<display:column sortable="true"  title="Select For Create Stores Request"  media="html" >
 <c:if test="${row.stRequestStatus == null && row.approvedStatus == 'Y'}">
 <form:radiobutton path="miindexID"  value='${row.seqMiId}'></form:radiobutton>
 </c:if>
 </display:column>
-<display:column sortable="true"  title="Select For Group MI "  media="html" >
+<display:column sortable="true"  title="Select For Group MI/View Additional MI "  media="html" >
 
 <form:radiobutton path="miindexID"  value='${row.seqMiId}'></form:radiobutton>
 
@@ -156,8 +156,8 @@
 <display:column sortable="true"  title="Request Status"  property="requestStatus" >
 
 </display:column>
-<display:column sortable="true"   title="MI ID"  property="seqMiId">
-
+<display:column sortable="true"   title="MI ID"  media="html">
+<a href="#" onclick="viewAddInfo('<c:out value='${row.seqMiId}'/>')" ><c:out value='${row.seqMiId}'></c:out></a>
 </display:column>
 <display:column sortable="true"   title="Material Code" property="matcode" >
 
@@ -205,14 +205,43 @@
 
 </display:column>
 </display:table>
+
+ <c:if test="${fn:length(addInfos) > 0}">
+  <display:table export="true" sort="list"   pagesize="10" name="addInfos"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+   <display:column sortable="true"  title="Label"  property="addInfoLabel" >
+
+   </display:column>
+   <display:column sortable="true"  title="Value"  property="addInfoValue" >
+
+   </display:column>
+  </display:table>
+ </c:if>
+ <c:if test="${fn:length(addDocInfos) > 0}">
+  <display:table export="true" sort="list"   pagesize="10" name="addDocInfos"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+   <display:column sortable="true"  title="Label"  property="addinfoLabel" >
+
+   </display:column>
+   <display:column sortable="true"  title="File"   >
+    <a href="javascript:openfile('<c:out value="${row.seqMiAddDocsId}"/>')"><c:out value="${row.originalDocName}" /></a>
+   </display:column>
+  </display:table>
+ </c:if>
 </div>
+
  <c:if test="${fn:length(workmis) > 0}">
 <p align="left" style="padding-left:10px">
  <input type="button" value="Create Store Request" onclick="javascript:addRemarks('storerequest')"/>
   <input type="button" value="Convert to Group MI" onclick="javascript:addRemarks('addGroupMI')"/>
+
  </p>
 </c:if>
+
+
 </form:form>
+<form name="myloginform" action="streamer.MIAddInfoDocOpener" method="post">
+ <input type="hidden" name="key" id="key" value="workdes"/>
+ <input type="hidden" name="idkey" id="idkey" value=""/>
+</form>
 </div>
 <script language="javascript">
 function loadSpecs(selectbx) {
@@ -239,13 +268,22 @@ document.matindbean._eventId.value = eventid;
 document.matindbean.submit();
 }
 
-
+function viewAddInfo(seqMIid) {
+ document.matindbean._eventId.value = 'additionalInfo';
+ document.matindbean.miindexID.value = seqMIid;
+ document.matindbean.submit();
+}
 
 function eventdirect(event) {
 
 document.getElementById('_eventId').value = event;
 
 document.matindbean.submit();
+}
+
+function openfile(idkeyval) {
+ document.myloginform.idkey.value=idkeyval;
+ document.myloginform.submit();
 }
 
 </script>
