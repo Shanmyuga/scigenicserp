@@ -97,7 +97,7 @@
 <input type="submit" value="Add New MI" />
  <input type="hidden" name="_flowExecutionKey" value='<c:out value="${flowExecutionKey}"/>'>
  <input type="hidden" name="_eventId"  id="_eventId"  value="addMaterialMI">
-    <input type="hidden" name="_eventId"  id="_eventId"  value="addMaterialMI">
+
     <form:hidden path="rowindex"/>
 
 </div>

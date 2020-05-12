@@ -69,6 +69,7 @@
         <webflow:on-entry>
           <webflow:evaluate expression="micont.loadDrawingList"/>
             <webflow:evaluate expression="lookupbean.getDropDownList('matdept_key')" result="flowScope.matdeptlist"/>
+
         </webflow:on-entry>
         <webflow:transition on="addMaterialMI" to="addGroupMI">
             <webflow:evaluate expression="micont.bind"/>
@@ -106,13 +107,20 @@
 
     </webflow:view-state>
     <webflow:view-state id="viewGroupMispecs" view="mi.viewmatspec"  >
-        <webflow:transition on="selectspec" to="addGroupMI" >
+        <webflow:transition on="selectspec" to="viewGroupAddMispecs" >
             <webflow:evaluate expression="micont.bind"/>
             <webflow:evaluate expression="micont.selectSpecs"/>
         </webflow:transition>
     </webflow:view-state>
     <webflow:view-state id="viewAddMispecs" view="mi.viewAddmatspec"  >
         <webflow:transition on="addAdditionalMaterialMI" to="addMI" >
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.reviewAdditionalInfo"/>
+        </webflow:transition>
+    </webflow:view-state>
+
+    <webflow:view-state id="viewGroupAddMispecs" view="mi.viewAddmatspec"  >
+        <webflow:transition on="addAdditionalMaterialMI" to="addGroupMI" >
             <webflow:evaluate expression="micont.bind"/>
             <webflow:evaluate expression="micont.reviewAdditionalInfo"/>
         </webflow:transition>

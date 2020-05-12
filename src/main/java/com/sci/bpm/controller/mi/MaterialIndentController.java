@@ -102,18 +102,19 @@ public class MaterialIndentController extends SciBaseController {
 						}
 					}
 					else {
-						SciAddMatInfoDocsEntity addMatInfoDocsEntity = new SciAddMatInfoDocsEntity();
+						if(additionalInfoCommand.getOriginalDocName() != null ) {
+							SciAddMatInfoDocsEntity addMatInfoDocsEntity = new SciAddMatInfoDocsEntity();
 
-						addMatInfoDocsEntity.setSeqMiId(master);
-						addMatInfoDocsEntity.setDocData(additionalInfoCommand.getFileData());
-						addMatInfoDocsEntity.setOriginalDocName(additionalInfoCommand.getOriginalDocName());
-						addMatInfoDocsEntity.setDocType(additionalInfoCommand.getDocType());
-						addMatInfoDocsEntity.setAddinfoLabel(additionalInfoCommand.getAdditionalInfoLabel());
-						addMatInfoDocsEntity.setInsertedBy(getUserPreferences().getUserID());
-						addMatInfoDocsEntity.setInsertedDate(new Time(Calendar.getInstance().getTime().getTime()));
-						master.getMatInfoDocsEntities().add(addMatInfoDocsEntity);
+							addMatInfoDocsEntity.setSeqMiId(master);
+							addMatInfoDocsEntity.setDocData(additionalInfoCommand.getFileData());
+							addMatInfoDocsEntity.setOriginalDocName(additionalInfoCommand.getOriginalDocName());
+							addMatInfoDocsEntity.setDocType(additionalInfoCommand.getDocType());
+							addMatInfoDocsEntity.setAddinfoLabel(additionalInfoCommand.getAdditionalInfoLabel());
+							addMatInfoDocsEntity.setInsertedBy(getUserPreferences().getUserID());
+							addMatInfoDocsEntity.setInsertedDate(new Time(Calendar.getInstance().getTime().getTime()));
+							master.getMatInfoDocsEntities().add(addMatInfoDocsEntity);
 
-
+						}
 					}
 
 
@@ -240,6 +241,15 @@ public class MaterialIndentController extends SciBaseController {
 		return success();
 	}
 	public Event backAddMI(RequestContext context) throws Exception {
+		MatindCommand command = (MatindCommand) getFormObject(context);
+		command.getMatList().clear();
+		for (int idx = 0; idx < 11; idx++) {
+			command.getMatList().add(new MatCollectionCommand());
+		}
+		context.getFlowScope().remove("productcatmap");
+		context.getFlowScope().remove("productspecmap");
+		command.setMatGroupMiId(null);
+		command.setIsGroupMiId("");
 		context.getFlowScope().remove("groupMI");
 		context.getFlowScope().remove("workGroupmis");
 		return success();
@@ -678,10 +688,18 @@ public class MaterialIndentController extends SciBaseController {
 	}
 	public Event createGroupMI(RequestContext context) throws Exception {
 		MatindCommand command = (MatindCommand) getFormObject(context);
+		command.getMatList().clear();
+		for (int idx = 0; idx < 11; idx++) {
+			command.getMatList().add(new MatCollectionCommand());
+		}
+
 		List<SciMatindMaster> masterList = (List<SciMatindMaster>) context.getFlowScope().get("workmis");
 		SciMatindMaster master = selectMI(masterList, command.getMiindexID());
 		if(master.getMatGroupMiId() != null) {
 			return  error();
+		}
+		if(!getLookupservice().loadIDData("MI_OPEN").equals(master.getPurStatus())){
+			return error();
 		}
 		if(!"Y".equalsIgnoreCase(master.getIsGroupMiId())) {
 			master.setIsGroupMiId("Y");
@@ -689,7 +707,8 @@ public class MaterialIndentController extends SciBaseController {
 			master.setUpdatedDate(new Date());
 			service.updateMI(master);
 		}
-
+context.getFlowScope().remove("productcatmap");
+		context.getFlowScope().remove("productspecmap");
 context.getFlowScope().put("groupMI",master);
 		return success();
 	}
@@ -765,6 +784,7 @@ context.getFlowScope().put("groupMI",master);
 		MatindCommand command = (MatindCommand) getFormObject(context);
 		List<MatCollectionCommand> matcollection = command.getMatList();
 		List<AdditionalInfoCommand> addcommands = command.getAdditionalInfoCommandList();
+		addcommands.clear();
 		List<SciMIAdditionalInfoDTO> miAdditionalInfoDTOS = new ArrayList<SciMIAdditionalInfoDTO>();
 		for(int idx =0;idx<matcollection.size();idx++) {
 			MatCollectionCommand comamnd1 = (MatCollectionCommand)matcollection.get(idx);

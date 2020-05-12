@@ -286,6 +286,9 @@ public  void writejdr() throws SQLException  {
 		Connection conn  = null;
 		try {
 			conn = getConnection();
+			if(conn == null) {
+				return;
+			}
 			String query = "Select * from scigenics.SCI_ADD_MAT_INFO_DOCS where DOC_DATA is not null";
 			ResultSet rst = conn.createStatement().executeQuery(query);
 			int idx =1;
