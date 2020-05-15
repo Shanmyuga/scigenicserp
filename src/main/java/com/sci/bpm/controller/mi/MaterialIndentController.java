@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.sql.SQLOutput;
 import java.sql.Time;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.sci.bpm.command.mi.AdditionalInfoCommand;
 import com.sci.bpm.db.model.*;
@@ -830,8 +831,8 @@ context.getFlowScope().put("groupMI",master);
 		for(int idx =0;idx<matcollection.size();idx++) {
 			MatCollectionCommand comamnd1 = (MatCollectionCommand)matcollection.get(idx);
 			if(idx == Integer.parseInt(command.getSelectedIdx())) {
-
-			 comamnd1.setAdditionalInfoCommandList(command.getAdditionalInfoCommandList());
+				List<AdditionalInfoCommand> newlist = command.getAdditionalInfoCommandList().stream().collect(Collectors.toList());
+			 comamnd1.setAdditionalInfoCommandList(newlist);
 			}
 
 		}

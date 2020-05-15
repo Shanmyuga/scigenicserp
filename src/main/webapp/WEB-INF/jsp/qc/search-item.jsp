@@ -4,186 +4,186 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
- <div width="787px"  style="float:left;">
-<br>
-<p style="padding-left:20px" align="center"><font color="#0080ff" size="4" face="Baskerville Old Face"> Search  Store Items </font></p>
-<p style="padding-left:20px" align="center"></p>
 <div width="787px"  style="float:left;">
-<form:form modelAttribute="qcbean" name="qcbean"   >
-<div width="787px"  >
-<table  cellspacing="5" cellpadding="5" border="0" >
-<tr>
-<td>Mechanical</td>
-<td><form:radiobutton path="dept" value="MECH"  />
+ <br>
+ <p style="padding-left:20px" align="center"><font color="#0080ff" size="4" face="Baskerville Old Face"> Search  Store Items </font></p>
+ <p style="padding-left:20px" align="center"></p>
+ <div width="787px"  style="float:left;">
+  <form:form modelAttribute="qcbean" name="qcbean"   >
+   <div width="787px"  >
+    <table  cellspacing="5" cellpadding="5" border="0" >
+     <tr>
+      <td>Mechanical</td>
+      <td><form:radiobutton path="dept" value="MECH"  />
 
-</td>
- <td>Electronics</td>
-<td><form:radiobutton path="dept" value="E&I"  />
+      </td>
+      <td>Electronics</td>
+      <td><form:radiobutton path="dept" value="E&I"  />
 
-</td>
-
- 
-</tr>
-<tr>
-
-
- <td colspan="2" align="right"><input type="button" value="Search QC" onclick="eventdirect('searchQC')"/></td>
-
-</tr>
-</table>
-
-</div>
+      </td>
 
 
-<div style="float:left;width:780px;padding:10px">
-
-<display:table export="true" sort="list"   pagesize="10" name="qcitemslist"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
-
-
-<c:set var="nestedmis" value="${row.rawmis}" />
-
-<c:set var="nestedmyName" value="${row.mydocs}" />
-<c:set var="nestedpoms" value="${row.pomasters}" />
-
-<display:column sortable="true"  title="Select" media="html" >
-
-<form:radiobutton  path="seqQcMiId"  value="${row.seqQcMiId}"/>
-
-</display:column>
-<display:column sortable="true"  title="MI ID"  >
-<c:out value="${row.sciMiMaster.seqMiId}"/>
-</display:column>
-<display:column sortable="true"   title="MI Remarks"  >
-<c:out value='${row.sciMiMaster.recommend}'/>
-</display:column>
-<display:column sortable="true"   title="Mat Dimension"  >
-<c:out value='${row.sciMiMaster.matDimesion}'/>
-</display:column>
-<display:column sortable="true"   title="Mat Qty"  >
-<c:out value='${row.sciMiMaster.matQty}'/>
-</display:column>
-<display:column sortable="true"   title="Mat Code" property="matCode"  >
-</display:column>
-<display:column sortable="true"   title="Mat Type" property="matType"  >
-</display:column>
-<display:column sortable="true"   title="Mat Spec" property="matSpec"  >
-</display:column>
-
-<display:column title="Subcont Vendor">
-<c:forEach items="${nestedpoms }" var="row1" varStatus="table">
-<c:out value="${row1.subContVendor}" />
-</c:forEach>
-</display:column>
-
-<display:column title="Raw MI">
-<c:forEach items="${nestedmis }" var="row1" varStatus="table">
-<c:out value="${row1.seqOrigMIID}" />/
-</c:forEach>
-</display:column>
-
-<display:column title="Raw Qc Docs">
-<c:forEach items="${nestedmyName }" var="row1" varStatus="table">
-<c:out value="${row1.originalFile}" />/
-</c:forEach>
-</display:column>
-<display:column sortable="true"  title="Recd Qty" property="qcRecCnt" >
-
-</display:column>
-<display:column sortable="true"  title="Recd Dimension"  property="qcRecDime">
-
-</display:column>
-<display:column sortable="true"  title="Recd Date" property="insertedDate" >
-
-</display:column>
+     </tr>
+     <tr>
 
 
+      <td colspan="2" align="right"><input type="button" value="Search QC" onclick="eventdirect('searchQC')"/></td>
 
-<display:column sortable="true"  title="WO DESC"  >
-<c:out value='${row.sciMiMaster.sciWorkorderMaster.jobDesc}'/>
-</display:column>
-<display:column sortable="true"  title="Client Details"  >
-<c:out value='${row.sciMiMaster.sciWorkorderMaster.sciCustomerMaster.customerName}'/>
-</display:column>
-</display:table>
+     </tr>
+    </table>
+
+   </div>
 
 
- <c:if test="${fn:length(addInfos) > 0}">
-  <display:table export="true" sort="list"   pagesize="10" name="addInfos"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
-   <display:column sortable="true"  title="Label"  property="addInfoLabel" >
+   <div style="float:left;width:780px;padding:10px">
 
-   </display:column>
-   <display:column sortable="true"  title="Value"  property="addInfoValue" >
+    <display:table export="true" sort="list"   pagesize="10" name="qcitemslist"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
 
-   </display:column>
-  </display:table>
- </c:if>
- <c:if test="${fn:length(addDocInfos) > 0}">
-  <display:table export="true" sort="list"   pagesize="10" name="addDocInfos"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
-   <display:column sortable="true"  title="Label"  property="addinfoLabel" >
 
-   </display:column>
-   <display:column sortable="true"  title="File"   >
-    <a href="javascript:openfile('<c:out value="${row.seqMiAddDocsId}"/>')"><c:out value="${row.originalDocName}" /></a>
-   </display:column>
-  </display:table>
- </c:if>
-</div>
-<input type="hidden" name="_flowExecutionKey"  value="<c:out value="${flowExecutionKey}"/>" />
- <input type="hidden" name="_eventId"  id="_eventId" value="searchItem" >
- <input type="hidden" name="miindexID"  id="miindexID" value="submit" >
-  <c:if test="${fn:length(qcitemslist) > 0 }" >
-<div style="padding-left:10px;width:787px;float:left">
-<table >
+     <c:set var="nestedmis" value="${row.rawmis}" />
 
-<tr>
-<td>Approved Qty</td><td><form:input path="qcAppCnt"/></td>
-<td>Approved Dimen </td><td><form:input path="qcAppDime"/></td>
-</tr>
-<tr>
-<td>Failed/Rework Qty</td><td><form:input path="qcFailedCnt"/></td>
-<td>Failed/Rework Dimension</td><td><form:input path="qcFailedDim"/></td>
-</tr>
-<tr>
-<td>Tests Conducted</td><td><form:textarea path="qcTestsCond"/></td>
-<td>Fail Reason</td><td><form:input path="qcFailReason"/></td>
-</tr>
+     <c:set var="nestedmyName" value="${row.mydocs}" />
+     <c:set var="nestedpoms" value="${row.pomasters}" />
 
-<tr>
-<td colspan="2">Has Failed Materials</td><td><form:checkbox path="failedStatus" value="Y"/></td>
+     <display:column sortable="true"  title="Select" media="html" >
 
-</tr>
+      <form:radiobutton  path="seqQcMiId"  value="${row.seqQcMiId}"/>
 
-</table>
+     </display:column>
+     <display:column sortable="true"  title="MI ID"  >
+      <c:out value="${row.sciMiMaster.seqMiId}"/>
+     </display:column>
+     <display:column sortable="true"   title="MI Remarks"  >
+      <c:out value='${row.sciMiMaster.recommend}'/>
+     </display:column>
+     <display:column sortable="true"   title="Mat Dimension"  >
+      <c:out value='${row.sciMiMaster.matDimesion}'/>
+     </display:column>
+     <display:column sortable="true"   title="Mat Qty"  >
+      <c:out value='${row.sciMiMaster.matQty}'/>
+     </display:column>
+     <display:column sortable="true"   title="Mat Code" property="matCode"  >
+     </display:column>
+     <display:column sortable="true"   title="Mat Type" property="matType"  >
+     </display:column>
+     <display:column sortable="true"   title="Mat Spec" property="matSpec"  >
+     </display:column>
 
- <input type="button"  value="Add QC Results" onclick="eventdirect('addQCResult')"/>
+     <display:column title="Subcont Vendor">
+      <c:forEach items="${nestedpoms }" var="row1" varStatus="table">
+       <c:out value="${row1.subContVendor}" />
+      </c:forEach>
+     </display:column>
+
+     <display:column title="Raw MI">
+      <c:forEach items="${nestedmis }" var="row1" varStatus="table">
+       <c:out value="${row1.seqOrigMIID}" />/
+      </c:forEach>
+     </display:column>
+
+     <display:column title="Raw Qc Docs">
+      <c:forEach items="${nestedmyName }" var="row1" varStatus="table">
+       <c:out value="${row1.originalFile}" />/
+      </c:forEach>
+     </display:column>
+     <display:column sortable="true"  title="Recd Qty" property="qcRecCnt" >
+
+     </display:column>
+     <display:column sortable="true"  title="Recd Dimension"  property="qcRecDime">
+
+     </display:column>
+     <display:column sortable="true"  title="Recd Date" property="insertedDate" >
+
+     </display:column>
+
+
+
+     <display:column sortable="true"  title="WO DESC"  >
+      <c:out value='${row.sciMiMaster.sciWorkorderMaster.jobDesc}'/>
+     </display:column>
+     <display:column sortable="true"  title="Client Details"  >
+      <c:out value='${row.sciMiMaster.sciWorkorderMaster.sciCustomerMaster.customerName}'/>
+     </display:column>
+    </display:table>
+
+
+    <c:if test="${fn:length(addInfos) > 0}">
+     <display:table export="true" sort="list"   pagesize="10" name="addInfos"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+      <display:column sortable="true"  title="Label"  property="addInfoLabel" >
+
+      </display:column>
+      <display:column sortable="true"  title="Value"  property="addInfoValue" >
+
+      </display:column>
+     </display:table>
+    </c:if>
+    <c:if test="${fn:length(addDocInfos) > 0}">
+     <display:table export="true" sort="list"   pagesize="10" name="addDocInfos"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+      <display:column sortable="true"  title="Label"  property="addinfoLabel" >
+
+      </display:column>
+      <display:column sortable="true"  title="File"   >
+       <a href="javascript:openfile('<c:out value="${row.seqMiAddDocsId}"/>')"><c:out value="${row.originalDocName}" /></a>
+      </display:column>
+     </display:table>
+    </c:if>
+   </div>
+   <input type="hidden" name="_flowExecutionKey"  value="<c:out value="${flowExecutionKey}"/>" />
+   <input type="hidden" name="_eventId"  id="_eventId" value="searchItem" >
+   <input type="hidden" name="miindexID"  id="miindexID" value="0" >
+   <c:if test="${fn:length(qcitemslist) > 0 }" >
+    <div style="padding-left:10px;width:787px;float:left">
+     <table >
+
+      <tr>
+       <td>Approved Qty</td><td><form:input path="qcAppCnt"/></td>
+       <td>Approved Dimen </td><td><form:input path="qcAppDime"/></td>
+      </tr>
+      <tr>
+       <td>Failed/Rework Qty</td><td><form:input path="qcFailedCnt"/></td>
+       <td>Failed/Rework Dimension</td><td><form:input path="qcFailedDim"/></td>
+      </tr>
+      <tr>
+       <td>Tests Conducted</td><td><form:textarea path="qcTestsCond"/></td>
+       <td>Fail Reason</td><td><form:input path="qcFailReason"/></td>
+      </tr>
+
+      <tr>
+       <td colspan="2">Has Failed Materials</td><td><form:checkbox path="failedStatus" value="Y"/></td>
+
+      </tr>
+
+     </table>
+
+     <input type="button"  value="Add QC Results" onclick="eventdirect('addQCResult')"/>
+    </div>
+   </c:if>
+
+
+  </form:form>
+  <form name="myloginform" action="streamer.MIAddInfoDocOpener" method="post">
+   <input type="hidden" name="key" id="key" value="workdes"/>
+   <input type="hidden" name="idkey" id="idkey" value=""/>
+  </form>
  </div>
- </c:if>
- 
- 
-</form:form>
- <form name="myloginform" action="streamer.MIAddInfoDocOpener" method="post">
-  <input type="hidden" name="key" id="key" value="workdes"/>
-  <input type="hidden" name="idkey" id="idkey" value=""/>
- </form>
-</div>
 </div>
 
 <script language="javascript">
 
-function eventdirect(event) {
+ function eventdirect(event) {
 
-document.getElementById('_eventId').value = event;
+  document.getElementById('_eventId').value = event;
 
-document.qcbean.submit();
-}
-function viewAddInfo(seqMIid) {
- document.qcbean._eventId.value = 'additionalInfo';
- document.qcbean.miindexID.value = seqMIid;
- document.qcbean.submit();
-}
+  document.qcbean.submit();
+ }
+ function viewAddInfo(seqMIid) {
+  document.qcbean._eventId.value = 'additionalInfo';
+  document.qcbean.miindexID.value = seqMIid;
+  document.qcbean.submit();
+ }
 
-function openfile(idkeyval) {
- document.myloginform.idkey.value=idkeyval;
- document.myloginform.submit();
-}
+ function openfile(idkeyval) {
+  document.myloginform.idkey.value=idkeyval;
+  document.myloginform.submit();
+ }
 </script>
