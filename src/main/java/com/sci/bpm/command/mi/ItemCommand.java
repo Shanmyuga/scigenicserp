@@ -24,9 +24,12 @@ public class ItemCommand implements Serializable {
 	private String[] seqMIids;
 	
 	private String[] micost;
+
 	private String[] miremarks;
 	private String[] miquantity;
-	
+
+	private Integer[] miCostPercentage;
+	private String[] childMiRemarks;
 	public String[] getMiquantity() {
 		return miquantity;
 	}
@@ -111,7 +114,20 @@ public class ItemCommand implements Serializable {
 	public void setItemDenom(String itemDenom) {
 		this.itemDenom = itemDenom;
 	}
-	
-	
-	
+
+	public Integer[] getMiCostPercentage() {
+		return miCostPercentage;
+	}
+
+	public void setMiCostPercentage(Integer[] miCostPercentage) {
+		this.miCostPercentage = miCostPercentage;
+	}
+
+	public String[] getChildMiRemarks() {
+		return childMiRemarks;
+	}
+
+	public void setChildMiRemarks(String[] childMiRemarks) {
+		this.childMiRemarks = childMiRemarks;
+	}
 }

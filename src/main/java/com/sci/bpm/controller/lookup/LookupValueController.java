@@ -66,6 +66,9 @@ SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope()
 		if(StringUtils.isBlank(master.getCustomerPhone()) || StringUtils.isBlank(master.getCustomerEmail() )|| StringUtils.isBlank(master.getCusomterCity())) {
 			throw new Exception("Customer phone ,email and city codes are mandatory");
 		}
+		if(StringUtils.isBlank(master.getCustomerContact()) ) {
+			throw new Exception("Customer Contact is empty");
+		}
 		String customerCode = service.selectCustomerCode(String.valueOf(clientOrgMaster.getSeqClientOrgId()));
 		master.setCustomerCode(StringUtils.trim(customerCode));
 		master.setUpdatedDate(new java.util.Date());

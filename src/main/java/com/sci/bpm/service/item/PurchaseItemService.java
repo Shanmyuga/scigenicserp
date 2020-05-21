@@ -9,7 +9,7 @@ import com.sci.bpm.db.model.SciRawMIDetails;
 
 public interface PurchaseItemService {
 
-	public  void addNewItem(SciPurchItemMaster command,List<SciMatindMaster> milist,List<SciMatindMaster> splitmilist,SciRawMIDetails details);
+	public  void addNewItem(SciPurchItemMaster command,List<SciMatindMaster> milist,List<SciMatindMaster> splitmilist,SciRawMIDetails details,List<SciMatindMaster> childMiList);
 	
 	public List<SciPurchItemMaster> search(ItemCommand  entity);
 	

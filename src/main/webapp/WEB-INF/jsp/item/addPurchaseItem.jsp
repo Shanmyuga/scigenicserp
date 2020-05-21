@@ -104,7 +104,50 @@
 <form:input path="miremarks" />
 </display:column>
 </display:table>
+
+    <display:table export="true" sort="list"  pagesize="10" name="childMiList"  id="row"  requestURI="springtest.htm" cellpadding="5px" cellspacing="5px">/8-5
+
+
+
+        <display:column sortable="true"   title="Material Code" property="matcode" >
+
+        </display:column>
+        <display:column sortable="true"  title="Material Specs"  property="matSpec" >
+
+        </display:column>
+        <display:column sortable="true"  title="Material Cat"  property="matType" >
+
+        </display:column>
+
+        <display:column sortable="true"  title="Qty"  property="matQty">
+
+        </display:column>
+        <display:column sortable="true"  title="Dimen"  property="matDimesion">
+
+        </display:column>
+
+        <display:column sortable="true"  title="Due Date"  property="matDuedate" >
+
+        </display:column>
+
+
+        <display:column sortable="true"  title="Cost Percentage"  >
+
+            <form:input path="miCostPercentage" />
+        </display:column>
+
+
+        <display:column sortable="true"  title="Recommendation"  >
+            <form:input path="childMiRemarks" />
+        </display:column>
+    </display:table>
 </div>
+
+
+    <div style="float:left;width:787px;padding-left:10px;margin-top:50px">
+
+
+    </div>
  <input type="hidden" name="_flowExecutionKey" value='<c:out value="${flowExecutionKey}"/>'>
  <input type="hidden" name="_eventId"  id="_eventId"  value="addItem"> 
  

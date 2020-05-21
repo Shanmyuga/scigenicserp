@@ -2,6 +2,7 @@ package com.sci.bpm.controller.item;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +51,8 @@ public class ITemMasterController extends SciBaseController {
 		SciPurchItemMaster  itemmaster = new SciPurchItemMaster();
 		BeanUtils.copyProperties(itemmaster,command);
 		List<SciMatindMaster> milist = (List)context.getFlowScope().get("itemmilist");
+		List<SciMatindMaster> childMiList = (List)context.getFlowScope().get("childMiList");
+		List<SciMatindMaster> updatedMiList = new ArrayList<SciMatindMaster>();
 		String itemCode = null;
 		 int idx = 0;
 		 double totalQuantity = 0.000;
@@ -119,7 +122,33 @@ public class ITemMasterController extends SciBaseController {
 			throw new Exception("ITem denom cannot be blank");
 		}
 		itemmaster.setItemDenom(command.getItemDenom());
-				service.addNewItem(itemmaster, datalist,splitdatalist,new SciRawMIDetails());
+		int jdx = 0;
+		int totalPercentage = 0;
+		if(command.getMiCostPercentage() != null && command.getMiCostPercentage().length > 0) {
+			totalPercentage = Arrays.stream(command.getMiCostPercentage()).mapToInt(dti -> dti.intValue() ).sum();
+			if(totalPercentage != 100) {
+				throw new Exception("The Child MI's cost ratio should be totalling to 100");
+			}
+			if(childMiList.size() == command.getMiCostPercentage().length) {
+				for (SciMatindMaster mis : childMiList) {
+						SciMatindMaster dbMi = this.miservice.loadMI(mis.getSeqMiId());
+					dbMi.setUpdatedBy(getUserPreferences().getUserID());
+					dbMi.setUpdatedDate(new java.util.Date());
+					dbMi.setCostPercentageRation(command.getMiCostPercentage()[jdx].longValue());
+					BigDecimal cost = new BigDecimal((estcost[idx-1]));
+					dbMi.setUnitCost(new BigDecimal((cost.doubleValue()/dbMi.getMatQty().doubleValue()) * (dbMi.getCostPercentageRation().longValue())/100));
+					dbMi.setPurStatus(getLookupservice().loadIDData("MI_ITEMISED"));
+					updatedMiList.add(dbMi);
+					jdx++;
+				}
+			}
+		}
+
+
+
+
+
+				service.addNewItem(itemmaster, datalist,splitdatalist,new SciRawMIDetails(),updatedMiList);
 				String rawmis  = itemmaster.getRawmis();
 				
 				String[] rawmisarr = StringUtils.split(rawmis,",");

@@ -55,7 +55,7 @@ private String prodRequestStatus;
 private String purchRequestStatus;
 private String workorderDesc;
 private Long poID;
-
+private Long costPercentageRation;
 private String miForType;
 	// Constructors
 
@@ -145,7 +145,7 @@ private String miForType;
 			Object object4, Object object5, Object object6, Object object7,
 			Object object8, Object object9, Object object10, Object object11,
 			Object object12, Object object13, Object object14, Object object15,
-			Object object16,Object object17,Object object18,Object object19) {
+			Object object16,Object object17,Object object18,Object object19,Object object20) {
 		// TODO Auto-generated constructor stub
 		
 		this.seqMiId = (Long) object;
@@ -167,6 +167,7 @@ private String miForType;
 		this.workorderDesc = (String)object17;
 		this.poID = (Long)object18;
 		this.matDuedate = (Date)object19;
+		this.isGroupMiId =(String)object20;
 	}
 
 	// Property accessors
@@ -543,5 +544,13 @@ private String miForType;
 
 	public void setMatInfos(Set<SciMiMaterialAddinfoEntity> matInfos) {
 		this.matInfos = matInfos;
+	}
+	@Column(name = "COST_PERCENTAGE_RATIO",precision = 22)
+	public Long getCostPercentageRation() {
+		return costPercentageRation;
+	}
+
+	public void setCostPercentageRation(Long costPercentageRation) {
+		this.costPercentageRation = costPercentageRation;
 	}
 }

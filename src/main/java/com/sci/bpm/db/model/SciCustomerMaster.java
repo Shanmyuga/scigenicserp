@@ -197,7 +197,7 @@ public class SciCustomerMaster implements java.io.Serializable {
 
 
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SEQ_CLIENT_ORG_ID")
 	public SciClientOrgMaster getSciClientOrgMaster() {
 		return sciClientOrgMaster;

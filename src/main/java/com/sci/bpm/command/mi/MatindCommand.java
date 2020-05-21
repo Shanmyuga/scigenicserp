@@ -100,7 +100,7 @@ public class MatindCommand implements Serializable {
 	private String filterRejected;
 	private String reportFilter;
     private Double quantity;
-
+  	private String filterChildMi;
 
 	private String moc;
 	private Integer noOfDays;
@@ -608,6 +608,14 @@ public class MatindCommand implements Serializable {
 
 	public Integer getNoOfDays() {
 		return noOfDays;
+	}
+
+	public String getFilterChildMi() {
+		return filterChildMi;
+	}
+
+	public void setFilterChildMi(String filterChildMi) {
+		this.filterChildMi = filterChildMi;
 	}
 
 	public void setNoOfDays(Integer noOfDays) {

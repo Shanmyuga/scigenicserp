@@ -109,13 +109,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 			itemdao.update(im);
 			Set<SciItemmiDetails> miset = im.getSciItemmiDetailses();
 			for (SciItemmiDetails itemmi : miset) {
-				SciMatindMaster mi = matdao.findById(itemmi.getSeqMiId());
-				mi.setPurStatus(mistatus);
-				mi.setUpdatedBy(im.getUpdatedBy());
-				mi.setUpdatedDate(im.getUpdatedDate());
-				mi.setPodueDate(master.getPurchaseDueDate());
-				matdao.updateMI(mi);
+				updateChildMi(master, mistatus, im, itemmi);
+
 			}
+
 		}
 
 	}
@@ -128,14 +125,31 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 			
 			Set<SciItemmiDetails> miset = im.getSciItemmiDetailses();
 			for (SciItemmiDetails itemmi : miset) {
-				SciMatindMaster mi = matdao.findById(itemmi.getSeqMiId());
-				mi.setPurStatus(mistatus);
-				mi.setUpdatedBy(im.getUpdatedBy());
-				mi.setUpdatedDate(im.getUpdatedDate());
-				matdao.updateMI(mi);
+				updateChildMi(master, mistatus, im, itemmi);
+				SciMatindMaster mi;
+
 			}
 
 		}
+	}
+
+	private void updateChildMi(SciPurchaseMast master, Long mistatus, SciPurchItemMaster im, SciItemmiDetails itemmi) {
+		SciMatindMaster mi = matdao.findById(itemmi.getSeqMiId());
+
+		if("Y".equals(mi.getIsGroupMiId())) {
+			List<SciMatindMaster> childmis = matdao.loadChildMi(mi.getSeqMiId());
+			for(SciMatindMaster childmi : childmis) {
+				childmi.setPurStatus(mistatus);
+				childmi.setUpdatedBy(im.getUpdatedBy());
+				childmi.setUpdatedDate(im.getUpdatedDate());
+				childmi.setPodueDate(master.getPurchaseDueDate());
+				matdao.update(childmi);
+			}
+		}
+		mi.setPurStatus(mistatus);
+		mi.setUpdatedBy(im.getUpdatedBy());
+		mi.setUpdatedDate(im.getUpdatedDate());
+		matdao.updateMI(mi);
 	}
 
 	public void cancelPO(SciPurchaseMast master) {

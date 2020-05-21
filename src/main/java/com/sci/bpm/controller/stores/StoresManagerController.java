@@ -3,6 +3,7 @@ package com.sci.bpm.controller.stores;
 import java.util.Date;
 import java.util.List;
 
+import com.sci.bpm.service.mi.MaterialIndentService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
@@ -43,6 +44,10 @@ public class StoresManagerController extends SciBaseController {
     private StoreService service;
     @Autowired
     private ProductMasterService prservice;
+
+    @Autowired
+    private MaterialIndentService miservice;
+
 
     public Event loadPOItems(RequestContext context) throws Exception {
         String[] status = new String[]{String.valueOf(getLookupservice().loadIDData("PO_CANCELLED")),
@@ -231,6 +236,14 @@ public class StoresManagerController extends SciBaseController {
         SciPurchItemMaster mast = selectPI(master, bean.getSeqItemId());
 
         List<SciMatindMaster> matitemlist = service.getMatItems(mast);
+        if(matitemlist.size() ==1) {
+            SciMatindMaster groupMi = matitemlist.get(0);
+            if("Y".equals(groupMi.getIsGroupMiId())) {
+               List<SciMatindMaster> matlist =  miservice.loadChildMi(groupMi.getSeqMiId());
+                context.getFlowScope().put("matitemlist", matlist);
+                return success();
+            }
+        }
         context.getFlowScope().put("matitemlist", matitemlist);
         return success();
     }

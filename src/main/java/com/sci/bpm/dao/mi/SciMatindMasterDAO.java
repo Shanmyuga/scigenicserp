@@ -76,7 +76,7 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 			wmaster = em.find(SciWorkorderMaster.class, new Long(command.getSeqWorkId()));
 		}
 
-		String query = "select  m.seqMiId,m.matType,m.matSpec,m.matDesc,m.matQty,m.matDimesion,m.recommend,m.purStatus,m.preparedBy,m.estUnintCost,m.matcode,(select CASE  WHEN requestStatus = 'Y' then 'Request Issued' WHEN requestStatus = 'N' then 'Request Not Issued'   WHEN requestStatus = 'C' then 'Request Cancelled by Stores'  WHEN requestStatus = 'R' then 'Request Rejected' ELSE 'Not raised' END from SciStoresRequest r  where  r.sciMiMaster.seqMiId =m.seqMiId ),(select r.prodApproval from SciStoresRequest r where r.sciMiMaster.seqMiId =m.seqMiId),(select r.purchApproval from SciStoresRequest r where r.sciMiMaster.seqMiId =m.seqMiId),m.insertedBy,m.insertedDate,(select wm.jobDesc from SciWorkorderMaster wm where wm.seqWorkId=m.sciWorkorderMaster.seqWorkId),(select  max(pm.seqPurchId) from SciPurchaseMast pm,SciPurchItemMaster im,SciItemmiDetails immi,SciPurchaseItemdetails pmmd where immi.seqMiId =m.seqMiId and immi.sciPurchItemMaster.seaPuritemId=im.seaPuritemId and im.seaPuritemId=pmmd.seqItemId and pm.seqPurchId=pmmd.sciPurchaseMast.seqPurchId) ,m.matDuedate from SciMatindMaster m ,SciMattypeMaster mt  where mt.matCode  = substr(m.matcode,1,2)  ";
+		String query = "select  m.seqMiId,m.matType,m.matSpec,m.matDesc,m.matQty,m.matDimesion,m.recommend,m.purStatus,m.preparedBy,m.estUnintCost,m.matcode,(select CASE  WHEN requestStatus = 'Y' then 'Request Issued' WHEN requestStatus = 'N' then 'Request Not Issued'   WHEN requestStatus = 'C' then 'Request Cancelled by Stores'  WHEN requestStatus = 'R' then 'Request Rejected' ELSE 'Not raised' END from SciStoresRequest r  where  r.sciMiMaster.seqMiId =m.seqMiId ),(select r.prodApproval from SciStoresRequest r where r.sciMiMaster.seqMiId =m.seqMiId),(select r.purchApproval from SciStoresRequest r where r.sciMiMaster.seqMiId =m.seqMiId),m.insertedBy,m.insertedDate,(select wm.jobDesc from SciWorkorderMaster wm where wm.seqWorkId=m.sciWorkorderMaster.seqWorkId),(select  max(pm.seqPurchId) from SciPurchaseMast pm,SciPurchItemMaster im,SciItemmiDetails immi,SciPurchaseItemdetails pmmd where immi.seqMiId =m.seqMiId and immi.sciPurchItemMaster.seaPuritemId=im.seaPuritemId and im.seaPuritemId=pmmd.seqItemId and pm.seqPurchId=pmmd.sciPurchaseMast.seqPurchId) ,m.matDuedate ,m.isGroupMiId from SciMatindMaster m ,SciMattypeMaster mt  where mt.matCode  = substr(m.matcode,1,2)  ";
 		// Query query = em.createQuery("Select * from SciMatindMaster m ");
 		Map parameters = new HashMap();
 		String whereClause = "";
@@ -108,7 +108,10 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 			whereClause = whereClause + " and m.purStatus = :purstatus ";
 			parameters.put("purstatus", command.getPurStatus());
 		}
-		
+		if (command.getIsGroupMiId() != null &&  !"".equals(command.getIsGroupMiId())) {
+			whereClause = whereClause + " and m.isGroupMiId = :isGroupMiId ";
+			parameters.put("isGroupMiId", command.getIsGroupMiId());
+		}
 		if (command.getCancelStatus() != null) {
 			whereClause = whereClause + " and m.purStatus <> :cancelstatus ";
 			parameters.put("cancelstatus", command.getCancelStatusLov());
@@ -150,7 +153,9 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 			whereClause = whereClause + " and nvl(m.estUnintCost,0) = 0 ";
 			
 		}
-		
+		if("Y".equals(command.getFilterChildMi())) {
+			whereClause = whereClause + " and m.matGroupMiId is null ";
+		}
 		if ("Y".equals(command.getFilterIssued()))  {
 			whereClause = whereClause + " and not exists (select 1 from SciStoresRequest r,SciStoreissueMaster im  where r.seqStreqId=im.strequest.seqStreqId and r.sciMiMaster.seqMiId =m.seqMiId) ";
 			
@@ -202,7 +207,7 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		List<SciMatindMaster> finalList = new ArrayList<SciMatindMaster>();
 		List<SciMatindMaster> deptList = new ArrayList<SciMatindMaster>();
 		for(Object[]  obj :milist) {
-			finalList.add(new SciMatindMaster(obj[0], obj[1], obj[2], obj[3], obj[4], obj[5], obj[6], obj[7], obj[8], obj[9], obj[10], obj[11], obj[12], obj[13], obj[14], obj[15],obj[16],obj[17],obj[18]));
+			finalList.add(new SciMatindMaster(obj[0], obj[1], obj[2], obj[3], obj[4], obj[5], obj[6], obj[7], obj[8], obj[9], obj[10], obj[11], obj[12], obj[13], obj[14], obj[15],obj[16],obj[17],obj[18],obj[19]));
 		}
 				
 		int deptid = 0;
@@ -264,8 +269,16 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		return deptList;
 	}
 
-	
-	
+	@Override
+	public List<SciMatindMaster> loadChildMi(Long seqParentGroupMIId) {
+		String query = "Select m from SciMatindMaster m where m.matGroupMiId =:parentMiId";
+		Query qry = em.createQuery(query);
+		qry.setParameter("parentMiId",seqParentGroupMIId);
+
+		return qry.getResultList();
+	}
+
+
 	public List searchMIByWorkOrder(SciMatindMaster command,MatindCommand command1) {
 		String query = "Select distinct m from SciMatindMaster m ,SciMattypeMaster mt where mt.matCode  = substr(m.matcode,1,2)and  m.sciWorkorderMaster = :workmaster ";
 		Query wquery = null;

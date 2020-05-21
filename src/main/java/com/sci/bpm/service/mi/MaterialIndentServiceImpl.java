@@ -28,7 +28,12 @@ public class MaterialIndentServiceImpl implements MaterialIndentService {
 	daoimpl.save(master);
 	}
 
-	
+	@Override
+	public List<SciMatindMaster> loadChildMi(Long seqParentGroupMIId) {
+		return daoimpl.loadChildMi(seqParentGroupMIId);
+	}
+
+
 	public List<SciMatindMaster> searchMI(MatindCommand command) {
 		List<SciMatindMaster> milist = daoimpl.searchMI(command);
 		for(SciMatindMaster miitem:milist) {

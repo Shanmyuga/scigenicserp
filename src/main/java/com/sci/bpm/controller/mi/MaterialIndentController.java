@@ -292,11 +292,19 @@ public class MaterialIndentController extends SciBaseController {
 		String chkmatcode = null;
 		String matSpec = null;
 		String[] milist = command.getMiindex();
-		
+		List<SciMatindMaster> childmiList = new ArrayList<SciMatindMaster>();
 		List fullmilist = (List) context.getFlowScope().get("milist");
 		for (int idx = 0; idx < milist.length; idx++) {
 			SciMatindMaster mi = (SciMatindMaster) fullmilist.get(Integer.parseInt(milist[idx]) - 1);
 			String matcode = mi.getMatcode();
+			if("Y".equals(mi.getIsGroupMiId()) && milist.length >1) {
+				context.getFlashScope().put("groupError","groupError");
+				return error();
+			}
+			if("Y".equals(mi.getIsGroupMiId()) && milist.length ==1) {
+List<SciMatindMaster> childList = this.service.loadChildMi(mi.getSeqMiId());
+context.getFlowScope().put("childMiList",childList);
+			}
 			matSpec = mi.getMatSpec();
 			if(idx == 0) {
 				chkmatcode = mi.getMatcode();
@@ -311,6 +319,7 @@ public class MaterialIndentController extends SciBaseController {
 				return error();
 			}
 		}
+
 		context.getFlowScope().put("itemdesc", matSpec);
 		context.getFlowScope().put("itemmilist", itemmilist);
 		return success();

@@ -64,7 +64,14 @@ public class EnquiryDAOImpl implements EnquiryDAO {
             whereClause = whereClause + " and m.seqEnqryId = :seqEnqryId ";
             parameters.put("seqEnqryId", command.getSeqEnqMasterId());
         }
-
+        if (command.getEnqCreateFromDate() != null) {
+            whereClause = whereClause + " and m.insertedDate > :fromDate ";
+            parameters.put("fromDate", command.getEnqCreateFromDate());
+        }
+        if (command.getEnqCreateToDate() != null) {
+            whereClause = whereClause + " and m.insertedDate < :toDate ";
+            parameters.put("toDate", command.getEnqCreateToDate());
+        }
         if (command.getEnqPriority() != null) {
             whereClause = whereClause + " and m.enqPriority = :enqPriority ";
             parameters.put("enqPriority", command.getEnqPriority());
@@ -95,7 +102,7 @@ public class EnquiryDAOImpl implements EnquiryDAO {
             String key = (String) keyset.next();
             wquery.setParameter(key, parameters.get(key));
         }
-
+wquery.setMaxResults(1000);
         List<SciEnquiryMaster> enqList = wquery.getResultList();
         return enqList;
     }

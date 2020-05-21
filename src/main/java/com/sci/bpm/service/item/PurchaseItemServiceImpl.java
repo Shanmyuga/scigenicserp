@@ -26,7 +26,7 @@ public class PurchaseItemServiceImpl implements PurchaseItemService {
 	private ISciMatindMasterDAO matdao;
 	
 	
-	public void addNewItem(SciPurchItemMaster command,List<SciMatindMaster> milist,List<SciMatindMaster> splitmilist,SciRawMIDetails rmidetails) {
+	public void addNewItem(SciPurchItemMaster command,List<SciMatindMaster> milist,List<SciMatindMaster> splitmilist,SciRawMIDetails rmidetails,List<SciMatindMaster> childMiList) {
 		String rawmis  = command.getRawmis();
 		
 		String[] rawmisarr = StringUtils.split(rawmis,",");
@@ -40,6 +40,11 @@ public class PurchaseItemServiceImpl implements PurchaseItemService {
 for(SciMatindMaster m: splitmilist) {
 			
 			matdao.save(m);
+		}
+
+		for(SciMatindMaster m: childMiList) {
+
+			matdao.update(m);
 		}
 	}
 

@@ -103,7 +103,7 @@ public class EnquiryController extends SciBaseController {
 			emaster.setEnqFullCode(clientOrgMaster.getOrgCode() + cmaster.getCustomerCityCode() + cmaster.getCustomerCode()+String.valueOf(enqCode));
 		}
 		else {
-			throw new Exception("Cannot generATE fULL CODE");
+			throw new Exception("Cannot generate fULL CODE");
 		}
 		if(StringUtils.isBlank(emaster.getEnqAttendee()) || emaster.getEnqDate() == null ) {
 			throw new Exception();

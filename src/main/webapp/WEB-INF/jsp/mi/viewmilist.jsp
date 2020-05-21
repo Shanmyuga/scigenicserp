@@ -110,74 +110,70 @@
 
 </table>
 
-</div>
+
+    <display:table export="true" sort="list"   pagesize="10" name="milist"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
 
 
-<div style="float:left;width:750px;padding:10px;margin-top:50px">
+        <display:column sortable="true"   title="MI ID"  media="html">
+            <a href="#" onclick="viewAddInfo('<c:out value='${row.seqMiId}'/>')" ><c:out value='${row.seqMiId}'></c:out></a>
+        </display:column>
+        <display:column sortable="true"   title="Material Code" property="matcode" >
 
-<display:table export="true" sort="list"   pagesize="10" name="milist"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+        </display:column>
+        <display:column sortable="true"  title="Material Specs"  property="matSpec" >
+
+        </display:column>
+        <display:column sortable="true"  title="Material Cat"  property="matType" >
+
+        </display:column>
+
+        <display:column sortable="true"  title="Qty"  property="matQty">
+
+        </display:column>
+        <display:column sortable="true"  title="Dimen"  property="matDimesion">
+
+        </display:column>
+        <display:column sortable="true"  title="MI Due Date"  property="matDuedate">
+
+        </display:column>
+        <display:column sortable="true"  title="MI Remarks"  property="recommend" >
+
+        </display:column>
+        <display:column sortable="true"  title="PO ID"  property="poID" >
+
+        </display:column>
+        <display:column sortable="true"  title="Created By"  property="insertedBy" >
+
+        </display:column>
+        <display:column sortable="true"  title="Created Date"  property="insertedDate" >
+
+        </display:column>
+        <display:column sortable="true"   title="Mat Estimated Cost"   >
+            <fmt:parseNumber var="ut" type="NUMBER" value="${row.estUnintCost}"></fmt:parseNumber>
+            <fmt:parseNumber var="issquantity" type="NUMBER" value="${row.matQty}"></fmt:parseNumber>
 
 
-    <display:column sortable="true"   title="MI ID"  media="html">
-        <a href="#" onclick="viewAddInfo('<c:out value='${row.seqMiId}'/>')" ><c:out value='${row.seqMiId}'></c:out></a>
-    </display:column>
-<display:column sortable="true"   title="Material Code" property="matcode" >
+            <c:set var="utcost" value="${issquantity * ut}" />
+            <fmt:formatNumber type="number"
+                              maxFractionDigits="2" value="${utcost}" />
+        </display:column>
 
-</display:column>
-<display:column sortable="true"  title="Material Specs"  property="matSpec" >
+        <display:column sortable="true"  title="Work Order Details"  property="workorderDesc"  >
 
-</display:column>
-<display:column sortable="true"  title="Material Cat"  property="matType" >
+        </display:column>
+        <display:column sortable="true"   title="Material Status"  >
+            <c:out value='${lovmap[row.purStatus]}'/>
+        </display:column>
+        <display:column sortable="true"  title="Request Status"  property="requestStatus" >
 
-</display:column>
+        </display:column>
+        <display:column sortable="true"  title="Prod Appr reques"  property="prodRequestStatus" >
 
-<display:column sortable="true"  title="Qty"  property="matQty">
+        </display:column>
+        <display:column sortable="true"  title="Purch Appr Reques"  property="purchRequestStatus" >
 
-</display:column>
-<display:column sortable="true"  title="Dimen"  property="matDimesion">
-
-</display:column>
-    <display:column sortable="true"  title="MI Due Date"  property="matDuedate">
-
-    </display:column>
-    <display:column sortable="true"  title="MI Remarks"  property="recommend" >
-
-    </display:column>
-<display:column sortable="true"  title="PO ID"  property="poID" >
-
-</display:column>
-<display:column sortable="true"  title="Created By"  property="insertedBy" >
-
-</display:column>
-<display:column sortable="true"  title="Created Date"  property="insertedDate" >
-
-</display:column>
-<display:column sortable="true"   title="Mat Estimated Cost"   >
-<fmt:parseNumber var="ut" type="NUMBER" value="${row.estUnintCost}"></fmt:parseNumber>
-<fmt:parseNumber var="issquantity" type="NUMBER" value="${row.matQty}"></fmt:parseNumber>
-
-            
-       <c:set var="utcost" value="${issquantity * ut}" />     
-<fmt:formatNumber type="number" 
-            maxFractionDigits="2" value="${utcost}" />
-</display:column>
-
-<display:column sortable="true"  title="Work Order Details"  property="workorderDesc"  >
-
-</display:column>
-<display:column sortable="true"   title="Material Status"  >
-<c:out value='${lovmap[row.purStatus]}'/>
-</display:column>
-<display:column sortable="true"  title="Request Status"  property="requestStatus" >
-
-</display:column>
-<display:column sortable="true"  title="Prod Appr reques"  property="prodRequestStatus" >
-
-</display:column>
-<display:column sortable="true"  title="Purch Appr Reques"  property="purchRequestStatus" >
-
-</display:column>
-</display:table>
+        </display:column>
+    </display:table>
 
     <c:if test="${fn:length(addInfos) > 0}">
         <display:table export="true" sort="list"   pagesize="10" name="addInfos"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
@@ -200,6 +196,10 @@
         </display:table>
     </c:if>
 </div>
+
+
+
+
 <input type="hidden" name="_flowExecutionKey"  value="<c:out value="${flowExecutionKey}"/>" />
  <input type="hidden" name="_eventId"  id="_eventId" value="submit" >
     <input type="hidden" name="miindexID"  id="miindexID" value="submit" >
@@ -213,7 +213,7 @@
         <input type="hidden" name="idkey" id="idkey" value=""/>
     </form>
 </div>
-</div>
+
 
 <script language="javascript">
 

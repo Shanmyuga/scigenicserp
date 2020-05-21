@@ -79,7 +79,20 @@
                     <form:options items="${enqpriorities}" itemLabel="lovDescription" itemValue="seqLovId"/>
                 </form:select>
 
-                    <span style="color:red;">*</span></td>
+
+            </tr>
+
+            <tr>
+                <td align="left" class="datatext">Enquiry Create From Date</td>
+                <td ><form:input path="enqCreateFromDate" />
+                    <a href="javascript:show_calendar('document.enqbean.enqCreateFromDate', document.enqbean.enqCreateFromDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
+
+                </td>
+                 <td align="left" class="datatext">Enquiry Create To Date</td>
+                <td ><form:input path="enqCreateToDate" />
+                    <a href="javascript:show_calendar('document.enqbean.enqCreateToDate', document.enqbean.enqCreateToDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
+
+                </td>
             </tr>
 
             <tr>
@@ -109,14 +122,12 @@
 
             </display:column>
             <display:column sortable="true"  title="Customer Details" >
-                <c:out value='${row1.sciCustomerMaster.customerName}'/>
+                <c:out value='${row1.sciCustomerMaster.customerContact}'/>
             </display:column>
-            <display:column sortable="true"  title="Customer Dept" >
-                <c:out value='${lovmap[row1.customerDept]}'/>
+            <display:column sortable="true"  title="Organization Name" >
+                <c:out value='${row1.sciCustomerMaster.sciClientOrgMaster.orgName}'/>
             </display:column>
-            <display:column sortable="true"  title="Customer Contact" property="customerContact" >
 
-            </display:column>
             <display:column sortable="true"  title="Enquiry Category" >
 
                 <c:out value='${lovmap[row1.enqCategory]}'/>

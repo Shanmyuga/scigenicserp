@@ -73,7 +73,18 @@
 </form:select>
 
 </td>
- <td colspan="2" align="right"><input type="submit" value="Search MI"/></td>
+
+ <td> Group MI</td>
+ <td>
+  <form:select path="isGroupMiId" size="1" id="isGroupMiId" >
+   <form:option value="">ALL</form:option>
+   <form:option value="Y">Yes</form:option>
+   <form:option value="N">No</form:option>
+  </form:select>
+ </td>
+</tr>
+ <tr>
+ <td colspan="4" align="right"><input type="submit" value="Search MI"/></td>
 
 </tr>
 </table>
@@ -83,9 +94,14 @@
 <div style="float:left;width:750px;padding:10px;margin-top:50px">
 <c:if test="${itemerror != null}">
 <p>
-Cannot select different material code to create items.
+Cannot select different material code to create items
 </p>
 </c:if>
+ <c:if test="${groupError != null}">
+  <p>
+   Cannot select multiple group MI for create items
+  </p>
+ </c:if>
 <display:table export="true" sort="list"   pagesize="10" name="milist"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
 
 <display:column sortable="true"  title="Select" media="html" >
@@ -112,7 +128,9 @@ Cannot select different material code to create items.
 <display:column sortable="true"  title="Dimen"  property="matDimesion">
 
 </display:column>
+ <display:column sortable="true"  title="Group MI"  property="isGroupMiId">
 
+ </display:column>
 <display:column sortable="true"  title="Due Date"  property="matDuedate" >
 
 </display:column>
@@ -164,8 +182,8 @@ Cannot select different material code to create items.
 </div>
 <input type="hidden" name="_flowExecutionKey"  value="<c:out value="${flowExecutionKey}"/>" />
  <input type="hidden" name="_eventId"  id="_eventId" value="searchMI" >
- <input type="hidden" name="miindexID"  id="miindexID" value="submit" >
-
+ <input type="hidden" name="miindexID"  id="miindexID" value="0" >
+ <input type="hidden" name="filterChildMi"  id="filterChildMi" value="Y" >
 
  <c:if test="${fn:length(milist) > 0 && (matindbean.purStatus == Openmi || matindbean.purStatus == approveMI)}" >
 <div style="padding-left:10px;width:787px;float:left">

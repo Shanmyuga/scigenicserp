@@ -50,6 +50,10 @@ public class EnqBean implements Serializable {
 
     private String orgStateCityCode;
 
+    private Date enqCreateFromDate;
+
+    private Date enqCreateToDate;
+
     private MultipartFile fileDoc;
     private String reportFilter;
 
@@ -327,5 +331,21 @@ public class EnqBean implements Serializable {
 
     public void setReportFilter(String reportFilter) {
         this.reportFilter = reportFilter;
+    }
+
+    public Date getEnqCreateFromDate() {
+        return enqCreateFromDate;
+    }
+
+    public void setEnqCreateFromDate(Date enqCreateFromDate) {
+        this.enqCreateFromDate = enqCreateFromDate;
+    }
+
+    public Date getEnqCreateToDate() {
+        return enqCreateToDate;
+    }
+
+    public void setEnqCreateToDate(Date enqCreateToDate) {
+        this.enqCreateToDate = enqCreateToDate;
     }
 }

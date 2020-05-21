@@ -116,7 +116,7 @@ public interface ISciMatindMasterDAO {
 	public List<SciMatindMaster> findAll(int... rowStartIdxAndCount);
 	
 	public List<SciMatindMaster> searchMI(MatindCommand command);
-		
+	public List<SciMatindMaster>  loadChildMi(Long seqParentGroupMIId);
 	public List searchMIByWorkOrder(SciMatindMaster master,MatindCommand command);
 	public void approveMI(String seqmilist, String approvedBy);
 	public void cancelMI(SciMatindMaster master);
