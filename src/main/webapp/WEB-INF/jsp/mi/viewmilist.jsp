@@ -112,10 +112,12 @@
 
 
     <display:table export="true" sort="list"   pagesize="10" name="milist"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
-
-
-        <display:column sortable="true"   title="MI ID"  media="html">
+        <display:column sortable="true"   title="MI Additional Details" media="html"   >
             <a href="#" onclick="viewAddInfo('<c:out value='${row.seqMiId}'/>')" ><c:out value='${row.seqMiId}'></c:out></a>
+        </display:column>
+
+        <display:column sortable="true"   title="MI ID"  property="seqMiId">
+
         </display:column>
         <display:column sortable="true"   title="Material Code" property="matcode" >
 

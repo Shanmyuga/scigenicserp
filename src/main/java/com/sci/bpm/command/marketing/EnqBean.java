@@ -56,6 +56,7 @@ public class EnqBean implements Serializable {
 
     private MultipartFile fileDoc;
     private String reportFilter;
+    private String insertedBy;
 
     public Long getSeqEnqMasterId() {
         return seqEnqMasterId;
@@ -347,5 +348,13 @@ public class EnqBean implements Serializable {
 
     public void setEnqCreateToDate(Date enqCreateToDate) {
         this.enqCreateToDate = enqCreateToDate;
+    }
+
+    public String getInsertedBy() {
+        return insertedBy;
+    }
+
+    public void setInsertedBy(String insertedBy) {
+        this.insertedBy = insertedBy;
     }
 }

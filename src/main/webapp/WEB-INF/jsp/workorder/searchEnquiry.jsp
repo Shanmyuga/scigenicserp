@@ -97,7 +97,9 @@
 
             <tr>
 
-                <td colspan="4"> <input  type="button" value="Search Enquiry" onclick="eventdirect('searchEnquiry')"/> </td>
+                <td align="left" class="datatext">Inserted By</td>
+                <td><form:input path="insertedBy" /></td>
+                <td colspan="2"> <input  type="button" value="Search Enquiry" onclick="eventdirect('searchEnquiry')"/> </td>
 
             </tr>
 
@@ -139,6 +141,9 @@
 
             </display:column>
             <display:column sortable="true"  property="enqAttendee" >
+
+            </display:column>
+            <display:column sortable="true"  property="insertedBy" >
 
             </display:column>
             <display:column sortable="true"  title="EnqType" >

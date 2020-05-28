@@ -148,7 +148,7 @@
 <form:radiobutton path="miindexID"  value='${row.seqMiId}'></form:radiobutton>
 </c:if>
 </display:column>
-<display:column sortable="true"  title="Select For Group MI/View Additional MI "  media="html" >
+<display:column sortable="true"  title="Select For Group MI "  media="html" >
 
 <form:radiobutton path="miindexID"  value='${row.seqMiId}'></form:radiobutton>
 
