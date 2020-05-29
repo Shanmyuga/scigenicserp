@@ -192,7 +192,7 @@ public class EnquiryController extends SciBaseController {
 		emaster.setUdpatedBy(getUserPreferences().getUserID());
 		emaster.setUpdatedDate(new Date());
 		service.closeEnquury(emaster);
-		
+		loadEnquiryMaster(context);
 	  return success();	
 		
 	}

@@ -217,6 +217,7 @@
                     </tr>
                 </table>
                 <input type="button" value="Add Enquiry Details" onclick="eventdirect('addEnqdet')"/>
+                <input type="button" value="Close Enquiry" onclick="eventdirect('closeenq')"/>
             </div>
         </div>
 

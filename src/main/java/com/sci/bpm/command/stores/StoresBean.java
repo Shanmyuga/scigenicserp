@@ -65,6 +65,8 @@ public class StoresBean implements Serializable {
 	private String returnCriteria;
 	private String isScrap;
 	private String cancelReason;
+	private String availableDimension;
+
 	public Long getSeqVendorID() {
 		return seqVendorID;
 	}
@@ -494,5 +496,13 @@ public class StoresBean implements Serializable {
 
 	public void setCancelReason(String cancelReason) {
 		this.cancelReason = cancelReason;
+	}
+
+	public String getAvailableDimension() {
+		return availableDimension;
+	}
+
+	public void setAvailableDimension(String availableDimension) {
+		this.availableDimension = availableDimension;
 	}
 }

@@ -372,7 +372,7 @@ public class StoresManagerController extends SciBaseController {
 
         SciStoreissueMaster master = new SciStoreissueMaster();
         BeanUtils.copyProperties(master, bean);
-        availdata.setAvailDimension(bean.getIssueDimension());
+        availdata.setAvailDimension(bean.getAvailableDimension());
 
         if (bean.getAvailableCnt() == null || "".equals(bean.getAvailableCnt().trim())) {
 

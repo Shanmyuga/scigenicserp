@@ -200,6 +200,7 @@ Cancellation Reason :
 
 <tr>
 <td>Issue Dimension</td><td><form:input path="issueDimension"/></td>
+ <td>Remaining Dimension in Stores</td><td><form:input path="availableDimension"/></td>
 <td>Issued Count</td><td><form:input path="issueCnt"/></td>
 </tr>
 <tr>
