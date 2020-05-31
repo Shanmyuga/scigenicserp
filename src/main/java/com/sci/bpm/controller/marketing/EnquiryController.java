@@ -100,7 +100,7 @@ public class EnquiryController extends SciBaseController {
 		emaster.setEnqOrgCode(clientOrgMaster.getOrgCode());
 		emaster.setEnqCustomerCode(cmaster.getCustomerCode());
 		if(StringUtils.isNotBlank(clientOrgMaster.getOrgCode()) && StringUtils.isNotBlank(cmaster.getCustomerCityCode()) && StringUtils.isNotBlank(cmaster.getCustomerCode()) ) {
-			emaster.setEnqFullCode(clientOrgMaster.getOrgCode() + cmaster.getCustomerCityCode() + cmaster.getCustomerCode()+String.valueOf(enqCode));
+			emaster.setEnqFullCode(  cmaster.getCustomerCityCode() +clientOrgMaster.getOrgCode()+ cmaster.getCustomerCode()+String.valueOf(enqCode));
 		}
 		else {
 			throw new Exception("Cannot generate fULL CODE");
@@ -192,7 +192,7 @@ public class EnquiryController extends SciBaseController {
 		emaster.setUdpatedBy(getUserPreferences().getUserID());
 		emaster.setUpdatedDate(new Date());
 		service.closeEnquury(emaster);
-		loadEnquiryMaster(context);
+		
 	  return success();	
 		
 	}

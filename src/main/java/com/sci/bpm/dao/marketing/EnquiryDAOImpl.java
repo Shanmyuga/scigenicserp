@@ -46,7 +46,7 @@ public class EnquiryDAOImpl implements EnquiryDAO {
     public List loadOpenEnquiry(EnqBean command) {
 
 
-        String query = "select  m from SciEnquiryMaster m ";
+        String query = "select  m from SciEnquiryMaster m  ";
         // Query query = em.createQuery("Select * from SciMatindMaster m ");
         Map parameters = new HashMap();
         String whereClause = "where";

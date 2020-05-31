@@ -99,10 +99,21 @@
 
                 <td align="left" class="datatext">Inserted By</td>
                 <td><form:input path="insertedBy" /></td>
-                <td colspan="2"> <input  type="button" value="Search Enquiry" onclick="eventdirect('searchEnquiry')"/> </td>
+
+                <td>Enquiry Status</td>
+                <td  ><form:select path="enqStatus" size="1" id="enqStatus">
+                    <form:option value="">All</form:option>
+                    <form:option value="O">Open</form:option>
+                    <form:option value="C">Close</form:option>
+                </form:select>
+                </td>
+
 
             </tr>
+<tr>
 
+    <td colspan="4"> <input  type="button" value="Search Enquiry" onclick="eventdirect('searchEnquiry')"/> </td>
+</tr>
 
         </table>
 
