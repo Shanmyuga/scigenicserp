@@ -2,10 +2,12 @@ package com.sci.bpm.controller.lookup;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.sci.bpm.command.marketing.WorkOrderCommand;
 import com.sci.bpm.db.model.*;
+import com.sci.bpm.service.marketing.EnquiryService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class LookupValueController extends SciBaseController {
 
 	@Autowired
 	private TaskService taskService;
+
+	@Autowired
+	private EnquiryService enquiryService;
 
 	public Event addNewValue(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
@@ -131,6 +136,14 @@ SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope()
 		BeanUtils.copyProperties(customerMaster,value);
 		  customerMaster.setCustomerState(Long.parseLong(value.getStateCode()));
 		service.updateCustomer(customerMaster);
+
+		List<SciEnquiryMaster> enquiryMasters = enquiryService.loadCustomerEnquiries(customerMaster.getSeqCustId());
+		for(SciEnquiryMaster ems:enquiryMasters) {
+			ems.setEnqStateCityCode(customerMaster.getCustomerCityCode());
+			ems.setUdpatedBy(getUserPreferences().getUserID());
+			ems.setUpdatedDate(new Date());
+			enquiryService.updateEnquiryMaster(ems);
+		}
 		return success();
 	}
 	public Event editClientOrg(RequestContext context) throws Exception {

@@ -134,6 +134,13 @@ wquery.setMaxResults(1000);
         return qry.getResultList();
     }
 
+    @Override
+    public List loadCustomerEnquiries(Long seqCustomerId) {
+        Query qry = em.createQuery("from SciEnquiryMaster em where em.sciCustomerMaster.seqCustId =:seqCustId");
+        qry.setParameter("seqCustId",seqCustomerId);
+        return qry.getResultList();
+    }
+
 
     @Override
     public Long findEnqCode(String orgCode, String stateCode, String customerCode) {

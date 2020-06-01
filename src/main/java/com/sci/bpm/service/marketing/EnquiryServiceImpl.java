@@ -84,7 +84,7 @@ public class EnquiryServiceImpl implements EnquiryService {
 
 	public void updateEnquiryMaster(SciEnquiryMaster master) {
 		// TODO Auto-generated method stub
-		dao.closeEnquury(master);
+		dao.updateEnquiryMaster(master);
 	}
 
 	@Override
@@ -96,6 +96,11 @@ public class EnquiryServiceImpl implements EnquiryService {
 	@Override
 	public List loadEnquiryDocs(SciEnquiryMaster enquiryMaster) {
 		return dao.loadEnquiryDocs(enquiryMaster);
+	}
+
+	@Override
+	public List loadCustomerEnquiries(Long seqCustomerId) {
+		return dao.loadCustomerEnquiries(seqCustomerId);
 	}
 
 	public Long findEnqCode(String orgCode, String stateCode, String customerCode) {

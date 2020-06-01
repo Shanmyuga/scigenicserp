@@ -43,17 +43,13 @@ Data</font></p>
         <td  align="right" class="datatext">Customer Country</td>
         <td><form:input path="customerCountry" maxlength="50" size="50"/></td>
     </tr>
+    <tr>
 <td align="right" class="datatext">Customer Phone</td>
 <td><form:input path="customerPhone" maxlength="50" size="50"/></td>
 
 <td align="right" class="datatext">Customer Email</td>
 <td><form:input path="customerEmail" maxlength="50" size="50"/></td>
-</tr>
-    <tr>
-        <td align="right" class="datatext">Customer Address</td>
-        <td><form:input path="customerAddress" maxlength="50" size="50"/></td>
-
-</tr>
+    </tr>
 
 <tr >
 <td align="right" >&nbsp;</td>
