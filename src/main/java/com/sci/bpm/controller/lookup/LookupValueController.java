@@ -140,6 +140,7 @@ SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope()
 		List<SciEnquiryMaster> enquiryMasters = enquiryService.loadCustomerEnquiries(customerMaster.getSeqCustId());
 		for(SciEnquiryMaster ems:enquiryMasters) {
 			ems.setEnqStateCityCode(customerMaster.getCustomerCityCode());
+			ems.setEnqFullCode(  customerMaster.getCustomerCityCode() +ems.getEnqOrgCode()+ ems.getEnqCustomerCode()+ems.getEnquiryCode());
 			ems.setUdpatedBy(getUserPreferences().getUserID());
 			ems.setUpdatedDate(new Date());
 			enquiryService.updateEnquiryMaster(ems);

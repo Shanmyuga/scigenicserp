@@ -89,6 +89,11 @@ public class EnquiryDAOImpl implements EnquiryDAO {
             whereClause = whereClause + " and SUBSTRING(m.enqStateCityCode,1,2) = :enqStateCityCode ";
             parameters.put("enqStateCityCode", command.getStateCode());
         }
+
+        if (command.getEnqFullCode() != null && !StringUtils.isEmpty(command.getEnqFullCode())) {
+            whereClause = whereClause + " and enqFullCode = :enqFullCode ";
+            parameters.put("enqFullCode", command.getEnqFullCode());
+        }
         if (command.getCustomerCityCode() != null && !StringUtils.isEmpty(command.getCustomerCityCode())) {
             whereClause = whereClause + " and m.enqStateCityCode = :enqCityCode ";
             parameters.put("enqCityCode", command.getCustomerCityCode());

@@ -187,9 +187,9 @@
             <input type="hidden" name="_eventId"  id="_eventId" value="addEnq" >
 
         </div>
-    </div>
-    <c:if test="${fn:length(openenqlist) > 0 }" >
-        <div style="float:left;width:900px">
+
+        <c:if test="${fn:length(openenqlist) > 0 }" >
+
             <display:table export="true" sort="list"  pagesize="10" name="openenqdetails" requestURI="springtest.htm"  id="row2"  htmlId="3" cellpadding="5px" cellspacing="5px">
 
 
@@ -215,40 +215,38 @@
                 </display:column>
 
             </display:table>
-            <div width="787px" style="float:left;height:150px">
-                <p> Action Detail on the Enquiry</p>
-                <table>
-                    <tr>
-                        <td align="right" class="datatext">Action Taken till date</td>
-                        <td ><form:textarea path="actionTaken" /></td>
 
-                        <td align="right" class="datatext">Action Date</td>
-                        <td ><form:input path="actionDate" />
-                            <a href="javascript:show_calendar('document.enqbean.actionDate', document.enqbean.actionDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right" class="datatext">Action to be taken</td>
-                        <td ><form:textarea path="purpose" /></td>
+            <p> Action Detail on the Enquiry</p>
+            <table>
+                <tr>
+                    <td align="right" class="datatext">Action Taken till date</td>
+                    <td ><form:textarea path="actionTaken" /></td>
 
-                        <td align="right" class="datatext">Bring Forward Date</td>
-                        <td ><form:input path="bringForwardDate" />
-                            <a href="javascript:show_calendar('document.enqbean.bringForwardDate', document.enqbean.bringForwardDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
-                        </td>
-                        <td align="right" class="datatext">Enquiry Type</td>
-                        <td ><form:select path="enqmasterType" >
-                            <form:options items="${enqtypes}" itemLabel="lovDescription" itemValue="seqLovId"/>
-                        </form:select>
+                    <td align="right" class="datatext">Action Date</td>
+                    <td ><form:input path="actionDate" />
+                        <a href="javascript:show_calendar('document.enqbean.actionDate', document.enqbean.actionDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" class="datatext">Action to be taken</td>
+                    <td ><form:textarea path="purpose" /></td>
 
-                            <span style="color:red;">*</span></td>
-                    </tr>
-                </table>
-                <input type="button" value="Add Enquiry Details" onclick="eventdirect('addEnqdet')"/>
-                <input type="button" value="Close Enquiry" onclick="eventdirect('closeenq')"/>
-            </div>
-        </div>
+                    <td align="right" class="datatext">Bring Forward Date</td>
+                    <td ><form:input path="bringForwardDate" />
+                        <a href="javascript:show_calendar('document.enqbean.bringForwardDate', document.enqbean.bringForwardDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
+                    </td>
+                    <td align="right" class="datatext">Enquiry Type</td>
+                    <td ><form:select path="enqmasterType" >
+                        <form:options items="${enqtypes}" itemLabel="lovDescription" itemValue="seqLovId"/>
+                    </form:select>
 
-        <div style="float:left;width:900px">
+                        <span style="color:red;">*</span></td>
+                </tr>
+            </table>
+            <input type="button" value="Add Enquiry Details" onclick="eventdirect('addEnqdet')"/>
+            <input type="button" value="Close Enquiry" onclick="eventdirect('closeenq')"/>
+
+
             <display:table export="true" sort="list"   pagesize="10" name="enqdoclist"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
 
                 <display:column sortable="true"   title="Document Name" property="enqDocName" >
@@ -267,27 +265,28 @@
 
 
             </display:table>
-            <div style="padding-left:10px;width:787px;float:left">
 
-                <table >
 
-                    <tr>
-                        <td>Enquiry Upload File </td>
-                    </tr>
-                    <tr>
-                        <td align="right" class="datatext">Document  Description</td>
-                        <td ><form:textarea path="enqDocDesc" /><span style="color:red;">*</span></td>
-                        <td colspan="2">&nbsp</td>
-                    </tr>
-                    <tr>
-                        <td><input type="file" name="fileDoc" id="fileDoc"/><span style="color:red;">*</span></td>
-                    </tr>
+            <table >
 
-                </table>
-                <input type="button"  value="Add Enquiry Docs" onclick="eventdirect('addEnquirydoc')"/>
-            </div>
-        </div>
-    </c:if>
+                <tr>
+                    <td>Enquiry Upload File </td>
+                </tr>
+                <tr>
+                    <td align="right" class="datatext">Document  Description</td>
+                    <td ><form:textarea path="enqDocDesc" /><span style="color:red;">*</span></td>
+                    <td colspan="2">&nbsp</td>
+                </tr>
+                <tr>
+                    <td><input type="file" name="fileDoc" id="fileDoc"/><span style="color:red;">*</span></td>
+                </tr>
+
+            </table>
+            <input type="button"  value="Add Enquiry Docs" onclick="eventdirect('addEnquirydoc')"/>
+
+        </c:if>
+    </div>
+
     </div>
 
 
@@ -296,7 +295,10 @@
 
 
 </form:form>
-
+<form name="myloginform" action="streamer.enqDocServlet" method="post">
+    <input type="hidden" name="key" id="key" value="workdes"/>
+    <input type="hidden" name="idkey" id="idkey" value=""/>
+</form>
 <script language="javascript">
 
     function eventdirect(event) {
@@ -306,7 +308,10 @@
         document.enqbean.submit();
     }
 
-
+    function openfile(idkeyval) {
+        document.myloginform.idkey.value=idkeyval;
+        document.myloginform.submit();
+    }
 </script>
 <script>
     $( function() {
@@ -314,6 +319,6 @@
         var availableTags =temp.split('|');
         $( "#reportFilter" ).autocomplete({
             source: availableTags
-        });
+        }).css('z-index', 100);
     } );
 </script>

@@ -54,7 +54,7 @@ public class EnqBean implements Serializable {
 
     private Date enqCreateToDate;
 
-    private MultipartFile fileDoc;
+    private transient  MultipartFile fileDoc;
     private String reportFilter;
     private String insertedBy;
 

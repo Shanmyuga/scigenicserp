@@ -149,7 +149,7 @@ public class EnquiryController extends SciBaseController {
 
 		List enqdoclist = service.loadEnquiryDocs(emaster);
 		context.getFlowScope().put("openenqdetails", detaillist);
-
+		context.getExternalContext().getSessionMap().put("enqdoclistSessiom", enqdoclist);
 		context.getFlowScope().put("enqdoclist", enqdoclist);
 		context.getFlowScope().put("selectEnq", emaster);
 		return success();
@@ -210,7 +210,7 @@ public class EnquiryController extends SciBaseController {
 		SciEnquiryMaster emaster = selectEnqmaster(enqmasterlist, bean.getSeqenqmasterid());
 		BeanUtils.copyProperties(master, bean);
 		master.setSeqEnqId(emaster.getSeqEnqryId());
-		master.setEnqDocName(file.getName());
+		master.setEnqDocName(file.getOriginalFilename());
 
 		master.setUpdatedBy(getUserPreferences().getUserID());
 		master.setUpdatedDate(new java.util.Date());
@@ -222,6 +222,7 @@ public class EnquiryController extends SciBaseController {
 		master.setDocCnttype(file.getContentType());
 
 		service.addEnquiryDocMaster(master);
+		loadEnquiryDetails(context);
 		diskwriter.writeEnquiryDoc();
 		return success();
 	}
