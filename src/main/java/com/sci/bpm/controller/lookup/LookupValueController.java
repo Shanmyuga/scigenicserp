@@ -150,7 +150,9 @@ SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope()
 	public Event editClientOrg(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope().get("selectedClientOrg");
-		BeanUtils.copyProperties(clientOrgMaster,value);
+		clientOrgMaster.setOrgAddress(value.getOrgAddress());
+		clientOrgMaster.setUpdatedBy(getUserPreferences().getUserID());
+		clientOrgMaster.setUpdatedDate(new Date());
 		service.updateCLientOrg(clientOrgMaster);
 		return success();
 	}
