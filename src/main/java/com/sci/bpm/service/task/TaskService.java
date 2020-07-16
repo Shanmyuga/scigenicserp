@@ -3,16 +3,15 @@ package com.sci.bpm.service.task;
 import java.util.List;
 import java.util.Map;
 
-import com.sci.bpm.db.model.SciIssueDetails;
-import com.sci.bpm.db.model.SciIssueMaster;
-import com.sci.bpm.db.model.SciReportConfiguration;
+import com.sci.bpm.db.model.*;
 
 public interface TaskService {
 
 	
 	public boolean addNewTask(SciIssueMaster master);
-	
-	
+	public void addNewEnquiryDocs(List<SciEnquiryDocs> docs);
+	public SciEnquiryDetails addNewEnquiryActionDetail(SciEnquiryDetails details);
+	public SciEnquiryMaster loadEnquiryMaster(String enqFullId);
 	public boolean forwardTasks(SciIssueDetails issueDetails);
 	
 	public boolean closeTasks(SciIssueDetails issueDetails);

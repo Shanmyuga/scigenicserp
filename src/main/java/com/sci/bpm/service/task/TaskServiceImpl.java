@@ -30,6 +30,9 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
+import com.sci.bpm.dao.marketing.EnquiryDAO;
+import com.sci.bpm.db.model.*;
+import com.sci.bpm.service.marketing.EnquiryService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.fop.area.OffDocumentExtensionAttachment;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -43,15 +46,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sci.bpm.dao.task.TaskProcessDAO;
-import com.sci.bpm.db.model.SciIssueDetails;
-import com.sci.bpm.db.model.SciIssueMaster;
-import com.sci.bpm.db.model.SciReportConfiguration;
 
 @Service("taskservice")
 public class TaskServiceImpl implements TaskService {
 
 	@Autowired
 	private TaskProcessDAO daoimpl;
+
+	@Autowired
+	private EnquiryDAO enquiryDAO;
+
+
 	Properties properties = null;
 	public TaskServiceImpl() {
 		 properties = new Properties();
@@ -69,6 +74,21 @@ public class TaskServiceImpl implements TaskService {
 	public boolean addNewTask(SciIssueMaster master) {
 	
 		return daoimpl.addNewTask(master);
+	}
+
+	@Transactional
+	public void addNewEnquiryDocs(List<SciEnquiryDocs> docs) {
+		 enquiryDAO.addNewEnquiryDocs(docs);
+	}
+
+	@Transactional
+	public SciEnquiryDetails addNewEnquiryActionDetail(SciEnquiryDetails details) {
+		 return enquiryDAO.addNewEnquiryActionDetail(details);
+	}
+
+	@Transactional
+	public SciEnquiryMaster loadEnquiryMaster(String enqFullId) {
+		return enquiryDAO.loadEnquiryMaster(enqFullId);
 	}
 
 	@Transactional

@@ -17,7 +17,6 @@ import org.springframework.stereotype.Repository;
 import com.sci.bpm.command.marketing.EnqBean;
 import com.sci.bpm.db.model.SciEnquiryDetails;
 import com.sci.bpm.db.model.SciEnquiryMaster;
-import com.sci.bpm.db.model.SciMatindMaster;
 
 @Repository
 public class EnquiryDAOImpl implements EnquiryDAO {
@@ -30,8 +29,22 @@ public class EnquiryDAOImpl implements EnquiryDAO {
         em.persist(master);
     }
 
-    public void addNewEnquiryDetail(SciEnquiryDetails details,
-                                    SciEnquiryMaster master) {
+    @Override
+    public void addNewEnquiryDocs(List<SciEnquiryDocs> docs) {
+        for(SciEnquiryDocs doc:docs) {
+            em.persist(doc);
+        }
+    }
+
+    @Override
+    public SciEnquiryDetails addNewEnquiryActionDetail(SciEnquiryDetails details) {
+        em.persist(details);
+        System.out.println(details.getSeqEnqDetId());
+        return  details;
+    }
+
+    public void addNewEnquiryDetail(SciEnquiryDetails details,SciEnquiryMaster master
+                                     ) {
         em.persist(details);
 
     }
@@ -115,6 +128,17 @@ public class EnquiryDAOImpl implements EnquiryDAO {
 wquery.setMaxResults(1000);
         List<SciEnquiryMaster> enqList = wquery.getResultList();
         return enqList;
+    }
+
+    @Override
+    public SciEnquiryMaster loadEnquiryMaster(String enqFullId) {
+        Query query = em.createQuery("from SciEnquiryMaster  em where em.enqFullCode=:enqFullCode");
+        query.setParameter("enqFullCode",enqFullId);
+       List<SciEnquiryMaster> masters =  query.getResultList();
+       if(masters.size() > 0) {
+           return masters.get(0);
+       }
+        return null;
     }
 
     public void closeEnquury(SciEnquiryMaster master) {

@@ -191,7 +191,9 @@
         <div style="float:left;width:900px">
             <display:table export="true" sort="list"  pagesize="10" name="openenqdetails" requestURI="springtest.htm"  id="row2"  htmlId="3" cellpadding="5px" cellspacing="5px">
 
+                <display:column sortable="true"  property="seqEnqDetId" >
 
+                </display:column>
                 <display:column sortable="true"  property="actionTaken" >
 
                 </display:column>
@@ -246,7 +248,10 @@
 
 
 </form:form>
-
+<form name="myloginform" action="streamer.enqDocServlet" method="post">
+    <input type="hidden" name="key" id="key" value="workdes"/>
+    <input type="hidden" name="idkey" id="idkey" value=""/>
+</form>
 <script language="javascript">
 
     function eventdirect(event) {
@@ -257,6 +262,10 @@
     }
 
 
+    function openfile(idkeyval) {
+        document.myloginform.idkey.value=idkeyval;
+        document.myloginform.submit();
+    }
 </script>
 <script>
     $( function() {
