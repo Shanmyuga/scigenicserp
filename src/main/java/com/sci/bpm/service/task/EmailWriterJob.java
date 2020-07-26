@@ -124,7 +124,7 @@ public class EmailWriterJob extends QuartzJobBean  {
                 Properties props = new Properties();
 
 
-                Session session = Session.getDefaultInstance(props, null);
+                Session session = Session.getInstance(props, null);
 
                 MimeMessage email = new MimeMessage(session, new ByteArrayInputStream(emailBytes));
                 Arrays.stream(email.getHeader("From")).forEach(x-> System.out.println(x));
@@ -240,13 +240,13 @@ public class EmailWriterJob extends QuartzJobBean  {
                 request.setRemoveLabelIds(labelsToRemove);
                 service.users().messages().modify(user,message.getId(),request).execute();
                tservice.addNewEnquiryDocs(docs);
-               diskWriterJob.writeEnquiryDoc();
+
                 docs.clear();
-                break;
+
             }
 
             System.out.println("Docs "+ docs.size());
-
+            diskWriterJob.writeEnquiryDoc();
 
         } catch (GeneralSecurityException e) {
             e.printStackTrace();

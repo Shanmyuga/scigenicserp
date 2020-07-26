@@ -169,7 +169,7 @@ public class TaskServiceImpl implements TaskService {
 		System.out.println(array);
 		
 
-		Session session = Session.getDefaultInstance(properties,
+		Session session = Session.getInstance(properties,
 				new Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
 						return new PasswordAuthentication((String) properties

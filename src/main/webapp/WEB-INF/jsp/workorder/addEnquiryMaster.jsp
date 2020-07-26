@@ -21,7 +21,7 @@
 <td ><form:textarea path="enqDetails" /></td>
 </tr>
 <tr>
-<td align="right" class="datatext">Enquiry Date</td>
+<td align="right" class="datatext">Visit/Enquiry Date</td>
 <td ><form:input path="enqDate" />
 <a href="javascript:show_calendar('document.enqbean.enqDate', document.enqbean.enqDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
 </td>
@@ -61,7 +61,9 @@
 
 <tr>
 <td align="right" class="datatext">Enquiry Source</td>
-<td ><form:input path="enqSource" /></td>
+<td ><form:select path="enqSource" >
+    <form:options items="${enqSources}" itemLabel="lovDescription" itemValue="lovDescription"/>
+</form:select></td>
 </tr>
 
 <tr>

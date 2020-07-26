@@ -74,27 +74,27 @@
 			</map>
 		</property>
 	</bean>
-	<!--<bean name="diskjob" class="com.sci.bpm.service.task.DiskWriterJob">
-    <property name="host" value="210.18.138.222"></property>
-    <property name="port" value="8055"></property>
-    <property name="diskfileloc" value="C:/temp/"></property>
-</bean> -->
+	<!--  	<bean name="diskjob" class="com.sci.bpm.service.task.DiskWriterJob">
+        <property name="host" value="210.18.138.222"></property>
+        <property name="port" value="8055"></property>
+        <property name="diskfileloc" value="C:/temp/"></property>
+    </bean>-->
 
-    <bean name="diskjob" class="com.sci.bpm.service.task.DiskWriterJob">
-        <property name="host" value="192.168.1.115"></property>
-        <property name="port" value="32771"></property>
-        <property name="diskfileloc" value="/home/scigenics/datafolder/"></property>
-    </bean>
-        <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
-            <property name="jobDetail" ref="exampleJob" />
-            <property name="startDelay" value="10000" />
-            <property name="repeatInterval" value="300000" />
-        </bean>
-        <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <bean name="diskjob" class="com.sci.bpm.service.task.DiskWriterJob">
+              <property name="host" value="192.168.1.115"></property>
+              <property name="port" value="32771"></property>
+              <property name="diskfileloc" value="/home/scigenics/datafolder/"></property>
+          </bean>
+          <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+              <property name="jobDetail" ref="exampleJob" />
+              <property name="startDelay" value="10000" />
+              <property name="repeatInterval" value="300000" />
+          </bean>
+          <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 
-            <property name="jobDetail" ref="reportCountJob" />
-            <property name="cronExpression" value="0 0 12 * * ?" />
-            <!-- <property name="cronExpression" value="0 0/10 * * * ?" /> -->
+              <property name="jobDetail" ref="reportCountJob" />
+              <property name="cronExpression" value="0 0 12 * * ?" />
+              <!-- <property name="cronExpression" value="0 0/10 * * * ?" /> -->
 	</bean>
 	<bean id="dailycronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 
@@ -105,7 +105,7 @@
 	<bean id="emailcronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 
 		<property name="jobDetail" ref="emailJob" />
-		<property name="cronExpression" value="0 0/5 * *  * ?" />
+		<property name="cronExpression" value="0 0/55 * *  * ?" />
 		<!--<property name="cronExpression" value="*/5 * * * * ?" /> -->
 	</bean>
 	<bean id="WeeklycronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
@@ -161,9 +161,9 @@
 	<bean id="docfilelocation" class="com.sci.bpm.command.design.DocPropery">
 		<property name="docfilelocation" value="/home/scigenics/datafolder/"></property>
 
-		<!--<property name="docfilelocation" value="c:/temp/"></property>-->
+		<!-- <property name="docfilelocation" value="c:/temp/"></property>-->
 
 
-    </bean>
+</bean>
 </beans>
 
