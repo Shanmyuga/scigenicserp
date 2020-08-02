@@ -207,10 +207,17 @@
                 <display:column sortable="true"  property="purpose" title="Action to be Taken" >
 
                 </display:column>
+
                 <display:column sortable="true"  property="insertedDate" >
 
                 </display:column>
                 <display:column sortable="true"  property="insertedBy" >
+
+                </display:column>
+                <display:column sortable="true"  property="competitors" >
+
+                </display:column>
+                <display:column sortable="true"  property="followupMethod" >
 
                 </display:column>
 
@@ -238,6 +245,19 @@
                     <td align="right" class="datatext">Enquiry Type</td>
                     <td ><form:select path="enqmasterType" >
                         <form:options items="${enqtypes}" itemLabel="lovDescription" itemValue="seqLovId"/>
+                    </form:select>
+
+                        <span style="color:red;">*</span></td>
+                </tr>
+
+                <tr>
+                    <td align="right" class="datatext">Competitors Information</td>
+                    <td ><form:textarea path="competitors" /></td>
+
+
+                    <td align="right" class="datatext">Enquiry Follow up Method</td>
+                    <td ><form:select path="followupMethod" >
+                        <form:options items="${enqSources}" itemLabel="lovDescription" itemValue="lovDescription"/>
                     </form:select>
 
                         <span style="color:red;">*</span></td>

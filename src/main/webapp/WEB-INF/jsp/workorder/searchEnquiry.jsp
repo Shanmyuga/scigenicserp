@@ -214,7 +214,12 @@
                 <display:column sortable="true"  property="insertedBy" >
 
                 </display:column>
+                <display:column sortable="true"  property="competitors" >
 
+                </display:column>
+                <display:column sortable="true"  property="followupMethod" >
+
+                </display:column>
             </display:table>
             <div style="float:left;width:900px">
                 <display:table export="true" sort="list"   pagesize="10" name="enqdoclist"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >

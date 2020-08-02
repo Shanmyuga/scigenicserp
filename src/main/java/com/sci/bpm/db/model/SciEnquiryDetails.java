@@ -36,7 +36,9 @@ public class SciEnquiryDetails implements java.io.Serializable {
 
 	private String purpose;
 	
-	
+	private String competitors;
+
+	private String followupMethod;
 	// Constructors
 
 	/** default constructor */
@@ -159,5 +161,20 @@ public class SciEnquiryDetails implements java.io.Serializable {
 	public void setPurpose(String purpose) {
 		this.purpose = purpose;
 	}
+	@Column(name = "COMPETITOR", nullable=true,length = 250)
+	public String getCompetitors() {
+		return competitors;
+	}
 
+	public void setCompetitors(String competitors) {
+		this.competitors = competitors;
+	}
+	@Column(name = "FOLLOWUP_METHOD", nullable=true,length = 50)
+	public String getFollowupMethod() {
+		return followupMethod;
+	}
+
+	public void setFollowupMethod(String followupMethod) {
+		this.followupMethod = followupMethod;
+	}
 }

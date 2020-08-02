@@ -165,6 +165,8 @@ public class EnquiryController extends SciBaseController {
 		details.setUpdatedBy(getUserPreferences().getUserID());
 		details.setUpdatedDate(new java.util.Date());
 		details.setInsertedBy(getUserPreferences().getUserID());
+		details.setCompetitors(bean.getCompetitors());
+		details.setFollowupMethod(bean.getFollowupMethod());
 		details.setInsertedDate(new java.util.Date());
 		if(bean.getBringForwardDate() == null || StringUtils.isEmpty(bean.getPurpose())) {
 			throw new Exception();

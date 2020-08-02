@@ -22,6 +22,8 @@ public class EnqBean implements Serializable {
     private String enqStatus;
     private String actionTaken;
     private String enqAttendee;
+    private String followupMethod;
+    private String competitors;
     private Date actionDate;
     private Long seqenqmasterid;
     private Long enqPriority;
@@ -356,5 +358,21 @@ public class EnqBean implements Serializable {
 
     public void setInsertedBy(String insertedBy) {
         this.insertedBy = insertedBy;
+    }
+
+    public String getFollowupMethod() {
+        return followupMethod;
+    }
+
+    public void setFollowupMethod(String followupMethod) {
+        this.followupMethod = followupMethod;
+    }
+
+    public String getCompetitors() {
+        return competitors;
+    }
+
+    public void setCompetitors(String competitors) {
+        this.competitors = competitors;
     }
 }
