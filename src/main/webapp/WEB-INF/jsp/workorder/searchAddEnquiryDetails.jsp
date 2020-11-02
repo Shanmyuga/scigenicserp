@@ -262,6 +262,14 @@
 
                         <span style="color:red;">*</span></td>
                 </tr>
+                <tr><td align="right" class="datatext">Enquiry Priority</td>
+                    <td ><form:select path="enqPriorityLov" >
+                        <form:options items="${enqpriorities}" itemLabel="lovDescription" itemValue="seqLovId"/>
+                    </form:select>
+
+                        </td>
+
+                </tr>
             </table>
             <input type="button" value="Add Enquiry Details" onclick="eventdirect('addEnqdet')"/>
             <input type="button" value="Close Enquiry" onclick="eventdirect('closeenq')"/>

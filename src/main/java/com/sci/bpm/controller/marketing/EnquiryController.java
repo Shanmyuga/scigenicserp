@@ -41,7 +41,10 @@ public class EnquiryController extends SciBaseController {
 	
 	public Event loadEnquiryMaster(RequestContext context) throws Exception {
 		EnqBean bean = (EnqBean) getFormObject(context);
-		
+		if("marketing".equals(getUserPreferences().getRoleName())) {
+			bean.setInsertedBy(getUserPreferences().getUserID());
+		}
+
 		List mylist = service.loadOpenEnquiry(bean);
 		context.getFlowScope().put("openenqlist", mylist);
 	
@@ -176,6 +179,7 @@ public class EnquiryController extends SciBaseController {
 		//emaster.setCloseDate(new Date());
 		//emaster.setEnqStatus("C");
 		emaster.setEnqType(bean.getEnqmasterType());
+		emaster.setEnqPriority(bean.getEnqPriorityLov());
 		emaster.setUdpatedBy(getUserPreferences().getUserID());
 		emaster.setUpdatedDate(new Date());
 		service.updateEnquiryMaster(emaster);

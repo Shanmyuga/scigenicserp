@@ -27,6 +27,7 @@ public class EnqBean implements Serializable {
     private Date actionDate;
     private Long seqenqmasterid;
     private Long enqPriority;
+    private Long enqPriorityLov;
     private Long enqmasterType;
     private Long enqCategory;
     private Date enqFollowUpDate;
@@ -374,5 +375,13 @@ public class EnqBean implements Serializable {
 
     public void setCompetitors(String competitors) {
         this.competitors = competitors;
+    }
+
+    public Long getEnqPriorityLov() {
+        return enqPriorityLov;
+    }
+
+    public void setEnqPriorityLov(Long enqPriorityLov) {
+        this.enqPriorityLov = enqPriorityLov;
     }
 }

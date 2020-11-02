@@ -29,24 +29,16 @@
               <tr>
                   <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewproposals-flow">View  Project  Proposals</a></td>
               </tr>
-               <tr> 
-                <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewstreqIssue-flow">View Store Issues for a WorkOrder</a></td>
-              </tr>
-                <tr> 
-                <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=searchwork-flow">WO MI</a></td>
-              </tr>
+
+
                   <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addCustomer-flow">Add Edit Customer</a></td>
               </tr>
                 <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewworkorder-flow">View Work Order Docs</a></td>
               </tr>
-                         <tr> 
-                <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewstreq-flow">View Store Request</a></td>
-              </tr>
-                <tr> 
-                <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewstores-flow">View Stores List</a></td>
-              </tr>
+
+
               <tr>
                   <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewweeklystatus-flow">View Weekly Status Report</a></td>
               </tr>
