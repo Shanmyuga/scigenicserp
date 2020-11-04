@@ -30,7 +30,16 @@
                   <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewproposals-flow">View  Project  Proposals</a></td>
               </tr>
 
-
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=addEnquiry-flow">Add New Enquiry </a> </td>
+              </tr>
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=update-enquiry-flow">Add  Enquiry updates </a> </td>
+              </tr>
+              <tr>
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=searchenquiry-flow">Search  Enquiry  </a> </td>
+              </tr>
                   <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addCustomer-flow">Add Edit Customer</a></td>
               </tr>
