@@ -134,7 +134,9 @@ Cannot select different material code to create items
 <display:column sortable="true"  title="Due Date"  property="matDuedate" >
 
 </display:column>
+ <display:column sortable="true"  title="Parent Group MI ID"  property="matGroupMiId" >
 
+ </display:column>
 <display:column sortable="true"  title="Created Date"  property="insertedDate" >
 
 </display:column>

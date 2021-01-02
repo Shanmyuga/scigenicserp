@@ -305,6 +305,7 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 			whereClause = whereClause + " and m.matGroupMiId = :matGroupMiId ";
 			parameters.put("matGroupMiId", command1.getMatGroupMiId());
 		}
+		System.out.println(whereClause);
 		wquery = em.createQuery(query + whereClause);
 		Iterator keyset = parameters.keySet().iterator();
 		while (keyset.hasNext()) {
@@ -317,7 +318,7 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
         Query storeqry = em.createQuery("Select m from SciStoresRequest m Join m.sciMiMaster ms where ms.seqMiId =:seqmiid"); 
         Query issueqry = em.createQuery("Select m from SciStoreissueMaster m Join m.strequest ms where ms.seqStreqId =:seqStreqId"); 
 		wquery.setParameter("workmaster", command.getSciWorkorderMaster());
-		wquery.setMaxResults(500);
+		wquery.setMaxResults(1000);
 		List<SciMatindMaster> milist = wquery.getResultList();
 		StringBuffer buffer = new StringBuffer("");
 		for(SciMatindMaster mi:milist) {
