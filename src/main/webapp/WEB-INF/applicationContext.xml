@@ -105,8 +105,8 @@
 	<bean id="emailcronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 
 		<property name="jobDetail" ref="emailJob" />
-		<property name="cronExpression" value="0 0/55 * *  * ?" />
-		<!--<property name="cronExpression" value="*/5 * * * * ?" /> -->
+		<property name="cronExpression" value="0 0/50 * *  * ?" />
+		<!--<property name="cronExpression" value="*/5 * * * * ?" />-->
 	</bean>
 	<bean id="WeeklycronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 
@@ -161,7 +161,7 @@
 	<bean id="docfilelocation" class="com.sci.bpm.command.design.DocPropery">
 		<property name="docfilelocation" value="/home/scigenics/datafolder/"></property>
 
-		<!-- <property name="docfilelocation" value="c:/temp/"></property>-->
+		<!-- <property name="docfilelocation" value="/Users/prakash/tools/"></property>-->
 
 
 </bean>
