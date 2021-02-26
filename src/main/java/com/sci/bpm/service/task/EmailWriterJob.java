@@ -197,7 +197,9 @@ public class EmailWriterJob extends QuartzJobBean  {
                             BufferedReader reader = new BufferedReader(new InputStreamReader(part.getRawInputStream()));
                              data  =   reader.lines().collect(Collectors.joining());
                             int index  = data.indexOf("printable");
-                            data =    data.substring(index+9,data.length());
+                            if(data.length() > 9) {
+                                data = data.substring(index + 9, data.length());
+                            }
                             data.replaceAll("=C2=A0","");
                             System.out.println(data);
                             SciEnquiryDocs doc = new SciEnquiryDocs();
