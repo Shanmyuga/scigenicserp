@@ -159,7 +159,7 @@
 	<bean id="exceptionresol" class="com.sci.bpm.controller.base.Scigenics" />
 
 	<bean id="docfilelocation" class="com.sci.bpm.command.design.DocPropery">
-		<property name="docfilelocation" value="/home/scigenics/datafolder/"></property>->
+		<property name="docfilelocation" value="/home/scigenics/datafolder/"></property>
 
 		<!-- <property name="docfilelocation" value="/Users/prakash/tools/"></property>-->
 
