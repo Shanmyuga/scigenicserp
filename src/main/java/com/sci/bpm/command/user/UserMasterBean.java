@@ -17,7 +17,7 @@ public class UserMasterBean implements Serializable {
 	private String rolename;
 	private String selectedUserID;
 	private String userStatus;
-	
+	private String stateCode[];
 	
 	public String getRolename() {
 		return rolename;
@@ -67,7 +67,12 @@ public class UserMasterBean implements Serializable {
 	public void setUserStatus(String userStatus) {
 		this.userStatus = userStatus;
 	}
-	
-	
-	
+
+	public String[] getStateCode() {
+		return stateCode;
+	}
+
+	public void setStateCode(String[] stateCode) {
+		this.stateCode = stateCode;
+	}
 }

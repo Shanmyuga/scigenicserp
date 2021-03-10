@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class EnqBean implements Serializable {
 
@@ -44,6 +45,8 @@ public class EnqBean implements Serializable {
     private String customerCityCode;
 
     private String stateCode;
+
+    private List<String> stateCodeDelimited;
 
     private String rawOrgCode;
 
@@ -383,5 +386,13 @@ public class EnqBean implements Serializable {
 
     public void setEnqPriorityLov(Long enqPriorityLov) {
         this.enqPriorityLov = enqPriorityLov;
+    }
+
+    public List<String> getStateCodeDelimited() {
+        return stateCodeDelimited;
+    }
+
+    public void setStateCodeDelimited(List<String> stateCodeDelimited) {
+        this.stateCodeDelimited = stateCodeDelimited;
     }
 }

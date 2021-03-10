@@ -1,5 +1,6 @@
 package com.sci.bpm.controller.marketing;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import com.sci.bpm.command.LookupValueBean;
 import com.sci.bpm.db.model.*;
 import com.sci.bpm.service.lookup.LookUpValueService;
 import com.sci.bpm.service.task.DiskWriterJob;
+import com.sci.bpm.service.user.UserService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,8 @@ public class EnquiryController extends SciBaseController {
 	@Autowired
 	private EnquiryService service;
 	@Autowired
+	private UserService userService;
+	@Autowired
 	private LookUpValueService lservice;
 	@Autowired
 	private DiskWriterJob diskwriter;
@@ -42,7 +46,20 @@ public class EnquiryController extends SciBaseController {
 	public Event loadEnquiryMaster(RequestContext context) throws Exception {
 		EnqBean bean = (EnqBean) getFormObject(context);
 		if("marketing".equals(getUserPreferences().getRoleName())) {
-			bean.setInsertedBy(getUserPreferences().getUserID());
+		ScigenicsUserMaster userMaster = 	userService.findUser(getUserPreferences().getUserID());
+		List<SciUserStateMasterEntity> stateCodes = userService.getUserStates(userMaster.getSeqUserId());
+		List<String> stateCodeStrings = new ArrayList<String>();
+
+		for(SciUserStateMasterEntity entity : stateCodes) {
+			stateCodeStrings.add(entity.getStateCode());
+
+
+		}
+		if(stateCodeStrings.size() > 0) {
+
+			bean.setStateCodeDelimited(stateCodeStrings);
+		}
+			//bean.setInsertedBy(getUserPreferences().getUserID());
 		}
 
 		List mylist = service.loadOpenEnquiry(bean);

@@ -11,7 +11,7 @@
 		<class>com.sci.bpm.db.model.ScigenicsRoleMaster</class>
 		<class>com.sci.bpm.db.model.ScigenicsUserMaster</class>
 		<class>com.sci.bpm.db.model.SciFermJobDetails</class>
-
+		<class>com.sci.bpm.db.model.SciUserStateMasterEntity</class>
 		<class>com.sci.bpm.db.model.SciWorkInspection</class>
 		<class>com.sci.bpm.db.model.SciLookupMaster</class>
 		<class>com.sci.bpm.db.model.SciWorkorderMaster</class>

@@ -2,6 +2,7 @@ package com.sci.bpm.dao.user;
 
 import java.util.List;
 
+import com.sci.bpm.db.model.SciUserStateMasterEntity;
 import com.sci.bpm.db.model.ScigenicsRoleMaster;
 import com.sci.bpm.db.model.ScigenicsUserMaster;
 
@@ -127,7 +128,7 @@ public interface IScigenicsUserMasterDAO {
 
 	public List<ScigenicsUserMaster> findByUserId(Object userId,
 			int... rowStartIdxAndCount);
-
+	public boolean updateUserStates(List<SciUserStateMasterEntity> userStateMasterEntity);
 	public List<ScigenicsUserMaster> findByPassword(Object password,
 			int... rowStartIdxAndCount);
 
@@ -143,7 +144,8 @@ public interface IScigenicsUserMasterDAO {
 	 */
 	public ScigenicsUserMaster findUser(String userID);
 	public List selectUserList();
-
+public void deleteUserStates(Long seqUserId);
 	public ScigenicsRoleMaster selectRole(Long roleId);
+	public List<SciUserStateMasterEntity> getUserStates(Long seqUserId);
 	public List<ScigenicsUserMaster> findAll(int... rowStartIdxAndCount);
 }

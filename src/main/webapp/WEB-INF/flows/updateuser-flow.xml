@@ -3,7 +3,10 @@
 <webflow:on-start>
         <webflow:evaluate expression="usercontroller.setupForm"/>
     <webflow:evaluate expression="lookupbean.getDropDownList('roles_key')" result="flowScope.roleitems"/>
-    </webflow:on-start>
+
+    <webflow:evaluate expression="lookupbean.getDropDownList('state_unique_key')" result="flowScope.statenames"/>
+
+</webflow:on-start>
 <webflow:view-state id="viewuserlist" view="user.viewlist">
         <webflow:on-entry>
             <webflow:evaluate expression="usercontroller.loadUserData"/>

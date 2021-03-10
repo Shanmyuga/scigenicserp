@@ -1,10 +1,8 @@
 package com.sci.bpm.controller.user;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
+import com.sci.bpm.db.model.SciUserStateMasterEntity;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,15 +81,27 @@ public class UserMasterController extends SciBaseController {
 				break;
 			}
 		}
+
+		List<SciUserStateMasterEntity> userStateMasterEntities = userService.getUserStates(userbean.getSeqUserId());
+		List<String> stateCodes = new ArrayList<String>();
+
 List<String> roles = new ArrayList<String>();
 		if(userbean != null) {
 
 			for(ScigenicsRoleMaster role: userbean.getScigenicsRoleMasters()) {
 				roles.add(String.valueOf(role.getSeqRoleId()));
 			}
+
+			for(SciUserStateMasterEntity userStateMasterEntity : userStateMasterEntities) {
+				stateCodes.add(userStateMasterEntity.getStateCode());
+			}
 		}
 		String [] roleNAmes = roles.toArray(new String[roles.size()]);
+		if(stateCodes.size() > 0) {
+			mybean.setStateCode(stateCodes.toArray(new String[stateCodes.size()]));
+		}
 		mybean.setRoleID(roleNAmes);
+
 		return success();
 	}
 
@@ -117,6 +127,18 @@ List<String> roles = new ArrayList<String>();
 			rolemasterset.add(rolemaster);
 
 		}
+
+		String stateCode[] = mybean.getStateCode();
+		List<SciUserStateMasterEntity> datasets = new ArrayList<SciUserStateMasterEntity>();
+		for(int idx =0;idx < stateCode.length;idx++) {
+			SciUserStateMasterEntity stateMasterEntity = new SciUserStateMasterEntity();
+			stateMasterEntity.setSeqUserId(userbean.getSeqUserId());
+			stateMasterEntity.setStateCode(stateCode[idx]);
+			stateMasterEntity.setInsertedBy(getUserPreferences().getUserID());
+			stateMasterEntity.setInsertedDate(new Date());
+			datasets.add(stateMasterEntity);
+		}
+		userService.updateUserStates(datasets,userbean.getSeqUserId());
 		userbean.setScigenicsRoleMasters(rolemasterset);
 		userService.updateUser(userbean);
 		mybean.setUserStatus("");

@@ -59,7 +59,19 @@
         <td ><form:select path="roleID" multiple="true" >
 
             <form:options items="${roleitems}" itemValue="seqRoleId" itemLabel="roleName"/>
-        </form:select> </td></tr>
+        </form:select> </td>
+
+    </tr>
+
+
+    <tr>
+        <td align="right" class="datatext">States</td>
+        <td ><form:select path="stateCode" multiple="true" >
+
+            <form:options items="${statenames}" itemValue="lovType" itemLabel="lovName"/>
+        </form:select> </td>
+
+    </tr>
 <tr>
 <td colspan="4" align="left">
   <input type="submit" value="Update User" /></td>

@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.sci.bpm.db.model.SciUserStateMasterEntity;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Repository;
 
@@ -60,6 +61,15 @@ public class UserMasterDAO implements IScigenicsUserMasterDAO {
 		return null;
 	}
 
+	@Override
+	public boolean updateUserStates(List<SciUserStateMasterEntity> userStateMasterEntityList) {
+
+		for(SciUserStateMasterEntity userStateMasterEntity1: userStateMasterEntityList) {
+			em.persist(userStateMasterEntity1);
+		}
+		return true;
+	}
+
 	public List<ScigenicsUserMaster> findByUserLastname(Object userLastname,
 			int... rowStartIdxAndCount) {
 		// TODO Auto-generated method stub
@@ -93,8 +103,22 @@ public class UserMasterDAO implements IScigenicsUserMasterDAO {
 	}
 
 	@Override
+	public void deleteUserStates(Long seqUserId) {
+		Query qry = em.createNativeQuery("Delete from SCI_USER_STATE_MASTER where SEQ_USER_ID=:seqUserId");
+		qry.setParameter("seqUserId",seqUserId);
+		qry.executeUpdate();
+	}
+
+	@Override
 	public ScigenicsRoleMaster selectRole(Long roleId) {
 		return em.find(ScigenicsRoleMaster.class,roleId);
+	}
+
+	@Override
+	public List<SciUserStateMasterEntity> getUserStates(Long seqUserId) {
+		Query qry = em.createQuery("from SciUserStateMasterEntity where seqUserId=:seqUserId");
+		qry.setParameter("seqUserId",seqUserId);
+		return qry.getResultList();
 	}
 
 	public ScigenicsUserMaster findUser(String userID) {
