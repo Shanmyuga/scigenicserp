@@ -63,7 +63,7 @@
             <tr>
                 <td  align="right" class="datatext">Customer City Code</td>
                 <td><form:select path="customerCityCode"  id="customerCityCode"  >
-
+                    <form:option value="">Select</form:option>
                     <form:options items="${stateCityList}"  itemLabel="cityName" itemValue="cityCode"/>
                 </form:select></td>
 
@@ -137,19 +137,18 @@
 
             </display:column>
             <display:column sortable="true"  title="Customer Details" >
-                <c:out value='${row1.sciCustomerMaster.customerName}'/>
+                <c:out value='${row1.sciCustomerMaster.customerContact}'/>
             </display:column>
-            <display:column sortable="true"  title="Customer Dept" >
-                <c:out value='${lovmap[row1.customerDept]}'/>
-            </display:column>
-            <display:column sortable="true"  title="Customer Contact" property="customerContact" >
 
+
+            <display:column sortable="true"  title="Organization Name" >
+                <c:out value='${row1.sciCustomerMaster.sciClientOrgMaster.orgName}'/>
             </display:column>
             <display:column sortable="true"  title="Enquiry Category" >
 
                 <c:out value='${lovmap[row1.enqCategory]}'/>
             </display:column>
-            <display:column sortable="true"  property="enqDate" >
+            <display:column sortable="true"  property="insertedDate" >
 
             </display:column>
             <display:column sortable="true"  property="enqSource" >

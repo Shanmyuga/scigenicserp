@@ -62,7 +62,7 @@
             <tr>
                 <td  align="right" class="datatext">Customer City Code</td>
                 <td><form:select path="customerCityCode"  id="customerCityCode"  >
-
+                    <form:option value="">Select</form:option>
                     <form:options items="${stateCityList}"  itemLabel="cityName" itemValue="cityCode"/>
                 </form:select></td>
 
@@ -145,7 +145,7 @@
 
                 <c:out value='${lovmap[row1.enqCategory]}'/>
             </display:column>
-            <display:column sortable="true"  property="enqDate" >
+            <display:column sortable="true"  property="insertedDate" >
 
             </display:column>
             <display:column sortable="true"  property="enqSource" >
