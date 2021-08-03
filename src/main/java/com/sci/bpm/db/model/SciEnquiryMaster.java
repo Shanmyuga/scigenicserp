@@ -4,19 +4,7 @@ package com.sci.bpm.db.model;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 /**
  * SciEnquiryMaster entity. @author MyEclipse Persistence Tools
@@ -56,6 +44,12 @@ public class SciEnquiryMaster implements java.io.Serializable {
 	private String enqOrgCode;
 
 	private String enqFullCode;
+
+	private String actionTaken;
+	private Date actionDate;
+
+	private String lastUpdatedBy;
+	private Date bringForwardDate;
 
 	private Set<SciEnquiryDetails> sciEnquiryDetailses = new HashSet<SciEnquiryDetails>(
 			0);
@@ -312,7 +306,42 @@ public class SciEnquiryMaster implements java.io.Serializable {
 		return enqFullCode;
 	}
 
-	public void setEnqFullCode(String enqFullCode) {
+	public void setEnqFullCode(String enqFullCode ) {
 		this.enqFullCode = enqFullCode;
+	}
+
+		@Transient
+	public String getActionTaken() {
+		return actionTaken;
+	}
+
+	public void setActionTaken(String actionTaken) {
+		this.actionTaken = actionTaken;
+	}
+	@Transient
+
+	public Date getActionDate() {
+		return actionDate;
+	}
+
+	public void setActionDate(Date actionDate) {
+		this.actionDate = actionDate;
+	}
+	@Transient
+	public String getLastUpdatedBy() {
+		return lastUpdatedBy;
+	}
+
+	public void setLastUpdatedBy(String lastUpdatedBy) {
+		this.lastUpdatedBy = lastUpdatedBy;
+	}
+	@Transient
+
+	public Date getBringForwardDate() {
+		return bringForwardDate;
+	}
+
+	public void setBringForwardDate(Date bringForwardDate) {
+		this.bringForwardDate = bringForwardDate;
 	}
 }

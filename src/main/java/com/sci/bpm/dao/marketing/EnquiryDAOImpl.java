@@ -1,10 +1,7 @@
 package com.sci.bpm.dao.marketing;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -94,6 +91,10 @@ public class EnquiryDAOImpl implements EnquiryDAO {
             whereClause = whereClause + " and m.enqPriority = :enqPriority ";
             parameters.put("enqPriority", command.getEnqPriority());
         }
+        if (command.getEnqCategory() != null) {
+            whereClause = whereClause + " and m.enqCategory = :enqCategory ";
+            parameters.put("enqCategory", command.getEnqCategory());
+        }
         if (command.getOrgCode() != null && !StringUtils.isEmpty(command.getOrgCode())) {
             whereClause = whereClause + " and m.enqOrgCode = :enqOrgCode ";
             parameters.put("enqOrgCode", command.getOrgCode());
@@ -131,6 +132,18 @@ public class EnquiryDAOImpl implements EnquiryDAO {
         }
 wquery.setMaxResults(1000);
         List<SciEnquiryMaster> enqList = wquery.getResultList();
+        for(SciEnquiryMaster sciEnquiryMaster:enqList) {
+
+        Set<SciEnquiryDetails> treeSet = new TreeSet<SciEnquiryDetails>(new DateSortComparator());
+        treeSet.addAll(sciEnquiryMaster.getSciEnquiryDetailses());
+        if(!treeSet.isEmpty()) {
+            SciEnquiryDetails details = treeSet.stream().findFirst().get();
+            sciEnquiryMaster.setActionDate(details.getActionDate());
+            sciEnquiryMaster.setBringForwardDate(details.getBringForwardDate());
+            sciEnquiryMaster.setLastUpdatedBy(details.getUpdatedBy());
+            sciEnquiryMaster.setActionTaken(details.getActionTaken());
+        }
+        }
         return enqList;
     }
 

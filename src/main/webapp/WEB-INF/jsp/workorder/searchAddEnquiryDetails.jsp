@@ -81,6 +81,15 @@
                 </form:select>
 
                     <span style="color:red;">*</span></td>
+            </tr
+            <tr>
+                <td align="right" class="datatext">Enquiry Category</td>
+                <td ><form:select path="enqCategory" >
+                    <form:option value="">Select</form:option>
+                        <form:options items="${enqCategories}" itemLabel="lovDescription" itemValue="seqLovId"/>
+                    </form:select>
+
+
             </tr>
             <tr>
                 <td align="left" class="datatext">Enquiry Create From Date</td>

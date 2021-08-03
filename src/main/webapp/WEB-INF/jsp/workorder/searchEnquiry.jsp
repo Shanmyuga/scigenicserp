@@ -81,8 +81,15 @@
 
 
             </tr>
-
             <tr>
+                <td align="right" class="datatext">Enquiry Category</td>
+                <td ><form:select path="enqCategory" >
+                    <form:option value="">Select</form:option>
+                        <form:options items="${enqCategories}" itemLabel="lovDescription" itemValue="seqLovId"/>
+                    </form:select>
+
+
+            </tr>            <tr>
                 <td align="left" class="datatext">Enquiry Create From Date</td>
                 <td ><form:input path="enqCreateFromDate" />
                     <a href="javascript:show_calendar('document.enqbean.enqCreateFromDate', document.enqbean.enqCreateFromDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
@@ -168,18 +175,23 @@
 
             </display:column>
 
-            <display:column sortable="true"  property="enqOrgCode" >
 
-            </display:column>
-            <display:column sortable="true"  property="enqStateCityCode" >
-
-            </display:column>
-            <display:column sortable="true"  property="enqCustomerCode" >
-
-            </display:column>
             <display:column sortable="true"  property="enqFullCode" >
 
             </display:column>
+            <display:column sortable="true"  property="actionTaken"  title="Last Action Taken" >
+
+            </display:column>
+            <display:column sortable="true"  property="actionDate" title="Last action Date">
+
+            </display:column>
+            <display:column sortable="true"  property="lastUpdatedBy" title="Last updated by" >
+
+        </display:column>
+            <display:column sortable="true"  property="bringForwardDate" title="Bring forward Date" >
+
+            </display:column>
+
         </display:table>
         <div style="float:left;width:787px;padding: 10px" >
             <input type="hidden" name="_flowExecutionKey" value='<c:out value="${flowExecutionKey}"/>'>
