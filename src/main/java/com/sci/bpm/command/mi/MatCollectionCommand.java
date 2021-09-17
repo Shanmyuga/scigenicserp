@@ -26,6 +26,7 @@ public class MatCollectionCommand implements Serializable {
 	private String preparedBy;
 	private String drawingRef;
 	private String miForType;
+	private String miPhase;
 	private String matDesc;
 	private String productSpecid;
 	private String matDept;
@@ -167,5 +168,13 @@ public class MatCollectionCommand implements Serializable {
 
 	public void setAdditionalInfoCommandList(List<AdditionalInfoCommand> additionalInfoCommandList) {
 		this.additionalInfoCommandList = additionalInfoCommandList;
+	}
+
+	public String getMiPhase() {
+		return miPhase;
+	}
+
+	public void setMiPhase(String miPhase) {
+		this.miPhase = miPhase;
 	}
 }
