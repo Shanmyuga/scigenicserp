@@ -477,7 +477,7 @@ public class StoreDAOImpl implements StoresDAO {
 				List<SciReturnitemsRequest> stlist = storeqry.getResultList();
 				float totalret = 0;
 				for(SciReturnitemsRequest retReq:stlist) {
-					totalret = totalret + Float.parseFloat(retReq.getRetQuantity());
+					totalret = totalret + Float.parseFloat(retReq.getRetQuantity()==null?"0": retReq.getRetQuantity());
 				}
 					
 				

@@ -550,12 +550,19 @@ public class StoresManagerController extends SciBaseController {
         BeanUtils.copyProperties(request, command);
 
         request.setInsertedBy(getUserPreferences().getUserID());
-        request.setInsertedDate(new Date());
-        request.setUpdatedBy(getUserPreferences().getUserID());
+        request.setUpdatedBy(getUserPreferences().getUserID());        request.setInsertedDate(new Date());
+
         request.setUpdatedDt(new Date());
         request.setRetDate(new Date());
         request.setSciMiMaster(master.getSciMiMaster());
-
+        if(request.getRetQuantity() == null || "".equals(request.getRetQuantity().trim())) {
+            throw new Exception("Return quantity cannot be empty");
+        }
+        try {
+            double d = Double.parseDouble(request.getRetQuantity());
+        } catch (NumberFormatException nfe) {
+            throw new Exception("Return quantity cannot be empty");
+        }
         request.setStissue(master);
         request.setRequestStatus("N");
         request.setMatcode(master.getSciMiMaster().getMatcode());
