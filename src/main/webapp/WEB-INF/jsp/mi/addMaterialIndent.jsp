@@ -24,7 +24,7 @@
 
 <td align="right" class="datatext">Purchase details</td>
 <td align="left" class="datatext">Mi Purpose </td>
-
+ <td align="left" class="datatext">Mi Phase </td>
 
 
 </tr>
@@ -74,7 +74,15 @@
 </form:select>
 </td>
 
+ <td ><form:select path="matList[${rowcnt.index}].miPhase"  size="1" >
+  <form:option value="">Select</form:option>
+  <form:option value="Phase1">Phase1</form:option>
+  <form:option value="Phase2">Phase2</form:option>
+  <form:option value="Phase3">Phase3</form:option>
+  <form:option value="Phase4">Phase4</form:option>
 
+ </form:select>
+ </td>
 
 
 

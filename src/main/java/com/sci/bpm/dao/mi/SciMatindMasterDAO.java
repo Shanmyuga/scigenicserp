@@ -120,6 +120,10 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 			whereClause = whereClause + " and m.approvedStatus = :appstatus ";
 			parameters.put("appstatus", command.getApprovalStatus());
 		}
+		if (command.getMiPhase() != null && !"".equals(command.getMiPhase()) )  {
+			whereClause = whereClause + " and m.miPhase = :miPhase ";
+			parameters.put("miPhase", command.getMiPhase());
+		}
 		if (command.getMatCategory() != null && !"".equals(command.getMatCategory())) {
 			whereClause = whereClause + " and substr(m.matcode,3,2) = :matcat ";
 			parameters.put("matcat", command.getMatCategory());

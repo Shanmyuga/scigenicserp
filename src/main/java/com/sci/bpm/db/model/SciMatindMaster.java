@@ -57,6 +57,7 @@ private String workorderDesc;
 private Long poID;
 private Long costPercentageRation;
 private String miForType;
+private String miPhase;
 	// Constructors
 
 	private Set<SciAddMatInfoDocsEntity> matInfoDocsEntities = new HashSet<SciAddMatInfoDocsEntity>();
@@ -552,5 +553,13 @@ private String miForType;
 
 	public void setCostPercentageRation(Long costPercentageRation) {
 		this.costPercentageRation = costPercentageRation;
+	}
+	@Column(name = "MI_PHASE", length = 20)
+	public String getMiPhase() {
+		return miPhase;
+	}
+
+	public void setMiPhase(String miPhase) {
+		this.miPhase = miPhase;
 	}
 }

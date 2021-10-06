@@ -44,6 +44,7 @@ public class MatindCommand implements Serializable {
 	private Long seqprodID;
 	private String strapproval;
 	private String remarks;
+	private String miPhase;
 	private List<MatCollectionCommand> matList = new ArrayList();
 	private List<AdditionalInfoCommand> additionalInfoCommandList = new ArrayList();
 	private String dept;
@@ -741,4 +742,11 @@ public class MatindCommand implements Serializable {
 	}
 
 
+	public String getMiPhase() {
+		return miPhase;
+	}
+
+	public void setMiPhase(String miPhase) {
+		this.miPhase = miPhase;
+	}
 }

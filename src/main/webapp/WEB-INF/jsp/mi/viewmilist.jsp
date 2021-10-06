@@ -102,8 +102,17 @@
  <tr>
 <td>Remove Rejected requests</td>
 <td><form:checkbox path="filterRejected" value="Y"/>
-</td>
-<td colspan="2"> <input  type="button" value="Search MI  Items" onclick="eventdirect('searchMI')"/> </td>
+</td><td>MI Phase</td>
+     <td ><form:select path="miPhase"  size="1" >
+         <form:option value="">Select</form:option>
+         <form:option value="Phase1">Phase1</form:option>
+         <form:option value="Phase2">Phase2</form:option>
+         <form:option value="Phase3">Phase3</form:option>
+         <form:option value="Phase4">Phase4</form:option>
+
+     </form:select>
+     </td>
+<td colspan="1"> <input  type="button" value="Search MI  Items" onclick="eventdirect('searchMI')"/> </td>
 
 </tr>
  
