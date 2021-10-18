@@ -141,6 +141,9 @@
             <display:column sortable="true"  property="enqDetails" >
 
             </display:column>
+            <display:column sortable="true"  property="enqDate" >
+
+            </display:column>
             <display:column sortable="true"  title="Customer Details" >
                 <c:out value='${row1.sciCustomerMaster.customerContact}'/>
             </display:column>
