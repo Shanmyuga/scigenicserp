@@ -204,13 +204,17 @@ public class MaterialIndentController extends SciBaseController {
 
 		System.out.println(command.getMatDuedate());
 		List milist = service.loadStoreRequestFilters(command);
+		List pendingmiList = new ArrayList();
+		if("N".equals(command.getStIssued())) {
+			 pendingmiList = service.loadMisWithoutStoresRequest(command);
+		}
 		/*
 		 * Map[] mymaps = prservice.loadDesc(milist);
 		 * context.getFlowScope().put("pcatmap", mymaps[0]);
 		 * context.getFlowScope().put("pspecmap", mymaps[1]);
 		 */
 		context.getFlowScope().put("milist", milist);
-		
+		context.getFlowScope().put("pendingmiList", pendingmiList);
 		
 		return success();
 	}

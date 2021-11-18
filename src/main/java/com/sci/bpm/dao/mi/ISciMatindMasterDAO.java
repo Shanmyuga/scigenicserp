@@ -141,5 +141,7 @@ public interface ISciMatindMasterDAO {
 	public List<SciSubcontJobstatus> getRecentSubcontJobStatus(Long seqWorkID);
 	public List<SciSubcontJobstatus> getLoadDetails(Long jobCode,String jobType,Long seqWorkId);
 	public List<SciMIAdditionalInfoDTO> loadAdditionalInfoMaster(String categoryId, String dept);
-	
+	public List loadMisWithoutStoresRequest(MatindCommand command);
+
+
 }

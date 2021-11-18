@@ -149,6 +149,11 @@ public class MaterialIndentServiceImpl implements MaterialIndentService {
 		return daoimpl.loadStoreRequestFilters(command);
 	}
 
+	@Override
+	public List loadMisWithoutStoresRequest(MatindCommand command) {
+		return daoimpl.loadMisWithoutStoresRequest(command);
+	}
+
 
 	public void addSubContStatus(SciSubcontJobstatus jobstatus) {
 		// TODO Auto-generated method stub

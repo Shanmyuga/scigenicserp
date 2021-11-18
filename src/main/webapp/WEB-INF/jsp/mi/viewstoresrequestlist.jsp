@@ -98,7 +98,7 @@
 </div>
 
 
-<div style="float:left;width:750px;padding:10px;margin-top:50px">
+<div style="float:left;padding:10px;margin-top:50px">
 <display:table export="true" sort="list"  pagesize="10" name="milist"  id="row"  cellpadding="5px" cellspacing="5px" requestURI="springtest.htm">
 
 
@@ -153,6 +153,44 @@
 </display:table>
 
 </div>
+
+ <div style="float:left;padding:10px;margin-top:50px">
+  <p>Unraised Stores Request for the Workorder</p>
+  <display:table export="true" sort="list"  pagesize="10" name="pendingmiList"  id="row"  cellpadding="5px" cellspacing="5px" requestURI="springtest.htm">
+
+
+   <display:column sortable="true"   title="MI ID"  property="seqMiId">
+
+   </display:column>
+   <display:column sortable="true"   title="Material Code" property="matcode" >
+
+   </display:column>
+   <display:column sortable="true"  title="Material Specs"  property="matSpec" >
+
+   </display:column>
+   <display:column sortable="true"  title="Material Cat"  property="matType" >
+
+   </display:column>
+
+   <display:column sortable="true"  title="Qty"  property="matQty">
+
+   </display:column>
+   <display:column sortable="true"  title="Dimen"  property="matDimesion">
+
+   </display:column>
+   <display:column sortable="true"  title="MI Due Date"  property="matDuedate">
+
+   </display:column>
+   <display:column sortable="true"  title="MI Remarks"  property="recommend" >
+
+   </display:column>
+   <display:column sortable="true"   title="Material Status"  >
+    <c:out value='${lovmap[row.purStatus]}'/>
+   </display:column>
+  </display:table>
+
+ </div>
+
 <input type="hidden" name="_flowExecutionKey"  value="<c:out value="${flowExecutionKey}"/>" />
  <input type="hidden" name="_eventId"  id="_eventId" value="submit" >
  

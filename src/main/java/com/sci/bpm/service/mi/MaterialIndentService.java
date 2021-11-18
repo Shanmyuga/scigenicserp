@@ -30,6 +30,7 @@ public interface MaterialIndentService {
 	
 	public List loadStoreRequest(MatindCommand command);
 	public List loadStoreRequestFilters(MatindCommand command);
+	public List loadMisWithoutStoresRequest(MatindCommand command);
 	public List loadStoreRequestIssue(MatindCommand command);
 	public List loadforAppPurchStRequest(MatindCommand command);
 	public List loadforAppProdStRequest(MatindCommand command);
