@@ -848,7 +848,7 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 
 	@Override
 	public List loadMisWithoutStoresRequest(MatindCommand command) {
-		String query = " Select m from SciMatindMaster m,SciLookupMaster lm  where m.purStatus =lm.seqLovId and lm.lovName  not in ( 'MI_CANCELLED') " +
+		String query = " Select m from SciMatindMaster m,SciLookupMaster lm  where m.purStatus =lm.seqLovId and lm.lovName  not in ( 'MI_CANCEL','MI_QC_REJECTED_ITEMS') " +
 				" and not exists (select 1 from SciStoresRequest st where st.sciMiMaster.seqMiId = m.seqMiId ) " +
 				" and m.sciWorkorderMaster.seqWorkId = :workid  ";
 		Query wquery = null;
