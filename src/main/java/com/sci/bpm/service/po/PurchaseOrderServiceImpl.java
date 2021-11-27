@@ -70,7 +70,15 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
 	public List<SciPurchaseMast> searchPOs(POCommand command) {
 
-		return this.dao.searchPO(command);
+		List<SciPurchaseMast> purchaseMastList = this.dao.searchPO(command);
+		for(SciPurchaseMast purchaseMast:purchaseMastList) {
+			if(command.getSeqWorkId() != null) {
+				Float workCost = this.dao.getCostByWork(purchaseMast.getSeqPurchId(), command.getSeqWorkId());
+				purchaseMast.setWorkCost(workCost);
+			}
+		}
+
+		return purchaseMastList;
 	}
 
 	public List searchMatCodePO(POCommand command) {

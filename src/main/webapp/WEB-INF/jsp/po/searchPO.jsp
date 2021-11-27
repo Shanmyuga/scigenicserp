@@ -159,6 +159,9 @@
                     <display:column sortable="true"  title="PO Total Cost"  property="poTotalcost">
 
                     </display:column>
+                    <display:column sortable="true"  title=" WorkOrderCost"  property="workCost">
+
+                    </display:column>
                     <display:column sortable="true"    property="exciseCharges">
 
                     </display:column>

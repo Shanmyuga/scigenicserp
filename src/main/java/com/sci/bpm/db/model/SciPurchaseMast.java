@@ -5,20 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 /**
  * SciPurchaseMast entity.
@@ -70,6 +57,7 @@ public class SciPurchaseMast implements java.io.Serializable {
 	private Double creditTimeline;
 	private String poPaidFully;
 	private Date poPaidDate;
+	public Float workCost;
 	public Integer paymentPercentage;
 	
 	// Constructors
@@ -468,5 +456,14 @@ private String insertedBy;
 
 	public void setPaymentPercentage(Integer paymentPercentage) {
 		this.paymentPercentage = paymentPercentage;
+	}
+
+	@Transient
+	public Float getWorkCost() {
+		return workCost;
+	}
+
+	public void setWorkCost(Float workCost) {
+		this.workCost = workCost;
 	}
 }

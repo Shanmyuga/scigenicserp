@@ -135,6 +135,6 @@ public interface ISciPurchaseMastDAO {
 	public List<SciVendorPurchaseCost> loadQuotations(String matDept,String matCategory);
 	
 	public void addPurchaseVendorCost(SciVendorPurchaseCost purchaseCost);
-	
+	public Float getCostByWork(Long seqPurchaseId, Long seqWorkId);
 	
 }
