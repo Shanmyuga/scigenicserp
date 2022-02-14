@@ -370,7 +370,7 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 
 	@Override
 	public Float getCostByWork(Long seqPurchaseId, Long seqWorkId) {
-		Query query = em.createNativeQuery("select sum(product)  from (select unit_cost*MAT_QTY_MOD as product,seq_mi_id as mi_id  from sci_matind_master mi where mi.seq_mi_id in (select seq_mi_id from WORKORDER_MI_PURCHASE_VIEW where workorder_mi_purchase_view.seq_purch_id = :seq_purch_id and workorder_mi_purchase_view.seq_Work_id = :seq_Work_id))  ");
+		Query query = em.createNativeQuery("select sum(product)  from (select est_unit_cost*MAT_QTY_MOD as product,seq_mi_id as mi_id  from sci_matind_master mi where mi.seq_mi_id in (select seq_mi_id from WORKORDER_MI_PURCHASE_VIEW where workorder_mi_purchase_view.seq_purch_id = :seq_purch_id and workorder_mi_purchase_view.seq_Work_id = :seq_Work_id))  ");
 		query.setParameter("seq_purch_id",seqPurchaseId);
 		query.setParameter("seq_Work_id",seqWorkId);
 		BigDecimal cost = (BigDecimal) query.getResultList().get(0);

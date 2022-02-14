@@ -563,6 +563,7 @@ public class StoresManagerController extends SciBaseController {
         } catch (NumberFormatException nfe) {
             throw new Exception("Return quantity cannot be empty");
         }
+        request.setRetQuantity(request.getRetQuantity().trim());
         request.setStissue(master);
         request.setRequestStatus("N");
         request.setMatcode(master.getSciMiMaster().getMatcode());

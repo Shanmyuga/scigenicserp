@@ -121,6 +121,7 @@
 <input type="button"  value="Check All " onclick="checkAll('miindex',true)"/>
 <input type="button"  value="Uncheck All " onclick="checkAll('miindex',false)"/>
  <input type="button"  value="Approve MI " onclick="eventdirect('approveMI')"/>
+ <input type="button"  value="Approve MI for Stock " onclick="eventdirect('approveMIStock')"/>
   <input type="button"  value="Reject MI " onclick="eventdirect('rejectMI')"/>
  </div>
  </c:if>
