@@ -1,10 +1,7 @@
 package com.sci.bpm.dao.lookup;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -56,6 +53,36 @@ public class LookupValueDAOImpl implements LookupValueDAO {
 		qry.setParameter("seqClientOrgId",seqClientOrgId);
 
 		return qry.getResultList();
+	}
+
+	@Override
+	public List<SciCustomerMaster> loadCustomerforOrgandState(Long seqClientOrgId, Long stateCode) {
+		String query = "Select cm from SciCustomerMaster cm  where ";
+		System.out.println(stateCode + " - " + seqClientOrgId);
+		Map parameters = new HashMap();
+		String whereClause = "";
+		if(seqClientOrgId != null) {
+			whereClause = whereClause + "and cm.sciClientOrgMaster.seqClientOrgId=:seqClientOrgId ";
+			parameters.put("seqClientOrgId",seqClientOrgId);
+		}
+		if(stateCode != null) {
+			whereClause = whereClause + "and cm.customerState=:stateCode ";
+			parameters.put("stateCode",stateCode);
+		}
+		if (!"".equals(whereClause)) {
+			whereClause = whereClause.substring(3,whereClause.length());
+		}
+		Query wquery = em.createQuery(query+whereClause);
+
+		Iterator keyset = parameters.keySet().iterator();
+		while (keyset.hasNext()) {
+			String key = (String) keyset.next();
+			wquery.setParameter(key, parameters.get(key));
+		}
+		List<SciCustomerMaster> customerMasterList = wquery.getResultList();
+
+
+		return customerMasterList;
 	}
 
 
@@ -170,6 +197,22 @@ public class LookupValueDAOImpl implements LookupValueDAO {
 
 		return (String) qry.getSingleResult();
 
+	}
+
+	@Override
+	public String findOrgByOrgCode(String orgCode) {
+		Query qry = em.createQuery("from SciClientOrgMaster where orgCode =:orgCode");
+		qry.setParameter("orgCode",orgCode);
+		SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) qry.getSingleResult();
+		return clientOrgMaster.getOrgName();
+
+	}
+
+	@Override
+	public SciCustomerMaster findCustomer(Long seqClientId) {
+		Query qry = em.createQuery("from SciCustomerMaster where seqCustId =:seqCustId");
+		qry.setParameter("seqCustId",seqClientId);
+		return (SciCustomerMaster) qry.getSingleResult();
 	}
 
 }

@@ -23,7 +23,7 @@ public interface MaterialIndentService {
 	public void cancelMI(SciMatindMaster master);
 	public List<SciMIAdditionalInfoDTO> loadAdditionalInfoMaster(String categoryId, String dept);
 	public List selectDesignDocs(SciMatindMaster command);
-	
+	public List<SciMatindMaster> loadLastPriced(MatindCommand command);
 	public List loadOpenMI(SciMatindMaster command);
 	
 	public void addStoreRequest(SciStoresRequest request);

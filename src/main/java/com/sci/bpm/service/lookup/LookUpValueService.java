@@ -13,6 +13,7 @@ public interface LookUpValueService {
 	public boolean addNewValue(SciLookupMaster master);
 	public Long loadIDData(String lovName);
     public List<SciCustomerMaster> loadCustomerforOrg(Long seqClientOrgId);
+	public List<SciCustomerMaster> loadCustomerforOrgandState(Long seqClientOrgId,Long stateCode);
 	public List<SciClientOrgMaster> loadOrgNames();
 	public boolean addNewItemValue(SciMasterItem master);
 	public Map loadIDDescription();
@@ -28,6 +29,9 @@ public interface LookUpValueService {
 	public List<SciReportConfiguration> loadReports();
 	public void updateStatus(SciReportConfiguration config);
 	public List<SciStateCityMasterEntity> loadCities(String stateCode);
+
+	public String findOrgByOrgCode(String orgCode);
+	public SciCustomerMaster findCustomer(Long seqClientId);
 	public String selectOrgCode();
 	public String selectCustomerCode(String seq_client_org_id);
 }

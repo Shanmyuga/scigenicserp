@@ -27,7 +27,11 @@
               </tr>
 
               <tr>
-                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewproposals-flow">View  Project  Proposals</a></td>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewproposals-flow">Select Items for Project Proposals</a></td>
+              </tr>
+
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=priceProposals-flow">Price for Project Proposals</a></td>
               </tr>
               <tr>
                   <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewstreqitems-flow">View Stores Request List</a></td>
@@ -49,6 +53,10 @@
               </tr>
                   <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addCustomer-flow">Add Edit Customer</a></td>
+              </tr>
+
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewCustomer-flow">Search Customer</a></td>
               </tr>
                 <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewworkorder-flow">View Work Order Docs</a></td>

@@ -191,6 +191,25 @@ SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope()
 		context.getFlowScope().put("selectedCustomers",customers);
 		return success();
 	}
+
+	public Event searchCustomer(RequestContext context) throws Exception {
+		LookupValueBean value = (LookupValueBean)getFormObject(context);
+		List<SciClientOrgMaster> clientOrgs = (List<SciClientOrgMaster>) context.getFlowScope().get("clientorglist");
+		Long seqClientOrgId = null;
+		if(value.getSeqClientOrgId() != null && clientOrgs != null) {
+			SciClientOrgMaster clientOrgMaster = filterClientOrg(clientOrgs, value.getSeqClientOrgId());
+			seqClientOrgId = clientOrgMaster.getSeqClientOrgId();
+		}
+		Long stateCode = null;
+		if(value.getStateCode() != null && !"".equals(value.getStateCode())) {
+			stateCode = new Long(value.getStateCode());
+		}
+		List<SciCustomerMaster> customers = service.loadCustomerforOrgandState(seqClientOrgId,stateCode);
+
+		//context.getFlowScope().put("selectedClientOrg",clientOrgMaster);
+		context.getFlowScope().put("selectedCustomers",customers);
+		return success();
+	}
 	public Event addNewMatSpec(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		SciMatspecMaster master = new SciMatspecMaster();

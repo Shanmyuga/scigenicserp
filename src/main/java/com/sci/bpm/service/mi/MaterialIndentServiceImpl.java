@@ -77,8 +77,13 @@ public class MaterialIndentServiceImpl implements MaterialIndentService {
 		// TODO Auto-generated method stub
 		return daoimpl.selectDesignDocs(command);
 	}
-	
-	
+
+	@Override
+	public List<SciMatindMaster> loadLastPriced(MatindCommand command) {
+		return daoimpl.loadLastPriced(command);
+	}
+
+
 	public List loadOpenMI(SciMatindMaster command) {
 		// TODO Auto-generated method stub
 		return daoimpl.loadOpenMI(command);

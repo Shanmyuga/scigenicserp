@@ -17,21 +17,32 @@
 
 
 
-        <webflow:evaluate expression="lookupbean.getDropDownList('proposal_key')" result="flowScope.propsData"/>
+
         <webflow:evaluate expression="lookupbean.getDropDownList('customer_key')" result="flowScope.customerData"/>
     </webflow:on-start>
 
     <webflow:view-state id="entersearchProps" view="mi.viewproplist">
+<webflow:on-entry>
+    <webflow:evaluate expression="propcont.viewProps"/>
+</webflow:on-entry>
 
-
-        <webflow:transition on="loadProp" to="entersearchProps">
+        <webflow:transition on="selectPropItems" to="entersearchProps">
             <webflow:evaluate expression="propcont.bind"/>
-            <webflow:evaluate expression="propcont.searchProp"/>
+            <webflow:evaluate expression="propcont.loadPropItems"/>
         </webflow:transition>
 
-        <webflow:transition on="editProps" to="entersearch">
+        <webflow:transition on="addToProposal" to="entersearchProps">
             <webflow:evaluate expression="propcont.bind"/>
-            <webflow:evaluate expression="propcont.searchProp"/>
+            <webflow:evaluate expression="propcont.addProposalSelects"/>
+        </webflow:transition>
+
+        <webflow:transition on="addProposalItems" to="entersearchProps">
+            <webflow:evaluate expression="propcont.bind"/>
+            <webflow:evaluate expression="propcont.addProposalItem"/>
+        </webflow:transition>
+        <webflow:transition on="removeProposalItems" to="entersearchProps">
+            <webflow:evaluate expression="propcont.bind"/>
+            <webflow:evaluate expression="propcont.removeProposalItem"/>
         </webflow:transition>
     </webflow:view-state>
 

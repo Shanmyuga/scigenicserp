@@ -77,6 +77,19 @@ public class EnquiryServiceImpl implements EnquiryService {
 		return dao.loadOpenEnquiry(bean);
 	}
 
+	@Override
+	public SciEnquiryMaster checkEnquiryExists(String enquiryId) {
+		SciEnquiryMaster master = dao.loadEnquiryMaster(enquiryId);
+
+		if(master == null) {
+			return  null;
+		}
+		else {
+			master.getSciCustomerMaster();
+		}
+		return master;
+	}
+
 	public void closeEnquury(SciEnquiryMaster master) {
 		dao.closeEnquury(master);
 		

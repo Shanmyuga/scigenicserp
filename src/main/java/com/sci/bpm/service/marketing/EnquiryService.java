@@ -10,6 +10,8 @@ import com.sci.bpm.db.model.SciEnquiryMaster;
 public interface EnquiryService {
 
 	public List loadOpenEnquiry(EnqBean bean);
+
+	public SciEnquiryMaster checkEnquiryExists(String enquiryId);
 	
 	public void addNewEnqMaster(SciEnquiryMaster master,boolean isTaskRequired);
 	

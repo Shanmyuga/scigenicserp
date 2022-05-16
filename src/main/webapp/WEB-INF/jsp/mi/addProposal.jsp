@@ -23,18 +23,11 @@
 <td align="left" class="datatext">Proposal Remarks</td>
 <td ><form:input path="propRemarks" /><span style="color:red;">*</span></td>
 
+    <td align="left" class="datatext">Enquiry Full Code</td>
+    <td ><form:input path="enquiryID" /><span style="color:red;">*</span></td>
 
 </tr>
-<tr>
-    <td align="right" class="datatext">Client Details</td>
-    <td ><form:select path="proposalClient" >
-        <form:options items="${customerData}" itemLabel="customerName" itemValue="customerName"/>
-    </form:select>
 
-        <span style="color:red;">*</span></td>
-
-
-</tr>
 <tr>
 <td colspan="3" align="right" >&nbsp;</td>
 <td><input type="submit" value="Create New Proposal" /></td>

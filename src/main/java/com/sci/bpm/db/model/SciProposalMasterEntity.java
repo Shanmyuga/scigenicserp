@@ -11,8 +11,12 @@ import java.util.Date;
 public class SciProposalMasterEntity implements Serializable {
     private long seqPropId;
     private String proposalName;
-    private String proposalClient;
+
     private String proposalRemarks;
+    private String proposalOrg;
+
+    private String proposalClientName;
+    private String enquiryId;
     private Date insertedDate;
     private String insertedBy;
     private Date updatedDate;
@@ -43,15 +47,7 @@ public class SciProposalMasterEntity implements Serializable {
         this.proposalName = proposalName;
     }
 
-    @Basic
-    @Column(name = "PROPOSAL_CLIENT", nullable = false, length = 200)
-    public String getProposalClient() {
-        return proposalClient;
-    }
 
-    public void setProposalClient(String proposalClient) {
-        this.proposalClient = proposalClient;
-    }
 
     @Basic
     @Column(name = "PROPOSAL_REMARKS", nullable = true, length = 200)
@@ -102,6 +98,33 @@ public class SciProposalMasterEntity implements Serializable {
     public void setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
     }
+    @Basic
+    @Column(name = "ENQUIRY_ID", nullable = false, length = 20)
+    public String getEnquiryId() {
+        return enquiryId;
+    }
+
+    public void setEnquiryId(String enquiryId) {
+        this.enquiryId = enquiryId;
+    }
+    @Basic
+    @Column(name = "PROPOSAL_ORG", nullable = false, length = 200)
+    public String getProposalOrg() {
+        return proposalOrg;
+    }
+
+    public void setProposalOrg(String proposalOrg) {
+        this.proposalOrg = proposalOrg;
+    }
+    @Basic
+    @Column(name = "PROPOSAL_CLIENT", nullable = false, length = 200)
+    public String getProposalClientName() {
+        return proposalClientName;
+    }
+
+    public void setProposalClientName(String proposalClientName) {
+        this.proposalClientName = proposalClientName;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -112,8 +135,7 @@ public class SciProposalMasterEntity implements Serializable {
 
         if (seqPropId != that.seqPropId) return false;
         if (proposalName != null ? !proposalName.equals(that.proposalName) : that.proposalName != null) return false;
-        if (proposalClient != null ? !proposalClient.equals(that.proposalClient) : that.proposalClient != null)
-            return false;
+
         if (proposalRemarks != null ? !proposalRemarks.equals(that.proposalRemarks) : that.proposalRemarks != null)
             return false;
         if (insertedDate != null ? !insertedDate.equals(that.insertedDate) : that.insertedDate != null) return false;
@@ -128,7 +150,7 @@ public class SciProposalMasterEntity implements Serializable {
     public int hashCode() {
         int result = (int) (seqPropId ^ (seqPropId >>> 32));
         result = 31 * result + (proposalName != null ? proposalName.hashCode() : 0);
-        result = 31 * result + (proposalClient != null ? proposalClient.hashCode() : 0);
+
         result = 31 * result + (proposalRemarks != null ? proposalRemarks.hashCode() : 0);
         result = 31 * result + (insertedDate != null ? insertedDate.hashCode() : 0);
         result = 31 * result + (insertedBy != null ? insertedBy.hashCode() : 0);

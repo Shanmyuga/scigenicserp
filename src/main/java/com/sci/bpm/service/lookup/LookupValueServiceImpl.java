@@ -38,6 +38,11 @@ public class LookupValueServiceImpl implements LookUpValueService {
 		return daoimpl.loadCustomerforOrg(seqClientOrgId);
 	}
 
+	@Override
+	public List<SciCustomerMaster> loadCustomerforOrgandState(Long seqClientOrgId, Long stateCode) {
+		return daoimpl.loadCustomerforOrgandState(seqClientOrgId,stateCode);
+	}
+
 	public List<SciClientOrgMaster> loadOrgNames() {
 		return daoimpl.loadOrgNames();
 	}
@@ -113,6 +118,16 @@ public class LookupValueServiceImpl implements LookUpValueService {
 
 	public List<SciStateCityMasterEntity> loadCities(String stateCode) {
 		return daoimpl.loadCities(stateCode);
+	}
+
+	@Override
+	public String findOrgByOrgCode(String orgCode) {
+		return daoimpl.findOrgByOrgCode(orgCode);
+	}
+
+	@Override
+	public SciCustomerMaster findCustomer(Long seqClientId) {
+		return daoimpl.findCustomer(seqClientId);
 	}
 
 	public String selectOrgCode() {

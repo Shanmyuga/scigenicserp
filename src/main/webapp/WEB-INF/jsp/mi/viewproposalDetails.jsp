@@ -11,88 +11,70 @@
 <div width="787px"  style="float:left;">
 <form:form modelAttribute="proposalbean" name="proposalbean" >
 <div width="787px"  style="float:left;">
-<table  cellspacing="5" cellpadding="5" border="0" >
-<tr>
 
- 
+ <display:table export="true" sort="list"  pagesize="10" name="proposals" requestURI="springtest.htm"  id="row"  cellpadding="5px" cellspacing="5px">
 
-<td> Proposal Names</td>
-<td>
-<form:select path="seqProposalId" size="1" id="seqProposalId" onchange="eventdirect('loadProp')">
- <form:option value="">Select</form:option>
-<form:options items="${propsData}" itemLabel="proposalName" itemValue="seqPropId"/>
-</form:select>
-</td>
+  <display:column sortable="true"  title="Select" media="html" >
+   <form:radiobutton path="seqProposalId"  value='${row.seqPropId}' />
 
+  </display:column>
+  <display:column sortable="true"  property="proposalName" >
 
+  </display:column>
+  <display:column sortable="true"  property="proposalRemarks" >
 
+  </display:column>
+  <display:column sortable="true"  property="proposalOrg" >
 
-</tr>
+  </display:column>
+  <display:column sortable="true"  property="proposalClientName" >
 
- <c:if test="${propsMaster != null}">
+  </display:column>
 
-<tr>
-  <td> Proposal Name</td>
-  <td><c:out value="${propsMaster.proposalName}"/> </td>
-
-  <td> Proposal Client</td>
-  <td><c:out value="${propsMaster.proposalClient}"/> </td>
- </tr>
-
-  <tr>
-   <td> Proposal Remarks</td>
-   <td><c:out value="${propsMaster.proposalRemarks}"/> </td>
-
-   <td> Proposal Created Date</td>
-   <td><c:out value="${propsMaster.insertedDate}"/> </td>
-  </tr>
-
- </c:if>
-</table>
-
-</div>
-
-
-<div style="float:left;width:750px;padding:10px;margin-top:50px">
-
-<display:table export="true" sort="list"   pagesize="10" name="propsDetails"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
-
-
-<display:column sortable="true"  title="MI ID" property="seqMiId" >
-
-
-
-</display:column>
-<display:column sortable="true"   title="MatCode" property="matCode"  >
-</display:column>
-
-<display:column sortable="true"   title="Material Spec" property="matSpec"  >
-</display:column>
-    <display:column sortable="true"   title="Quantity" property="quantity"  >
-    </display:column>
-<display:column sortable="true"   title="matCost" property="matCost"  >
-</display:column>
-
-
-</display:table>
-</div>
-<input type="hidden" name="_flowExecutionKey"  value="<c:out value="${flowExecutionKey}"/>" />
+ </display:table>
+ <input type="hidden" name="_flowExecutionKey"  value="<c:out value="${flowExecutionKey}"/>" />
  <input type="hidden" name="_eventId"  id="_eventId" value="searchItem" >
- 
-  <c:if test="${fn:length(qcunappitemslist) > 0 }" >
-<div style="padding-left:10px;width:787px;float:left">
+<p align="left">
+ <input type="button" value="Select Proposal Items" onclick="javascript:eventdirect('selectPropItems')"/>
+</p>
+</div>
 
 
- </div>
- </c:if>
  
  
+
+</div>
+
+
+
+</div>
+<div width="787px"  style="float:left;width: 100%">
+
+ <display:table export="true" sort="list"  pagesize="10" name="proposalItemMasterList" requestURI="springtest.htm"  id="row"  cellpadding="5px" cellspacing="5px">
+
+  <display:column sortable="true"  title="Select" media="html" >
+   <form:checkbox path="seqPropItemId"  value='${row.seqPropItemId}'  onchange="javascript:saveSelect(this)"/>
+
+  </display:column>
+  <display:column sortable="true"  property="schedule" >
+
+  </display:column>
+  <display:column sortable="true"  property="type" >
+
+  </display:column>
+  <display:column sortable="true"  property="description" >
+
+  </display:column>
+  <display:column sortable="true"  property="mocCategory" >
+
+  </display:column>
+
+ </display:table>
+ <input type="button" value="Add to Proposal " onclick="javascript:eventdirect('addToProposal')"/>
+ <form:hidden path="selectItem" />
+ <form:hidden path="unSelectItem" />
+</div>
 </form:form>
-</div>
-
-
-</div>
-
 <script language="javascript">
 
 function eventdirect(event) {
@@ -101,7 +83,22 @@ document.getElementById('_eventId').value = event;
 
 document.proposalbean.submit();
 }
+function saveSelect(event) {
 
+
+ if(event.checked) {
+  document.getElementById('_eventId').value = 'addProposalItems';
+  document.getElementById('selectItem').value = event.value
+  document.proposalbean.submit();
+ }
+
+ if(!event.checked) {
+  document.getElementById('_eventId').value = 'removeProposalItems';
+  document.getElementById('unSelectItem').value = event.value
+  document.proposalbean.submit();
+ }
+// document.proposalbean.submit();
+}
 
 
 </script>

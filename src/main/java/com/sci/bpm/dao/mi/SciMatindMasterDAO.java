@@ -374,6 +374,44 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		wquery.executeUpdate();
 	}
 
+	@Override
+	public List<SciMatindMaster> loadLastPriced(MatindCommand command1) {
+		String query = "Select distinct m from SciMatindMaster m ,SciMattypeMaster mt where mt.matCode  = substr(m.matcode,1,2) and exists (select 1 from SciRecdMaterials rm where rm.sciMiMaster.seqMiId = m.seqMiId ) ";
+		Query wquery = null;
+		Map parameters = new HashMap();
+		String whereClause = "";
+		if (command1.getMatCategory() != null && !"".equals(command1.getMatCategory())) {
+			whereClause = whereClause + " and substr(m.matcode,3,2) = :matcat ";
+			parameters.put("matcat", command1.getMatCategory());
+		}
+		if (command1.getMatDept() != null && !"".equals(command1.getMatDept())) {
+			whereClause = whereClause + " and mt.matDept = :matdept ";
+			parameters.put("matdept", command1.getMatDept());
+		}
+		if (command1.getMatCodeselected() != null && !"".equals(command1.getMatCodeselected().trim()) ) {
+			whereClause = whereClause + " and m.matcode = :matcodefull ";
+			parameters.put("matcodefull", command1.getMatCodeselected());
+		}
+		whereClause = whereClause + " order by m.updatedDate desc ";
+		System.out.println(whereClause);
+		wquery = em.createQuery(query + whereClause);
+		Iterator keyset = parameters.keySet().iterator();
+		while (keyset.hasNext()) {
+			String key = (String) keyset.next();
+			wquery.setParameter(key, parameters.get(key));
+		}
+
+
+
+
+
+		wquery.setMaxResults(3);
+		List<SciMatindMaster> milist = wquery.getResultList();
+		System.out.println("misearch size" + milist.size());
+
+		return milist;
+	}
+
 	public void cancelMI(SciMatindMaster master) {
 		
 		 

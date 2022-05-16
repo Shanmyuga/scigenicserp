@@ -10,6 +10,7 @@ import com.sci.bpm.db.model.SciEnquiryMaster;
 public interface EnquiryDAO {
 	public List loadOpenEnquiry(EnqBean bean);
 	public SciEnquiryMaster loadEnquiryMaster(String enqFullId);
+
 	public void addNewEnqMaster(SciEnquiryMaster master);
 	public void addNewEnquiryDocs(List<SciEnquiryDocs> docs);
 	public SciEnquiryDetails addNewEnquiryActionDetail(SciEnquiryDetails details);

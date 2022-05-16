@@ -11,7 +11,7 @@ public interface LookupValueDAO {
 
 	public List getDropDownList(String query);
 	public List<SciCustomerMaster> loadCustomerforOrg(Long seqClientOrgId);
-
+	public List<SciCustomerMaster> loadCustomerforOrgandState(Long seqClientOrgId,Long stateCode);
 	public boolean addNewValue(SciLookupMaster master);
 	public List<SciClientOrgMaster> loadOrgNames();
 	public Long lookupId(String lovname);
@@ -31,6 +31,8 @@ public interface LookupValueDAO {
 	public void updateCLientOrg(SciClientOrgMaster clientOrg);
 	public String selectOrgCode();
 	public String selectCustomerCode(String seq_client_org_id);
+	public String findOrgByOrgCode(String orgCode);
+	public SciCustomerMaster findCustomer(Long seqClientId);
 
 
 

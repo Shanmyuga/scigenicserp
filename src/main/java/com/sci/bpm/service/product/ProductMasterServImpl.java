@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sci.bpm.db.model.SciMatcatMaster;
+import com.sci.bpm.db.model.SciMattypeMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,6 +51,11 @@ public class ProductMasterServImpl implements ProductMasterService {
 		return dao.selectProdType();
 	}
 
+	@Override
+	public List<SciMattypeMaster> getMatType(String matCode) {
+		return dao.getMatType(matCode);
+	}
+
 	public String getMatDept(String matTypeCode) {
 		
 		return dao.getMatDept(matTypeCode);
@@ -68,6 +75,11 @@ public class ProductMasterServImpl implements ProductMasterService {
 	public String getMatType(String cat, String dept) {
 		
 		return dao.getMatType(cat, dept);
+	}
+
+	@Override
+	public SciMatcatMaster getMatTypeCat(String cat, String dept) {
+		return dao.getMatTypeCat(cat, dept);
 	}
 
 	public List selectCategory(String matDept) {

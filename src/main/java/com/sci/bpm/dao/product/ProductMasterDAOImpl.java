@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.sci.bpm.db.model.SciMattypeMaster;
 import org.springframework.stereotype.Repository;
 
 import com.sci.bpm.db.model.SciMatcatMaster;
@@ -40,6 +41,14 @@ Query qry = em.createQuery("from SciMatcatMaster pm");
 			newList.add(pm);
 		}
 		return newList;
+	}
+
+	@Override
+	public List<SciMattypeMaster> getMatType(String matCode) {
+		Query qry = em.createQuery(" from SciMattypeMaster pm where pm.matCode =:matCode");
+		qry.setParameter("matCode", matCode);
+
+		return qry.getResultList();
 	}
 
 	public SciProductMaster loadProd(Long seqprodid) {
@@ -100,4 +109,15 @@ Query qry = em.createQuery("from SciMatcatMaster pm");
 		qry.setParameter("matDept", matDept);
 		return qry.getResultList();
 	}
+
+	@Override
+	public SciMatcatMaster getMatTypeCat(String cat, String dept) {
+		Query qry = em.createQuery("from SciMatcatMaster pm where pm.matcatCode=:matCode and pm.matDept =:matDept");
+		qry.setParameter("matCode", cat);
+		qry.setParameter("matDept", dept);
+		SciMatcatMaster matcat = (SciMatcatMaster) qry.getSingleResult();
+		return matcat;
+	}
+
+
 }

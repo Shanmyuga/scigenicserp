@@ -50,6 +50,11 @@
 
         <put-attribute name="body" value="/WEB-INF/jsp/lookup/searchClientOrg.jsp" />
     </definition>
+    <definition name="viewcustomer.search" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/lookup/viewCustomer.jsp" />
+    </definition>
     <definition name="enquiry.search" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
         <put-attribute name="menu" value="usermenu.jsp" />
 
