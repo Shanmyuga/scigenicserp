@@ -412,6 +412,12 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		return milist;
 	}
 
+	@Override
+	public List<SciMatindMaster> searchMIForPrice(MatindCommand command) {
+
+		return null;
+	}
+
 	public void cancelMI(SciMatindMaster master) {
 		
 		 

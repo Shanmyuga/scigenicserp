@@ -4,10 +4,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.sci.bpm.command.marketing.WorkOrderCommand;
 import com.sci.bpm.db.model.*;
 import com.sci.bpm.service.marketing.EnquiryService;
+import com.sci.bpm.service.user.UserService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class LookupValueController extends SciBaseController {
 
 	@Autowired
 	private EnquiryService enquiryService;
+
+	@Autowired
+	private UserService userService;
 
 	public Event addNewValue(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
@@ -77,6 +82,7 @@ SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope()
 		String customerCode = service.selectCustomerCode(String.valueOf(clientOrgMaster.getSeqClientOrgId()));
 		master.setCustomerCode(StringUtils.trim(customerCode));
 		master.setUpdatedDate(new java.util.Date());
+		master.setCustomerStatus("A");
 		master.setUpdatedBy(getUserPreferences().getUserID());
 		master.setSciClientOrgMaster(clientOrgMaster);
 		service.addNewCustomer(master);
@@ -164,7 +170,35 @@ SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope()
 		context.getFlowScope().put("selectedVendor",vendorMaster);
 		return success();
 	}
+	public Event loadStates(RequestContext context) throws Exception {
 
+		LookupValueBean value = (LookupValueBean)getFormObject(context);
+		List<LookupValueBean> stateMaster = (List<LookupValueBean>) context.getFlowScope().get("states");
+
+
+		List<SciUserStateMasterEntity> stateCodes  = new ArrayList<>();
+		if("marketing".equals(getUserPreferences().getRoleName())) {
+			ScigenicsUserMaster userMaster = 	userService.findUser(getUserPreferences().getUserID());
+			 stateCodes = userService.getUserStates(userMaster.getSeqUserId());
+
+
+		}
+		else {
+
+		}
+
+
+		final List<String> codes = stateCodes.stream().map(e -> e.getStateCode()).collect(Collectors.toList());
+		List<LookupValueBean> beans = stateMaster.stream().filter(e -> codes.contains(e.getLovType())).collect(Collectors.toList());
+		if(beans.isEmpty()) {
+			context.getFlowScope().put("states",stateMaster);
+		}
+		if(beans.size() > 3) {
+			context.getFlowScope().put("states",beans);
+		}
+
+		return success();
+	}
 	public Event selectCustomer(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		List<SciCustomerMaster> customers = (List<SciCustomerMaster>) context.getFlowScope().get("selectedCustomers");

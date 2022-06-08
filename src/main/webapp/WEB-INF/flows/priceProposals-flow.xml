@@ -42,7 +42,7 @@
         </webflow:transition>
         <webflow:transition on="searchMI" to="entersearchProps">
             <webflow:evaluate expression="propcont.bind"/>
-            <webflow:evaluate expression="propcont.searchMIPricing"/>
+            <webflow:evaluate expression="propcont.searchPricedMI"/>
         </webflow:transition>
 
         <webflow:transition on="removeProposalItems" to="entersearchProps">

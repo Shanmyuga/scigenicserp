@@ -29,6 +29,7 @@ public class SciCustomerMaster implements java.io.Serializable {
 	private String customerCode;
 	private SciClientOrgMaster sciClientOrgMaster;
 	private String customerCountry;
+	private String customerStatus;
 	private Set<SciWorkorderMaster> sciWorkorderMasters = new HashSet<SciWorkorderMaster>(
 			0);
 
@@ -193,9 +194,14 @@ public class SciCustomerMaster implements java.io.Serializable {
 		this.customerCountry = customerCountry;
 	}
 
+	@Column(name = "CUSTOMER_STATUS",length = 2)
+	public String getCustomerStatus() {
+		return customerStatus;
+	}
 
-
-
+	public void setCustomerStatus(String customerStatus) {
+		this.customerStatus = customerStatus;
+	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SEQ_CLIENT_ORG_ID")

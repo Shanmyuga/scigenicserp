@@ -87,6 +87,9 @@
             <display:column sortable="true"    property="customerCode" >
 
             </display:column>
+            <display:column sortable="true"    property="customerStatus" >
+
+            </display:column>
         </display:table>
 
 

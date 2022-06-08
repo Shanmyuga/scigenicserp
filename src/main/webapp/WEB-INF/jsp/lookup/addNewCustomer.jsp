@@ -101,6 +101,9 @@ Data</font></p>
             <display:column sortable="true"    property="customerCode" >
 
             </display:column>
+            <display:column sortable="true"    property="customerStatus" >
+
+            </display:column>
         </display:table>
 
         <input type="button" value="Edit Customer"  onclick="eventdirect('selectCustomer')" />

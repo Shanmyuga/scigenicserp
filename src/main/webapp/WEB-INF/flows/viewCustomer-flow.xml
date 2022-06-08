@@ -6,7 +6,9 @@
     <webflow:evaluate expression="lookupbean.getDropDownList('state_unique_key')" result="flowScope.states"/>
     </webflow:on-start>
 <webflow:view-state id="addlookup" view="viewcustomer.search">
-
+<webflow:on-entry>
+    <webflow:evaluate expression="lookupcontbean.loadStates"/>
+</webflow:on-entry>
 
     <webflow:transition on="filterReport" to="addlookup">
         <webflow:evaluate expression="lookupcontbean.bind"/>

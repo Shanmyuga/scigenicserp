@@ -117,6 +117,10 @@
 
                 <form:radiobutton path="selectItem" value='${row.seqMiId}'/>
             </display:column>
+
+            <display:column sortable="true"  property="seqMiId" >
+
+            </display:column>
             <display:column sortable="true"  property="matSpec" >
 
             </display:column>

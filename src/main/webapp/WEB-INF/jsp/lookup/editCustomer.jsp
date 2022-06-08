@@ -52,6 +52,12 @@ Data</font></p>
     </tr>
 
 <tr >
+    <td  align="right" class="datatext">Customer Status</td>
+    <td><form:select path="customerStatus"  id="customerStatus"  >
+
+        <form:option value="A">Active</form:option>
+        <form:option value="I">INACTIVE</form:option>
+    </form:select></td>
 <td align="right" >&nbsp;</td>
 <td><input type="submit" value="Edit Customer" /></td>
 </tr>

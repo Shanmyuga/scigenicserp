@@ -38,7 +38,9 @@ public class LookupValueBean implements Serializable{
 	private String vendorContact;
 	private String vendorCity;
 	private String vendorAddress;
-	
+	private String customerStatus;
+
+
 	
 	
 	private String seqReportID;
@@ -327,5 +329,13 @@ public class LookupValueBean implements Serializable{
 
 	public void setStateCode(String stateCode) {
 		this.stateCode = stateCode;
+	}
+
+	public String getCustomerStatus() {
+		return customerStatus;
+	}
+
+	public void setCustomerStatus(String customerStatus) {
+		this.customerStatus = customerStatus;
 	}
 }

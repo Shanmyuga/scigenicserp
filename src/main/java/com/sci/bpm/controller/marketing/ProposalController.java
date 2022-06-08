@@ -185,6 +185,17 @@ command1.setMatCodeselected(command.getProductType()+command.getProductSpec());
         return success();
     }
 
+
+    public Event searchPricedMI(RequestContext context) throws Exception {
+        ProposalCommand command = (ProposalCommand) getFormObject(context);
+        MatindCommand matindCommand = new MatindCommand();
+        matindCommand.setMatDept(command.getProductDept());
+        matindCommand.setMatCodeselected(command.getProductType()+command.getProductSpec());
+        List<SciMatindMaster> matindMasterList = miservice.loadLastPriced(matindCommand);
+        System.out.println(matindMasterList.size());
+        context.getFlowScope().put("matindMasterList",matindMasterList);
+        return success();
+    }
     public Event loadPropItems(RequestContext context) throws Exception {
 
         ProposalCommand command = (ProposalCommand) getFormObject(context);
