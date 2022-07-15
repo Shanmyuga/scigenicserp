@@ -116,7 +116,7 @@ public class PurchaseItemMasterDAOImpl implements ISciPurchItemMasterDAO {
 	public boolean checkRawMI(Long rawMI) {
 		// TODO Auto-generated method stub
 		Query query = null;
-		query = em.createQuery("from SciStoreissueMaster im where im.sciMiMaster.seqMiId=:seqMIID");
+		query = em.createQuery("from SciQcMiMaster im where im.sciMiMaster.seqMiId=:seqMIID");
 		query.setParameter("seqMIID", rawMI);
 		if(query.getResultList() != null && query.getResultList().size() >0 ) {
 			return true;

@@ -50,7 +50,7 @@ public class SciPurchaseMast implements java.io.Serializable {
 	private String refundStatement;
 	private Date refDate;
 	private String qutRefNo;
-	
+	private Date piDate;
 	private String subContVendor;
 	private Double gst;
 	private Double gstCharges;
@@ -456,6 +456,16 @@ private String insertedBy;
 
 	public void setPaymentPercentage(Integer paymentPercentage) {
 		this.paymentPercentage = paymentPercentage;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "PI_DATE", nullable = true, length = 7)
+	public Date getPiDate() {
+		return piDate;
+	}
+
+	public void setPiDate(Date piDate) {
+		this.piDate = piDate;
 	}
 
 	@Transient

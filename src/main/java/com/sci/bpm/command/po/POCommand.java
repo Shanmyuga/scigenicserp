@@ -46,6 +46,7 @@ public class POCommand implements Serializable {
 	private Date todate;
 	private String[] poDetailIndex;
 	private Date refDate;
+	private Date piDate;
 	private String qutRefNo;
 	private Date paymentDate;
 
@@ -544,6 +545,14 @@ public class POCommand implements Serializable {
 
 	public Date getPoPaidDate() {
 		return poPaidDate;
+	}
+
+	public Date getPiDate() {
+		return piDate;
+	}
+
+	public void setPiDate(Date piDate) {
+		this.piDate = piDate;
 	}
 
 	public void setPoPaidDate(Date poPaidDate) {

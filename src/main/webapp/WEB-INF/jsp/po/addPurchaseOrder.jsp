@@ -149,11 +149,23 @@
 <a href="javascript:show_calendar('document.pocommand.refDate', document.pocommand.refDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
 </td>
 </tr>
+
 <tr>
 <td align="left" class="datatext">Subcont Vendor</td>
 <td ><form:input path="subContVendor" />
-<td colspan="2"><input type="submit" value="Create New PO" /></td>
+    <td align="left" class="datatext">PI Date</td>
+    <td ><form:input path="piDate" />
+        <a href="javascript:show_calendar('document.pocommand.piDate', document.pocommand.piDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
+    </td>
+
+
 </tr>
+</tr
+
+    <tr>
+        <td colspan="4"><input type="submit" value="Create New PO" /></td>
+
+    </tr>
 <form:errors >
 <c:forEach items="${messages}" var="message">
 		<tr><td colspan="2"><c:out value="${message}"></c:out></td></tr>
