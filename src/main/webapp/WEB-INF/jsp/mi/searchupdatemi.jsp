@@ -144,7 +144,7 @@
    <input type="hidden" name="_eventId"  id="_eventId" value="searchMI" >
 
 
-    <c:if test="${fn:length(milist) > 0 && (matindbean.purStatus == Openmi || matindbean.purStatus == approveMI)}" >
+    <c:if test="${fn:length(milist) > 0 && (matindbean.purStatus == Openmi || matindbean.purStatus == approveMI ||  matindbean.purStatus == AssignedMI )}" >
      <div style="padding-left:10px;width:787px;float:left">
       <input type="button"  value="Cancel MI " onclick="eventdirect('updateMI')"/>
       <input type="button"  value="Update Remarks" onclick="eventdirect('updateRemarks')"/>

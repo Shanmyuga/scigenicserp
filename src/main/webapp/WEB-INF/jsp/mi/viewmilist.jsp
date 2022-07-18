@@ -153,6 +153,9 @@
         <display:column sortable="true"  title="PO ID"  property="poID" >
 
         </display:column>
+        <display:column sortable="true"  title="Delivery Due"  property="deliverySchedule" >
+
+        </display:column>
         <display:column sortable="true"  title="Created By"  property="insertedBy" >
 
         </display:column>
