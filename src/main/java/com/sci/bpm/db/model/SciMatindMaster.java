@@ -35,6 +35,7 @@ public class SciMatindMaster implements java.io.Serializable {
 	private Long matGroupMiId;
 	
 	private String isGroupMiId;
+	private Date deliverySchedule;
 	
 	 private BigDecimal matEstcost;
 		private String approvedStatus;
@@ -561,5 +562,13 @@ private String miPhase;
 
 	public void setMiPhase(String miPhase) {
 		this.miPhase = miPhase;
+	}
+	@Transient
+	public Date getDeliverySchedule() {
+		return deliverySchedule;
+	}
+
+	public void setDeliverySchedule(Date deliverySchedule) {
+		this.deliverySchedule = deliverySchedule;
 	}
 }

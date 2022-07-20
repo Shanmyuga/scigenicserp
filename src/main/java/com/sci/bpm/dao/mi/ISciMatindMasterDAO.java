@@ -1,5 +1,7 @@
 package com.sci.bpm.dao.mi;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import com.sci.bpm.command.mi.MatindCommand;
@@ -139,6 +141,7 @@ public interface ISciMatindMasterDAO {
 	public List loadStoreRequestIssue(MatindCommand command);
 	public List loadStoreRequestFilters(MatindCommand command);
 	public float loadLatestUnitCost(SciMatindMaster matid);
+	public Date loadDeliverySchedule(Long seqPoId);
 	public void addSubContStatus(SciSubcontJobstatus jobstatus);
 	public List<SciSubcontJobstatus> getRecentSubcontJobStatus(Long seqWorkID);
 	public List<SciSubcontJobstatus> getLoadDetails(Long jobCode,String jobType,Long seqWorkId);

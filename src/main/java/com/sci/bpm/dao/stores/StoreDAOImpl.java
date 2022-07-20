@@ -252,6 +252,18 @@ public class StoreDAOImpl implements StoresDAO {
 			wquery.setParameter(key, parameters.get(key));
 		}
 		List<SciAvailableMaterials> milist = wquery.getResultList();
+
+		String stockquery = "select qty from VW_ASSIGNED_STOCK_MI_LIST wm where matcode=:matcode ";
+		Query stqry = em.createNativeQuery(stockquery);
+
+		for(SciAvailableMaterials materials: milist) {
+
+			stqry.setParameter("matcode",materials.getMatcode());
+			List<BigDecimal> datalist  = stqry.getResultList();
+			if(datalist != null && datalist.size()> 0) {
+				materials.setAssignedStock(datalist.get(0));
+			}
+		}
 		return wquery.getResultList();
 	}
 

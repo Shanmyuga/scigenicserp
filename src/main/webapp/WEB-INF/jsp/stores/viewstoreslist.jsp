@@ -99,7 +99,9 @@
 
 </display:column>
 
+ <display:column sortable="true"  title="Pre Assigned Quantity" property="assignedStock" >
 
+ </display:column>
 <display:column sortable="true"  title="Stores Received Date" property="insertedDate" >
 
 </display:column>

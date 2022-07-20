@@ -850,6 +850,17 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		return 0;
 	}
 
+	@Override
+	public Date loadDeliverySchedule(Long seqPoId) {
+
+		SciPurchaseMast pm = em.find(SciPurchaseMast.class,seqPoId);
+
+
+		return pm.getPurchaseDueDate();
+	}
+
+
+
 	public void addSubContStatus(SciSubcontJobstatus jobstatus) {
 		// TODO Auto-generated method stub
 		em.merge(jobstatus);
