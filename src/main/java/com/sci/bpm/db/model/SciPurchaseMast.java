@@ -59,6 +59,9 @@ public class SciPurchaseMast implements java.io.Serializable {
 	private Date poPaidDate;
 	public Float workCost;
 	public Integer paymentPercentage;
+	private String certRequired;
+
+	private String certStatus;
 	
 	// Constructors
 
@@ -475,5 +478,23 @@ private String insertedBy;
 
 	public void setWorkCost(Float workCost) {
 		this.workCost = workCost;
+	}
+
+	@Column(name ="CERT_REQUIRED" ,length = 20)
+	public String getCertRequired() {
+		return certRequired;
+	}
+
+	public void setCertRequired(String certRequired) {
+		this.certRequired = certRequired;
+	}
+
+	@Column(name = "CERTIFICATE_STATUS")
+	public String getCertStatus() {
+		return certStatus;
+	}
+
+	public void setCertStatus(String certStatus) {
+		this.certStatus = certStatus;
 	}
 }

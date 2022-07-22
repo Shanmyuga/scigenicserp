@@ -108,6 +108,7 @@ public class MatindCommand implements Serializable {
 	private String operationStatus;
 	private Long operation;
 	private String matDescription;
+	private Long stockMI;
 	public String getProdAppStatus() {
 		return prodAppStatus;
 	}
@@ -741,6 +742,13 @@ public class MatindCommand implements Serializable {
 		this.additionalInfoCommandList = additionalInfoCommandList;
 	}
 
+	public Long getStockMI() {
+		return stockMI;
+	}
+
+	public void setStockMI(Long stockMI) {
+		this.stockMI = stockMI;
+	}
 
 	public String getMiPhase() {
 		return miPhase;

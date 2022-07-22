@@ -191,7 +191,7 @@ Cannot select different material code to create items
 <div style="padding-left:10px;width:787px;float:left">
  <input type="button"  value="Create Item " onclick="eventdirect('createitem')"/>
  <input type="button"  value="Stock MI " onclick="eventdirect('stockMI')"/>
-
+<form:input path="stockMI"/>
  </div>
  </c:if>
 

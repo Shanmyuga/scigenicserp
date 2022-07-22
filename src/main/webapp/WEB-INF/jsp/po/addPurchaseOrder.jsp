@@ -70,6 +70,16 @@
 </form:select>
 </td>
 </tr>
+    <tr>
+        <td align="left" class="datatext">Certificates Required</td>
+        <td ><form:select path="certRequired"  id="certRequired" >
+            <form:option value="Y">Yes</form:option>
+            <form:option value="N">No</form:option>
+
+        </form:select>
+        </td>
+
+    </tr>
 <tr>
 <td align="left" class="datatext">PO Due Date</td>
 <td ><form:input path="purchaseDueDate" />

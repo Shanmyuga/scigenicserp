@@ -19,6 +19,10 @@
             <webflow:evaluate expression="pocont.bind"/>
             <webflow:evaluate expression="pocont.updatePOStatus"/>
         </webflow:transition>
+    <webflow:transition on="updateCertStatus" to="entersearch">
+        <webflow:evaluate expression="pocont.bind"/>
+        <webflow:evaluate expression="pocont.updateCertStatus"/>
+    </webflow:transition>
            <webflow:transition on="closePo" to="entersearch">
             <webflow:evaluate expression="pocont.bind"/>
             <webflow:evaluate expression="pocont.closePo"/>

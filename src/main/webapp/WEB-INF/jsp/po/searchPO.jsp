@@ -202,6 +202,7 @@
                     <input type="button"  value="Close Purchase Order " onclick="eventdirect('closePo')"/>
                     <input type="button"  value="Paid Fully " onclick="eventdirect('paidFully')"/>
                     <input type="button"  value="Cancel PO " onclick="eventdirect('cancelPO')"/>
+                    <input type="button"  value="Certificates Received fully " onclick="eventdirect('updateCertStatus')"/>
                     <c:if test="${userPreferences.roleName == 'admin' ||  userPreferences.roleName == 'purchasemanager' }">
                     <input type="button"  value="Approve PO " onclick="eventdirect('approvePO')"/>
                     </c:if>

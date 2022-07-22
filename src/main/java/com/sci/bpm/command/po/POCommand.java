@@ -72,6 +72,7 @@ public class POCommand implements Serializable {
 	private Double  creditTimeline;
 	private String poPaidFully;
 	private Date poPaidDate;
+	private String certRequired;
 
 	private Double gst = new Double(0);
 	private Double gstCharges = new Double(0);
@@ -553,6 +554,14 @@ public class POCommand implements Serializable {
 
 	public void setPiDate(Date piDate) {
 		this.piDate = piDate;
+	}
+
+	public String getCertRequired() {
+		return certRequired;
+	}
+
+	public void setCertRequired(String certRequired) {
+		this.certRequired = certRequired;
 	}
 
 	public void setPoPaidDate(Date poPaidDate) {

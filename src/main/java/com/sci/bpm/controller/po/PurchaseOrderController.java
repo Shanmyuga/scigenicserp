@@ -83,6 +83,7 @@ public class PurchaseOrderController extends SciBaseController {
 		// purchmaster.setSeqVendorID(vendorDetail.getSeqVendorId());
 		purchmaster.setSciVendorMaster(vendorDetail);
 		purchmaster.setVendorOrder(vendorDetail.getVendorName());
+
 		System.out.println(vendorDetail.getVendorAddress());
 		String vendorcity = "";
 		if(StringUtils.isNotBlank(vendorDetail.getVendorCity())) {
@@ -278,6 +279,22 @@ public class PurchaseOrderController extends SciBaseController {
 		return success();
 	}
 
+
+	public Event updateCertStatus(RequestContext context) throws Exception {
+
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
+				.getFlowScope().get("pomastlist");
+		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
+		//selected.setPurchaseStatus(getLookupservice().loadIDData("PO_CLOSED"));
+		selected.setCertStatus("Y");
+		selected.setUpdatedBy(getUserPreferences().getUserID());
+		selected.setUpdatedDate(new Date());
+		service.updatePOStatus(selected);
+		context.getFlowScope().remove("pomastlist");
+		resetForm(context);
+		return success();
+	}
 	public Event viewPOPDF(RequestContext context) throws Exception {
 
 		POCommand command = (POCommand) getFormObject(context);

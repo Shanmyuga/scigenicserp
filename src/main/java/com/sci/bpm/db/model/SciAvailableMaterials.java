@@ -31,6 +31,7 @@ public class SciAvailableMaterials  implements java.io.Serializable {
      private Long seqQcId;	
      private Long seqStreqId;
      private BigDecimal assignedStock;
+     private BigDecimal totalStockByMatCode;
 
     // Constructors
 
@@ -227,5 +228,14 @@ private SciMatindMaster sciMiMaster;
 
     public void setAssignedStock(BigDecimal assignedStock) {
         this.assignedStock = assignedStock;
+    }
+
+    @Transient
+    public BigDecimal getTotalStockByMatCode() {
+        return totalStockByMatCode;
+    }
+
+    public void setTotalStockByMatCode(BigDecimal totalStockByMatCode) {
+        this.totalStockByMatCode = totalStockByMatCode;
     }
 }

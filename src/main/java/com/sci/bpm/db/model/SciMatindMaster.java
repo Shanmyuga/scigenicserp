@@ -59,6 +59,8 @@ private Long poID;
 private Long costPercentageRation;
 private String miForType;
 private String miPhase;
+
+private Long stockMI;
 	// Constructors
 
 	private Set<SciAddMatInfoDocsEntity> matInfoDocsEntities = new HashSet<SciAddMatInfoDocsEntity>();
@@ -570,5 +572,14 @@ private String miPhase;
 
 	public void setDeliverySchedule(Date deliverySchedule) {
 		this.deliverySchedule = deliverySchedule;
+	}
+
+	@Column(name = "STOCK_MI")
+	public Long getStockMI() {
+		return stockMI;
+	}
+
+	public void setStockMI(Long stockMI) {
+		this.stockMI = stockMI;
 	}
 }
