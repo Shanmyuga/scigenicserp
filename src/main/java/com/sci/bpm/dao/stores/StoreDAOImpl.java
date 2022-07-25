@@ -257,10 +257,13 @@ public class StoreDAOImpl implements StoresDAO {
 		Query stqry = em.createNativeQuery(stockquery);
 		String totalStockquery = "select qty from VW_AVAIL_MATERIALS wm where matcode=:matcode ";
 		Query totalStockqry = em.createNativeQuery(totalStockquery);
+		String actualStockQuery = "select avail_qty from VW_ACTUAL_AVAIL_STOCK wm where matcode=:matcode ";
+		Query actualStockqry = em.createNativeQuery(actualStockQuery);
 		for(SciAvailableMaterials materials: milist) {
 
 			stqry.setParameter("matcode",materials.getMatcode());
 			totalStockqry.setParameter("matcode",materials.getMatcode());
+			actualStockqry.setParameter("matcode",materials.getMatcode());
 			List<BigDecimal> datalist  = stqry.getResultList();
 			if(datalist != null && datalist.size()> 0) {
 				materials.setAssignedStock(datalist.get(0));
@@ -269,6 +272,11 @@ public class StoreDAOImpl implements StoresDAO {
 			List<BigDecimal> tdatalist  = totalStockqry.getResultList();
 			if(tdatalist != null && tdatalist.size()> 0) {
 				materials.setTotalStockByMatCode(tdatalist.get(0));
+			}
+
+			List<BigDecimal> actdatalist  = actualStockqry.getResultList();
+			if(actdatalist != null && actdatalist.size()> 0) {
+				materials.setActualStockMatCode(actdatalist.get(0));
 			}
 		}
 		return wquery.getResultList();

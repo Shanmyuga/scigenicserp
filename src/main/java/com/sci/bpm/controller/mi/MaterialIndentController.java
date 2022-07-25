@@ -366,15 +366,36 @@ public class MaterialIndentController extends SciBaseController {
         String[] milist = command.getMiindex();
 
         List fullmilist = (List) context.getFlowScope().get("milist");
+       List<SciMatindMaster> selectedList = new ArrayList<SciMatindMaster>();
+       Set<String> matcodes = new HashSet<String>();
+       double totalqty = 0;
+
         for (int idx = 0; idx < milist.length; idx++) {
             SciMatindMaster mi = (SciMatindMaster) fullmilist.get(Integer.parseInt(milist[idx]) - 1);
+
             mi = service.loadMI(mi.getSeqMiId());
             mi.setPurStatus(getLookupservice().loadIDData("MI_IN_STOCK"));
             mi.setUpdatedBy(getUserPreferences().getUserID());
+            mi.setStockMI(command.getStockMI());
             mi.setUpdatedDate(new Date());
             System.out.println("shanmuga");
-            service.mergeMI(mi);
+           selectedList.add(mi);
+           matcodes.add(mi.getMatcode());
+            totalqty = totalqty + mi.getMatQty().doubleValue();
         }
+        if(matcodes.size() > 1) {
+            throw new Exception("Dont Select multiple different Matcodes");
+        }
+        String mcd = null;
+        if(matcodes.size() == 1) {
+             mcd =  matcodes.stream().findFirst().get();
+
+        }
+
+        if(!service.checkStockAvailability(mcd,new BigDecimal(totalqty))) {
+            throw new Exception("Material not available in stock");
+        }
+
         resetForm(context);
         context.getFlowScope().remove("milist");
         return success();

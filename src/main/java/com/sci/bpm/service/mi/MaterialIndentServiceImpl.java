@@ -1,6 +1,7 @@
 package com.sci.bpm.service.mi;
 
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.sci.bpm.db.model.SciMIAdditionalInfoDTO;
@@ -90,6 +91,11 @@ public class MaterialIndentServiceImpl implements MaterialIndentService {
 	public List loadOpenMI(SciMatindMaster command) {
 		// TODO Auto-generated method stub
 		return daoimpl.loadOpenMI(command);
+	}
+
+	@Override
+	public boolean checkStockAvailability(String matcode, BigDecimal quantity) {
+		return daoimpl.checkStockAvailability(matcode,quantity);
 	}
 
 	public void addStoreRequest(SciStoresRequest request) {

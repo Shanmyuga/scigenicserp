@@ -87,6 +87,7 @@ public interface ISciMatindMasterDAO {
 	public SciMatindMaster update(SciMatindMaster entity);
 
 	public SciMatindMaster findById(Long id);
+	public boolean checkStockAvailability(String matcode, BigDecimal quantity);
 
 	/**
 	 * Find all SciMatindMaster entities with a specific property value.

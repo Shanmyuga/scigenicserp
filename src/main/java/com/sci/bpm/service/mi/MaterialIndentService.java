@@ -1,5 +1,6 @@
 package com.sci.bpm.service.mi;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.sci.bpm.command.mi.MatindCommand;
@@ -25,7 +26,7 @@ public interface MaterialIndentService {
 	public List selectDesignDocs(SciMatindMaster command);
 	public List<SciMatindMaster> loadLastPriced(MatindCommand command);
 	public List loadOpenMI(SciMatindMaster command);
-	
+	public boolean checkStockAvailability(String matcode, BigDecimal quantity);
 	public void addStoreRequest(SciStoresRequest request);
 	
 	public List loadStoreRequest(MatindCommand command);

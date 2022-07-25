@@ -45,6 +45,23 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		return em.find(SciMatindMaster.class, id);
 	}
 
+	@Override
+	public boolean checkStockAvailability(String matcode, BigDecimal quantity) {
+
+		Query qry = em.createNativeQuery("Select avail_qty from VW_ACTUAL_AVAIL_STOCK where matcode =:matcode");
+
+		qry.setParameter("matcode",matcode);
+
+		List<BigDecimal> tdatalist  = qry.getResultList();
+		if(tdatalist != null && tdatalist.size()> 0) {
+			if(tdatalist.get(0).doubleValue() > quantity.doubleValue()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public List<SciMatindMaster> findByProperty(String propertyName,
 			Object value, int... rowStartIdxAndCount) {
 		// TODO Auto-generated method stub
