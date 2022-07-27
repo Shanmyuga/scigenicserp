@@ -391,7 +391,9 @@ public class MaterialIndentController extends SciBaseController {
              mcd =  matcodes.stream().findFirst().get();
 
         }
-
+        for(SciMatindMaster matindMaster: selectedList) {
+            service.mergeMI(matindMaster);
+        }
         if(!service.checkStockAvailability(mcd,new BigDecimal(totalqty))) {
             throw new Exception("Material not available in stock");
         }

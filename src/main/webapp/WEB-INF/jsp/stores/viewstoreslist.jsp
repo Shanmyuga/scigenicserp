@@ -106,6 +106,11 @@
   <fmt:formatNumber maxFractionDigits="2" value="${row.totalStockByMatCode}" />
 
  </display:column>
+
+ <display:column sortable="true"  title="Actual  quantity Available for this matcode"  >
+  <fmt:formatNumber maxFractionDigits="2" value="${row.actualStockMatCode}" />
+
+ </display:column>
 <display:column sortable="true"  title="Stores Received Date" property="insertedDate" >
 
 </display:column>
