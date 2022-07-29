@@ -17,7 +17,8 @@ public interface TaskService {
 	public boolean closeTasks(SciIssueDetails issueDetails);
 	
 	public boolean esclateTasks(SciIssueDetails  details);
-	
+	public boolean rejectDelayedRequests();
+
 	public List loadForEscalation(int numberOfdays);
 	
 	public List searchTasks(String status ,int startpage,String userid);

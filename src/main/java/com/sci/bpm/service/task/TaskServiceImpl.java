@@ -131,6 +131,12 @@ public class TaskServiceImpl implements TaskService {
 		daoimpl.addNewDetails(details);
 		return false;
 	}
+
+	@Override
+	public boolean rejectDelayedRequests() {
+		return false;
+	}
+
 	@Transactional
 	public List loadForEscalation(int numberOfdays) {
 		// TODO Auto-generated method stub

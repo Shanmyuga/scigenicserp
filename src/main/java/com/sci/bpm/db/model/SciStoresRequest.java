@@ -44,6 +44,7 @@ public class SciStoresRequest implements java.io.Serializable {
 	private String requestStatus;
 	private Set<SciStoreissueMaster> sciStoreIssueSet;
 	private String requestBy;
+	private Date approvedDate;
 	// Constructors
 
 	/** default constructor */
@@ -283,7 +284,13 @@ private String insertedBy;
 	public void setSciStoreIssueSet(Set sciStoreIssueSet) {
 		this.sciStoreIssueSet = sciStoreIssueSet;
 	}
-	
-	
-	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "APPROVAL_DATE", nullable = true, length = 7)
+	public Date getApprovedDate() {
+		return approvedDate;
+	}
+
+	public void setApprovedDate(Date approvedDate) {
+		this.approvedDate = approvedDate;
+	}
 }

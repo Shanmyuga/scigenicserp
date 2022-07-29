@@ -171,7 +171,8 @@ public class MaterialStoresRequestController extends SciBaseController {
 		request.setProdRemarks(command.getRemarks());
 		request.setProdAppBy(getUserPreferences().getUserID());
 		request.setUpdatedBy(getUserPreferences().getUserID());
-		request.setUpdatedDt(new Date());
+			request.setUpdatedDt(new Date());
+		request.setApprovedDate(new Date());
 		service.updateStoreRequest(request);
 		}
 		resetForm(context);
@@ -202,7 +203,9 @@ public class MaterialStoresRequestController extends SciBaseController {
 		request.setPurchApprBy(getUserPreferences().getUserID());
 		request.setUpdatedBy(getUserPreferences().getUserID());
 		request.setUpdatedDt(new Date());
-		service.updateStoreRequest(request);
+			request.setApprovedDate(new Date());
+
+			service.updateStoreRequest(request);
 		}
 		context.getFlowScope().remove("openstreq");
 		resetForm(context);
