@@ -26,7 +26,7 @@ public class SciDesignDocMaster implements java.io.Serializable {
 	private Long seqDesDocId;
 	private String docNum;
 	private String docuDesc;
-private String docuName;
+	private String docuName;
 	// Constructors
 
 	/** default constructor */

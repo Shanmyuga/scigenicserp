@@ -174,9 +174,18 @@ public class TaskServiceImpl implements TaskService {
 		// Authenticators are used to prompt the user for user
 		// name and password.
 		System.out.println(array);
-		
+		Properties props = new Properties();
+		props.put("mail.host", "smtpout.secureserver.net");
+		props.put("mail.port", "465");
+		props.put("mail.username", "dbaseserver@scigenics.in");
+		props.put("mail.password", "scigenics1991");
+		props.put("mail.protocol", "smtp");
 
-		Session session = Session.getInstance(properties,
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.ssl.enable", "true");
+		props.put("mail.smtp.ssl.trust", "*");
+
+		Session session = Session.getInstance(props,
 				new Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
 						return new PasswordAuthentication((String) properties
