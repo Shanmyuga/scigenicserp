@@ -285,7 +285,7 @@ private String insertedBy;
 		this.sciStoreIssueSet = sciStoreIssueSet;
 	}
 	@Temporal(TemporalType.DATE)
-	@Column(name = "APPROVAL_DATE", nullable = true, length = 7)
+	@Column(name = "APPROVED_DATE", nullable = true, length = 7)
 	public Date getApprovedDate() {
 		return approvedDate;
 	}
