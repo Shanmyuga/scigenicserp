@@ -65,7 +65,14 @@
 			</map>
 		</property>
 	</bean>
-
+	<bean name="storesRequestSuppressJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="com.sci.bpm.service.task.StoresRequestSuppressJob" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="tservice" value-ref="taskservice" />
+			</map>
+		</property>
+	</bean>
 	<bean name="reportWeeklyQueryJob" class="org.springframework.scheduling.quartz.JobDetailBean">
 		<property name="jobClass" value="com.sci.bpm.service.task.ReportQueryWeeklyService" />
 		<property name="jobDataAsMap">
@@ -102,6 +109,12 @@
 		<property name="cronExpression" value="0 0 12 * * ?" />
 		<!--<property name="cronExpression" value="*/5 * * * * ?" /> -->
 	</bean>
+	<bean id="dailycronTriggerStoresRequest" class="org.springframework.scheduling.quartz.CronTriggerBean">
+
+		<property name="jobDetail" ref="storesRequestSuppressJob" />
+		<property name="cronExpression" value="0 0 12 * * ?" />
+		<!--<property name="cronExpression" value="*/5 * * * * ?" /> -->
+	</bean>
 	<bean id="emailcronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 
 		<property name="jobDetail" ref="emailJob" />
@@ -122,6 +135,7 @@
 				<ref bean="simpleTrigger" />
 				<ref bean="cronTrigger" />
 				<ref bean="dailycronTrigger" />
+				<ref bean="dailycronTriggerStoresRequest" />
 				<ref bean="WeeklycronTrigger" />
 				<ref bean="emailcronTrigger" />
 			</list>

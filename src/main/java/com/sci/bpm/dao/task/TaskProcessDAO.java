@@ -17,7 +17,8 @@ public interface TaskProcessDAO {
 	public boolean closeTasks(SciIssueDetails issueDetails);
 	
 	public boolean addNewDetails(SciIssueDetails details);
-	
+	public boolean rejectDelayedRequests();
+
 	public boolean updateDetails(List<SciIssueDetails> detailList);
 	
 	public List searchOpenTask(String status ,int startpage,String userid);

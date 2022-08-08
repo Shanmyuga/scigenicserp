@@ -38,6 +38,14 @@ public class TaskProcessDAOImpl implements TaskProcessDAO {
 		return true;
 	}
 
+	@Override
+	public boolean rejectDelayedRequests() {
+		String query = "update sci_stores_Request st set Prod_approval = 'N' , st.purch_approval = 'N' where st.seq_streq_id in (Select seq_streq_id , updated_dt from sci_Stores_Request st1 where   st1.request_Status = 'N' and Prod_approval = 'Y' and purch_approval ='Y' and  st1.approved_Date < sysdate -3) ";
+		Query qry = em.createNativeQuery(query);
+		qry.executeUpdate();
+		return true;
+	}
+
 	public boolean addNewTask(SciIssueMaster master) {
 		em.persist(master);
 		return true;

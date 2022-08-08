@@ -7,7 +7,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 public class StoresRequestSuppressJob extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-
+            tservice.rejectDelayedRequests();
     }
 
 

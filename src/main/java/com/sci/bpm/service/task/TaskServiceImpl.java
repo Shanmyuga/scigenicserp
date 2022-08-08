@@ -133,8 +133,9 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
+	@Transactional
 	public boolean rejectDelayedRequests() {
-		return false;
+		return daoimpl.rejectDelayedRequests();
 	}
 
 	@Transactional
