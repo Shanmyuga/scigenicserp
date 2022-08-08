@@ -884,10 +884,15 @@ public Event loadbillDetails(RequestContext context) throws Exception {
 
 	private Properties createConfiguration() {
 		return new Properties() {{
+			put("mail.host", "smtpout.secureserver.net");
+			put("mail.port", "465");
+			put("mail.username", "dbaseserver@scigenics.in");
+			put("mail.password", "scigenics1991");
+			put("mail.protocol", "smtp");
+
 			put("mail.smtp.auth", "true");
-			put("mail.smtp.starttls.enable", "true");
-			put("mail.smtp.host", "smtp.gmail.com");
-			put("mail.smtp.port", "587");
+			put("mail.smtp.ssl.enable", "true");
+			put("mail.smtp.ssl.trust", "*");
 
 		}};
 	}
