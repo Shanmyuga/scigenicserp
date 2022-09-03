@@ -162,10 +162,7 @@
                     <display:column sortable="true"  title=" WorkOrderCost"  property="workCost">
 
                     </display:column>
-                    <display:column sortable="true"    property="exciseCharges">
-
-                    </display:column>
-                    <display:column sortable="true"    property="excisePercent">
+                    <display:column sortable="true"  title=" WorkOrders"  property="workOrders">
 
                     </display:column>
                     <display:column sortable="true"   property="packingFrwdCharges">

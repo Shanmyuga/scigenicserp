@@ -110,8 +110,9 @@ Cannot select different material code to create items
 
 </display:column>
  <display:column sortable="true"   title="MI ID"  media="html">
-  <a href="#" onclick="viewAddInfo('<c:out value='${row.seqMiId}'/>')" ><c:out value='${row.seqMiId}'></c:out></a>
+  <a href="#" onclick="viewAddInfo('<c:out value='${row.seqMiId}'/>')"  ><c:out value='${row.seqMiId}'></c:out></a>
  </display:column>
+
 <display:column sortable="true"   title="Material Code" property="matcode" >
 
 </display:column>
@@ -162,6 +163,9 @@ Cannot select different material code to create items
 
 
  <c:if test="${fn:length(addInfos) > 0}">
+ <div id="myModal"  style="background-color: #92a8d1;">
+  <div class="modal-content">
+   <span class="close">&times;</span>
   <display:table export="true" sort="list"   pagesize="10" name="addInfos"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
    <display:column sortable="true"  title="Label"  property="addInfoLabel" >
 
@@ -170,8 +174,11 @@ Cannot select different material code to create items
 
    </display:column>
   </display:table>
+  </div>
+ </div>
  </c:if>
  <c:if test="${fn:length(addDocInfos) > 0}">
+
   <display:table export="true" sort="list"   pagesize="10" name="addDocInfos"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
    <display:column sortable="true"  title="Label"  property="addinfoLabel" >
 
@@ -180,6 +187,7 @@ Cannot select different material code to create items
     <a href="javascript:openfile('<c:out value="${row.seqMiAddDocsId}"/>')"><c:out value="${row.originalDocName}" /></a>
    </display:column>
   </display:table>
+
  </c:if>
 </div>
 <input type="hidden" name="_flowExecutionKey"  value="<c:out value="${flowExecutionKey}"/>" />
@@ -224,4 +232,29 @@ function openfile(idkeyval) {
  document.myloginform.idkey.value=idkeyval;
  document.myloginform.submit();
 }
+
+
+
+
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+ modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+ if (event.target == modal) {
+  modal.style.display = "none";
+ }
+}
+
+$( function() {
+ $( "#myModal" ).dialog();
+} );
 </script>

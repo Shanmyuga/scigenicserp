@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.sci.bpm.command.po.POCommand;
@@ -149,8 +150,17 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 			String key = (String) keyset.next();
 			wquery.setParameter(key, parameters.get(key));
 		}
-
-		return wquery.getResultList();
+		List<SciPurchaseMast> datalist = wquery.getResultList();
+		String pseqquery = "select  JOB_DESC from WORKORDER_MI_PURCHASE_VIEW p where p.SEQ_PURCH_ID=:SEQ_PURCH_ID";
+		Query qry = em.createNativeQuery(pseqquery);
+		for(SciPurchaseMast pm:datalist) {
+			qry.setParameter("SEQ_PURCH_ID",pm.getSeqPurchId());
+			List<String> masterlist = qry.getResultList();
+			String commalist
+					= StringUtils.join(masterlist, ",");
+			pm.setWorkOrders(commalist);
+		}
+		return datalist;
 	}
 
 	public List searchMatCodePO(POCommand command) {

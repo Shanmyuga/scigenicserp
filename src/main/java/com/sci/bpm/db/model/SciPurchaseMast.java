@@ -62,6 +62,8 @@ public class SciPurchaseMast implements java.io.Serializable {
 	private String certRequired;
 
 	private String certStatus;
+
+	private String workOrders;
 	
 	// Constructors
 
@@ -496,5 +498,14 @@ private String insertedBy;
 
 	public void setCertStatus(String certStatus) {
 		this.certStatus = certStatus;
+	}
+
+	@Transient
+	public String getWorkOrders() {
+		return workOrders;
+	}
+
+	public void setWorkOrders(String workOrders) {
+		this.workOrders = workOrders;
 	}
 }
