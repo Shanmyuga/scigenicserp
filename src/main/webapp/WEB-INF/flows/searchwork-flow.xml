@@ -99,6 +99,12 @@
         </webflow:transition>
     </webflow:view-state>
     <webflow:view-state id="viewMispecs" view="mi.viewmatspec"  >
+
+        <webflow:transition on="filterReportSpec" to="viewMispecs">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.filterReportSpec"/>
+
+        </webflow:transition>
     <webflow:transition on="selectspec" to="viewAddMispecs" >
     <webflow:evaluate expression="micont.bind"/>
             <webflow:evaluate expression="micont.selectSpecs"/>

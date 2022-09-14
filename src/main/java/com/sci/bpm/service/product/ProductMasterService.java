@@ -5,13 +5,14 @@ import java.util.Map;
 
 import com.sci.bpm.db.model.SciMatcatMaster;
 import com.sci.bpm.db.model.SciMatindMaster;
+import com.sci.bpm.db.model.SciMatspecMaster;
 import com.sci.bpm.db.model.SciMattypeMaster;
 
 public interface ProductMasterService {
 	public List selectProdCat();
 	
 	public List selectProducts(String cat);
-	public List selectProducts(String cat,String matDept);
+	public List<SciMatspecMaster> selectProducts(String cat, String matDept);
 	
 	public List selectProdType();
 

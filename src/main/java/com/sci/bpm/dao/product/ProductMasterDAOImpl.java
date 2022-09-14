@@ -27,14 +27,14 @@ Query qry = em.createQuery("from SciMatcatMaster pm");
 		return qry.getResultList();
 	}
 
-	public List selectProducts(String cat) {
+	public List<SciMatspecMaster> selectProducts(String cat) {
 		// TODO Auto-generated method stub
 		System.out.println(cat);
 		Query qry = em.createQuery("select pm from SciMatspecMaster pm where pm.matcatCode =:matcatCode ");
 		qry.setParameter("matcatCode", cat);
 		
 		List mylist = qry.getResultList();
-		List newList = new ArrayList();
+		List<SciMatspecMaster> newList = new ArrayList<SciMatspecMaster>();
 		for(int idx=0;idx<mylist.size();idx++) {
 			SciMatspecMaster pm = (SciMatspecMaster) mylist.get(idx);
 			pm.setMatSpecDesc(pm.getMaterialSpec());

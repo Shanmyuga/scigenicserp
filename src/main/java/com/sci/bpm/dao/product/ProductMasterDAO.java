@@ -3,6 +3,7 @@ package com.sci.bpm.dao.product;
 import java.util.List;
 
 import com.sci.bpm.db.model.SciMatcatMaster;
+import com.sci.bpm.db.model.SciMatspecMaster;
 import com.sci.bpm.db.model.SciMattypeMaster;
 import com.sci.bpm.db.model.SciProductMaster;
 
@@ -11,7 +12,7 @@ public interface ProductMasterDAO {
 	
 	public List selectProdCat();
 	
-	public List selectProducts(String cat);
+	public List<SciMatspecMaster> selectProducts(String cat);
 	public List<SciMattypeMaster> getMatType(String matCode);
 
 	public SciProductMaster loadProd(Long seqprodid);

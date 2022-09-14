@@ -75,6 +75,7 @@ public class MatindCommand implements Serializable {
 	private String isGroupMiId;
 	private Long matGroupMiId;
 
+
 	public Long getSeqWorkorderId() {
 		return seqWorkorderId;
 	}

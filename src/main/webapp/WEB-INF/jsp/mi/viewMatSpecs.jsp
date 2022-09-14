@@ -11,7 +11,17 @@
 <div width="787px"  style="float:left;">
 <form:form modelAttribute="matindbean" name="matindbean">
 
+ <form:input path="reportFilter" size="100" />
 
+ <p><input type="button" value="Filter report" onclick="eventdirect('filterReportSpec')"/>&nbsp;&nbsp;</p>
+
+ <br/>
+ <br/>
+ <br/>
+
+ <br/>
+ <br/><br/>
+ <br/>
 
 
 
@@ -63,4 +73,16 @@ document.getElementById('_eventId').value = event;
 document.matindbean.submit();
 
 }
+
+
+
+</script>
+<script>
+ $( function() {
+  var temp = "<c:out value='${specstring}'/>";
+  var availableTags =temp.split('|');
+  $( "#reportFilter" ).autocomplete({
+   source: availableTags
+  });
+ } );
 </script>

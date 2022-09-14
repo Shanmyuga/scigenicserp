@@ -759,9 +759,18 @@ public class MaterialIndentController extends SciBaseController {
         String deptandcode = mcommand.getProductCat();
         String dept = getDelimitedTokens(deptandcode, 1);
         String catcode = getDelimitedTokens(deptandcode, 0);
-        List myprodlist = prservice.selectProducts(catcode, dept);
+        List<SciMatspecMaster> myprodlist = prservice.selectProducts(catcode, dept);
+        StringBuilder builder = new StringBuilder("");
+        for(SciMatspecMaster ms:myprodlist) {
+           // str=str.replaceAll("[^a-zA-Z0-9]","");
+            String speccode = ms.getMaterialSpec();
+            builder.append(speccode.replaceAll("[^a-zA-Z0-9/]"," "));
+            builder.append("|");
+        }
+
         HashMap<Integer, List> mymap = (HashMap<Integer, List>) context
                 .getFlowScope().get("productspecmap");
+
         if (mymap == null) {
             mymap = new HashMap<Integer, List>();
         }
@@ -769,10 +778,40 @@ public class MaterialIndentController extends SciBaseController {
         mymap.put(new Integer(command.getRowindex()), myprodlist);
         context.getFlowScope().put("productspecmap", mymap);
         context.getFlowScope().put("openpopup", myprodlist);
+        context.getFlowScope().put("unfiltered", myprodlist);
+        context.getFlowScope().put("specstring", builder.toString());
         context.getFlowScope().put("specrowindex", command.getRowindex());
         return success();
     }
 
+
+    private List<SciMatspecMaster> selectMatspecbyDesc(List<SciMatspecMaster> master,String filter) {
+        System.out.println("filter " + filter);
+        List<SciMatspecMaster> configurationList = new ArrayList<SciMatspecMaster>();
+        for(SciMatspecMaster m : master) {
+            String specCode = m.getMaterialSpec();
+            if(specCode.replaceAll("[^a-zA-Z0-9/]"," ").matches(".*"+filter+".*")) {
+                configurationList.add(m);
+            }
+        }
+
+        return configurationList;
+    }
+
+    public Event filterReportSpec(RequestContext context) throws Exception {
+        MatindCommand command = (MatindCommand) getFormObject(context);
+       List<SciMatspecMaster> sciMatspecMasterList = (List<SciMatspecMaster>) context.getFlowScope().get("unfiltered");
+       String filterspec = command.getReportFilter();
+       if(filterspec != null && !"".equals(filterspec))  {
+            List<SciMatspecMaster> filteredList = selectMatspecbyDesc(sciMatspecMasterList, filterspec);
+            context.getFlowScope().put("openpopup",filteredList);
+        }
+       else {
+           context.getFlowScope().put("openpopup",sciMatspecMasterList);
+       }
+
+        return success();
+    }
     public String getDelimitedTokens(String myString, int position) {
         List mylist = new ArrayList<String>();
 

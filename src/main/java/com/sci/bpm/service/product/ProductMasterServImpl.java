@@ -4,15 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sci.bpm.db.model.SciMatcatMaster;
-import com.sci.bpm.db.model.SciMattypeMaster;
+import com.sci.bpm.db.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sci.bpm.dao.product.ProductMasterDAO;
-import com.sci.bpm.db.model.SciMatindMaster;
-import com.sci.bpm.db.model.SciProductMaster;
 
 @Service
 @Transactional
@@ -67,7 +64,7 @@ public class ProductMasterServImpl implements ProductMasterService {
 		return dao.selectCategory(mattype, matDept);
 	}
 
-	public List selectProducts(String cat, String matDept) {
+	public List<SciMatspecMaster> selectProducts(String cat, String matDept) {
 		
 		return dao.selectProducts(cat, matDept);
 	}
