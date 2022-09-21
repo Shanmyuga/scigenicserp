@@ -69,7 +69,13 @@ Data</font></p>
 </display:table>
 
 <br>
-<p><input type="button" value="Send Report By email " onclick="eventdirect('runSelectedReport')"/></p>
+<p>
+<br/>
+
+    <input type="button" value="Send Report By email " onclick="eventdirect('runSelectedReport')"/>
+</p>
+
+
     <p><input type="button" value="View Report" onclick="eventdirect('viewSelectedReport')"/></p>
 </c:if>
 
