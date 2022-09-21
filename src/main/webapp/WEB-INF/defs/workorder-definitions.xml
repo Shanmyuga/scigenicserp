@@ -509,7 +509,18 @@
      
       <put-attribute name="body" value="/WEB-INF/jsp/lookup/addNewReport.jsp" />
   </definition>
-  <definition name="add.payment" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+    <definition name="run.schedule.add" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/lookup/runReport.jsp" />
+    </definition>
+    <definition name="view.schedule.add" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/lookup/viewReport.jsp" />
+    </definition>
+
+    <definition name="add.payment" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
   <put-attribute name="menu" value="usermenu.jsp" />
      
       <put-attribute name="body" value="/WEB-INF/jsp/po/addPaymentDetails.jsp" />

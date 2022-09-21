@@ -3,6 +3,8 @@ package com.sci.bpm.service.task;
 import java.util.List;
 import java.util.Map;
 
+import com.sci.bpm.command.LookupValueBean;
+import com.sci.bpm.command.user.TableDynaBean;
 import com.sci.bpm.db.model.*;
 
 public interface TaskService {
@@ -32,4 +34,7 @@ public interface TaskService {
 	public void generateWeeklyReports();
 	
 	public void runSelectedReport(SciReportConfiguration configuration);
+
+
+	public List<TableDynaBean> viewSelectedReport(SciReportConfiguration configuration);
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.sci.bpm.command.marketing.WorkOrderCommand;
+import com.sci.bpm.command.user.TableDynaBean;
 import com.sci.bpm.db.model.*;
 import com.sci.bpm.service.marketing.EnquiryService;
 import com.sci.bpm.service.user.UserService;
@@ -316,6 +317,17 @@ SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope()
 
 		return success();
 	}
+
+	public Event viewSelectedReport(RequestContext context) throws Exception {
+		LookupValueBean value = (LookupValueBean)getFormObject(context);
+		List<SciReportConfiguration> reports = loadReports(context);
+
+		SciReportConfiguration config=   selectReport(reports, new Long(value.getSeqReportID()));
+		List<TableDynaBean> items = taskService.viewSelectedReport(config);
+		context.getFlowScope().put("ViewReportsData",items);
+		return success();
+	}
+
 
 	private SciReportConfiguration selectReport(List<SciReportConfiguration> master,Long seqReportId) {
 		SciReportConfiguration selected = null;
