@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="entersearchProps">
+    <webflow:on-start>
+
+        <webflow:evaluate expression="micont.setupForm"/>
+
+
+
+
+
+        <webflow:evaluate expression="propcont.setupForm"/>
+
+
+
+
+
+
+        <webflow:evaluate expression="lookupbean.getDropDownList('customer_key')" result="flowScope.customerData"/>
+    </webflow:on-start>
+
+    <webflow:view-state id="entersearchProps" view="mi.priceproplist">
+<webflow:on-entry>
+    <webflow:evaluate expression="propcont.viewProps"/>
+</webflow:on-entry>
+
+        <webflow:transition on="selectPropItems" to="entersearchProps">
+            <webflow:evaluate expression="propcont.bind"/>
+            <webflow:evaluate expression="propcont.loadPropItems"/>
+        </webflow:transition>
+
+        <webflow:transition on="addToProposal" to="entersearchProps">
+            <webflow:evaluate expression="propcont.bind"/>
+            <webflow:evaluate expression="propcont.addProposalSelects"/>
+        </webflow:transition>
+        <webflow:transition on="startPricing" to="entersearchProps">
+            <webflow:evaluate expression="propcont.bind"/>
+            <webflow:evaluate expression="propcont.selectForPricing"/>
+        </webflow:transition>
+        <webflow:transition on="addProposalItems" to="entersearchProps">
+            <webflow:evaluate expression="propcont.bind"/>
+            <webflow:evaluate expression="propcont.addProposalItem"/>
+        </webflow:transition>
+        <webflow:transition on="searchMI" to="entersearchProps">
+            <webflow:evaluate expression="propcont.bind"/>
+            <webflow:evaluate expression="propcont.searchPricedMI"/>
+        </webflow:transition>
+
+        <webflow:transition on="removeProposalItems" to="entersearchProps">
+            <webflow:evaluate expression="propcont.bind"/>
+            <webflow:evaluate expression="propcont.removeProposalItem"/>
+        </webflow:transition>
+    </webflow:view-state>
+
+    <webflow:view-state id="entersearch" view="mi.editproposalcost">
+        <webflow:transition on="loadCategory" to="entersearch">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.loadMatCatItems"/>
+        </webflow:transition>
+
+        <webflow:transition on="loadDescription" to="entersearch">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.loadDescriptions"/>
+        </webflow:transition>
+        <webflow:transition on="displaysubmit" to="entersearch">
+            <webflow:evaluate expression="micont.bind"/>
+
+        </webflow:transition>
+        <webflow:transition on="searchMI" to="entersearch">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.searchMI"/>
+        </webflow:transition>
+
+        <webflow:transition on="selectPropMI" to="entersearch">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.selectPropMI"/>
+        </webflow:transition>
+
+        <webflow:transition on="addprops" to="addproposal">
+
+
+        </webflow:transition>
+    </webflow:view-state>
+    <webflow:exception-handler bean="exceptionresol"/>
+</webflow:flow>
