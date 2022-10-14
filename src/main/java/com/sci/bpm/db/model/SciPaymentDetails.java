@@ -32,6 +32,8 @@ public class SciPaymentDetails implements java.io.Serializable {
 	private Date insertedDate;
 	private Long poId;
 	private String billNo;
+	private String workOrderKey;
+	private String paymentSource;
 	// Constructors
 
 	/** default constructor */
@@ -147,5 +149,24 @@ public class SciPaymentDetails implements java.io.Serializable {
 
 	public void setBillNo(String billno) {
 		this.billNo = billno;
+	}
+
+
+	@Column(name = "PAYMENT_SOURCE", length = 200)
+	public String getPaymentSource() {
+		return paymentSource;
+	}
+
+	public void setPaymentSource(String paymentSource) {
+		this.paymentSource = paymentSource;
+	}
+
+	@Column(name = "WORKORDER_REF", length = 200)
+	public String getWorkOrderKey() {
+		return workOrderKey;
+	}
+
+	public void setWorkOrderKey(String workOrderKey) {
+		this.workOrderKey = workOrderKey;
 	}
 }

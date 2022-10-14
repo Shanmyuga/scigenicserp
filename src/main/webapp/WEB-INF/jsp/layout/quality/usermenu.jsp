@@ -13,6 +13,9 @@
               <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=qc-flow">Add QC Results</a></td>
               </tr>
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=view-report-flow">View Run Report</a></td>
+              </tr>
               <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addqcdoc-flow">Add QC Docs</a></td>
               </tr>

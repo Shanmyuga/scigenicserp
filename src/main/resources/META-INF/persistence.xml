@@ -45,9 +45,10 @@
 		<class>com.sci.bpm.db.model.SciAvailableMaterials</class>
 		<class>com.sci.bpm.db.model.SciRecdMaterials</class>
 		<class>com.sci.bpm.db.model.SciStoresRequest</class>
-		<properties>
+        <class>com.sci.bpm.db.model.SciActiveWorkordersReportEntity</class>
+        <properties>
 			<property name="hibernate.connection.driver_class"
-					  value="oracle.jdbc.driver.OracleDriver" />
+					  value="oracle.jdbc.OracleDriver" />
 			 <property name="hibernate.connection.url"
                                      value="jdbc:oracle:thin:@//192.168.1.115:32771/xe.oraslim.com" />
 

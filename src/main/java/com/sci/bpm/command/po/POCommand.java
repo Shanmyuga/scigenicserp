@@ -74,6 +74,8 @@ public class POCommand implements Serializable {
 	private Date poPaidDate;
 	private String certRequired;
 
+	private String workOrderKey;
+
 	private Double gst = new Double(0);
 	private Double gstCharges = new Double(0);
 	
@@ -566,5 +568,13 @@ public class POCommand implements Serializable {
 
 	public void setPoPaidDate(Date poPaidDate) {
 		this.poPaidDate = poPaidDate;
+	}
+
+	public String getWorkOrderKey() {
+		return workOrderKey;
+	}
+
+	public void setWorkOrderKey(String workOrderKey) {
+		this.workOrderKey = workOrderKey;
 	}
 }
