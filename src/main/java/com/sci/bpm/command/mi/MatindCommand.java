@@ -74,7 +74,7 @@ public class MatindCommand implements Serializable {
 	private Date sentDate;
 	private String isGroupMiId;
 	private Long matGroupMiId;
-
+	private String workOrderKey;
 
 	public Long getSeqWorkorderId() {
 		return seqWorkorderId;
@@ -757,5 +757,13 @@ public class MatindCommand implements Serializable {
 
 	public void setMiPhase(String miPhase) {
 		this.miPhase = miPhase;
+	}
+
+	public String getWorkOrderKey() {
+		return workOrderKey;
+	}
+
+	public void setWorkOrderKey(String workOrderKey) {
+		this.workOrderKey = workOrderKey;
 	}
 }

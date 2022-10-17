@@ -51,7 +51,16 @@
 <form:option value="">Select</form:option>
 <form:options items="${billdetails}" itemValue="billNo" itemLabel="billNo"/>
 </form:select><span style="color:red;">*</span></td>
-<td colspan="2"><input type="submit" value="Add Payment Details" /></td>
+    <td> Workorder </td>
+    <td>
+        <form:select path="workOrderKey" size="1" id="workOrderKey" >
+            <form:option value="">All</form:option>
+            <form:options items="${workordershortkey}" />
+        </form:select>
+    </td>
+</tr>
+    <tr>
+<td colspan="4"><input type="submit" value="Add Payment Details" /></td>
 </tr>
 <form:errors >
 <c:forEach items="${messages}" var="message">

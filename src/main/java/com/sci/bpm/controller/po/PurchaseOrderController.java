@@ -776,6 +776,9 @@ public Event loadQuotationsDetails(RequestContext context) throws Exception {
 
 		SciPaymentDetails payment = new SciPaymentDetails();
 		BeanUtils.copyProperties(payment, command);
+		if(StringUtils.isBlank(payment.getWorkOrderKey())) {
+			throw new Exception("Payment Cannot Be Blank");
+		}
 		payment.setInsertedBy(getUserPreferences().getUserID());
 		SciVendorMaster master = service.loadSciVendorMaster(command.getSeqVendorId());
 		payment.setSciVendorMaster(master);

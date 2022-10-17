@@ -162,6 +162,11 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 			whereClause = whereClause + " and UPPER(m.matSpec) like UPPER(:matSpec) ";
 			parameters.put("matSpec", "%"+command.getMatDescription()+"%");
 		}
+
+		if (command.getWorkOrderKey() != null && !"".equals(command.getWorkOrderKey().trim()) ) {
+			whereClause = whereClause + " and m.sciWorkorderMaster.seqWorkId in (Select seqWorkId from SciActiveWorkordersReportEntity where shortKey = :shortKey)";
+			parameters.put("shortKey", command.getWorkOrderKey());
+		}
 		if (command.getSeqMatindid() != null)  {
 			whereClause = whereClause + " and m.seqMiId = :seqMiId ";
 			parameters.put("seqMiId", command.getSeqMatindid());
@@ -185,6 +190,7 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 			whereClause = whereClause + " and  exists (select 1 from SciStoresRequest r  where  r.sciMiMaster.seqMiId =m.seqMiId and r.requestStatus = 'Y') ";
 
 		}
+
 		if ("N".equals(command.getStstatus()))  {
 			whereClause = whereClause + " and  exists (select 1 from SciStoresRequest r  where  r.sciMiMaster.seqMiId =m.seqMiId and r.requestStatus = 'N') ";
 

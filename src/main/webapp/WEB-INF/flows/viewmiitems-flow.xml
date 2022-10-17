@@ -9,7 +9,7 @@
 <webflow:evaluate expression="lookupbean.getDropDownList('matdept_key')" result="flowScope.matdeptlist"/>
 <webflow:evaluate expression="lookupbean.getDropDownList('matstats_key')" result="flowScope.matstatitems"/>
 <webflow:evaluate expression="lookupbean.getDropDownList('workorder_key')" result="flowScope.workmastlist"/>
-
+    <webflow:evaluate expression="lookupbean.getDropDownList('workordershort_key')" result="flowScope.workordershortkey"/>
 <webflow:evaluate expression="lookupbean.getDropDownList('user_master_key')" result="flowScope.usermastlist"/>
     </webflow:on-start>
   

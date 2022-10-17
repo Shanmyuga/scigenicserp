@@ -99,6 +99,7 @@
 <td><form:checkbox path="filterIssued" value="Y"/>
 </td>
 </tr>
+
  <tr>
 <td>Remove Rejected requests</td>
 <td><form:checkbox path="filterRejected" value="Y"/>
@@ -112,7 +113,18 @@
 
      </form:select>
      </td>
-<td colspan="1"> <input  type="button" value="Search MI  Items" onclick="eventdirect('searchMI')"/> </td>
+
+
+ </tr>
+    <td> Workorder Short Key</td>
+    <td>
+        <form:select path="workOrderKey" size="1" id="workOrderKey" >
+            <form:option value="">All</form:option>
+            <form:options items="${workordershortkey}" />
+        </form:select>
+    </td>
+    <tr>
+<td colspan="2"> <input  type="button" value="Search MI  Items" onclick="eventdirect('searchMI')"/> </td>
 
 </tr>
  
