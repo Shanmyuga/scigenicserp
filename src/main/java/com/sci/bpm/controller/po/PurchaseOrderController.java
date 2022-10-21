@@ -515,6 +515,7 @@ public class PurchaseOrderController extends SciBaseController {
 		context.getExternalContext().getSessionMap()
 				.put("poxml", "<purchaseOrder>"+poxml);
 		context.getFlowScope().put("poxml_flow","<purchaseOrder>"+poxml);
+		context.getFlowScope().put("PO_ID",selected.getSeqPurchId());
 		return success();
 	}
 
@@ -552,6 +553,7 @@ public class PurchaseOrderController extends SciBaseController {
 			fop = fopFactory.newFop(MimeConstants.MIME_PDF, out);
 			fopFactory.setURIResolver(uriResolver);
 			String poxml = (String) context.getFlowScope().get("poxml_flow");
+			Long seqPurchID = (Long) context.getFlowScope().get("PO_ID");
 			String vendorEmailId = (String) context.getFlowScope().get("vendorEmailID_flow");
 			if (poxml == null) {
 
@@ -572,7 +574,7 @@ public class PurchaseOrderController extends SciBaseController {
 			byte[] pdfarray = out.toByteArray();
 
 			//Send content to Browser
-			sendEmail("purchase@scigenics.in",vendorEmailId,"Purchase Order From Scigenics","Dear Sir/Madam \n Please find the attached purchase order from Scigenics India Pvt Ltd. \n\n\n Thanks and Regards \n Scigenics Purchase Manager \n email : purchase@scigenics.in ",pdfarray);
+			sendEmail("purchase@scigenics.in",vendorEmailId,"Purchase Order From Scigenics - PO-ID "+seqPurchID,"Dear Sir/Madam \n Please find the attached purchase order from Scigenics India Pvt Ltd. \n\n\n Thanks and Regards \n Scigenics Purchase Manager \n email : purchase@scigenics.in ",pdfarray);
 			context.getFlashScope().put("mailMessage","Mail Successfully sent");
 		}
 		catch(Exception e) {
