@@ -74,6 +74,8 @@ public class POCommand implements Serializable {
 	private Date poPaidDate;
 	private String certRequired;
 
+	private Date vendorAgreedDate;
+
 	private String workOrderKey;
 
 	private Double gst = new Double(0);
@@ -432,6 +434,14 @@ public class POCommand implements Serializable {
 
 	public Double getPoId() {
 		return poId;
+	}
+
+	public Date getVendorAgreedDate() {
+		return vendorAgreedDate;
+	}
+
+	public void setVendorAgreedDate(Date vendorAgreedDate) {
+		this.vendorAgreedDate = vendorAgreedDate;
 	}
 
 	public void setPoId(Double poId) {

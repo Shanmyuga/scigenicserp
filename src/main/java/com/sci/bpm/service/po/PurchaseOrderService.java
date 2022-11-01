@@ -18,7 +18,7 @@ import com.sci.bpm.db.model.SciVendorPurchaseCost;
  */
 public interface PurchaseOrderService {
 
-	
+	public SciPurchaseMast loadPOById(Long seqPurchId);
 	public  void addPurchOrder(SciPurchaseMast master,List<SciPurchItemMaster> itemlist) ;
 	public  void addPurchOrder(SciPurchaseMast master,List<SciPurchItemMaster> itemlist,Long mistatus) ;
 	public List<SciPurchaseMast> searchPOs(POCommand command);
@@ -26,6 +26,7 @@ public interface PurchaseOrderService {
 	public List<SciPurchItemMaster> loadPODetails(SciPurchaseMast master);
 	public void cancelPO(SciPurchaseMast master);
 	public void updatePOStatus(SciPurchaseMast master);
+	public void updatePOStatusBy(SciPurchaseMast master);
 	public List closePO(POCommand command);
 	public void updateReject(SciRejectedMaterials mater,SciRejectMaterialAudit audit);
 	public List viewRejected(POCommand command);

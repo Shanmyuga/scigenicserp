@@ -57,6 +57,7 @@ public class SciPurchaseMast implements java.io.Serializable {
 	private Double creditTimeline;
 	private String poPaidFully;
 	private Date poPaidDate;
+	private Date vendorAgreedDate;
 	public Float workCost;
 	public Integer paymentPercentage;
 	private String certRequired;
@@ -507,5 +508,15 @@ private String insertedBy;
 
 	public void setWorkOrders(String workOrders) {
 		this.workOrders = workOrders;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "VENDOR_AGREED_DATE", nullable = true, length = 7)
+	public Date getVendorAgreedDate() {
+		return vendorAgreedDate;
+	}
+
+	public void setVendorAgreedDate(Date vendorAgreedDate) {
+		this.vendorAgreedDate = vendorAgreedDate;
 	}
 }

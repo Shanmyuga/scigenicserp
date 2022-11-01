@@ -3,7 +3,9 @@ package com.sci.bpm.controller.stores;
 import java.util.Date;
 import java.util.List;
 
+import com.sci.bpm.db.model.*;
 import com.sci.bpm.service.mi.MaterialIndentService;
+import com.sci.bpm.service.po.PurchaseOrderService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
@@ -15,18 +17,6 @@ import org.springframework.webflow.execution.RequestContext;
 import com.sci.bpm.command.mi.MatindCommand;
 import com.sci.bpm.command.stores.StoresBean;
 import com.sci.bpm.controller.base.SciBaseController;
-import com.sci.bpm.db.model.SciAvailableMaterials;
-import com.sci.bpm.db.model.SciDamagedMaterials;
-import com.sci.bpm.db.model.SciMatindMaster;
-import com.sci.bpm.db.model.SciPurchItemMaster;
-import com.sci.bpm.db.model.SciQcMiMaster;
-import com.sci.bpm.db.model.SciRecdMaterials;
-import com.sci.bpm.db.model.SciRejectedMaterials;
-import com.sci.bpm.db.model.SciReturnitemsRequest;
-import com.sci.bpm.db.model.SciStoreMiMaster;
-import com.sci.bpm.db.model.SciStoreissueMaster;
-import com.sci.bpm.db.model.SciStoresRequest;
-import com.sci.bpm.db.model.SciWorkorderMaster;
 import com.sci.bpm.service.product.ProductMasterService;
 import com.sci.bpm.service.stores.StoreService;
 
@@ -39,7 +29,8 @@ public class StoresManagerController extends SciBaseController {
         setFormObjectClass(StoresBean.class);
         return super.setupForm(context);
     }
-
+    @Autowired
+    private PurchaseOrderService purchaseOrderService;
     @Autowired
     private StoreService service;
     @Autowired
@@ -181,6 +172,11 @@ public class StoresManagerController extends SciBaseController {
         recdmat.setInsertedDate(new java.util.Date());
         service.addNewtoStores(storems, qcmi, getLookupservice().loadIDData(
                 "MI_INQC").toString(), recdmat);
+        SciPurchaseMast purchaseMast = purchaseOrderService.loadPOById(recdmat.getPoId());
+        purchaseMast.setPurchaseStatus(getLookupservice().loadIDData("PO_RECEIVED"));
+        purchaseMast.setUpdatedBy(getUserPreferences().getUserID());
+        purchaseMast.setUpdatedDate(new Date());
+        purchaseOrderService.updatePOStatus(purchaseMast);
 
         // storems.set
         return success();

@@ -58,8 +58,13 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	@Autowired
 	private ISciMatindMasterDAO matdao;
 
+	@Override
+	public SciPurchaseMast loadPOById(Long seqPurchId) {
+		return dao.findById(seqPurchId);
+	}
+
 	public void addPurchOrder(SciPurchaseMast master,
-			List<SciPurchItemMaster> itemlist) {
+							  List<SciPurchItemMaster> itemlist) {
 		// TODO Auto-generated method stub
 		dao.save(master);
 		for (SciPurchItemMaster im : itemlist) {
@@ -92,6 +97,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
 	public void updatePOStatus(SciPurchaseMast master) {
 		itemdao.updatePOStatus(master);
+
+	}
+
+	@Override
+	public void updatePOStatusBy(SciPurchaseMast master) {
 
 	}
 

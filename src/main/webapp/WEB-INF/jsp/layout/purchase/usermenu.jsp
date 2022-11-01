@@ -24,6 +24,10 @@
                 
               </tr>
               <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=updatepurch-flow">Update Purchase Order Dates</a></td>
+
+              </tr>
+              <tr>
                   <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=view-report-flow">View Run Report</a></td>
               </tr>
               <tr>
@@ -33,6 +37,7 @@
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addpayment-flow">Add Payment Details</a></td>
                 
               </tr>
+
                <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewissueqcresults-flow">View Issued QC Docs for  WorkOrder</a></td>
               </tr>

@@ -617,6 +617,25 @@ public class PurchaseOrderController extends SciBaseController {
 		
 		return success();
 	}
+
+	public Event vendorAgreedDate(RequestContext context) throws Exception {
+
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
+				.getFlowScope().get("pomastlist");
+		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
+	if(command.getVendorAgreedDate() == null) {
+		throw new Exception("vendor date cannot be null");
+	}
+		selected.setVendorAgreedDate(command.getVendorAgreedDate());
+		selected.setUpdatedBy(getUserPreferences().getUserID());
+		selected.setUpdatedDate(new Date());
+		service.updatePOStatus(selected);
+		List<SciPurchaseMast> masterlist = service.searchPOs(command);
+		context.getFlowScope().put("pomastlist", masterlist);
+
+		return success();
+	}
 	public Event approvedDirector(RequestContext context) throws Exception {
 
 		POCommand command = (POCommand) getFormObject(context);
