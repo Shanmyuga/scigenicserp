@@ -63,6 +63,10 @@
                         value="true" />
               <property name="hibernate.dialect"  value="org.hibernate.dialect.Oracle10gDialect"/>
               <property name="hibernate.event.merge.entity_copy_observer" value="allow"/>
+			<property name="hibernate.hikari.connectionTimeout" value="20000"/>
+			<property name="hibernate.hikari.maximumPoolSize" value="10"/>
+			<property name="hibernate.hikari.minimumIdle" value="5"/>
+			<property name="hibernate.hikari.idleTimeout" value="30000"/>
           </properties>
 
       </persistence-unit>
