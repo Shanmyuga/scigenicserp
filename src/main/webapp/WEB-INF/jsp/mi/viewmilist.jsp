@@ -165,6 +165,10 @@
         <display:column sortable="true"  title="PO ID"  property="poID" >
 
         </display:column>
+
+        <display:column sortable="true"  title="MI Exp Date"  property="vendorAgreedDate" >
+
+        </display:column>
         <display:column sortable="true"  title="Stock MI"  property="stockMI" >
 
         </display:column>

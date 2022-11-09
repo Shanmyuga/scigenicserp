@@ -61,6 +61,8 @@ private String miForType;
 private String miPhase;
 
 private Long stockMI;
+
+private Date vendorAgreeDate;
 	// Constructors
 
 	private Set<SciAddMatInfoDocsEntity> matInfoDocsEntities = new HashSet<SciAddMatInfoDocsEntity>();
@@ -149,7 +151,7 @@ private Long stockMI;
 			Object object4, Object object5, Object object6, Object object7,
 			Object object8, Object object9, Object object10, Object object11,
 			Object object12, Object object13, Object object14, Object object15,
-			Object object16,Object object17,Object object18,Object object19,Object object20,Object Object21) {
+			Object object16,Object object17,Object object18,Object object19,Object object20,Object Object21,Object object22) {
 		// TODO Auto-generated constructor stub
 		
 		this.seqMiId = (Long) object;
@@ -173,6 +175,7 @@ private Long stockMI;
 		this.matDuedate = (Date)object19;
 		this.isGroupMiId =(String)object20;
 		this.stockMI = (Long)Object21;
+		this.vendorAgreeDate = (Date)object22;
 	}
 
 	// Property accessors
@@ -582,5 +585,14 @@ private Long stockMI;
 
 	public void setStockMI(Long stockMI) {
 		this.stockMI = stockMI;
+	}
+
+	@Transient
+	public Date getVendorAgreeDate() {
+		return vendorAgreeDate;
+	}
+
+	public void setVendorAgreeDate(Date vendorAgreeDate) {
+		this.vendorAgreeDate = vendorAgreeDate;
 	}
 }
