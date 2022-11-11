@@ -41,7 +41,7 @@
         </webflow:transition>
         <webflow:transition on="vendorAgreedDate" to="entersearch">
             <webflow:evaluate expression="pocont.bind"/>
-            <webflow:evaluate expression="pocont.approvalDirector"/>
+            <webflow:evaluate expression="pocont.vendorAgreedDate"/>
         </webflow:transition>
         <webflow:transition on="approvePO" to="entersearch">
             <webflow:evaluate expression="pocont.bind"/>

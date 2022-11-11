@@ -166,7 +166,7 @@
 
         </display:column>
 
-        <display:column sortable="true"  title="MI Exp Date"  property="vendorAgreedDate" >
+        <display:column sortable="true"  title="MI Exp Date"  property="vendorAgreeDate" >
 
         </display:column>
         <display:column sortable="true"  title="Stock MI"  property="stockMI" >
