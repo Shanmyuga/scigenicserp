@@ -190,13 +190,19 @@
             <input type="hidden" name="_eventId"  id="_eventId" value="seachPO" >
 
             <c:if test="${fn:length(pomastlist) > 0 }" >
-                <div style="padding-left:10px;float:left">
+                <div style="padding-left:10px;float:left;width: 100%">
                     <p>Vendor Agreed Date</p>
                     <p><form:input path="vendorAgreedDate"/>
                         <a href="javascript:show_calendar('document.pocommand.vendorAgreedDate', document.pocommand.vendorAgreedDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
                     </p>
-
-                    <input type="button"  value="Update Vendor Agreed Date" onclick="eventdirect('vendorAgreedDate')"/>
+                    <p><form:select path="vendorStatus">
+                       <form:option value="VENDOR_DELIVERY_INPROGRESS">VENDOR_DELIVERY_INPROGRESS</form:option>
+                        <form:option value="COMMERCIAL_HOLD_SCIGENICS">COMMERCIAL_HOLD_SCIGENICS</form:option>
+                        <form:option value="PROJECT_HOLD_SCIGENICS">PROJECT_HOLD_SCIGENICS</form:option>
+                        <form:option value="VENDOR_PRODUCTION_DELAY">VENDOR_PRODUCTION_DELAY</form:option>
+                    </form:select>
+                    </p>
+                    <input type="button"  value="Update Vendor Status" onclick="eventdirect('vendorAgreedDate')"/>
 
 
                 </div>

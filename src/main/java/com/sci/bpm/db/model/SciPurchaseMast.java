@@ -65,6 +65,7 @@ public class SciPurchaseMast implements java.io.Serializable {
 	private String certStatus;
 
 	private String workOrders;
+	private String vendorStatus;
 	
 	// Constructors
 
@@ -518,5 +519,14 @@ private String insertedBy;
 
 	public void setVendorAgreedDate(Date vendorAgreedDate) {
 		this.vendorAgreedDate = vendorAgreedDate;
+	}
+
+	@Column(name = "VENDOR_STATUS",length = 50)
+	public String getVendorStatus() {
+		return vendorStatus;
+	}
+
+	public void setVendorStatus(String vendorStatus) {
+		this.vendorStatus = vendorStatus;
 	}
 }

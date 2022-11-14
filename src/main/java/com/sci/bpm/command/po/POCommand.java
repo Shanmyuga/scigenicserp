@@ -78,6 +78,8 @@ public class POCommand implements Serializable {
 
 	private String workOrderKey;
 
+	private String vendorStatus;
+
 	private Double gst = new Double(0);
 	private Double gstCharges = new Double(0);
 	
@@ -586,5 +588,13 @@ public class POCommand implements Serializable {
 
 	public void setWorkOrderKey(String workOrderKey) {
 		this.workOrderKey = workOrderKey;
+	}
+
+	public String getVendorStatus() {
+		return vendorStatus;
+	}
+
+	public void setVendorStatus(String vendorStatus) {
+		this.vendorStatus = vendorStatus;
 	}
 }

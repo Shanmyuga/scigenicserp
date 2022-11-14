@@ -624,11 +624,12 @@ public class PurchaseOrderController extends SciBaseController {
 		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
 				.getFlowScope().get("pomastlist");
 		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
-	if(command.getVendorAgreedDate() == null) {
+	if(command.getVendorAgreedDate() == null && ("VENDOR_DELIVERY_INPROGRESS".equals(command.getVendorStatus()) || "VENDOR_PRODUCTION_DELAY".equals(command.getVendorStatus()))) {
 		throw new Exception("vendor date cannot be null");
 	}
 		selected.setVendorAgreedDate(command.getVendorAgreedDate());
 		selected.setUpdatedBy(getUserPreferences().getUserID());
+		selected.setVendorStatus(command.getVendorStatus());
 		selected.setUpdatedDate(new Date());
 		service.updatePOStatus(selected);
 		List<SciPurchaseMast> masterlist = service.searchPOs(command);
