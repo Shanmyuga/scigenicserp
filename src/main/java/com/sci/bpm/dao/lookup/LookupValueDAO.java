@@ -10,6 +10,7 @@ public interface LookupValueDAO {
 	public List<SciStateCityMasterEntity> loadCities(String stateCode);
 
 	public List getDropDownList(String query);
+	public String getLovDescription(String lovname);
 	public List<SciCustomerMaster> loadCustomerforOrg(Long seqClientOrgId);
 	public List<SciCustomerMaster> loadCustomerforOrgandState(Long seqClientOrgId,Long stateCode);
 	public boolean addNewValue(SciLookupMaster master);

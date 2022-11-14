@@ -109,11 +109,16 @@ public class EnquiryController extends SciBaseController {
 		SciCustomerMaster cmaster = (SciCustomerMaster) context.getFlowScope().get("selectedCustomer");
 		emaster.setSciCustomerMaster(cmaster);
 		emaster.setEnqStatus("O");
+		emaster.setEnqCommerStatus(getLookupservice().loadDescription("ENQ_COM_INIT"));
+
 		emaster.setInsertedBy(getUserPreferences().getUserID());
 		emaster.setInsertedDate(new Date());
 		emaster.setUdpatedBy(getUserPreferences().getUserID());
 		emaster.setUpdatedDate(new Date());
 		emaster.setEnqCustomerCode(cmaster.getCustomerCode());
+		if("EV".equals(emaster.getEnqOrVisit()) && StringUtils.isBlank(emaster.getVisitEnqRefCode())) {
+			throw new Exception("Visit ref code cannot be null");
+		}
 		Long enqCode = service.findEnqCode(clientOrgMaster.getOrgCode(),cmaster.getCustomerCityCode(),cmaster.getCustomerCode());
 		emaster.setEnquiryCode(enqCode);
 		emaster.setEnqStateCityCode(cmaster.getCustomerCityCode());

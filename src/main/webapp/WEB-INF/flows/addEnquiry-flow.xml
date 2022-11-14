@@ -11,6 +11,8 @@
          <webflow:evaluate expression="lookupbean.getDropDownList('enq_categ_key')" result="flowScope.enqCategories"/>
     <webflow:evaluate expression="lookupbean.getDropDownList('enq_source_key')" result="flowScope.enqSources"/>
              <webflow:evaluate expression="lookupbean.getDropDownList('customer_dept_key')" result="flowScope.customerDepts"/>
+    <webflow:evaluate expression="lookupbean.getDropDownList('enqcommerstatusinq_key')" result="flowScope.enqCommerInqStatus"/>
+    <webflow:evaluate expression="lookupbean.getDropDownList('enqcommerstatus_key')" result="flowScope.enqCommerStatus"/>
     </webflow:on-start>
     <webflow:view-state id="addlookup" view="clientorg.search">
 

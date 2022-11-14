@@ -51,6 +51,13 @@ public class SciEnquiryMaster implements java.io.Serializable {
 	private String lastUpdatedBy;
 	private Date bringForwardDate;
 
+	private String enqCommerStatus;
+
+	private String enqOrVisit;
+
+	private String visitEnqRefCode;
+
+
 	private Set<SciEnquiryDetails> sciEnquiryDetailses = new HashSet<SciEnquiryDetails>(
 			0);
 
@@ -343,5 +350,29 @@ public class SciEnquiryMaster implements java.io.Serializable {
 
 	public void setBringForwardDate(Date bringForwardDate) {
 		this.bringForwardDate = bringForwardDate;
+	}
+	@Column(name = "ENQ_COMMER_STATUS", length = 50)
+	public String getEnqCommerStatus() {
+		return enqCommerStatus;
+	}
+
+	public void setEnqCommerStatus(String enqCommerStatus) {
+		this.enqCommerStatus = enqCommerStatus;
+	}
+	@Column(name = "ENQ_OR_VISIT", length = 20)
+	public String getEnqOrVisit() {
+		return enqOrVisit;
+	}
+
+	public void setEnqOrVisit(String enqOrVisit) {
+		this.enqOrVisit = enqOrVisit;
+	}
+	@Column(name = "ENQ_REF_VISIT", length = 50)
+	public String getVisitEnqRefCode() {
+		return visitEnqRefCode;
+	}
+
+	public void setVisitEnqRefCode(String visitEnqRefCode) {
+		this.visitEnqRefCode = visitEnqRefCode;
 	}
 }

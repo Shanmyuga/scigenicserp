@@ -44,6 +44,15 @@
             <span style="color:red;">*</span></td>
     </tr>
     <tr>
+        <td align="right" class="datatext">Enquiry or Visit</td>
+        <td >Actual Enquiry  <form:radiobutton path="enqOrVisit" value="E" /> <br/>
+            Prospect Visit <form:radiobutton path="enqOrVisit" value="PV" />
+            Visit for Enquiry <form:radiobutton path="enqOrVisit" value="EV" />
+
+            <span style="color:red;">*</span></td>
+    </tr>
+
+    <tr>
         <td align="right" class="datatext">Enquiry Category</td>
         <td ><form:select path="enqCategory" >
             <form:options items="${enqCategories}" itemLabel="lovDescription" itemValue="seqLovId"/>
@@ -51,7 +60,6 @@
 
             <span style="color:red;">*</span></td>
     </tr>
-
     <tr>
         <td align="right" class="datatext">Enquiry Follow up Date</td>
         <td ><form:input path="enqFollowUpDate" />
@@ -71,7 +79,10 @@
 <td ><form:input path="enqAttendee" /><span style="color:red;">*</span></td>
 </tr>
 
-
+    <tr>
+        <td align="right" class="datatext">Visit Enquiry Reference Code</td>
+        <td ><form:input path="visitEnqRefCode" /></td>
+    </tr>
 
 
 

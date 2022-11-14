@@ -34,6 +34,11 @@ public class LookupValueServiceImpl implements LookUpValueService {
 		return daoimpl.lookupId(lovName);
 	}
 
+	@Override
+	public String loadDescription(String lovName) {
+		return daoimpl.getLovDescription(lovName);
+	}
+
 	public List<SciCustomerMaster> loadCustomerforOrg(Long seqClientOrgId) {
 		return daoimpl.loadCustomerforOrg(seqClientOrgId);
 	}

@@ -35,7 +35,11 @@ public class EnqBean implements Serializable {
     private Long seqEnqMasterId;
     private Long customerDept;
     private String enqDocDesc;
+    private String enqCommerStatus;
 
+    private String enqOrVisit;
+
+    private String visitEnqRefCode;
     private String orgCode;
 
     private String orgName;
@@ -394,5 +398,29 @@ public class EnqBean implements Serializable {
 
     public void setStateCodeDelimited(List<String> stateCodeDelimited) {
         this.stateCodeDelimited = stateCodeDelimited;
+    }
+
+    public String getEnqCommerStatus() {
+        return enqCommerStatus;
+    }
+
+    public void setEnqCommerStatus(String enqCommerStatus) {
+        this.enqCommerStatus = enqCommerStatus;
+    }
+
+    public String getEnqOrVisit() {
+        return enqOrVisit;
+    }
+
+    public void setEnqOrVisit(String enqOrVisit) {
+        this.enqOrVisit = enqOrVisit;
+    }
+
+    public String getVisitEnqRefCode() {
+        return visitEnqRefCode;
+    }
+
+    public void setVisitEnqRefCode(String visitEnqRefCode) {
+        this.visitEnqRefCode = visitEnqRefCode;
     }
 }
