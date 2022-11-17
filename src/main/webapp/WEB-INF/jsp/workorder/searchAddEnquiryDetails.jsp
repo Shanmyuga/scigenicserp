@@ -166,8 +166,8 @@
             <display:column sortable="true"  property="enqAttendee" >
 
             </display:column>
-            <display:column sortable="true"  title="EnqType" >
-                <c:out value='${lovmap[row1.enqType]}'/>
+            <display:column sortable="true"  title="EnqCommerical Status" >
+                <c:out value='${lovmap[row1.enqCommerStatus]}'/>
             </display:column>
 
             <display:column sortable="true"  title="EnqPriority" >
@@ -195,7 +195,7 @@
             <input type="hidden" name="_eventId"  id="_eventId" value="addEnq" >
 
         </div>
-
+        <c:if test="${isVisit == false}" >
         <c:if test="${fn:length(openenqlist) > 0 }" >
 
             <display:table export="true" sort="list"  pagesize="10" name="openenqdetails" requestURI="springtest.htm"  id="row2"  htmlId="3" cellpadding="5px" cellspacing="5px">
@@ -263,9 +263,9 @@
                     <td ><form:textarea path="competitors" /></td>
 
 
-                    <td align="right" class="datatext">Enquiry Follow up Method</td>
-                    <td ><form:select path="followupMethod" >
-                        <form:options items="${enqSources}" itemLabel="lovDescription" itemValue="lovDescription"/>
+                    <td align="right" class="datatext">Enquiry Commercial Status</td>
+                    <td ><form:select path="enqCommerStatus" >
+                        <form:options items="${enqCommerStatuses}" itemLabel="lovDescription" itemValue="lovDescription"/>
                     </form:select>
 
                         <span style="color:red;">*</span></td>
@@ -277,10 +277,17 @@
 
                         </td>
 
+                    <td align="right" class="datatext">Enquiry Follow up Method</td>
+                    <td ><form:select path="followupMethod" >
+                        <form:options items="${enqSources}" itemLabel="lovDescription" itemValue="lovDescription"/>
+                    </form:select>
+
+                        <span style="color:red;">*</span></td>
+
                 </tr>
             </table>
             <input type="button" value="Add Enquiry Details" onclick="eventdirect('addEnqdet')"/>
-            <input type="button" value="Close Enquiry" onclick="eventdirect('closeenq')"/>
+
 
 
             <display:table export="true" sort="list"   pagesize="10" name="enqdoclist"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
@@ -320,6 +327,7 @@
             </table>
             <input type="button"  value="Add Enquiry Docs" onclick="eventdirect('addEnquirydoc')"/>
 
+        </c:if>
         </c:if>
     </div>
 

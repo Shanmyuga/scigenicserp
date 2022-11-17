@@ -109,7 +109,7 @@ public class EnquiryController extends SciBaseController {
 		SciCustomerMaster cmaster = (SciCustomerMaster) context.getFlowScope().get("selectedCustomer");
 		emaster.setSciCustomerMaster(cmaster);
 		emaster.setEnqStatus("O");
-		emaster.setEnqCommerStatus(getLookupservice().loadDescription("ENQ_COM_INIT"));
+		emaster.setEnqCommerStatus("INITIATION");
 
 		emaster.setInsertedBy(getUserPreferences().getUserID());
 		emaster.setInsertedDate(new Date());
@@ -170,6 +170,10 @@ public class EnquiryController extends SciBaseController {
 		EnqBean bean = (EnqBean) getFormObject(context);
 		List enqmasterlist = (List) context.getFlowScope().get("openenqlist");
 		SciEnquiryMaster emaster = selectEnqmaster(enqmasterlist, bean.getSeqenqmasterid());
+		boolean isVisit = false;
+		if("EV".equals(emaster.getEnqOrVisit()) || "GV".equals(emaster.getEnqOrVisit())) {
+			isVisit = true;
+		}
 		List detaillist = service.loadEnquiryDetails(emaster);
 
 		List enqdoclist = service.loadEnquiryDocs(emaster);
@@ -177,6 +181,7 @@ public class EnquiryController extends SciBaseController {
 		context.getExternalContext().getSessionMap().put("enqdoclistSessiom", enqdoclist);
 		context.getFlowScope().put("enqdoclist", enqdoclist);
 		context.getFlowScope().put("selectEnq", emaster);
+		context.getFlowScope().put("isVisit",isVisit);
 		return success();
 	}
 	
@@ -204,6 +209,7 @@ public class EnquiryController extends SciBaseController {
 		emaster.setEnqPriority(bean.getEnqPriorityLov());
 		emaster.setUdpatedBy(getUserPreferences().getUserID());
 		emaster.setUpdatedDate(new Date());
+		emaster.setEnqCommerStatus(bean.getEnqCommerStatus());
 		service.updateEnquiryMaster(emaster);
 		service.addNewEnquiryDetail(details, null);
 		loadEnquiryDetails(context);
