@@ -33,7 +33,7 @@ public class SciEnquiryDetails implements java.io.Serializable {
 	private String updatedBy;
 	
 	private Date bringForwardDate;
-
+	private String enqCommerStatus;
 	private String purpose;
 	
 	private String competitors;
@@ -176,5 +176,13 @@ public class SciEnquiryDetails implements java.io.Serializable {
 
 	public void setFollowupMethod(String followupMethod) {
 		this.followupMethod = followupMethod;
+	}
+	@Column(name = "ENQ_COMMERCIAL_STATUS", length = 50)
+	public String getEnqCommerStatus() {
+		return enqCommerStatus;
+	}
+
+	public void setEnqCommerStatus(String enqCommerStatus) {
+		this.enqCommerStatus = enqCommerStatus;
 	}
 }

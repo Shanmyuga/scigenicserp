@@ -166,8 +166,8 @@
             <display:column sortable="true"  property="enqAttendee" >
 
             </display:column>
-            <display:column sortable="true"  title="EnqCommerical Status" >
-                <c:out value='${lovmap[row1.enqCommerStatus]}'/>
+            <display:column sortable="true" property="enqCommerStatus" title="EnqCommerical Status" >
+
             </display:column>
 
             <display:column sortable="true"  title="EnqPriority" >
