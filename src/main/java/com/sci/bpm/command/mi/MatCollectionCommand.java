@@ -33,6 +33,7 @@ public class MatCollectionCommand implements Serializable {
 	private String matindex;
 	private String matSpec;
 	private String matEstUnitCost;
+	private String miForIssue;
 	private List<AdditionalInfoCommand> additionalInfoCommandList = new ArrayList();
 	
 	public String getMatEstUnitCost() {
@@ -168,6 +169,14 @@ public class MatCollectionCommand implements Serializable {
 
 	public void setAdditionalInfoCommandList(List<AdditionalInfoCommand> additionalInfoCommandList) {
 		this.additionalInfoCommandList = additionalInfoCommandList;
+	}
+
+	public String getMiForIssue() {
+		return miForIssue;
+	}
+
+	public void setMiForIssue(String miForIssue) {
+		this.miForIssue = miForIssue;
 	}
 
 	public String getMiPhase() {

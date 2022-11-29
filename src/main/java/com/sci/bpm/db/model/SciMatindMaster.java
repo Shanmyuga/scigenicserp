@@ -46,6 +46,12 @@ public class SciMatindMaster implements java.io.Serializable {
 		private Date podueDate;
 private String oldQCId;
 
+private Float stockQty;
+
+private Float assignedStock;
+
+private Float actualStock;
+
 private int tempestCost;
 
 private String requestStatus;
@@ -61,6 +67,7 @@ private String miForType;
 private String miPhase;
 
 private Long stockMI;
+private String miForIssue;
 
 private Date vendorAgreeDate;
 	// Constructors
@@ -151,7 +158,7 @@ private Date vendorAgreeDate;
 			Object object4, Object object5, Object object6, Object object7,
 			Object object8, Object object9, Object object10, Object object11,
 			Object object12, Object object13, Object object14, Object object15,
-			Object object16,Object object17,Object object18,Object object19,Object object20,Object Object21,Object object22) {
+			Object object16,Object object17,Object object18,Object object19,Object object20,Object Object21,Object object22,Object object23) {
 		// TODO Auto-generated constructor stub
 		
 		this.seqMiId = (Long) object;
@@ -176,6 +183,7 @@ private Date vendorAgreeDate;
 		this.isGroupMiId =(String)object20;
 		this.stockMI = (Long)Object21;
 		this.vendorAgreeDate = (Date)object22;
+		this.miForIssue = (String)object23;
 	}
 
 	// Property accessors
@@ -594,5 +602,40 @@ private Date vendorAgreeDate;
 
 	public void setVendorAgreeDate(Date vendorAgreeDate) {
 		this.vendorAgreeDate = vendorAgreeDate;
+	}
+
+	@Transient
+	public Float getStockQty() {
+		return stockQty;
+	}
+
+	public void setStockQty(Float stockQty) {
+		this.stockQty = stockQty;
+	}
+
+	@Transient
+	public Float getAssignedStock() {
+		return assignedStock;
+	}
+
+	public void setAssignedStock(Float assignedStock) {
+		this.assignedStock = assignedStock;
+	}
+
+	@Transient
+	public Float getActualStock() {
+		return actualStock;
+	}
+
+	public void setActualStock(Float actualStock) {
+		this.actualStock = actualStock;
+	}
+	@Column(name = "MI_FOR_ISSUE",length = 20)
+	public String getMiForIssue() {
+		return miForIssue;
+	}
+
+	public void setMiForIssue(String miForIssue) {
+		this.miForIssue = miForIssue;
 	}
 }

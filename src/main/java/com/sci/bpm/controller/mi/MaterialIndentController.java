@@ -77,6 +77,7 @@ public class MaterialIndentController extends SciBaseController {
                 String prodSpecid = mi.getProductSpecid().substring(0, 5);
                 master.setSciWorkorderMaster(wmaster);
                 BeanUtils.copyProperties(master, mi);
+                master.setMiForIssue(mi.getMiForIssue());
                 System.out.println(command.getDrawingRef());
 				/*if(!"".equals(mi.getDrawingRef())) {
 					String[] arra = StringUtils.split(mi.getDrawingRef(),",");

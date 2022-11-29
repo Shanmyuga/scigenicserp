@@ -24,6 +24,7 @@
 
 <td align="right" class="datatext">Purchase details</td>
 <td align="left" class="datatext">Mi Purpose </td>
+ <td align="left" class="datatext">Mi For issue </td>
  <td align="left" class="datatext">Mi Phase </td>
 
 
@@ -73,7 +74,11 @@
 <form:options items="${matfortypeitems}" itemValue="lovDescription" itemLabel="lovDescription"/>
 </form:select>
 </td>
-
+ <td ><form:select path="matList[${rowcnt.index}].miForIssue"  size="1" >
+  <form:option value="N">No</form:option>
+  <form:option value="Y">Yes</form:option>
+ </form:select>
+ </td>
  <td ><form:select path="matList[${rowcnt.index}].miPhase"  size="1" >
   <form:option value="">Select</form:option>
   <form:option value="Phase1">Phase1</form:option>
@@ -171,6 +176,15 @@
 
 </display:column>
 
+ <display:column sortable="true"  title="Total Stock"  property="stockQty">
+
+ </display:column>
+ <display:column sortable="true"  title="Assigned Stock"  property="assignedStock">
+
+ </display:column>
+ <display:column sortable="true"  title="Actual Stock"  property="actualStock">
+
+ </display:column>
 <display:column sortable="true"  title="Material Cat"  property="matType" >
 
 </display:column>
