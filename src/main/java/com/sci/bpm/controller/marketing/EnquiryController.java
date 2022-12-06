@@ -100,6 +100,24 @@ public class EnquiryController extends SciBaseController {
 		context.getFlowScope().put("stateCityList",cityList);
 		return success();
 	}
+
+	public Event showEnquiryData(RequestContext context) throws Exception {
+		EnqBean value = (EnqBean)getFormObject(context);
+		//value.setCheckEnquiry(true);
+		System.out.println("inside show");
+
+
+		context.getFlowScope().put("checkEnquiry",true);
+		return success();
+	}
+
+	public Event hideEnquiryData(RequestContext context) throws Exception {
+		EnqBean value = (EnqBean)getFormObject(context);
+		//value.setCheckEnquiry(false);
+		context.getFlowScope().put("checkEnquiry",false);
+		System.out.println("inside hide");
+		return success();
+	}
 	public Event addEnquiryMaster(RequestContext context) throws Exception {
 		System.out.println("inside enquiry master");
 		EnqBean bean = (EnqBean) getFormObject(context);

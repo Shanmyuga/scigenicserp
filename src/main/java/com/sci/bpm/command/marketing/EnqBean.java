@@ -15,6 +15,8 @@ public class EnqBean implements Serializable {
     private Long enqType;
     private Long seqClientOrgId;
 
+
+
     private String customerName;
 
     private String customerContact;
@@ -400,6 +402,8 @@ public class EnqBean implements Serializable {
         this.stateCodeDelimited = stateCodeDelimited;
     }
 
+
+
     public String getEnqCommerStatus() {
         return enqCommerStatus;
     }
@@ -423,4 +427,6 @@ public class EnqBean implements Serializable {
     public void setVisitEnqRefCode(String visitEnqRefCode) {
         this.visitEnqRefCode = visitEnqRefCode;
     }
+
+
 }

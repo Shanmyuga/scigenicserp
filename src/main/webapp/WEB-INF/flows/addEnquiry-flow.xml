@@ -74,6 +74,16 @@
             <webflow:evaluate expression="enqcont.bind"/>
             <webflow:evaluate expression="enqcont.addEnquiryMaster"/>
         </webflow:transition>
+
+    <webflow:transition on="showEnquiry" to="addview">
+        <webflow:evaluate expression="enqcont.bind"/>
+        <webflow:evaluate expression="enqcont.showEnquiryData"/>
+    </webflow:transition>
+
+    <webflow:transition on="hideEnquiry" to="addview">
+        <webflow:evaluate expression="enqcont.bind"/>
+        <webflow:evaluate expression="enqcont.hideEnquiryData"/>
+    </webflow:transition>
     </webflow:view-state>
     
 
