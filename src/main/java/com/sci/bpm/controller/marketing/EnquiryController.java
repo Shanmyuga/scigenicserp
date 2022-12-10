@@ -114,8 +114,23 @@ public class EnquiryController extends SciBaseController {
 	public Event hideEnquiryData(RequestContext context) throws Exception {
 		EnqBean value = (EnqBean)getFormObject(context);
 		//value.setCheckEnquiry(false);
+		if("EV".equals(value.getEnqOrVisit())) {
+			context.getFlowScope().put("enquiryVisit",true);
+		}
+
+		else {
+			context.getFlowScope().put("enquiryVisit",false);
+		}
 		context.getFlowScope().put("checkEnquiry",false);
+
 		System.out.println("inside hide");
+		return success();
+	}
+
+	public Event getMarketingUsers(RequestContext context) throws Exception {
+		EnqBean value = (EnqBean)getFormObject(context);
+		List<ScigenicsUserMaster> filteredUsers = userService.selectUserList("marketing");
+		context.getFlowScope().put("usersmarketing",filteredUsers);
 		return success();
 	}
 	public Event addEnquiryMaster(RequestContext context) throws Exception {
@@ -148,16 +163,16 @@ public class EnquiryController extends SciBaseController {
 		else {
 			throw new Exception("Cannot generate fULL CODE");
 		}
-		if(StringUtils.isBlank(emaster.getEnqAttendee()) || emaster.getEnqDate() == null ) {
-			throw new Exception();
-		}
-		boolean isTaskRequired = false;
-		Long lovID = getLookupservice().loadIDData("ENQ_PRIORITY_HOT");
-		if(lovID.longValue() == emaster.getEnqPriority().longValue()) {
-			isTaskRequired = true;
+		if("E".equals(bean.getEnqOrVisit())) {
+			if (StringUtils.isBlank(emaster.getEnqAttendee()) || emaster.getEnqDate() == null) {
+				throw new Exception();
+			}
 		}
 
-		service.addNewEnqMaster(emaster,isTaskRequired);
+
+
+
+		service.addNewEnqMaster(emaster, false);
 		
 		
 		return success();
@@ -195,6 +210,9 @@ public class EnquiryController extends SciBaseController {
 		List detaillist = service.loadEnquiryDetails(emaster);
 
 		List enqdoclist = service.loadEnquiryDocs(emaster);
+		bean.setEnquiryTimeline(emaster.getEnquiryTimeline());
+		bean.setEnqCommerStatus(emaster.getEnqCommerStatus());
+		bean.setEnqPriorityLov(emaster.getEnqPriority());
 		context.getFlowScope().put("openenqdetails", detaillist);
 		context.getExternalContext().getSessionMap().put("enqdoclistSessiom", enqdoclist);
 		context.getFlowScope().put("enqdoclist", enqdoclist);
@@ -229,6 +247,7 @@ public class EnquiryController extends SciBaseController {
 		emaster.setUdpatedBy(getUserPreferences().getUserID());
 		emaster.setUpdatedDate(new Date());
 		emaster.setEnqCommerStatus(bean.getEnqCommerStatus());
+		emaster.setEnquiryTimeline(bean.getEnquiryTimeline());
 		service.updateEnquiryMaster(emaster);
 		service.addNewEnquiryDetail(details, null);
 		loadEnquiryDetails(context);

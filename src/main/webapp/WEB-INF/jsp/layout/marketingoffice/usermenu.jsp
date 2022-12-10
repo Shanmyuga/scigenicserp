@@ -49,7 +49,9 @@
               <tr>
                   <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=searchenquiry-flow">Search  Enquiry  </a> </td>
               </tr>
-
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=searchvisit-flow">Search  Visit  </a> </td>
+              </tr>
               <tr>
                   <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addClientOrg-flow">Add Edit Organization</a></td>
               </tr>

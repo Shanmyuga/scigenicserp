@@ -8,26 +8,22 @@
         <webflow:evaluate expression="lookupbean.getDropDownList('enq_types_key')" result="flowScope.enqtypes"/>
         <webflow:evaluate expression="lookupbean.getDropDownList('enq_priority_key')" result="flowScope.enqpriorities"/>
         <webflow:evaluate expression="lookupbean.getDropDownList('enq_categ_key')" result="flowScope.enqCategories"/>
-        <webflow:evaluate expression="lookupbean.getDropDownList('enq_source_key')" result="flowScope.enqSources"/>
         <webflow:evaluate expression="lookupbean.getDropDownList('enqcommerstatus_key')" result="flowScope.enqCommerStatuses"/>
-        <webflow:evaluate expression="lookupbean.getDropDownList('enq_timeline_key')" result="flowScope.enqTimelines"/>
-
     </webflow:on-start>
-    <webflow:view-state id="addlookup" view="enquiry.update">
+    <webflow:view-state id="addlookup" view="enquiry.visit">
 
-
-
-
-        <webflow:transition on="loadcustomers" to="addlookup">
-            <webflow:evaluate expression="enqcont.bind"/>
-            <webflow:evaluate expression="enqcont.selectClientOrg"/>
-        </webflow:transition>
 
         <webflow:transition on="filterReport" to="addlookup">
             <webflow:evaluate expression="lookupcontbean.bind"/>
             <webflow:evaluate expression="lookupcontbean.filterReportByClientOrgName"/>
 
         </webflow:transition>
+
+        <webflow:transition on="loadcustomers" to="addlookup">
+            <webflow:evaluate expression="enqcont.bind"/>
+            <webflow:evaluate expression="enqcont.selectClientOrg"/>
+        </webflow:transition>
+
         <webflow:transition on="loadCity" to="addlookup">
             <webflow:evaluate expression="enqcont.bind"/>
             <webflow:evaluate expression="enqcont.loadCities"/>
@@ -53,10 +49,6 @@
             <webflow:evaluate expression="enqcont.bind"/>
             <webflow:evaluate expression="enqcont.addEnquiryDoc"/>
         </webflow:transition>
-        <webflow:transition on="closeenq" to="addlookup" >
-            <webflow:evaluate expression="enqcont.bind"/>
-            <webflow:evaluate expression="enqcont.closeEnquiry"/>
-        </webflow:transition>
     </webflow:view-state>
 
     <webflow:view-state id="editlookup" view="customer.search">
@@ -69,8 +61,6 @@
             <webflow:evaluate expression="lookupcontbean.bind"/>
             <webflow:evaluate expression="lookupcontbean.addNewCustomer"/>
         </webflow:transition>
-
-
     </webflow:view-state>
 
     <webflow:view-state id="entersearch" view="enq.loadview">

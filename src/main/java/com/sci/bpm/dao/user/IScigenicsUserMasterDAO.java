@@ -144,6 +144,7 @@ public interface IScigenicsUserMasterDAO {
 	 */
 	public ScigenicsUserMaster findUser(String userID);
 	public List selectUserList();
+	public List<ScigenicsUserMaster> selectUserList(String role);
 public void deleteUserStates(Long seqUserId);
 	public ScigenicsRoleMaster selectRole(Long roleId);
 	public List<SciUserStateMasterEntity> getUserStates(Long seqUserId);

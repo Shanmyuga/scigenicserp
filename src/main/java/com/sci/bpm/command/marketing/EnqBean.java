@@ -15,7 +15,7 @@ public class EnqBean implements Serializable {
     private Long enqType;
     private Long seqClientOrgId;
 
-
+    private String enquiryTimeline;
 
     private String customerName;
 
@@ -428,5 +428,11 @@ public class EnqBean implements Serializable {
         this.visitEnqRefCode = visitEnqRefCode;
     }
 
+    public String getEnquiryTimeline() {
+        return enquiryTimeline;
+    }
 
+    public void setEnquiryTimeline(String enquiryTimeline) {
+        this.enquiryTimeline = enquiryTimeline;
+    }
 }

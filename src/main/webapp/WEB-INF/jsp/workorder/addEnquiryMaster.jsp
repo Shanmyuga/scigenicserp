@@ -20,7 +20,7 @@
     <tr>
         <td align="right" class="datatext">Enquiry or Visit</td>
         <td >Actual Enquiry  <form:radiobutton path="enqOrVisit" value="E"  onclick="hideData('showEnquiry')"/> <br/>
-            Prospect Visit <form:radiobutton path="enqOrVisit" value="PV"  onclick="hideData('hideEnquiry')"/>
+            Prospect/Scan Visit <form:radiobutton path="enqOrVisit" value="PV"  onclick="hideData('hideEnquiry')"/>
             Follow up visit for an enquiry <form:radiobutton path="enqOrVisit" value="EV"  onclick="hideData('hideEnquiry')"/>
 
             <span style="color:red;">*</span></td>
@@ -72,17 +72,27 @@
     <form:options items="${enqSources}" itemLabel="lovDescription" itemValue="lovDescription"/>
 </form:select></td>
 </tr>
-
+        <tr>
+            <td align="right" class="datatext">Enquiry Attendee</td>
+            <td ><form:select path="enqAttendee" >
+                <form:options items="${usersmarketing}" itemLabel="userId" itemValue="userId"/>
+            </form:select></td>
+        </tr>
 <tr>
-<td align="right" class="datatext">Enquiry Attendee</td>
-<td ><form:input path="enqAttendee" /><span style="color:red;">*</span></td>
+<td align="right" class="datatext">Enquiry Timeline</td>
+
+
+    <td ><form:select path="enquiryTimeline" >
+        <form:options items="${enqTimelines}" itemLabel="lovDescription" itemValue="lovDescription"/>
+    </form:select><span style="color:red;">*</span></td>
 </tr>
     </c:if>
+    <c:if test="${enquiryVisit == true }">
     <tr>
         <td align="right" class="datatext">Visit Enquiry Reference Code</td>
         <td ><form:input path="visitEnqRefCode" /></td>
     </tr>
-
+    </c:if>
 
 
 

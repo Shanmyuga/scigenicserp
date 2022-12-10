@@ -67,4 +67,9 @@ public class UserServiceImpl implements UserService {
 		return daoimpl.selectUserList();
 	}
 
+	@Override
+	public List<ScigenicsUserMaster> selectUserList(String role) {
+		return daoimpl.selectUserList(role);
+	}
+
 }

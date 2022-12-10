@@ -9,6 +9,7 @@
         <webflow:evaluate expression="lookupbean.getDropDownList('enq_priority_key')" result="flowScope.enqpriorities"/>
         <webflow:evaluate expression="lookupbean.getDropDownList('enq_categ_key')" result="flowScope.enqCategories"/>
         <webflow:evaluate expression="lookupbean.getDropDownList('enqcommerstatus_key')" result="flowScope.enqCommerStatuses"/>
+        <webflow:evaluate expression="lookupbean.getDropDownList('enq_timeline_key')" result="flowScope.enqTimelines"/>
     </webflow:on-start>
     <webflow:view-state id="addlookup" view="enquiry.search">
 

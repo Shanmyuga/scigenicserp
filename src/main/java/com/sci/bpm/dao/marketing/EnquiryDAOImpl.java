@@ -70,6 +70,11 @@ public class EnquiryDAOImpl implements EnquiryDAO {
             whereClause = whereClause + " and m.insertedBy = :insertedBy ";
             parameters.put("insertedBy", command.getInsertedBy());
         }
+
+        if (command.getEnqOrVisit() != null && !"".equals(command.getEnqOrVisit())) {
+            whereClause = whereClause + " and m.enqOrVisit = :enqOrVisit ";
+            parameters.put("enqOrVisit", command.getEnqOrVisit());
+        }
         if (command.getSeqCustomerId() != null) {
             whereClause = whereClause + " and m.sciCustomerMaster.seqCustId = :seqCustomerId ";
             parameters.put("seqCustomerId", command.getSeqCustomerId());

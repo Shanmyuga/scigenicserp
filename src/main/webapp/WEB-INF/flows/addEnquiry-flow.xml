@@ -2,6 +2,7 @@
 <webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="addlookup">
 <webflow:on-start>
         <webflow:evaluate expression="enqcont.setupForm"/>
+    <webflow:evaluate expression="enqcont.getMarketingUsers"/>
     <webflow:evaluate expression="lookupcontbean.setupForm"/>
         <webflow:evaluate expression="lookupbean.getDropDownList('customer_key')" result="flowScope.custstats"/>
     <webflow:evaluate expression="lookupbean.getDropDownList('customer_name_key')" result="flowScope.customerNames"/>
@@ -13,6 +14,7 @@
              <webflow:evaluate expression="lookupbean.getDropDownList('customer_dept_key')" result="flowScope.customerDepts"/>
     <webflow:evaluate expression="lookupbean.getDropDownList('enqcommerstatusinq_key')" result="flowScope.enqCommerInqStatus"/>
     <webflow:evaluate expression="lookupbean.getDropDownList('enqcommerstatus_key')" result="flowScope.enqCommerStatus"/>
+    <webflow:evaluate expression="lookupbean.getDropDownList('enq_timeline_key')" result="flowScope.enqTimelines"/>
     </webflow:on-start>
     <webflow:view-state id="addlookup" view="clientorg.search">
 

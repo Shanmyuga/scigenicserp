@@ -1,5 +1,6 @@
 package com.sci.bpm.dao.user;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -101,6 +102,23 @@ public class UserMasterDAO implements IScigenicsUserMasterDAO {
 		}
 		return users;
 	}
+
+	@Override
+	public List<ScigenicsUserMaster> selectUserList(String role) {
+		// TODO Auto-generated method stub
+		List<ScigenicsUserMaster> users = em.createQuery("from ScigenicsUserMaster  um where um.userStatus = 'Y' ").getResultList();
+		List<ScigenicsUserMaster> filteredUsers = new ArrayList<ScigenicsUserMaster>();
+		for(ScigenicsUserMaster sm:users) {
+
+			boolean isExist = sm.getScigenicsRoleMasters().stream().anyMatch(element -> element.getRoleName().contains(role));
+			if(isExist) {
+				filteredUsers.add(sm);
+			}
+
+		}
+		return filteredUsers;
+	}
+
 
 	@Override
 	public void deleteUserStates(Long seqUserId) {

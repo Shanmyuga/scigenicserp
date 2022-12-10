@@ -26,6 +26,7 @@ public interface UserService {
 	public boolean updateRoleForUser(int roleid[],String seqUserID);
 	
 	public List selectUserList();
+	public List<ScigenicsUserMaster> selectUserList(String role);
 	
 	
 	

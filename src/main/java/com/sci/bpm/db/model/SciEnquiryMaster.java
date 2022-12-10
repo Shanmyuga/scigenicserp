@@ -30,7 +30,7 @@ public class SciEnquiryMaster implements java.io.Serializable {
 	private String enqSource;
 	private String enqStatus;
 	private Long enqPriority;
-	
+	private String enquiryTimeline;
 	private Long enqCategory;
 	
 	private Long customerDept;
@@ -374,5 +374,13 @@ public class SciEnquiryMaster implements java.io.Serializable {
 
 	public void setVisitEnqRefCode(String visitEnqRefCode) {
 		this.visitEnqRefCode = visitEnqRefCode;
+	}
+	@Column(name = "ENQUIRY_TIMELINE", length = 20)
+	public String getEnquiryTimeline() {
+		return enquiryTimeline;
+	}
+
+	public void setEnquiryTimeline(String enquiryTimeline) {
+		this.enquiryTimeline = enquiryTimeline;
 	}
 }

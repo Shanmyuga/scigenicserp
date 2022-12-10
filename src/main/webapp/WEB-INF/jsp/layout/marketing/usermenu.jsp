@@ -55,6 +55,10 @@
               <tr>
                   <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=searchenquiry-flow">Search  Enquiry  </a> </td>
               </tr>
+
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=searchvisit-flow">Search  Visit  </a> </td>
+              </tr>
               <tr>
                   <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewstreqitems-flow">View Stores Request List</a></td>
 

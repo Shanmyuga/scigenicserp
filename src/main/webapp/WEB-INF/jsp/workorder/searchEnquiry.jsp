@@ -118,8 +118,14 @@
 
             </tr>
 <tr>
+    <td>Enquiry or Visit</td>
+    <td  ><form:select path="enqOrVisit" size="1" id="enqOrVisit">
+        <form:option value="E">Enquiry</form:option>
 
-    <td colspan="4"> <input  type="button" value="Search Enquiry" onclick="eventdirect('searchEnquiry')"/> </td>
+    </form:select>
+    </td>
+
+    <td colspan="2"> <input  type="button" value="Search Enquiry" onclick="eventdirect('searchEnquiry')"/> </td>
 </tr>
 
         </table>
@@ -177,8 +183,15 @@
             <display:column sortable="true"  property="enqFollowUpDate" >
 
             </display:column>
+            <display:column sortable="true"  property="enqFollowUpDate" >
 
+            </display:column>
+            <display:column sortable="true" property="enqCommerStatus" title="EnqCommerical Status" >
 
+            </display:column>
+            <display:column sortable="true" property="enquiryTimeline" title="Enq Timeline" >
+
+            </display:column>
             <display:column sortable="true"  property="enqFullCode" >
 
             </display:column>
