@@ -4,16 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import com.sci.bpm.chart.model.ChartModel;
-import com.sci.bpm.db.model.SciAmendmentMaster;
-import com.sci.bpm.db.model.SciCustomerMaster;
-import com.sci.bpm.db.model.SciJdrDocs;
-import com.sci.bpm.db.model.SciWorkorderMaster;
+import com.sci.bpm.db.model.*;
 
 public interface WorkOrderService {
 
 	public void createWorkOrder(SciWorkorderMaster workMaster);
 	
 	public List<SciWorkorderMaster> searchWorkOrder();
+	public List<SciActiveWorkordersReportEntity> searchActiveWorkOrders();
 	public List<SciWorkorderMaster> searchAllWorkOrder();
 public List<SciAmendmentMaster> searchAmend(SciWorkorderMaster master);
 	

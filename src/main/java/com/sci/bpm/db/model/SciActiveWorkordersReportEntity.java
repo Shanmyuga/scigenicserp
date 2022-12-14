@@ -1,11 +1,12 @@
 package com.sci.bpm.db.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "SCI_ACTIVE_WORKORDERS_REPORT", schema = "SCIGENICS")
-public class SciActiveWorkordersReportEntity {
+public class SciActiveWorkordersReportEntity implements Serializable {
     private Long seqWorkId;
     private String jdrDesc;
     private String clientDesc;

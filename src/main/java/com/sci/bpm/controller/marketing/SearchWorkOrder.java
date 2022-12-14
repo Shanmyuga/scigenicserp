@@ -1,13 +1,12 @@
 package com.sci.bpm.controller.marketing;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sci.bpm.chart.model.ChartModel;
 import com.sci.bpm.command.LookupValueBean;
+import com.sci.bpm.db.model.SciActiveWorkordersReportEntity;
 import com.sci.bpm.db.model.SciReportConfiguration;
 import com.sci.bpm.service.lookup.LookUpValueService;
 import org.apache.commons.lang.StringUtils;
@@ -38,6 +37,24 @@ public class SearchWorkOrder extends SciBaseController{
 			builder.append(wm.getJobDesc()+"|");
 		}
 		context.getFlowScope().put("workorderlistNames", builder.toString());
+		return success();
+	}
+
+	public Event searchActiveWorkOrder(RequestContext context) {
+
+		List<SciActiveWorkordersReportEntity> mylist = service.searchActiveWorkOrders();
+		Map<String,String> workordermap = new HashMap<String,String>();
+		for(SciActiveWorkordersReportEntity entity:mylist) {
+			workordermap.put(entity.getShortKey(),entity.getShortKey());
+
+		}
+		Set<String> datalist = workordermap.keySet();
+		List<LookupValueBean> beanList = new ArrayList<LookupValueBean>();
+		for(String data:datalist) {
+			beanList.add(new LookupValueBean(data,data));
+		}
+		context.getFlowScope().put("beanList", beanList);
+
 		return success();
 	}
 	public Event searchAllWorkOrder(RequestContext context) {

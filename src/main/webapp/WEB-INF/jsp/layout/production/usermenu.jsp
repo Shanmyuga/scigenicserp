@@ -80,6 +80,9 @@
                     <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=addProjActual-flow">Project Actual</a> </td>
               </tr>
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=addProjStatus-flow">Project Status</a> </td>
+              </tr>
                 <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=changepass-flow">Change Password</a></td>
               </tr>

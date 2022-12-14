@@ -4,15 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.sci.bpm.chart.model.ChartModel;
+import com.sci.bpm.db.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sci.bpm.dao.marketing.ISciWorkorderMasterDAO;
-import com.sci.bpm.db.model.SciAmendmentMaster;
-import com.sci.bpm.db.model.SciCustomerMaster;
-import com.sci.bpm.db.model.SciJdrDocs;
-import com.sci.bpm.db.model.SciWorkorderMaster;
 
 @Transactional
 @Service
@@ -42,6 +39,11 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 	public List searchWorkOrder() {
 		// TODO Auto-generated method stub
 		return daoimpl.searchWork();
+	}
+
+	@Override
+	public List<SciActiveWorkordersReportEntity> searchActiveWorkOrders() {
+		return daoimpl.searchActiveWorkOrders();
 	}
 
 	public List<SciWorkorderMaster> searchAllWorkOrder() {

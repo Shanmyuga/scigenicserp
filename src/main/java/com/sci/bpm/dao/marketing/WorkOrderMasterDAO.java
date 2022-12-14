@@ -12,16 +12,8 @@ import javax.persistence.Query;
 
 import com.sci.bpm.chart.model.ChartModel;
 import com.sci.bpm.chart.model.DataPoint;
+import com.sci.bpm.db.model.*;
 import org.springframework.stereotype.Repository;
-
-
-import com.sci.bpm.db.model.SciAmendmentMaster;
-import com.sci.bpm.db.model.SciCustomerMaster;
-import com.sci.bpm.db.model.SciInstruDetails;
-import com.sci.bpm.db.model.SciJdrDocs;
-import com.sci.bpm.db.model.SciWorkordDet;
-import com.sci.bpm.db.model.SciWorkordInst;
-import com.sci.bpm.db.model.SciWorkorderMaster;
 
 @Repository
 
@@ -89,6 +81,11 @@ public class WorkOrderMasterDAO implements ISciWorkorderMasterDAO {
 	  
 	  
 		return query.getResultList();
+	}
+
+	@Override
+	public List<SciActiveWorkordersReportEntity> searchActiveWorkOrders() {
+		return em.createQuery("from SciActiveWorkordersReportEntity ").getResultList();
 	}
 
 	public void addWorkOrderwithDetails(Map workbeans) {

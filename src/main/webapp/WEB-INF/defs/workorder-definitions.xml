@@ -479,6 +479,12 @@
      
       <put-attribute name="body" value="/WEB-INF/jsp/workorder/searchworkordersched.jsp" />
   </definition>
+
+    <definition name="workorder.statusview" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/workorder/searchworkorderstatus.jsp" />
+    </definition>
    <definition name="workorder.worksuccess" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
   <put-attribute name="menu" value="usermenu.jsp" />
      
@@ -499,6 +505,12 @@
      
       <put-attribute name="body" value="/WEB-INF/jsp/proj/addProjSchedule.jsp" />
   </definition>
+
+    <definition name="projest.addview" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/proj/addProjectStatus.jsp" />
+    </definition>
    <definition name="projest.addActualview" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
   <put-attribute name="menu" value="usermenu.jsp" />
      

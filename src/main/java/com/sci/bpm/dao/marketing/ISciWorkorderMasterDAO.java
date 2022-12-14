@@ -4,10 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.sci.bpm.chart.model.ChartModel;
-import com.sci.bpm.db.model.SciAmendmentMaster;
-import com.sci.bpm.db.model.SciCustomerMaster;
-import com.sci.bpm.db.model.SciJdrDocs;
-import com.sci.bpm.db.model.SciWorkorderMaster;
+import com.sci.bpm.db.model.*;
 
 /**
  * Interface for SciWorkorderMasterDAO.
@@ -138,7 +135,7 @@ public interface ISciWorkorderMasterDAO {
 	public List<SciWorkorderMaster> searchWork();
 	public List<SciWorkorderMaster> searchAllWork();
 	public List<SciAmendmentMaster> searchAmend(SciWorkorderMaster master);
-	
+	public List<SciActiveWorkordersReportEntity> searchActiveWorkOrders();
 	public void addAmendment(SciAmendmentMaster master);
 	
 	public void addWorkOrderwithDetails(Map workbeans);
