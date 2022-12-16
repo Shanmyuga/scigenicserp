@@ -19,6 +19,9 @@
               <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=searchwork-flow">WO MI</a></td>
               </tr>
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=addProjStatus-flow">Project Status</a> </td>
+              </tr>
                <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewstreqIssue-flow">View Store Issues for a WorkOrder</a></td>
               </tr>

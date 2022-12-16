@@ -23,6 +23,9 @@
                   <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewworkstats-flow">View  WorkOrder Stats at a Glance</a></td>
               </tr>
               <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=addProjStatus-flow">Project Status</a> </td>
+              </tr>
+              <tr>
                   <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addprojprop-flow">Add Project  Proposals</a></td>
               </tr>
               <tr>
