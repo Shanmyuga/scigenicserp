@@ -156,6 +156,49 @@ public class ProjTrackController extends SciBaseController {
         resetForm(context);
         return success();
     }
+    public Event addProjectStatus(RequestContext context) throws Exception {
+
+        ProjectTrackCommand command = (ProjectTrackCommand) getFormObject(context);
+        boolean fail = false;
+        String error = "";
+
+        List totphaseList = (List) context.getFlowScope().get("totphaseslist");
+       String shortKey = (String) context.getFlowScope().get("shortKey");
+        SciWoTrackMaster master = null;
+        if (master == null) {
+            master = new SciWoTrackMaster();
+            BeanUtils.copyProperties(master, command);
+            Long phaseorder = selectPhaseOrder(totphaseList, command
+                    .getPhaseDetail());
+            String phasename = selectPhaseOrdername(totphaseList, command.getSubPhaseName());
+
+
+            master.setPhaseOrder(phaseorder);
+            master.setInsertedBy(getUserPreferences().getUserID());
+            master.setInsertedDate(new Date());
+            master.setEstStdate(command.getSubEstStart());
+            master.setEstEnddate(command.getSubEstEnd());
+        }
+
+
+        master.setUpdatedBy(getUserPreferences().getUserID());
+        master.setUpdatedDate(new Date());
+
+
+        master.setShortKey(shortKey);
+        //master.addWoProjDetail(detail);
+
+
+
+
+            service.addTaskPhase(master);
+
+
+        loadProjectStatusPhases(context);
+
+        resetForm(context);
+        return success();
+    }
 
     public Event loadProjectPhases(RequestContext context) {
         SciWorkorderMaster wmaster = (SciWorkorderMaster) context
@@ -164,7 +207,16 @@ public class ProjTrackController extends SciBaseController {
         context.getFlowScope().put("wophases", phaselist);
         return success();
     }
+    public Event loadProjectStatusPhases(RequestContext context) throws Exception {
+        String shortKey = (String) context
+                .getFlowScope().get("shortKey");
+        ProjectTrackCommand command = (ProjectTrackCommand) getFormObject(context);
 
+        List phaselist = service.loadWoPhasesByShortKey(shortKey,command.getPhaseDetail());
+        System.out.println(phaselist.size());
+        context.getFlowScope().put("wophasesMaster", phaselist);
+        return success();
+    }
     public Event loadProjectCost(RequestContext context) {
         SciWorkorderMaster wmaster = (SciWorkorderMaster) context
                 .getFlowScope().get("selectedwo");
@@ -176,7 +228,10 @@ public class ProjTrackController extends SciBaseController {
     public Event loadSubPhase(RequestContext context) throws Exception {
         ProjectTrackCommand command = (ProjectTrackCommand) getFormObject(context);
         List subphaselist = this.service.loadSubPhase(command.getPhaseDetail());
+        String shortKey = (String) context.getFlowScope().get("shortKey");
         context.getFlowScope().put("subphaselist", subphaselist);
+        context.getFlowScope().put("phaseInfo",command.getPhaseDetail());
+        loadProjectStatusPhases(context);
         return success();
     }
 

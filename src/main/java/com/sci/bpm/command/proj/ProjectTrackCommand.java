@@ -30,7 +30,11 @@ public class ProjectTrackCommand implements Serializable {
 	private Date subEstEnd;
 	private Date subActStdate;
 
+	private String shortKey;
 
+	private String risk;
+
+	private Long completionPercentage;
 
 	private Date subActEnd;
 	private Long phaseidx;
@@ -214,5 +218,29 @@ public class ProjectTrackCommand implements Serializable {
 
 	public void setTaskDate(Date taskDate) {
 		this.taskDate = taskDate;
+	}
+
+	public String getShortKey() {
+		return shortKey;
+	}
+
+	public void setShortKey(String shortKey) {
+		this.shortKey = shortKey;
+	}
+
+	public String getRisk() {
+		return risk;
+	}
+
+	public void setRisk(String risk) {
+		this.risk = risk;
+	}
+
+	public Long getCompletionPercentage() {
+		return completionPercentage;
+	}
+
+	public void setCompletionPercentage(Long completionPercentage) {
+		this.completionPercentage = completionPercentage;
 	}
 }

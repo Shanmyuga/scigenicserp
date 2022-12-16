@@ -24,7 +24,7 @@
 <display:table export="true" sort="list"  pagesize="10" name="beanList" requestURI="springtest.htm"  id="row"  cellpadding="5px" cellspacing="5px"  >
 
 <display:column sortable="true"  title="Select" media="html" >
-<form:radiobutton path="windex"  value="${row.lovName}"/>
+<form:radiobutton path="shortKey"  value="${row.lovName}"/>
 
 </display:column>
 <display:column sortable="true"  property="lovName" >

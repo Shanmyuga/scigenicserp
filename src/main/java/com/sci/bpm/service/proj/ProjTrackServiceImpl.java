@@ -31,6 +31,11 @@ public class ProjTrackServiceImpl implements ProjTrackService {
 		return daoimpl.loadWoPhases(master);
 	}
 
+	@Override
+	public List loadWoPhasesByShortKey(String shortKey, String phaseName) {
+		return daoimpl.loadWoPhasesByShortKey(shortKey,phaseName);
+	}
+
 	public List loadSubPhase(String phaseMaster) {
 		// TODO Auto-generated method stub
 		return daoimpl.loadSubPhase(phaseMaster);

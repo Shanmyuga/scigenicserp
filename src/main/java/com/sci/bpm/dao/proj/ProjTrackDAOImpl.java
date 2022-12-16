@@ -37,6 +37,21 @@ public class ProjTrackDAOImpl implements ProjTrackDao {
 
     }
 
+    @Override
+    public List loadWoPhasesByShortKey(String shortKey, String phaseName) {
+        System.out.println(shortKey+phaseName);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DATE,-14);
+        Date sysdateTime = cal.getTime();
+        Query qry = em
+                .createQuery("from SciWoTrackMaster wm where wm.shortKey =:shortKey and wm.phaseDetail = :phaseDetail and wm.insertedDate > :sysdateTime");
+        qry.setParameter("shortKey", shortKey);
+        qry.setParameter("phaseDetail", phaseName);
+        qry.setParameter("sysdateTime",sysdateTime);
+        return qry.getResultList();
+    }
+
     public List loadSubPhase(String phaseMaster) {
         // TODO Auto-generated method stub
         Query qry = em

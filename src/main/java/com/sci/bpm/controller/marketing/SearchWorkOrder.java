@@ -88,13 +88,14 @@ public class SearchWorkOrder extends SciBaseController{
 
 		try {
 			WorkOrderCommand wrkcommand = (WorkOrderCommand)context.getFlowScope().get("workorderbean");
-			List wlist = (List)context.getFlowScope().get("workorderlist");
+			//List wlist = (List)context.getFlowScope().get("workorderlist");
 
-			SciWorkorderMaster wmaster = (SciWorkorderMaster) wlist.get(Integer.parseInt(wrkcommand.getWindex())-1);
-			wrkcommand.setClientDetails(wmaster.getClientDetails());
-			wrkcommand.setJobDesc(wmaster.getJobDesc());
-			context.getFlowScope().put("workorderbean", wrkcommand);
-			context.getFlowScope().put("selectedwo", wmaster);
+			String shortKey = wrkcommand.getShortKey();
+
+			//wrkcommand.setClientDetails(wmaster.getClientDetails());
+			//wrkcommand.setJobDesc(wmaster.getJobDesc());
+			context.getFlowScope().put("shortKey", shortKey);
+			//context.getFlowScope().put("selectedwo", wmaster);
 
 
 		} catch (Exception e) {

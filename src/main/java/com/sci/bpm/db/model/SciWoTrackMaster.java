@@ -41,6 +41,12 @@ public class SciWoTrackMaster implements java.io.Serializable {
 	private Date insertedDate;
 	private String updatedBy;
 	private Date updatedDate;
+	private String risk;
+
+	private String shortKey;
+
+	private Long completionPercentage;
+
 	private Set<SciWoTrkDetail> sciWoTrkDetails = new HashSet<SciWoTrkDetail>(0);
 	
 	private Long estManhours;
@@ -234,7 +240,34 @@ public class SciWoTrackMaster implements java.io.Serializable {
 		return actManhours;
 	}
 
+	@Column(name = "RISK", nullable = false, length = 500)
+	public String getRisk() {
+		return risk;
+	}
+
+	public void setRisk(String risk) {
+		this.risk = risk;
+	}
+
 	public void setActManhours(Long actManhours) {
 		this.actManhours = actManhours;
+	}
+
+	@Column(name = "SHORT_KEY", nullable = false, length = 100)
+
+	public String getShortKey() {
+		return shortKey;
+	}
+
+	public void setShortKey(String shortKey) {
+		this.shortKey = shortKey;
+	}
+	@Column(name = "COMPLETION_PERCENTAGE", nullable = false, precision = 10, scale = 0)
+	public Long getCompletionPercentage() {
+		return completionPercentage;
+	}
+
+	public void setCompletionPercentage(Long completionPercentage) {
+		this.completionPercentage = completionPercentage;
 	}
 }

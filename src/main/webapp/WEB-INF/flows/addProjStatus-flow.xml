@@ -30,7 +30,7 @@
         </webflow:on-entry>
         <webflow:transition on="addProj" to="addProjsche">
             <webflow:evaluate expression="projtrack.bind"/>
-            <webflow:evaluate expression="projtrack.addProjectEstimationPhase"/>
+            <webflow:evaluate expression="projtrack.addProjectStatus"/>
         </webflow:transition>
           <webflow:transition on="loadsubphase" to="addProjsche">
             <webflow:evaluate expression="projtrack.bind"/>

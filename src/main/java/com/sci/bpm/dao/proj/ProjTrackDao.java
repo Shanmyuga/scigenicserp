@@ -15,7 +15,7 @@ public interface ProjTrackDao {
 	public void addTaskPhase(SciWoTrackMaster master);
 	
 	public List loadWoPhases(SciWorkorderMaster master);
-	
+	public List loadWoPhasesByShortKey(String shortKey,String phaseName);
 	public List loadSubPhase(String phaseMaster);
 	public boolean checkPhaseExist(String phaseName,String subphase,Long seqworkid);
 	public SciWoTrackMaster loadWoMaster(String phasename,Long seqWorkId);

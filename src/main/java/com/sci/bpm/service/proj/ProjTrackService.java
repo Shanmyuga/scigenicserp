@@ -14,7 +14,7 @@ public interface ProjTrackService {
 	public void addTaskPhase(SciWoTrackMaster master);
 
 	public List loadWoPhases(SciWorkorderMaster master);
-
+	public List loadWoPhasesByShortKey(String shortKey,String phaseName);
 	public List loadSubPhase(String phaseMaster);
 
 	public boolean checkPhaseExist(String phaseName, String subphase,

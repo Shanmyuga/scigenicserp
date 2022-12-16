@@ -5,9 +5,9 @@
 <%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
  <div width="787px"  style="float:left;">
 <br>
-<p style="padding-left:20px" align="center"><font color="#0080ff" size="4" face="Baskerville Old Face"> Add Project Schedule </font></p>
-<p style="padding-left:20px" align="center"> Work Order : <c:out value="${workorderbean.jobDesc}" /></p>
-<p style="padding-left:20px" align="center"> Client Details : <c:out value="${workorderbean.clientDetails}" /></p>
+<p style="padding-left:20px" align="center"><font color="#0080ff" size="4" face="Baskerville Old Face"> Add Project Status for this week </font></p>
+<p style="padding-left:20px" align="center"> Work Order : <c:out value="${shortKey}" /></p>
+
 
 <br/>
 <form:form modelAttribute="projschebean" name="projschebean">
@@ -32,11 +32,7 @@
 </tr>
 
 <tr>
-<td align="left" class="datatext">Sub Phase Estimated Start Date</td>
-<td ><form:input path="subEstStart" />
-<a href="javascript:show_calendar('document.projschebean.subEstStart', document.projschebean.subEstStart.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
-<span style="color:red;">*</span>
-</td>
+
 
 <td align="left" class="datatext">Sub Phase Estimated End Date</td>
 <td ><form:input path="subEstEnd" />
@@ -45,13 +41,29 @@
 <span style="color:red;">*</span>
 
 </td></tr>
+    <c:if test="${phaseInfo != 'Marketing-New'}">
 <tr>
-<td align="left"  class="datatext">Estimated Man Hours</td>
-<td ><form:input path="estManhours" />
+<td align="left"  class="datatext">Estimated Percentage Complete</td>
+<td ><form:input path="completionPercentage" /> <span style="color:red;">*</span>
 <td colspan="2">&nbsp;</td>
 
 </tr>
+    </c:if>
+    <c:if test="${phaseInfo == 'Marketing-New'}">
+    <tr>
+        <td align="left"  class="datatext">Marketing numbers</td>
+        <td ><form:input path="estManhours" /> <span style="color:red;">*</span>
+        <td colspan="2">&nbsp;</td>
 
+    </tr>
+    </c:if>
+
+    <tr>
+        <td align="left"  class="datatext">Major risk</td>
+        <td ><form:textarea path="risk"  /><span style="color:red;">*</span>
+        <td colspan="2">&nbsp;</td>
+
+    </tr>
 
 
 <tr>
@@ -75,26 +87,22 @@
 </div>
 <div width="787px" style="float:left;padding-left:10px;padding-right:600px;">
 <p >Master Task Phases</p>
-<display:table export="true" sort="list"   pagesize="10" name="wophases"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
-<display:column sortable="true"  title="Select"  media="html" >
+<display:table export="true" sort="list"   pagesize="10" name="wophasesMaster"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
 
-<form:radiobutton path="phaseidx"  value='${row.seqWoTrkId}' onclick="loadsubtasks(this)"></form:radiobutton>
-
-</display:column>
 <display:column sortable="true"   title="Project Phase"  property="phaseDetail">
 
 </display:column>
 <display:column sortable="true"  title="SubPhase Task"  property="phaseDesc">
 
 </display:column>
-<display:column sortable="true"   title="Estimated Start Date" property="estStdate" >
+<display:column sortable="true"    property="risk" >
 
 </display:column>
 
-<display:column sortable="true"  title="Estimated End Date"  property="estEnddate" >
+<display:column sortable="true"  title="CompletionPercentage"  property="completionPercentage" >
 
 </display:column>
-<display:column sortable="true"  title="Estimated Man hours"  property="estManhours" >
+<display:column sortable="true"  title="Marketing Hours"  property="estManhours" >
 
 </display:column>
 <display:column sortable="true"  title="Updated Date"  property="updatedDate">

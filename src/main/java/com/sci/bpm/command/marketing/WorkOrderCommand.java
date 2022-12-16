@@ -48,6 +48,7 @@ public class WorkOrderCommand implements Serializable {
 
 	private Long seqCustId;
 	private Long seqClientOrgId;
+	private String shortKey;
 	public String getAmendDetails() {
 		return amendDetails;
 	}
@@ -265,5 +266,13 @@ public class WorkOrderCommand implements Serializable {
 
 	public void setSeqClientOrgId(Long seqClientOrgId) {
 		this.seqClientOrgId = seqClientOrgId;
+	}
+
+	public String getShortKey() {
+		return shortKey;
+	}
+
+	public void setShortKey(String shortKey) {
+		this.shortKey = shortKey;
 	}
 }
