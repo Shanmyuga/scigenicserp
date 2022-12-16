@@ -83,8 +83,28 @@ public class SearchWorkOrder extends SciBaseController{
 		setValidator(new WorkOrderValidator());
 		return super.setupForm(context);
 	}
-
 	public Event selectWorder(RequestContext context) {
+
+		try {
+			WorkOrderCommand wrkcommand = (WorkOrderCommand)context.getFlowScope().get("workorderbean");
+			List wlist = (List)context.getFlowScope().get("workorderlist");
+
+			SciWorkorderMaster wmaster = (SciWorkorderMaster) wlist.get(Integer.parseInt(wrkcommand.getWindex())-1);
+			wrkcommand.setClientDetails(wmaster.getClientDetails());
+			wrkcommand.setJobDesc(wmaster.getJobDesc());
+			context.getFlowScope().put("workorderbean", wrkcommand);
+			context.getFlowScope().put("selectedwo", wmaster);
+
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		return success();
+	}
+	public Event selectWorderShortKey(RequestContext context) {
 
 		try {
 			WorkOrderCommand wrkcommand = (WorkOrderCommand)context.getFlowScope().get("workorderbean");

@@ -10,7 +10,7 @@
 
         <webflow:transition on="addProjsche" to="addProjsche">
             <webflow:evaluate expression="searchworkcont.bind"/>
-            <webflow:evaluate expression="searchworkcont.selectWorder"/>
+            <webflow:evaluate expression="searchworkcont.selectWorderShortKey"/>
         </webflow:transition>
     <webflow:transition on="filterReport" to="entersearch">
         <webflow:evaluate expression="searchworkcont.bind"/>
