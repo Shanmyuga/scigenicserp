@@ -159,6 +159,16 @@
         <display:column sortable="true"  title="MI Due Date"  property="matDuedate">
 
         </display:column>
+        <display:column sortable="true"  title="Total Stock"  property="stockQty">
+
+        </display:column>
+        <display:column sortable="true"  title="Assigned Stock"  property="assignedStock" >
+
+        </display:column>
+        <display:column sortable="true"  title="Actual stock"  property="actualStock" >
+
+        </display:column>
+
         <display:column sortable="true"  title="MI Remarks"  property="recommend" >
 
         </display:column>

@@ -21,7 +21,7 @@
     </webflow:view-state>
     
 
-<webflow:view-state id="addProjsche" view="projest.addview">
+<webflow:view-state id="addProjsche" view="projest.addStatusview">
 
 
         <webflow:on-entry>

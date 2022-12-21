@@ -184,6 +184,7 @@ private Date vendorAgreeDate;
 		this.stockMI = (Long)Object21;
 		this.vendorAgreeDate = (Date)object22;
 		this.miForIssue = (String)object23;
+
 	}
 
 	// Property accessors

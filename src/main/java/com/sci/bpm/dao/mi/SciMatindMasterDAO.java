@@ -236,12 +236,30 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		for(Object[]  obj :milist) {
 			finalList.add(new SciMatindMaster(obj[0], obj[1], obj[2], obj[3], obj[4], obj[5], obj[6], obj[7], obj[8], obj[9], obj[10], obj[11], obj[12], obj[13], obj[14], obj[15],obj[16],obj[17],obj[18],obj[19],obj[20],obj[21],obj[22]));
 		}
-				
+
+		Query totalAvailableqry = em.createNativeQuery("select nvl(sum(AVAIL_QTY),0) as availQty from sci_available_materials where matcode = :matcode");
+		Query assigendStoresqry = em.createNativeQuery("select nvl(sum(mat_qty_mod),0) as availQty from sci_matind_master mi where pur_status in (select seq_lov_id from sci_lookup_master lm where lm.lov_name in ('MI_IN_STOCK','MI_APP_STOCKS')) and  exists (select 1 from SCI_STORES_REQUEST st where st.seq_mi_id = mi.seq_mi_id and request_Status = 'N') and matcode = :matcode");
+		for(SciMatindMaster mi:finalList) {
+
+			totalAvailableqry.setParameter("matcode",mi.getMatcode());
+			BigDecimal  count = (BigDecimal )totalAvailableqry.getSingleResult();
+
+			assigendStoresqry.setParameter("matcode",mi.getMatcode());
+			BigDecimal  assignedCount = (BigDecimal )assigendStoresqry.getSingleResult();
+			mi.setAssignedStock(assignedCount.floatValue());
+			mi.setStockQty(count.floatValue());
+			mi.setActualStock(count.floatValue()-assignedCount.floatValue());
+			if(checkdept(mi.getMatcode(), command.getDept())){
+				deptList.add(mi);
+			}
+		}
 		int deptid = 0;
 		if(command.getDept() != null){
-			
-			
+
+
 		for(SciMatindMaster mi:finalList) {
+
+
 			if(checkdept(mi.getMatcode(), command.getDept())){
 				deptList.add(mi);
 			}

@@ -506,7 +506,7 @@
       <put-attribute name="body" value="/WEB-INF/jsp/proj/addProjSchedule.jsp" />
   </definition>
 
-    <definition name="projest.addview" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+    <definition name="projest.addStatusview" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
         <put-attribute name="menu" value="usermenu.jsp" />
 
         <put-attribute name="body" value="/WEB-INF/jsp/proj/addProjectStatus.jsp" />
