@@ -68,7 +68,7 @@ public interface ISciWorkorderMasterDAO {
 	 *             when the operation fails
 	 */
 	public void delete(SciWorkorderMaster entity);
-
+	public void extendMiCloseDate(SciWorkorderMaster wm);
 	/**
 	 * Persist a previously saved SciWorkorderMaster entity and return it or a
 	 * copy of it to the sender. A copy of the SciWorkorderMaster entity
@@ -102,7 +102,7 @@ public interface ISciWorkorderMasterDAO {
 	public SciWorkorderMaster update(SciWorkorderMaster entity);
 
 	public SciWorkorderMaster findById(Long id);
-
+	public List<SciWorkorderMaster> searchWorkOrderMIActive();
 	/**
 	 * Find all SciWorkorderMaster entities with a specific property value.
 	 * 

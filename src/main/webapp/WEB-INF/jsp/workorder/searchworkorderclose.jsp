@@ -33,6 +33,9 @@
 <display:column sortable="true"  property="clientDetails" >
 
 </display:column>
+ <display:column sortable="true"  property="miCloseDate" >
+
+ </display:column>
 <display:column sortable="true"  property="jobDesc" >
 
 </display:column>
@@ -47,10 +50,18 @@
 
 </div>
 <div style="float:left;width:787px;padding: 10px" >
+ <p>
+  <label>New MI Close Date</label>
+ <form:input path="miCloseDate" />
+ <a href="javascript:show_calendar('document.workorderbean.miCloseDate', document.workorderbean.miCloseDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
+ </p>
 <input type="hidden" name="_flowExecutionKey" value='<c:out value="${flowExecutionKey}"/>'>
- <input type="hidden" name="_eventId"  id="_eventId" value="closeWo" > 
+ <input type="hidden" name="_eventId"  id="_eventId" value="closeWo" >
+ <input type="button" name="close" value="Extend MI Date" onclick="javascript:eventD('extendMICloseDate')"/>
  <input type="button" name="close" value="Close Work Order" onclick="javascript:eventD('closeWo')"/>
   <input type="button" name="dormant" value="Inoperative Work Order" onclick="javascript:eventD('dormantWo')"/>
+
+
  </div>
  
 </form:form>

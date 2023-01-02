@@ -2,7 +2,7 @@
 <webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="entersearch">
 <webflow:on-start>
         <webflow:evaluate expression="searchworkcont.setupForm"/>
-        <webflow:evaluate expression="searchworkcont.searchWorkOrder"/>
+        <webflow:evaluate expression="searchworkcont.searchWorkOrderMIActive"/>
         <!-- WARNING: parameter-type is no longer supported.  Use <set name="temp" value="'matstats_key'" type="string" /> to convert the type before the evaluate action. --><webflow:evaluate expression="lookupbean.getDropDownList('matstats_key')" result="flowScope.matstatitems"/>
         <webflow:evaluate expression="lookupbean.getDropDownList('mi_fortype_status')" result="flowScope.matfortypeitems"/>
     </webflow:on-start>

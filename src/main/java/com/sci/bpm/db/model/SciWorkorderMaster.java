@@ -53,6 +53,7 @@ public class SciWorkorderMaster implements java.io.Serializable {
 	private Long deptOwnerLov;
 	private String salesTax;
 	private Date datePerPo;
+	private Date miCloseDate;
 	private String inspectionBy;
 	private String basis;
 	
@@ -451,6 +452,13 @@ private String insertedBy;
 	public void setWoCloseDate(Date woCloseDate) {
 		this.woCloseDate = woCloseDate;
 	}
+	@Temporal(TemporalType.DATE)
+	@Column(name = "MI_CLOSE_DATE", nullable = true, length = 7)
+	public Date getMiCloseDate() {
+		return miCloseDate;
+	}
 
-
+	public void setMiCloseDate(Date miCloseDate) {
+		this.miCloseDate = miCloseDate;
+	}
 }

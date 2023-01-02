@@ -42,6 +42,11 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 	}
 
 	@Override
+	public List<SciWorkorderMaster> searchWorkOrderMIActive() {
+		return daoimpl.searchWorkOrderMIActive();
+	}
+
+	@Override
 	public List<SciActiveWorkordersReportEntity> searchActiveWorkOrders() {
 		return daoimpl.searchActiveWorkOrders();
 	}
@@ -78,6 +83,11 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 	public SciCustomerMaster loadCustomer(Long seqCustID) {
 		// TODO Auto-generated method stub
 		return daoimpl.loadCustomer(seqCustID);
+	}
+
+	@Override
+	public void extendMiCloseDate(SciWorkorderMaster wm) {
+	daoimpl.extendMiCloseDate(wm);
 	}
 
 	public void closeWO(SciWorkorderMaster wm,Long seqLovID) {

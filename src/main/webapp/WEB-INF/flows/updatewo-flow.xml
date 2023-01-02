@@ -17,6 +17,11 @@
                         <webflow:evaluate expression="searchworkcont.closeWO"/>
         </webflow:transition>
 
+    <webflow:transition on="extendMICloseDate" to="entersearch">
+        <webflow:evaluate expression="searchworkcont.bind"/>
+        <webflow:evaluate expression="searchworkcont.selectWorder"/>
+        <webflow:evaluate expression="searchworkcont.extendMICloseDate"/>
+    </webflow:transition>
 
     <webflow:transition on="filterReport" to="entersearch">
         <webflow:evaluate expression="searchworkcont.bind"/>

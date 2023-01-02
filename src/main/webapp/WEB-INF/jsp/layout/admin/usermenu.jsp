@@ -26,6 +26,9 @@
                 <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=report-flow">Add New Scheduled Report</a></td>
               </tr>
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=updatewo-flow">Close WO/ExtendMIDate </a></td>
+              </tr>
                  <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addrole-flow">PO Reports with QC Rejection</a></td>
               </tr>

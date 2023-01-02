@@ -2,6 +2,7 @@ package com.sci.bpm.dao.marketing;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,11 @@ public class WorkOrderMasterDAO implements ISciWorkorderMasterDAO {
 		
 	}
 
+	@Override
+	public void extendMiCloseDate(SciWorkorderMaster wm) {
+		em.merge(wm);
+	}
+
 	public List<SciWorkorderMaster> findAll(int rowStartIdxAndCount) {
 		// TODO Auto-generated method stub
 		return null;
@@ -35,6 +41,14 @@ public class WorkOrderMasterDAO implements ISciWorkorderMasterDAO {
 	public SciWorkorderMaster findById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<SciWorkorderMaster> searchWorkOrderMIActive() {
+		Query query = em.createQuery("from SciWorkorderMaster  wm where wm.miCloseDate > :currentDate");
+
+		query.setParameter("currentDate", new Date());
+		return query.getResultList();
 	}
 
 	public List<SciWorkorderMaster> findByProperty(String propertyName,

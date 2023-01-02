@@ -1,6 +1,7 @@
 package com.sci.bpm.controller.marketing;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -77,6 +78,10 @@ public class WorkOrderController extends SciBaseController {
 			master.setSciCustomerMaster(custmaster);
 			BeanUtils.copyProperties(master, command);
 			master.setWoStatus("Y");
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(new Date());
+			cal.add(Calendar.DATE,30);
+			master.setMiCloseDate(cal.getTime());
 		SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope().get("selectedClientOrg");
 			master.setClientDetails(clientOrgMaster.getOrgName() + " - " + custmaster.getCustomerContact());
 			master.setUpdatedBy(getUserPreferences().getUserID());

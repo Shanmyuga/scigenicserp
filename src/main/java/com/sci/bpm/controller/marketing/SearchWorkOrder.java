@@ -40,6 +40,18 @@ public class SearchWorkOrder extends SciBaseController{
 		return success();
 	}
 
+	public Event searchWorkOrderMIActive(RequestContext context) {
+
+		List<SciWorkorderMaster> mylist = service.searchWorkOrderMIActive();
+		context.getFlowScope().put("workorderlist", mylist);
+		StringBuilder builder = new StringBuilder();
+		for(SciWorkorderMaster wm:mylist) {
+			builder.append(wm.getJobDesc()+"|");
+		}
+		context.getFlowScope().put("workorderlistNames", builder.toString());
+		return success();
+	}
+
 	public Event searchActiveWorkOrder(RequestContext context) {
 
 		List<SciActiveWorkordersReportEntity> mylist = service.searchActiveWorkOrders();
@@ -225,7 +237,20 @@ public class SearchWorkOrder extends SciBaseController{
 		return success();
 
 	}
+	public Event extendMICloseDate(RequestContext context) throws Exception {
+		WorkOrderCommand value = (WorkOrderCommand)getFormObject(context);
+		SciWorkorderMaster wmaster = (SciWorkorderMaster) context
+				.getFlowScope().get("selectedwo");
+		//wmaster.setWoStatus("C");
+		//aster.setWoCloseDate(new Date());
+		wmaster.setMiCloseDate(value.getMiCloseDate());
+		wmaster.setUpdatedBy(getUserPreferences().getUserID());
+		wmaster.setUpdatedDt(new Date());
+		service.closeWO(wmaster,getLookupservice().loadIDData("MI_CLOSED_WO_ORDER"));
 
+		return success();
+
+	}
 
 	public Event dormantWO(RequestContext context) {
 

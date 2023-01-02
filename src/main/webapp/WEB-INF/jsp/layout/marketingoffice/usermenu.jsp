@@ -75,7 +75,7 @@
               </tr>
 
               <tr>
-                <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=updatewo-flow">Close WO </a></td>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=updatewo-flow">Close WO/ExtendMIDate </a></td>
               </tr>
                <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=addProjEstimate-flow">Project Estimate</a> </td>

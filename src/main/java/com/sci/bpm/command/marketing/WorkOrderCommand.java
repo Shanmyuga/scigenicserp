@@ -49,6 +49,8 @@ public class WorkOrderCommand implements Serializable {
 	private Long seqCustId;
 	private Long seqClientOrgId;
 	private String shortKey;
+
+	private Date miCloseDate;
 	public String getAmendDetails() {
 		return amendDetails;
 	}
@@ -274,5 +276,13 @@ public class WorkOrderCommand implements Serializable {
 
 	public void setShortKey(String shortKey) {
 		this.shortKey = shortKey;
+	}
+
+	public Date getMiCloseDate() {
+		return miCloseDate;
+	}
+
+	public void setMiCloseDate(Date miCloseDate) {
+		this.miCloseDate = miCloseDate;
 	}
 }
