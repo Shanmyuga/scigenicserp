@@ -74,6 +74,7 @@
                   <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewweeklystatus-flow">View Weekly Status Report</a></td>
               </tr>
 
+
               <tr>
                   <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=updatewo-flow">Close WO/ExtendMIDate </a></td>
               </tr>
@@ -82,6 +83,9 @@
               </tr>
                 <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=addProjActual-flow">Project Actual</a> </td>
+              </tr>
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=addProjStatus-flow">Project Status</a> </td>
               </tr>
                 <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=addProjCost-flow">Add Estimated Project Cost</a> </td>

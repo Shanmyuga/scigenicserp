@@ -252,7 +252,7 @@ public class TaskServiceImpl implements TaskService {
             for (int idx = 1; idx < mylist.size(); idx++) {
 
                 HashMap<String, Object> rowMap = mylist.get(idx);
-                rowValues.add(((Object) rowMap.get(keys)).toString());
+                rowValues.add(((Object) rowMap.get(keys))!= null?((Object) rowMap.get(keys)).toString():" ");
             }
             tableDynaBean.addDynaBean(new DynaBean(keys, rowValues));
         }

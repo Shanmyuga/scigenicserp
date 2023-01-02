@@ -143,20 +143,22 @@
         <display:column sortable="true"   title="Material Code" property="matcode" >
 
         </display:column>
-        <display:column sortable="true"  title="Material Specs"  property="matSpec" >
-
-        </display:column>
-        <display:column sortable="true"  title="Material Cat"  property="matType" >
-
-        </display:column>
-
-        <display:column sortable="true"  title="Qty"  property="matQty">
-
-        </display:column>
-        <display:column sortable="true"  title="Dimen"  property="matDimesion">
+        <display:column sortable="true"  title="Created Date"  property="insertedDate" >
 
         </display:column>
         <display:column sortable="true"  title="MI Due Date"  property="matDuedate">
+
+        </display:column>
+        <display:column sortable="true"  title="Qty"  property="matQty">
+
+        </display:column>
+        <display:column sortable="true"  title="PO ID"  property="poID" >
+
+        </display:column>
+        <display:column sortable="true"  title="Delivery Due"  property="deliverySchedule" >
+
+        </display:column>
+        <display:column sortable="true"  title="MI Exp Date"  property="vendorAgreeDate" >
 
         </display:column>
         <display:column sortable="true"  title="Total Stock"  property="stockQty">
@@ -165,30 +167,28 @@
         <display:column sortable="true"  title="Assigned Stock"  property="assignedStock" >
 
         </display:column>
-        <display:column sortable="true"  title="Actual stock"  property="actualStock" >
 
-        </display:column>
-
-        <display:column sortable="true"  title="MI Remarks"  property="recommend" >
-
-        </display:column>
-        <display:column sortable="true"  title="PO ID"  property="poID" >
-
-        </display:column>
-
-        <display:column sortable="true"  title="MI Exp Date"  property="vendorAgreeDate" >
+        <display:column sortable="true"  title="Available stock"  property="actualStock" >
 
         </display:column>
         <display:column sortable="true"  title="Stock MI"  property="stockMI" >
 
         </display:column>
-        <display:column sortable="true"  title="Delivery Due"  property="deliverySchedule" >
 
-        </display:column>
         <display:column sortable="true"  title="Created By"  property="insertedBy" >
 
         </display:column>
-        <display:column sortable="true"  title="Created Date"  property="insertedDate" >
+        <display:column sortable="true"  title="Material Specs"  property="matSpec" >
+
+        </display:column>
+        <display:column sortable="true"  title="Material Cat"  property="matType" >
+
+        </display:column>
+        <display:column sortable="true"  title="MI Remarks"  property="recommend" >
+
+        </display:column>
+
+        <display:column sortable="true"  title="Work Order Details"  property="workorderDesc"  >
 
         </display:column>
         <display:column sortable="true"   title="Mat Estimated Cost"   >
@@ -201,18 +201,34 @@
                               maxFractionDigits="2" value="${utcost}" />
         </display:column>
 
-        <display:column sortable="true"  title="Work Order Details"  property="workorderDesc"  >
-
-        </display:column>
         <display:column sortable="true"   title="Material Status"  >
             <c:out value='${lovmap[row.purStatus]}'/>
         </display:column>
+
         <display:column sortable="true"  title="Request Status"  property="requestStatus" >
 
         </display:column>
         <display:column sortable="true"  title="Prod Appr reques"  property="prodRequestStatus" >
 
         </display:column>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <display:column sortable="true"  title="Purch Appr Reques"  property="purchRequestStatus" >
 
         </display:column>
