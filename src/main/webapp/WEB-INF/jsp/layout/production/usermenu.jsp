@@ -13,7 +13,9 @@
               <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=searchwork-flow">WO MI</a></td>
               </tr>
-              
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=searchworkrequest-flow">RAise Stores request</a></td>
+              </tr>
                <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=updatemi-flow">Update MI</a></td>
               </tr>
