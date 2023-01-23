@@ -149,6 +149,10 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 			whereClause = whereClause + " and mt.matDept = :matdept ";
 			parameters.put("matdept", command.getMatDept());
 		}
+		if (command.getDept() != null && !"".equals(command.getDept())) {
+			whereClause = whereClause + " and mt.matDept = :matdept ";
+			parameters.put("matdept", command.getDept());
+		}
 		if (command.getMatCodeselected() != null && !"".equals(command.getMatCodeselected().trim()) ) {
 			whereClause = whereClause + " and m.matcode = :matcodefull ";
 			parameters.put("matcodefull", command.getMatCodeselected());
@@ -249,9 +253,9 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 			mi.setAssignedStock(assignedCount.floatValue());
 			mi.setStockQty(count.floatValue());
 			mi.setActualStock(count.floatValue()-assignedCount.floatValue());
-			if(checkdept(mi.getMatcode(), command.getDept())){
+			/*if(checkdept(mi.getMatcode(), command.getDept())){
 				deptList.add(mi);
-			}
+			}*/
 		}
 		int deptid = 0;
 		if(command.getDept() != null){
@@ -713,10 +717,10 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 	private boolean checkdept(String matcode,String dept) {
 		boolean cond = false;
 		int deptcode = Integer.parseInt(matcode.substring(0,2));
-		if("mech".equals(dept) && deptcode < 80) {
+		if("MECH".equals(dept) && deptcode < 80) {
 			cond = true;
 		}
-		if("elec".equals(dept) && deptcode >= 80) {
+		if("E&I".equals(dept) && deptcode >= 80) {
 			cond = true;
 		}
 		

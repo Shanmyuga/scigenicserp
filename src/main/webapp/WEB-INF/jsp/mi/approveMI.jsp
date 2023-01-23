@@ -14,11 +14,11 @@
 <table  cellspacing="5" cellpadding="5" border="0" >
 <tr>
 <td>Mechanical</td>
-<td><form:radiobutton path="dept" value="mech"  />
+<td><form:radiobutton path="dept" value="MECH"  />
 
 </td>
  <td>Electronics</td>
-<td><form:radiobutton path="dept" value="elec"  />
+<td><form:radiobutton path="dept" value="E&I"  />
 
 </td>
  <td>Work Order</td>
