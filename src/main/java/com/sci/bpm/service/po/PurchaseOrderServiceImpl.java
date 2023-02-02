@@ -218,6 +218,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	}
 
 	@Override
+	public String getWorkOrders(Long seqPurchId) {
+		return dao.getWorkOrders(seqPurchId);
+	}
+
+	@Override
 	public void addPurchaseVendorCost(SciVendorPurchaseCost purchaseCost) {
 		// TODO Auto-generated method stub
 		dao.addPurchaseVendorCost(purchaseCost);

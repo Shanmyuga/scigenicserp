@@ -40,7 +40,7 @@ public interface PurchaseOrderService {
 	public List<SciPurchaseMast> loadPODetails(Long seqVendorID);
 	
 	public List<SciVendorInvoiceMaster> loadbillNo(Long seqVendorID);
-	
+	public String getWorkOrders(Long seqPurchId);
 	public List<SciVendorPurchaseCost> loadQuotations(String matDept,String matCategory);
 	
 	public void addPurchaseVendorCost(SciVendorPurchaseCost purchaseCost);

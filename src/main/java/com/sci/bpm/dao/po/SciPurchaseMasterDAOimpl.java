@@ -163,6 +163,20 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 		return datalist;
 	}
 
+
+	public String getWorkOrders(Long seqPurchId)  {
+
+		String pseqquery = "select  JOB_DESC from WORKORDER_MI_PURCHASE_VIEW p where p.SEQ_PURCH_ID=:SEQ_PURCH_ID";
+		Query qry = em.createNativeQuery(pseqquery);
+
+			qry.setParameter("SEQ_PURCH_ID",seqPurchId);
+			List<String> masterlist = qry.getResultList();
+			String commalist
+					= StringUtils.join(masterlist, ",");
+
+
+		return commalist;
+	}
 	public List searchMatCodePO(POCommand command) {
 
 		String myquery ="Select distinct pm.SEQ_PURCH_ID from  SCI_PURCHASE_MAST pm, SCI_PURCHASE_ITEMDETAILS_ pi, SCI_PURCH_ITEM_MASTER im, SCI_ITEMMI_DETAILS itmi, SCI_MATIND_MASTER mi  where mi.SEQ_MI_ID = itmi.SEQ_MI_ID and " +

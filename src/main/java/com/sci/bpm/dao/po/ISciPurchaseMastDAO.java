@@ -39,7 +39,7 @@ public interface ISciPurchaseMastDAO {
 	 *             when the operation fails
 	 */
 	public void save(SciPurchaseMast entity);
-
+	public String getWorkOrders(Long seqPurchId);
 	/**
 	 * Delete a persistent SciPurchaseMast entity. This operation must be
 	 * performed within the a database transaction context for the entity's data
@@ -47,14 +47,14 @@ public interface ISciPurchaseMastDAO {
 	 * This method uses the
 	 * {@link javax.persistence.EntityManager#remove(Object) EntityManager#delete}
 	 * operation.
-	 * 
+	 *
 	 * <pre>
 	 * EntityManagerHelper.beginTransaction();
 	 * ISciPurchaseMastDAO.delete(entity);
 	 * EntityManagerHelper.commit();
 	 * entity = null;
 	 * </pre>
-	 * 
+	 *
 	 * @param entity
 	 *            SciPurchaseMast entity to delete
 	 * @throws RuntimeException

@@ -19,6 +19,8 @@ import javax.xml.transform.*;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
 
+import com.sci.bpm.command.mi.ComponentDescription;
+import com.sci.bpm.command.mi.DeliveryChallanDTO;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.fop.apps.Fop;
@@ -511,7 +513,10 @@ public class PurchaseOrderController extends SciBaseController {
 		String poxml = new String(outstream.toByteArray());
 		int idlx = poxml.indexOf("<vendorDetails>");
 		poxml = poxml.substring(idlx, poxml.length());
-		
+		if("subcontract".equals(selected.getPurchaseType())){
+			DeliveryChallanDTO dt0 = setupData(selected, itemlist);
+			System.out.println("dto delivery " + dt0.getPurchaseNo());
+		}
 		context.getExternalContext().getSessionMap()
 				.put("poxml", "<purchaseOrder>"+poxml);
 		context.getFlowScope().put("poxml_flow","<purchaseOrder>"+poxml);
@@ -535,6 +540,37 @@ public class PurchaseOrderController extends SciBaseController {
 	}
 
 
+
+  private DeliveryChallanDTO setupData(SciPurchaseMast pm,List<SciPurchItemMaster> itemlist) {
+
+	  DeliveryChallanDTO dto = new DeliveryChallanDTO();
+	  String workorders =  service.getWorkOrders(pm.getSeqPurchId());
+SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+	  dto.setDcDate(dateFormat.format(pm.getPurchaseCreatedDt()));
+	  dto.setDeliveryChellanNo("DC"+pm.getSeqPurchId());
+	  dto.setPurchaseNo(String.valueOf(pm.getSeqPurchId()));
+	  dto.setWorkOrderNo(workorders);
+	  dto.setVendorName(pm.getSciVendorMaster().getVendorName()+ "\n"+ pm.getSciVendorMaster().getVendorAddress());
+	  dto.setVendorAddress(pm.getSciVendorMaster().getVendorAddress());
+
+	  for(SciPurchItemMaster item : itemlist) {
+		  ComponentDescription description = new ComponentDescription();
+		  description.setDescription(item.getItemDescription());
+		  description.setDimension(item.getItemDimen());
+		  description.setFinishMI(String.valueOf(item.getSeaPuritemId()));
+
+		  Float itemunitCost = item.getItemEstimatedCost()
+				  / Float.parseFloat(item.getItemQty());
+
+		  description.setUnitPrice(String.valueOf(itemunitCost));
+		  description.setQuantity(item.getItemQty());
+		  description.setTotalPrice(String.valueOf(item.getItemEstimatedCost()));
+		  System.out.println(item.getRawmis());
+		  dto.addComponentDesc(description);
+	  }
+
+		return dto;
+  }
 	public Event sendEmail( RequestContext context) throws Exception{
 
 		ServletContext externalContext =
