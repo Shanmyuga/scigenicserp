@@ -19,8 +19,13 @@ import javax.xml.transform.*;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
 
+import com.google.gson.Gson;
 import com.sci.bpm.command.mi.ComponentDescription;
 import com.sci.bpm.command.mi.DeliveryChallanDTO;
+import com.sci.bpm.command.mi.RawComponentDesc;
+import com.sci.bpm.db.model.*;
+import com.sci.bpm.service.mi.MaterialIndentService;
+import com.sci.bpm.service.qc.QCService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.fop.apps.Fop;
@@ -42,15 +47,6 @@ import com.sci.bpm.command.mi.MatindCommand;
 import com.sci.bpm.command.po.POCollectionCommand;
 import com.sci.bpm.command.po.POCommand;
 import com.sci.bpm.controller.base.SciBaseController;
-import com.sci.bpm.db.model.SciPaymentDetails;
-import com.sci.bpm.db.model.SciPurchItemMaster;
-import com.sci.bpm.db.model.SciPurchaseItemdetails;
-import com.sci.bpm.db.model.SciPurchaseMast;
-import com.sci.bpm.db.model.SciRejectMaterialAudit;
-import com.sci.bpm.db.model.SciRejectedMaterials;
-import com.sci.bpm.db.model.SciVendorInvoiceMaster;
-import com.sci.bpm.db.model.SciVendorMaster;
-import com.sci.bpm.db.model.SciVendorPurchaseCost;
 import com.sci.bpm.service.po.PurchaseOrderService;
 import com.sci.bpm.service.product.ProductMasterService;
 
@@ -61,6 +57,12 @@ public class PurchaseOrderController extends SciBaseController {
 	private PurchaseOrderService service;
 	@Autowired
 	private ProductMasterService prservice;
+
+	@Autowired
+	private QCService qcService;
+
+	@Autowired
+	private MaterialIndentService materialIndentService;
 
 	@Override
 	public Event setupForm(RequestContext context) throws Exception {
@@ -516,7 +518,12 @@ public class PurchaseOrderController extends SciBaseController {
 		if("subcontract".equals(selected.getPurchaseType())){
 			DeliveryChallanDTO dt0 = setupData(selected, itemlist);
 			System.out.println("dto delivery " + dt0.getPurchaseNo());
+			String dtstring = new Gson().toJson(dt0);
+			System.out.println(dtstring);
+			context.getExternalContext().getSessionMap()
+					.put("dtstring", dtstring);
 		}
+
 		context.getExternalContext().getSessionMap()
 				.put("poxml", "<purchaseOrder>"+poxml);
 		context.getFlowScope().put("poxml_flow","<purchaseOrder>"+poxml);
@@ -565,7 +572,17 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 		  description.setUnitPrice(String.valueOf(itemunitCost));
 		  description.setQuantity(item.getItemQty());
 		  description.setTotalPrice(String.valueOf(item.getItemEstimatedCost()));
-		  System.out.println(item.getRawmis());
+			for(SciItemmiDetails itemmi :item.getSciItemmiDetailses()) {
+				System.out.println("itemmi" + itemmi.getSeqMiId());
+				List<SciRawMIDetails> rawMIDetails = qcService.getRawMidata(itemmi.getSeqMiId());
+				for(SciRawMIDetails rawmi:rawMIDetails) {
+					SciMatindMaster mimaster = materialIndentService.loadMI(rawmi.getSeqRawMIid());
+					RawComponentDesc rawComponentDesc = new RawComponentDesc();
+					rawComponentDesc.setRawMatMi(String.valueOf(mimaster.getSeqMiId()));
+					rawComponentDesc.setRawMatDesc(mimaster.getMatDesc());
+					dto.addRawComponentDesc(rawComponentDesc);
+				}
+			}
 		  dto.addComponentDesc(description);
 	  }
 

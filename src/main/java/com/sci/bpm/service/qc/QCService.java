@@ -3,17 +3,13 @@ package com.sci.bpm.service.qc;
 import java.util.List;
 
 import com.sci.bpm.command.qc.QualityControlBean;
-import com.sci.bpm.db.model.SciQcDocs;
-import com.sci.bpm.db.model.SciQcMaster;
-import com.sci.bpm.db.model.SciQcMiMaster;
-import com.sci.bpm.db.model.SciRejectedMaterials;
-import com.sci.bpm.db.model.SciStoreMaster;
+import com.sci.bpm.db.model.*;
 
 public interface QCService {
 
 	public List loadQCItems(String deptid);
 	public List loadQCItems(String deptid,String approval);
-	
+	public List<SciRawMIDetails>  getRawMidata(Long seqsubcontMiId);
 	public boolean addQCResult(SciQcMaster master,SciStoreMaster stmaster);
 	
 	public boolean updateQCResult(SciQcMiMaster master,SciRejectedMaterials rejected);
