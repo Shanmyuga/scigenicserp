@@ -38,6 +38,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -352,7 +353,7 @@ public class TaskServiceImpl implements TaskService {
                 HSSFCell cell = row1.createCell(j);
                 Object celldata = rowdataMap.get(intkey);
                 if (celldata instanceof String && celldata != null) {
-                    cell.setCellType(Cell.CELL_TYPE_STRING);
+                    cell.setCellType(CellType.STRING);
                     cell.setCellValue(new HSSFRichTextString(celldata.toString()));
                 } else if (celldata instanceof Double && celldata != null) {
                     cell.setCellValue(((Double) celldata).doubleValue());
@@ -361,13 +362,13 @@ public class TaskServiceImpl implements TaskService {
                 } else if (celldata instanceof java.sql.Date && celldata != null) {
                     cell.setCellValue((java.sql.Date) celldata);
                 } else if (celldata instanceof BigInteger && celldata != null) {
-                    cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+                    cell.setCellType(CellType.NUMERIC);
                     cell.setCellValue(((BigInteger) celldata).doubleValue());
                 } else {
                     if (celldata == null) {
                         celldata = new String("");
                     }
-                    cell.setCellType(Cell.CELL_TYPE_STRING);
+                    cell.setCellType(CellType.STRING);
                     cell.setCellValue(new HSSFRichTextString(celldata.toString()));
                 }
 
@@ -402,7 +403,7 @@ public class TaskServiceImpl implements TaskService {
         HSSFCell cell = row.createCell((short) 0);
 
         cell.setCellValue(new Double(100.01).doubleValue());
-        cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+        cell.setCellType(CellType.NUMERIC);
         ByteArrayOutputStream outstream = new ByteArrayOutputStream();
         try {
             wb.write(outstream);

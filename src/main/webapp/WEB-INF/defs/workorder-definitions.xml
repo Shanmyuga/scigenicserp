@@ -235,6 +235,11 @@
      
       <put-attribute name="body" value="/WEB-INF/jsp/po/pdfview.jsp" />
   </definition>
+    <definition name="po.delchallanview"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/po/delChallanview.jsp" />
+    </definition>
     <definition name="po.emailview"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
         <put-attribute name="menu" value="usermenu.jsp" />
 

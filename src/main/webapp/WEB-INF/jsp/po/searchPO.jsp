@@ -193,6 +193,7 @@
                 <div style="padding-left:10px;width:787px;float:left">
                     <input type="button"  value="View Purchase Order " onclick="eventdirect('openPurchaseOrder')"/>
                     <input type="button"  value="Generate Purchase Order PDF" onclick="eventdirect('generatePDF')"/>
+                    <input type="button"  value="Generate Delivery Challan" onclick="eventdirect('generateChallan')"/>
             <c:if test="${APPROVED != null}">
                     <input type="button"  value="Send email Purchase Order PDF" onclick="eventdirect('generateEmail')"/>
             </c:if>

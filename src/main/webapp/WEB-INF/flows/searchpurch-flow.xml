@@ -54,6 +54,11 @@
             <webflow:evaluate expression="pocont.bind"/>
             <webflow:evaluate expression="pocont.viewPOPDF"/>
         </webflow:transition>
+
+    <webflow:transition on="generateChallan" to="viewdelChallanPage">
+        <webflow:evaluate expression="pocont.bind"/>
+        <webflow:evaluate expression="pocont.viewPOPDF"/>
+    </webflow:transition>
     <webflow:transition on="generateEmail" to="entersearch">
         <webflow:evaluate expression="pocont.bind"/>
         <webflow:evaluate expression="pocont.viewPOPDF"/>
@@ -77,6 +82,7 @@
     </webflow:view-state>
 <webflow:view-state id="addPOsucces" view="poadd.success"/>
 <webflow:view-state id="viewPDFPage" view="po.pdfview"/>
+    <webflow:view-state id="viewdelChallanPage" view="po.delchallanview"/>
     <webflow:view-state id="viewEmailPOPage" view="po.emailview"/>
 
     <webflow:exception-handler bean="exceptionresol"/>

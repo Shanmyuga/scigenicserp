@@ -100,6 +100,11 @@ public class QCServiceImpl implements QCService {
 		return null;
 	}
 
+	@Override
+	public List<SciRawMIDetails> getRawMidata(Long seqsubcontMiId) {
+		return dao.getRawMidata(seqsubcontMiId);
+	}
+
 	public List loadAllListDocs(QualityControlBean bean) {
 		// TODO Auto-generated method stub
 		return dao.loadAllListDocs(bean);
