@@ -143,6 +143,10 @@
         <display:column sortable="true"   title="Material Code" property="matcode" >
 
         </display:column>
+
+        <display:column sortable="true"   title="Material Dimension" property="matDimesion" >
+
+        </display:column>
         <display:column sortable="true"  title="Created Date"  property="insertedDate" >
 
         </display:column>
