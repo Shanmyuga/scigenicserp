@@ -276,9 +276,21 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 			
 		
 		System.out.println("myquery " +  finalList.size() );
-		  Query storeqry = em.createQuery("Select m from SciStoresRequest m Join m.sciMiMaster ms where ms.seqMiId =:seqmiid"); 
-	        Query issueqry = em.createQuery("Select m from SciStoreissueMaster m Join m.strequest ms where ms.seqStreqId =:seqStreqId");
+		  Query storeqry = em.createQuery("Select m from SciStoresRequest m Join m.sciMiMaster ms where ms.seqMiId =:seqmiid");
+
+	        Query issueqry = em.createQuery("Select m from SciStoreissueMaster m Join m.strequest ms where ms.sciMiMaster.seqMiId <>:seqMiId and m.sciMiMaster.seqMiId=:seqMiId2");
 	        StringBuffer buffer = new StringBuffer("");
+	        for(SciMatindMaster mi :finalList) {
+	        	issueqry.setParameter("seqMiId",mi.getSeqMiId());
+				issueqry.setParameter("seqMiId2",mi.getSeqMiId());
+	        	List<SciStoreissueMaster> sciStoreissueMasters =  issueqry.getResultList();
+	        	if(sciStoreissueMasters != null && sciStoreissueMasters.size() > 0) {
+	        		SciStoreissueMaster storeissueMaster = sciStoreissueMasters.get(0);
+
+					mi.setIssuedForWork(storeissueMaster.getStrequest().getSciMiMaster().getSciWorkorderMaster().getJobDesc());
+				}
+			}
+
 /*		for(SciMatindMaster mi:finalList) {
 			storeqry.setParameter("seqmiid", mi.getSeqMiId());
 			List stlist = storeqry.getResultList();
@@ -734,7 +746,7 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		
 	}
 
-	public List availableinStores(String matcode) {
+	public List<SciAvailableMaterials> availableinStores(String matcode) {
 		// TODO Auto-generated method stub
 		
 		Query qry = em.createQuery("from SciAvailableMaterials av where av.issuedFully = 'N' and av.matcode = :matcode");
@@ -744,7 +756,7 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		return qry.getResultList();
 	}
 
-	public List checkStockedMI(String matcode, Long lovid) {
+	public List<SciStoresRequest> checkStockedMI(String matcode, Long lovid) {
 		
 		Query qry = em.createQuery("Select distinct mi from SciStoresRequest mi where av.issuedFully = 'N' and av.matcode = :matcode");
 		qry.setParameter("matcode", matcode);

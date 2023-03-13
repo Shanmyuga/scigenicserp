@@ -33,6 +33,7 @@ public class SciMatindMaster implements java.io.Serializable {
 	private String designRef;
 	private String drawingRef;
 	private Long matGroupMiId;
+	private String issuedForWork;
 	
 	private String isGroupMiId;
 	private Date deliverySchedule;
@@ -638,5 +639,14 @@ private Date vendorAgreeDate;
 
 	public void setMiForIssue(String miForIssue) {
 		this.miForIssue = miForIssue;
+	}
+
+	@Transient
+	public String getIssuedForWork() {
+		return issuedForWork;
+	}
+
+	public void setIssuedForWork(String issuedForWork) {
+		this.issuedForWork = issuedForWork;
 	}
 }

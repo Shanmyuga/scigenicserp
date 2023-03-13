@@ -208,7 +208,9 @@
         <display:column sortable="true"   title="Material Status"  >
             <c:out value='${lovmap[row.purStatus]}'/>
         </display:column>
+        <display:column sortable="true"  title="Different Workorder"  property="issuedForWork" >
 
+        </display:column>
         <display:column sortable="true"  title="Request Status"  property="requestStatus" >
 
         </display:column>
