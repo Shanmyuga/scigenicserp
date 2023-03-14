@@ -576,7 +576,7 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 				System.out.println("itemmi" + itemmi.getSeqMiId());
 				List<SciRawMIDetails> rawMIDetails = qcService.getRawMidata(itemmi.getSeqMiId());
 				for(SciRawMIDetails rawmi:rawMIDetails) {
-					SciMatindMaster mimaster = materialIndentService.loadMI(rawmi.getSeqRawMIid());
+					SciMatindMaster mimaster = materialIndentService.loadMI(rawmi.getSeqOrigMIID());
 					RawComponentDesc rawComponentDesc = new RawComponentDesc();
 					rawComponentDesc.setRawMatMi(String.valueOf(mimaster.getSeqMiId()));
 					rawComponentDesc.setRawMatDesc(mimaster.getMatDesc());
