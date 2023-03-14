@@ -87,7 +87,7 @@ public class PurchaseOrderController extends SciBaseController {
 		// purchmaster.setSeqVendorID(vendorDetail.getSeqVendorId());
 		purchmaster.setSciVendorMaster(vendorDetail);
 		purchmaster.setVendorOrder(vendorDetail.getVendorName());
-
+		purchmaster.setDcVendorId(command.getDcSeqVendorId());
 		System.out.println(vendorDetail.getVendorAddress());
 		String vendorcity = "";
 		if(StringUtils.isNotBlank(vendorDetail.getVendorCity())) {

@@ -14,6 +14,7 @@ public class POCommand implements Serializable {
 	private String vendorAddress;
 	private Date purchaseDueDate;
 	private Long seqVendorId;
+	private Long dcSeqVendorId;
 	private Long purchaseStatus;
 	private Long scipurchID;
 	private String specialCondition;
@@ -596,5 +597,13 @@ public class POCommand implements Serializable {
 
 	public void setVendorStatus(String vendorStatus) {
 		this.vendorStatus = vendorStatus;
+	}
+
+	public Long getDcSeqVendorId() {
+		return dcSeqVendorId;
+	}
+
+	public void setDcSeqVendorId(Long dcSeqVendorId) {
+		this.dcSeqVendorId = dcSeqVendorId;
 	}
 }
