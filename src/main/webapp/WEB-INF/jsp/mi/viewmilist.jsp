@@ -116,6 +116,7 @@
 
 
  </tr>
+    <tr>
     <td> Workorder Short Key</td>
     <td>
         <form:select path="workOrderKey" size="1" id="workOrderKey" >
@@ -123,8 +124,12 @@
             <form:options items="${workordershortkey}" />
         </form:select>
     </td>
+        <td>Material description Keyword </td>
+        <td><form:input path="matKeyDesc" id="matKeyDesc"  />
+        </td>
+    </tr>
     <tr>
-<td colspan="2"> <input  type="button" value="Search MI  Items" onclick="eventdirect('searchMI')"/> </td>
+<td colspan="4"> <input  type="button" value="Search MI  Items" onclick="eventdirect('searchMI')"/> </td>
 
 </tr>
  
