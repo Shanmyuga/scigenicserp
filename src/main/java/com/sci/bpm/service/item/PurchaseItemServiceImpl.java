@@ -62,8 +62,14 @@ for(SciMatindMaster m: splitmilist) {
 	
 	public void addRawMI(SciRawMIDetails midetails) {
 		// TODO Auto-generated method stub
+
 		dao.addRawMI(midetails);
 	}
 
-	
+	@Override
+	public void deleteRawMI(Long seqMiId) {
+		dao.deleteRawMI(seqMiId);
+	}
+
+
 }

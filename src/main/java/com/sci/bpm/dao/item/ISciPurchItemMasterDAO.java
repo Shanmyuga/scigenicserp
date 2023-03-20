@@ -123,4 +123,6 @@ public interface ISciPurchItemMasterDAO {
 	public List<SciPurchItemMaster> loadPODetails(SciPurchaseMast master);
 	
 	public void addRawMI(SciRawMIDetails midetails);
+
+	public void deleteRawMI(Long seqMiId);
 }

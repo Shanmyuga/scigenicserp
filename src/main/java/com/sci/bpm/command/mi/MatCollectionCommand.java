@@ -26,6 +26,7 @@ public class MatCollectionCommand implements Serializable {
 	private String preparedBy;
 	private String drawingRef;
 	private String miForType;
+	private String rawMis;
 	private String miPhase;
 	private String matDesc;
 	private String productSpecid;
@@ -97,7 +98,7 @@ public class MatCollectionCommand implements Serializable {
 	public void setMatDesc(String matDesc) {
 		this.matDesc = matDesc;
 	}
-	
+
 	public Date getMatDuedate() throws ParseException {
 	   SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 	   if(!"".equals(matDuedatestr)) {
@@ -185,5 +186,14 @@ public class MatCollectionCommand implements Serializable {
 
 	public void setMiPhase(String miPhase) {
 		this.miPhase = miPhase;
+	}
+
+
+	public String getRawMis() {
+		return rawMis;
+	}
+
+	public void setRawMis(String rawMis) {
+		this.rawMis = rawMis;
 	}
 }

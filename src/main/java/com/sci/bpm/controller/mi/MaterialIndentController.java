@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import com.sci.bpm.command.mi.AdditionalInfoCommand;
 import com.sci.bpm.db.model.*;
+import com.sci.bpm.service.item.PurchaseItemService;
 import com.sci.bpm.service.task.DiskWriterJob;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
@@ -38,7 +39,8 @@ public class MaterialIndentController extends SciBaseController {
     private MaterialIndentService service;
     @Autowired
     private RoleService roleservice;
-
+    @Autowired
+    private PurchaseItemService purchaseItemService;
 
     @Autowired
     private TaskService taskservice;
@@ -594,6 +596,49 @@ public class MaterialIndentController extends SciBaseController {
         command.setDept(dept);
 
 
+        return success();
+    }
+
+    public Event updateRawMi(RequestContext context) throws Exception {
+        MatindCommand command = (MatindCommand) getFormObject(context);
+        String dept = command.getDept();
+        List itemmilist = new ArrayList();
+
+        String[] milist = command.getMiindex();
+        List fullmilist = (List) context.getFlowScope().get("milist");
+
+
+        List<MatCollectionCommand> matslist = command.getMatList();
+
+        for (MatCollectionCommand mcoll : matslist) {
+            if (mcoll.getMatindex() == null) {
+                continue;
+            }
+            int position = Integer.parseInt(mcoll.getMatindex()) - 1;
+            SciMatindMaster master = (SciMatindMaster) fullmilist.get(position);
+            master = service.loadMI(master.getSeqMiId());
+            String rawMis = mcoll.getRawMis();
+            String[] rawmi = StringUtils.split(rawMis,",");
+            purchaseItemService.deleteRawMI(master.getSeqMiId());
+            for(String raw:rawmi) {
+                SciMatindMaster mi = service.loadMI(Long.parseLong(raw));
+                if(mi == null) {
+                    throw  new Exception("Raw mi not a valid MI");
+                }
+                else {
+                    SciRawMIDetails rawMIDetails = new SciRawMIDetails();
+                    rawMIDetails.setSeqOrigMIID(Long.parseLong(raw));
+                    rawMIDetails.setSeqSubContMIID(master.getSeqMiId());
+                    purchaseItemService.addRawMI(rawMIDetails);
+                }
+
+            }
+
+
+
+            mcoll.reset();
+            //seqmilist = seqmilist + master.getSeqMiId() + ",";
+        }
         return success();
     }
 

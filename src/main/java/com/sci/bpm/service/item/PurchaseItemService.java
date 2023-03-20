@@ -16,4 +16,5 @@ public interface PurchaseItemService {
 	public boolean checkRawMI(Long rawMI);
 	
 	public void addRawMI(SciRawMIDetails midetails);
+	public void deleteRawMI(Long seqMiId);
 }

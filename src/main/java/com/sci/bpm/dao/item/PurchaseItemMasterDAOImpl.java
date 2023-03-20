@@ -125,9 +125,16 @@ public class PurchaseItemMasterDAOImpl implements ISciPurchItemMasterDAO {
 	}
 
 	public void addRawMI(SciRawMIDetails midetails) {
-		em.merge(midetails);
+		em.persist(midetails);
 		
 	}
 
-	
+	@Override
+	public void deleteRawMI(Long seqMiId) {
+		Query qry = em.createQuery("delete from SciRawMIDetails rawmi where rawmi.seqSubContMIID=:seqSubContractId");
+		qry.setParameter("seqSubContractId",seqMiId);
+		qry.executeUpdate();
+	}
+
+
 }
