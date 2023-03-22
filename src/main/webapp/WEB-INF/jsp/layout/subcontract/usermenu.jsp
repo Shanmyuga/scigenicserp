@@ -32,6 +32,11 @@
                   <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=workorder-flow">Add Work Order</a></td>
               </tr>
               <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=updaterawmi-flow">Update Raw MI</a></td>
+
+              </tr>
+
+              <tr>
                   <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addVendor-flow">Add/Update Vendor</a></td>
 
               </tr>

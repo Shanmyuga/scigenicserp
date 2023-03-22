@@ -27,6 +27,11 @@ public class MatCollectionCommand implements Serializable {
 	private String drawingRef;
 	private String miForType;
 	private String rawMis;
+	private Float rawMIQty;
+
+	private String rawMatDimension;
+
+	private Long rawSeqVendorId;
 	private String miPhase;
 	private String matDesc;
 	private String productSpecid;
@@ -195,5 +200,29 @@ public class MatCollectionCommand implements Serializable {
 
 	public void setRawMis(String rawMis) {
 		this.rawMis = rawMis;
+	}
+
+	public Float getRawMIQty() {
+		return rawMIQty;
+	}
+
+	public void setRawMIQty(Float rawMIQty) {
+		this.rawMIQty = rawMIQty;
+	}
+
+	public String getRawMatDimension() {
+		return rawMatDimension;
+	}
+
+	public void setRawMatDimension(String rawMatDimension) {
+		this.rawMatDimension = rawMatDimension;
+	}
+
+	public Long getRawSeqVendorId() {
+		return rawSeqVendorId;
+	}
+
+	public void setRawSeqVendorId(Long rawSeqVendorId) {
+		this.rawSeqVendorId = rawSeqVendorId;
 	}
 }

@@ -107,7 +107,7 @@
 
 <display:column sortable="true"  title='Select' media="html"  >
 
-<form:checkbox  path="matList[${row_rowNum%10}].matindex"  value="${row_rowNum}"/>
+<form:radiobutton  path="matList[${row_rowNum%10}].matindex"  value="${row_rowNum}" onclick="eventdirect('loadrawmi')"/>
 
 </display:column>
 
@@ -158,12 +158,33 @@
 
 </display:column>
 
-<display:column sortable="true"  title="Raw MIs"  >
+<display:column sortable="true"  title="Raw MI"  >
 
 <form:input path="matList[${row_rowNum%10}].rawMis" />
 
 </display:column>
 
+ <display:column sortable="true"  title="Raw MI Qty"  >
+
+  <form:input path="matList[${row_rowNum%10}].rawMIQty" />
+
+ </display:column>
+
+
+ <display:column sortable="true"  title="Raw MI Dimension"  >
+
+  <form:input path="matList[${row_rowNum%10}].rawMatDimension" />
+
+ </display:column>
+
+ <display:column sortable="true"  title="Raw MI Vendor"  >
+
+  <form:select path="matList[${row_rowNum%10}].rawSeqVendorId" size="1" >
+   <form:option value="">Select</form:option>
+   <form:options items="${vendorlist}" itemValue="seqVendorId" itemLabel="vendorName"/>
+  </form:select>
+
+ </display:column>
 </display:table>
 </div>
 <input type="hidden" name="_flowExecutionKey"  value="<c:out value="${flowExecutionKey}"/>" />
@@ -172,11 +193,33 @@
 
   <c:if test="${fn:length(milist) > 0}" >
 <div style="padding-left:10px;width:787px;float:left">
+ <display:table export="true" sort="list"   pagesize="10" name="rawMIDetails"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
 
+
+
+  <display:column sortable="true"   title="Sub Contract MI ID"  property="seqSubContMIID">
+
+  </display:column>
+  <display:column sortable="true"   title="Raw MI Code" property="seqOrigMIID" >
+
+  </display:column>
+  <display:column sortable="true"  title="Material Qty"  property="matQty" >
+
+  </display:column>
+  <display:column sortable="true"  title="Material Dimension"  property="matDimension" >
+
+  </display:column>
+
+
+
+ </display:table>
  <input type="button"  value="Update Raw MI " onclick="eventdirect('updateCostMI')"/>
   
  </div>
  </c:if>
+
+
+
  
 </form:form>
 
