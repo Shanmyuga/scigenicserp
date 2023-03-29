@@ -2,6 +2,8 @@ package com.sci.bpm.service.item;
 
 import java.util.List;
 
+import com.sci.bpm.dao.lookup.LookupValueDAO;
+import com.sci.bpm.db.model.SciVendorMaster;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,9 @@ public class PurchaseItemServiceImpl implements PurchaseItemService {
 	
 	@Autowired
 	private ISciMatindMasterDAO matdao;
-	
+
+	@Autowired
+	private LookupValueDAO lookupValueDAO;
 	
 	public void addNewItem(SciPurchItemMaster command,List<SciMatindMaster> milist,List<SciMatindMaster> splitmilist,SciRawMIDetails rmidetails,List<SciMatindMaster> childMiList) {
 		String rawmis  = command.getRawmis();
@@ -73,7 +77,14 @@ for(SciMatindMaster m: splitmilist) {
 
 	@Override
 	public List<SciRawMIDetails> loadRawMI(Long subContractMI) {
-		return dao.loadRawMI(subContractMI);
+		List<SciRawMIDetails> rawMIDetails = dao.loadRawMI(subContractMI);
+		for(SciRawMIDetails rawMIDetails1 : rawMIDetails) {
+			if(rawMIDetails1.getSeqVendorId() != null) {
+				SciVendorMaster vendorMaster = lookupValueDAO.loadVendor(rawMIDetails1.getSeqVendorId());
+				rawMIDetails1.setVendorName(vendorMaster.getVendorName());
+			}
+		}
+		return rawMIDetails;
 	}
 
 

@@ -136,7 +136,7 @@ public class ITemMasterController extends SciBaseController {
 					dbMi.setUpdatedDate(new java.util.Date());
 					dbMi.setCostPercentageRation(command.getMiCostPercentage()[jdx].longValue());
 					BigDecimal cost = new BigDecimal((estcost[idx-1]));
-					dbMi.setUnitCost(new BigDecimal((cost.doubleValue()/dbMi.getMatQty().doubleValue()) * (dbMi.getCostPercentageRation().longValue())/100));
+					dbMi.setUnitCost(new BigDecimal((cost.doubleValue()) * (dbMi.getCostPercentageRation().longValue())/100));
 					dbMi.setPurStatus(getLookupservice().loadIDData("MI_ITEMISED"));
 					updatedMiList.add(dbMi);
 					jdx++;

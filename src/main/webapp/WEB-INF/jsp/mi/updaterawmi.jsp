@@ -210,6 +210,9 @@
 
   </display:column>
 
+  <display:column sortable="true"  title="Vendor Name"  property="vendorName" >
+
+  </display:column>
 
 
  </display:table>
