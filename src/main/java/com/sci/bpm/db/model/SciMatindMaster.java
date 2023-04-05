@@ -71,6 +71,7 @@ private Long stockMI;
 private String miForIssue;
 
 private Date vendorAgreeDate;
+private String poMatAssign;
 	// Constructors
 
 	private Set<SciAddMatInfoDocsEntity> matInfoDocsEntities = new HashSet<SciAddMatInfoDocsEntity>();
@@ -159,7 +160,7 @@ private Date vendorAgreeDate;
 			Object object4, Object object5, Object object6, Object object7,
 			Object object8, Object object9, Object object10, Object object11,
 			Object object12, Object object13, Object object14, Object object15,
-			Object object16,Object object17,Object object18,Object object19,Object object20,Object Object21,Object object22,Object object23) {
+			Object object16,Object object17,Object object18,Object object19,Object object20,Object Object21,Object object22,Object object23,Object object24) {
 		// TODO Auto-generated constructor stub
 		
 		this.seqMiId = (Long) object;
@@ -185,6 +186,7 @@ private Date vendorAgreeDate;
 		this.stockMI = (Long)Object21;
 		this.vendorAgreeDate = (Date)object22;
 		this.miForIssue = (String)object23;
+		this.poMatAssign = (String)object24;
 
 	}
 
@@ -648,5 +650,14 @@ private Date vendorAgreeDate;
 
 	public void setIssuedForWork(String issuedForWork) {
 		this.issuedForWork = issuedForWork;
+	}
+
+	@Column(name = "PO_ASSIGN_ISSUE",length = 250)
+	public String getPoMatAssign() {
+		return poMatAssign;
+	}
+
+	public void setPoMatAssign(String poMatAssign) {
+		this.poMatAssign = poMatAssign;
 	}
 }

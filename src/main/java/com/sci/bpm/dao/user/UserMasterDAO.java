@@ -106,14 +106,21 @@ public class UserMasterDAO implements IScigenicsUserMasterDAO {
 	@Override
 	public List<ScigenicsUserMaster> selectUserList(String role) {
 		// TODO Auto-generated method stub
+		System.out.println(role);
 		List<ScigenicsUserMaster> users = em.createQuery("from ScigenicsUserMaster  um where um.userStatus = 'Y' ").getResultList();
 		List<ScigenicsUserMaster> filteredUsers = new ArrayList<ScigenicsUserMaster>();
 		for(ScigenicsUserMaster sm:users) {
-
-			boolean isExist = sm.getScigenicsRoleMasters().stream().anyMatch(element -> element.getRoleName().contains(role));
+			System.out.println(sm.getUserId());
+			for(ScigenicsRoleMaster rm : sm.getScigenicsRoleMasters()) {
+				if(rm.getRoleName() !=null && rm.getRoleName().equals(role)) {
+					filteredUsers.add(sm);
+					break;
+				}
+			}
+			/*boolean isExist = sm.getScigenicsRoleMasters().stream().anyMatch(element -> element.getRoleName().contains(role));
 			if(isExist) {
 				filteredUsers.add(sm);
-			}
+			}*/
 
 		}
 		return filteredUsers;

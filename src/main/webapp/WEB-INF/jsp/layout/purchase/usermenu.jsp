@@ -65,7 +65,10 @@
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=updatemicost-flow">Update MI Cost</a></td>
                 
               </tr>
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=updatemiassign-flow">Update MI Assign</a></td>
 
+              </tr>
               <tr>
                   <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=updaterawmi-flow">Update Raw MI</a></td>
 

@@ -219,6 +219,9 @@
         <display:column sortable="true"  title="Request Status"  property="requestStatus" >
 
         </display:column>
+        <display:column sortable="true"  title="PO Assign Remarks"  property="poMatAssign" >
+
+        </display:column>
         <display:column sortable="true"  title="Prod Appr reques"  property="prodRequestStatus" >
 
         </display:column>

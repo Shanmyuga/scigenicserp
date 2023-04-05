@@ -131,7 +131,11 @@
      
       <put-attribute name="body" value="/WEB-INF/jsp/mi/updatemicost.jsp" />
   </definition>
+    <definition name="mi.updatemiassign"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
 
+        <put-attribute name="body" value="/WEB-INF/jsp/mi/updatemiassign.jsp" />
+    </definition>
     <definition name="mi.updaterawmi"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
         <put-attribute name="menu" value="usermenu.jsp" />
 

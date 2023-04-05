@@ -600,6 +600,56 @@ public class MaterialIndentController extends SciBaseController {
         return success();
     }
 
+
+    public Event selectAssignMI(RequestContext context) throws Exception {
+        MatindCommand command = (MatindCommand) getFormObject(context);
+        String dept = command.getDept();
+        List itemmilist = new ArrayList();
+
+        String[] milist = command.getMiindex();
+        List fullmilist = (List) context.getFlowScope().get("milist");
+
+
+        List<MatCollectionCommand> matslist = command.getMatList();
+        String seqmilist = "";
+        List<SciMatindMaster> finallst = new ArrayList();
+
+        for (MatCollectionCommand mcoll : matslist) {
+            if (mcoll.getMatindex() == null) {
+                continue;
+            }
+            int position = Integer.parseInt(mcoll.getMatindex()) - 1;
+            SciMatindMaster master = (SciMatindMaster) fullmilist.get(position);
+            master = service.loadMI(master.getSeqMiId());
+            String assignPo = mcoll.getPoMatAssign();
+
+                master.setPoMatAssign(assignPo);
+
+
+            master.setUpdatedBy(getUserPreferences().getUserID());
+            master.setUpdatedDate(new java.util.Date());
+
+
+            finallst.add(master);
+            mcoll.reset();
+            //seqmilist = seqmilist + master.getSeqMiId() + ",";
+        }
+        //seqmilist = seqmilist.substring(0, seqmilist.length() - 1);
+        milist = null;
+
+
+        command.setMiindex(milist);
+
+        service.approveMilist(finallst);
+
+        searchforApproveMI(context);
+        resetForm(context);
+        command = (MatindCommand) getFormObject(context);
+        command.setDept(dept);
+
+
+        return success();
+    }
     public Event loadRawMI(RequestContext context) throws Exception {
 
         MatindCommand command = (MatindCommand) getFormObject(context);

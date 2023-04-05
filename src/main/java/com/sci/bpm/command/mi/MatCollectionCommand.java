@@ -40,6 +40,8 @@ public class MatCollectionCommand implements Serializable {
 	private String matSpec;
 	private String matEstUnitCost;
 	private String miForIssue;
+
+	private String poMatAssign;
 	private List<AdditionalInfoCommand> additionalInfoCommandList = new ArrayList();
 	
 	public String getMatEstUnitCost() {
@@ -224,5 +226,13 @@ public class MatCollectionCommand implements Serializable {
 
 	public void setRawSeqVendorId(Long rawSeqVendorId) {
 		this.rawSeqVendorId = rawSeqVendorId;
+	}
+
+	public String getPoMatAssign() {
+		return poMatAssign;
+	}
+
+	public void setPoMatAssign(String poMatAssign) {
+		this.poMatAssign = poMatAssign;
 	}
 }
