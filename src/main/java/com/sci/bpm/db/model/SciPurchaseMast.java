@@ -66,7 +66,7 @@ public class SciPurchaseMast implements java.io.Serializable {
 
 	private String workOrders;
 	private String vendorStatus;
-	
+	private Long dcVendorId;
 	// Constructors
 
 	@Column(name = "GST_CHARGES", precision = 11, scale = 2)
@@ -528,5 +528,14 @@ private String insertedBy;
 
 	public void setVendorStatus(String vendorStatus) {
 		this.vendorStatus = vendorStatus;
+	}
+
+	@Column(name = "DC_VENDOR_ID", precision = 22, scale = 0)
+	public Long getDcVendorId() {
+		return dcVendorId;
+	}
+
+	public void setDcVendorId(Long dcVendorId) {
+		this.dcVendorId = dcVendorId;
 	}
 }

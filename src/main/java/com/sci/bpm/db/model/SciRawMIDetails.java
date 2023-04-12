@@ -1,12 +1,6 @@
 package com.sci.bpm.db.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 @Entity
@@ -19,6 +13,13 @@ public class SciRawMIDetails implements java.io.Serializable {
 	
 	private Long seqSubContMIID;
 
+	private Float matQty;
+
+	private String matDimension;
+
+	private Long seqVendorId;
+
+	private String vendorName;
 	
 	@Id
 	@Column(name = "SEQ_RAW_MI_ID", unique = true, nullable = false, insertable = true, updatable = true, precision = 9, scale = 0)
@@ -50,7 +51,37 @@ public class SciRawMIDetails implements java.io.Serializable {
 	public void setSeqSubContMIID(Long seqSubContMIID) {
 		this.seqSubContMIID = seqSubContMIID;
 	}
-	
-	
-	
+	@Column(name = "MAT_QTY", unique = false, nullable = true, insertable = true, updatable = true, precision = 9, scale = 2)
+	public Float getMatQty() {
+		return matQty;
+	}
+
+	public void setMatQty(Float matQty) {
+		this.matQty = matQty;
+	}
+	@Column(name="MAT_DIMENSION", length=20)
+	public String getMatDimension() {
+		return matDimension;
+	}
+
+	public void setMatDimension(String matDimension) {
+		this.matDimension = matDimension;
+	}
+	@Column(name = "SEQ_VENDOR_ID", unique = false, nullable = true, insertable = true, updatable = true, precision = 9, scale = 0)
+	public Long getSeqVendorId() {
+		return seqVendorId;
+	}
+
+	public void setSeqVendorId(Long seqVendorId) {
+		this.seqVendorId = seqVendorId;
+	}
+
+	@Transient
+	public String getVendorName() {
+		return vendorName;
+	}
+
+	public void setVendorName(String vendorName) {
+		this.vendorName = vendorName;
+	}
 }

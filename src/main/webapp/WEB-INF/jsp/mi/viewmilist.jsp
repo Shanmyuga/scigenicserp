@@ -116,6 +116,7 @@
 
 
  </tr>
+    <tr>
     <td> Workorder Short Key</td>
     <td>
         <form:select path="workOrderKey" size="1" id="workOrderKey" >
@@ -123,8 +124,12 @@
             <form:options items="${workordershortkey}" />
         </form:select>
     </td>
+        <td>Material description Keyword </td>
+        <td><form:input path="matKeyDesc" id="matKeyDesc"  />
+        </td>
+    </tr>
     <tr>
-<td colspan="2"> <input  type="button" value="Search MI  Items" onclick="eventdirect('searchMI')"/> </td>
+<td colspan="4"> <input  type="button" value="Search MI  Items" onclick="eventdirect('searchMI')"/> </td>
 
 </tr>
  
@@ -141,6 +146,10 @@
 
         </display:column>
         <display:column sortable="true"   title="Material Code" property="matcode" >
+
+        </display:column>
+
+        <display:column sortable="true"   title="Material Dimension" property="matDimesion" >
 
         </display:column>
         <display:column sortable="true"  title="Created Date"  property="insertedDate" >
@@ -204,8 +213,13 @@
         <display:column sortable="true"   title="Material Status"  >
             <c:out value='${lovmap[row.purStatus]}'/>
         </display:column>
+        <display:column sortable="true"  title="Different Workorder"  property="issuedForWork" >
 
+        </display:column>
         <display:column sortable="true"  title="Request Status"  property="requestStatus" >
+
+        </display:column>
+        <display:column sortable="true"  title="PO Assign Remarks"  property="poMatAssign" >
 
         </display:column>
         <display:column sortable="true"  title="Prod Appr reques"  property="prodRequestStatus" >

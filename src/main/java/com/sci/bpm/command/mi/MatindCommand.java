@@ -33,6 +33,7 @@ public class MatindCommand implements Serializable {
 	private Date updatedDate;
 	private String designRef;
 	private String drawingRef;
+	private String matKeyDesc;
 	private String approvalStatus;
 	private Long miindexID;
 	private Long seqScjobIdkey;
@@ -765,5 +766,13 @@ public class MatindCommand implements Serializable {
 
 	public void setWorkOrderKey(String workOrderKey) {
 		this.workOrderKey = workOrderKey;
+	}
+
+	public String getMatKeyDesc() {
+		return matKeyDesc;
+	}
+
+	public void setMatKeyDesc(String matKeyDesc) {
+		this.matKeyDesc = matKeyDesc;
 	}
 }

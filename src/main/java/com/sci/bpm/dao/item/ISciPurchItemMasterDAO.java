@@ -56,6 +56,8 @@ public interface ISciPurchItemMasterDAO {
 	 *             when the operation fails
 	 */
 	public void delete(SciPurchItemMaster entity);
+	public List<SciRawMIDetails> loadRawMI(Long subContractMI);
+
 
 	/**
 	 * Persist a previously saved SciPurchItemMaster entity and return it or a
@@ -123,4 +125,6 @@ public interface ISciPurchItemMasterDAO {
 	public List<SciPurchItemMaster> loadPODetails(SciPurchaseMast master);
 	
 	public void addRawMI(SciRawMIDetails midetails);
+
+	public void deleteRawMI(Long seqMiId,Long rawMiId);
 }

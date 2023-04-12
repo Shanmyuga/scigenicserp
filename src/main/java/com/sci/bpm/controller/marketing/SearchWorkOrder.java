@@ -212,7 +212,20 @@ public class SearchWorkOrder extends SciBaseController{
 		return success();
 	}
 
-
+	public Event filterReportMIActive(RequestContext context) throws Exception {
+		WorkOrderCommand value = (WorkOrderCommand)getFormObject(context);
+		List<SciWorkorderMaster> workorderMasters = service.searchWorkOrderMIActive();
+		List<SciWorkorderMaster> workorderMastersList = null;
+		if(!StringUtils.isEmpty(value.getReportFilter())) {
+			workorderMastersList = selectWorkOrderByJobDesc(workorderMasters, value.getReportFilter());
+		}
+		else {
+			workorderMastersList = service.searchWorkOrderMIActive();
+		}
+		context.getFlowScope().put("workorderlist", workorderMastersList);
+		value.setWindex("");
+		return success();
+	}
 	private List<SciWorkorderMaster> selectWorkOrderByJobDesc(List<SciWorkorderMaster> master,String filter) {
 		System.out.println("filter " + filter);
 		List<SciWorkorderMaster> configurationList = new ArrayList<SciWorkorderMaster>();
@@ -237,6 +250,15 @@ public class SearchWorkOrder extends SciBaseController{
 		return success();
 
 	}
+
+	public WorkOrderService getService() {
+		return service;
+	}
+
+	public void setService(WorkOrderService service) {
+		this.service = service;
+	}
+
 	public Event extendMICloseDate(RequestContext context) throws Exception {
 		WorkOrderCommand value = (WorkOrderCommand)getFormObject(context);
 		SciWorkorderMaster wmaster = (SciWorkorderMaster) context
@@ -246,7 +268,7 @@ public class SearchWorkOrder extends SciBaseController{
 		wmaster.setMiCloseDate(value.getMiCloseDate());
 		wmaster.setUpdatedBy(getUserPreferences().getUserID());
 		wmaster.setUpdatedDt(new Date());
-		service.closeWO(wmaster,getLookupservice().loadIDData("MI_CLOSED_WO_ORDER"));
+		service.closeWO(wmaster,getLookupservice().loadIDData("MI_APPROVED"));
 
 		return success();
 

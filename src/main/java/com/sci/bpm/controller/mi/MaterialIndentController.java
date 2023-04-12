@@ -9,9 +9,11 @@ import java.util.stream.Collectors;
 
 import com.sci.bpm.command.mi.AdditionalInfoCommand;
 import com.sci.bpm.db.model.*;
+import com.sci.bpm.service.item.PurchaseItemService;
 import com.sci.bpm.service.task.DiskWriterJob;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
+import org.bouncycastle.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.stereotype.Controller;
@@ -38,7 +40,8 @@ public class MaterialIndentController extends SciBaseController {
     private MaterialIndentService service;
     @Autowired
     private RoleService roleservice;
-
+    @Autowired
+    private PurchaseItemService purchaseItemService;
 
     @Autowired
     private TaskService taskservice;
@@ -367,9 +370,9 @@ public class MaterialIndentController extends SciBaseController {
         String[] milist = command.getMiindex();
 
         List fullmilist = (List) context.getFlowScope().get("milist");
-       List<SciMatindMaster> selectedList = new ArrayList<SciMatindMaster>();
-       Set<String> matcodes = new HashSet<String>();
-       double totalqty = 0;
+        List<SciMatindMaster> selectedList = new ArrayList<SciMatindMaster>();
+        Set<String> matcodes = new HashSet<String>();
+        double totalqty = 0;
 
         for (int idx = 0; idx < milist.length; idx++) {
             SciMatindMaster mi = (SciMatindMaster) fullmilist.get(Integer.parseInt(milist[idx]) - 1);
@@ -380,22 +383,22 @@ public class MaterialIndentController extends SciBaseController {
             mi.setStockMI(command.getStockMI());
             mi.setUpdatedDate(new Date());
             System.out.println("shanmuga");
-           selectedList.add(mi);
-           matcodes.add(mi.getMatcode());
+            selectedList.add(mi);
+            matcodes.add(mi.getMatcode());
             totalqty = totalqty + mi.getMatQty().doubleValue();
         }
-        if(matcodes.size() > 1) {
+        if (matcodes.size() > 1) {
             throw new Exception("Dont Select multiple different Matcodes");
         }
         String mcd = null;
-        if(matcodes.size() == 1) {
-             mcd =  matcodes.stream().findFirst().get();
+        if (matcodes.size() == 1) {
+            mcd = matcodes.stream().findFirst().get();
 
         }
-        for(SciMatindMaster matindMaster: selectedList) {
+        for (SciMatindMaster matindMaster : selectedList) {
             service.mergeMI(matindMaster);
         }
-        if(!service.checkStockAvailability(mcd,new BigDecimal(totalqty))) {
+        if (!service.checkStockAvailability(mcd, new BigDecimal(totalqty))) {
             throw new Exception("Material not available in stock");
         }
 
@@ -597,6 +600,125 @@ public class MaterialIndentController extends SciBaseController {
         return success();
     }
 
+
+    public Event selectAssignMI(RequestContext context) throws Exception {
+        MatindCommand command = (MatindCommand) getFormObject(context);
+        String dept = command.getDept();
+        List itemmilist = new ArrayList();
+
+        String[] milist = command.getMiindex();
+        List fullmilist = (List) context.getFlowScope().get("milist");
+
+
+        List<MatCollectionCommand> matslist = command.getMatList();
+        String seqmilist = "";
+        List<SciMatindMaster> finallst = new ArrayList();
+
+        for (MatCollectionCommand mcoll : matslist) {
+            if (mcoll.getMatindex() == null) {
+                continue;
+            }
+            int position = Integer.parseInt(mcoll.getMatindex()) - 1;
+            SciMatindMaster master = (SciMatindMaster) fullmilist.get(position);
+            master = service.loadMI(master.getSeqMiId());
+            String assignPo = mcoll.getPoMatAssign();
+
+                master.setPoMatAssign(assignPo);
+
+
+            master.setUpdatedBy(getUserPreferences().getUserID());
+            master.setUpdatedDate(new java.util.Date());
+
+
+            finallst.add(master);
+            mcoll.reset();
+            //seqmilist = seqmilist + master.getSeqMiId() + ",";
+        }
+        //seqmilist = seqmilist.substring(0, seqmilist.length() - 1);
+        milist = null;
+
+
+        command.setMiindex(milist);
+
+        service.approveMilist(finallst);
+
+        searchforApproveMI(context);
+        resetForm(context);
+        command = (MatindCommand) getFormObject(context);
+        command.setDept(dept);
+
+
+        return success();
+    }
+    public Event loadRawMI(RequestContext context) throws Exception {
+
+        MatindCommand command = (MatindCommand) getFormObject(context);
+
+        List fullmilist = (List) context.getFlowScope().get("milist");
+
+
+        List<MatCollectionCommand> matslist = command.getMatList();
+
+        for (MatCollectionCommand mcoll : matslist) {
+            if (mcoll.getMatindex() == null) {
+                continue;
+            }
+            int position = Integer.parseInt(mcoll.getMatindex()) - 1;
+            SciMatindMaster master = (SciMatindMaster) fullmilist.get(position);
+
+
+            List<SciRawMIDetails> rawMIDetails = purchaseItemService.loadRawMI(master.getSeqMiId());
+            context.getFlowScope().put("rawMIDetails",rawMIDetails);
+
+
+            mcoll.reset();
+            //seqmilist = seqmilist + master.getSeqMiId() + ",";
+        }
+        return success();
+    }
+
+    public Event updateRawMi(RequestContext context) throws Exception {
+        MatindCommand command = (MatindCommand) getFormObject(context);
+
+        List fullmilist = (List) context.getFlowScope().get("milist");
+
+
+        List<MatCollectionCommand> matslist = command.getMatList();
+
+        for (MatCollectionCommand mcoll : matslist) {
+            if (mcoll.getMatindex() == null) {
+                continue;
+            }
+            int position = Integer.parseInt(mcoll.getMatindex()) - 1;
+            SciMatindMaster master = (SciMatindMaster) fullmilist.get(position);
+            master = service.loadMI(master.getSeqMiId());
+            String rawMis = mcoll.getRawMis();
+            String[] rawmi = StringUtils.split(rawMis, ",");
+
+            for (String raw : rawmi) {
+                purchaseItemService.deleteRawMI(master.getSeqMiId(),Long.parseLong(raw));
+                SciMatindMaster mi = service.loadMI(Long.parseLong(raw));
+                if (mi == null) {
+                    throw new Exception("Raw mi not a valid MI");
+                } else {
+                    SciRawMIDetails rawMIDetails = new SciRawMIDetails();
+                    rawMIDetails.setSeqOrigMIID(Long.parseLong(raw));
+                    rawMIDetails.setSeqSubContMIID(master.getSeqMiId());
+                    rawMIDetails.setMatQty(mcoll.getRawMIQty());
+                    rawMIDetails.setMatDimension(mcoll.getRawMatDimension());
+                    rawMIDetails.setSeqVendorId(mcoll.getRawSeqVendorId());
+                    purchaseItemService.addRawMI(rawMIDetails);
+                }
+
+            }
+            loadRawMI(context);
+
+            mcoll.reset();
+            //seqmilist = seqmilist + master.getSeqMiId() + ",";
+        }
+        return success();
+    }
+
     public Event selectRejectMI(RequestContext context) throws Exception {
         MatindCommand command = (MatindCommand) getFormObject(context);
         List itemmilist = new ArrayList();
@@ -762,10 +884,10 @@ public class MaterialIndentController extends SciBaseController {
         String catcode = getDelimitedTokens(deptandcode, 0);
         List<SciMatspecMaster> myprodlist = prservice.selectProducts(catcode, dept);
         StringBuilder builder = new StringBuilder("");
-        for(SciMatspecMaster ms:myprodlist) {
-           // str=str.replaceAll("[^a-zA-Z0-9]","");
+        for (SciMatspecMaster ms : myprodlist) {
+            // str=str.replaceAll("[^a-zA-Z0-9]","");
             String speccode = ms.getMaterialSpec();
-            builder.append(speccode.replaceAll("[^a-zA-Z0-9/]"," "));
+            builder.append(speccode.replaceAll("[^a-zA-Z0-9/]", " "));
             builder.append("|");
         }
 
@@ -786,12 +908,12 @@ public class MaterialIndentController extends SciBaseController {
     }
 
 
-    private List<SciMatspecMaster> selectMatspecbyDesc(List<SciMatspecMaster> master,String filter) {
+    private List<SciMatspecMaster> selectMatspecbyDesc(List<SciMatspecMaster> master, String filter) {
         System.out.println("filter " + filter);
         List<SciMatspecMaster> configurationList = new ArrayList<SciMatspecMaster>();
-        for(SciMatspecMaster m : master) {
+        for (SciMatspecMaster m : master) {
             String specCode = m.getMaterialSpec();
-            if(specCode.replaceAll("[^a-zA-Z0-9/]"," ").matches(".*"+filter+".*")) {
+            if (specCode.replaceAll("[^a-zA-Z0-9/]", " ").matches(".*" + filter + ".*")) {
                 configurationList.add(m);
             }
         }
@@ -801,18 +923,18 @@ public class MaterialIndentController extends SciBaseController {
 
     public Event filterReportSpec(RequestContext context) throws Exception {
         MatindCommand command = (MatindCommand) getFormObject(context);
-       List<SciMatspecMaster> sciMatspecMasterList = (List<SciMatspecMaster>) context.getFlowScope().get("unfiltered");
-       String filterspec = command.getReportFilter();
-       if(filterspec != null && !"".equals(filterspec))  {
+        List<SciMatspecMaster> sciMatspecMasterList = (List<SciMatspecMaster>) context.getFlowScope().get("unfiltered");
+        String filterspec = command.getReportFilter();
+        if (filterspec != null && !"".equals(filterspec)) {
             List<SciMatspecMaster> filteredList = selectMatspecbyDesc(sciMatspecMasterList, filterspec);
-            context.getFlowScope().put("openpopup",filteredList);
+            context.getFlowScope().put("openpopup", filteredList);
+        } else {
+            context.getFlowScope().put("openpopup", sciMatspecMasterList);
         }
-       else {
-           context.getFlowScope().put("openpopup",sciMatspecMasterList);
-       }
 
         return success();
     }
+
     public String getDelimitedTokens(String myString, int position) {
         List mylist = new ArrayList<String>();
 
@@ -1065,7 +1187,7 @@ public class MaterialIndentController extends SciBaseController {
                 .getFlowScope().get("selectedwo");
 
         return success();
-	}
+    }
 
     public Event viewMIRecdItems(RequestContext context) throws Exception {
         MatindCommand command = (MatindCommand) getFormObject(context);

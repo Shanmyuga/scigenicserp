@@ -24,6 +24,15 @@ public class PurchaseItemMasterDAOImpl implements ISciPurchItemMasterDAO {
 
 	}
 
+	@Override
+	public List<SciRawMIDetails> loadRawMI(Long subContractMI) {
+Query query =		em.createQuery("from SciRawMIDetails rawmi where rawmi.seqSubContMIID=:seqSubContMIID");
+query.setParameter("seqSubContMIID",subContractMI);
+return query.getResultList();
+
+
+	}
+
 	public List<SciPurchItemMaster> findAll() {
 		// TODO Auto-generated method stub
 		return null;
@@ -125,9 +134,17 @@ public class PurchaseItemMasterDAOImpl implements ISciPurchItemMasterDAO {
 	}
 
 	public void addRawMI(SciRawMIDetails midetails) {
-		em.merge(midetails);
+		em.persist(midetails);
 		
 	}
 
-	
+	@Override
+	public void deleteRawMI(Long seqMiId,Long rawMiId) {
+		Query qry = em.createQuery("delete from SciRawMIDetails rawmi where rawmi.seqSubContMIID=:seqSubContractId and rawmi.seqOrigMIID=:seqOrigMIID");
+		qry.setParameter("seqSubContractId",seqMiId);
+		qry.setParameter("seqOrigMIID",rawMiId);
+		qry.executeUpdate();
+	}
+
+
 }

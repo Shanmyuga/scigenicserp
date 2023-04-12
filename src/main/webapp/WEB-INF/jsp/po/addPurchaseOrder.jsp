@@ -171,7 +171,14 @@
 
 </tr>
 </tr
+    <tr>
 
+        <td align="left" class="datatext">DC Vendor Details(Subcontract)</td>
+        <td ><form:select path="dcSeqVendorId" size="1" id="seqVendorId">
+            <form:option value="">Select</form:option>
+            <form:options items="${vendordata}" itemValue="seqVendorId" itemLabel="vendorName"/>
+        </form:select><span style="color:red;">*</span></td>
+    </tr>
     <tr>
         <td colspan="4"><input type="submit" value="Create New PO" /></td>
 
