@@ -111,7 +111,7 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 
 		if (command.getFromdate() != null) {
 			whereClause = whereClause
-					+ " and m.inserted >= :purchasefromdate ";
+					+ " and m.insertedDate >= :purchasefromdate ";
 			// parameters.add(command.getMatDuedate());
 			parameters.put("purchasefromdate", command.getFromdate());
 		}
