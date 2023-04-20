@@ -26,6 +26,12 @@
         <webflow:evaluate expression="lookupcontbean.filterReport"/>
 
     </webflow:transition>
+
+    <webflow:transition on="downloadReport" to="viewExcelPage">
+        <webflow:evaluate expression="lookupcontbean.bind"/>
+        <webflow:evaluate expression="lookupcontbean.downloadSelectedReport"/>
+
+    </webflow:transition>
     </webflow:view-state>
 <webflow:view-state id="addsuccess" view="run.schedule.add">
 
@@ -34,5 +40,7 @@
 
     </webflow:transition>
 </webflow:view-state>
+
+    <webflow:view-state id="viewExcelPage" view="po.excelview"/>
 <webflow:exception-handler bean="exceptionresol"/>
 </webflow:flow>

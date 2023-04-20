@@ -106,13 +106,23 @@
 		<servlet-name>POEmailProcessorServlet</servlet-name>
 		<servlet-class>com.sci.bpm.controller.po.POEmailProcessorServlet</servlet-class>
 	</servlet>
-
+	<servlet>
+		<description>This is the description of my J2EE component</description>
+		<display-name>This is the display name of my J2EE component</display-name>
+		<servlet-name>ExcelProcessorServlet</servlet-name>
+		<servlet-class>com.sci.bpm.controller.lookup.ExcelProcessorServlet</servlet-class>
+	</servlet>
 	<!--
 		Map all /resources requests to the Resource Servlet for handling
 	-->
 	<servlet-mapping>
 		<servlet-name>Resource Servlet</servlet-name>
 		<url-pattern>/resources/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ExcelProcessorServlet</servlet-name>
+		<url-pattern>/servlet/excelreportservlet</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>springtest</servlet-name>

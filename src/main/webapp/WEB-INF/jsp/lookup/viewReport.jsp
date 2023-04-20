@@ -77,6 +77,7 @@ Data</font></p>
 
 
     <p><input type="button" value="View Report" onclick="eventdirect('viewSelectedReport')"/></p>
+    <p><input type="button" value="Download Report" onclick="eventdirect('downloadReport')"/></p>
 </c:if>
 
 </div>
