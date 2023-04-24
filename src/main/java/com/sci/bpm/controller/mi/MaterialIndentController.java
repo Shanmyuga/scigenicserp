@@ -705,8 +705,15 @@ public class MaterialIndentController extends SciBaseController {
                     rawMIDetails.setSeqOrigMIID(Long.parseLong(raw));
                     rawMIDetails.setSeqSubContMIID(master.getSeqMiId());
                     rawMIDetails.setMatQty(mcoll.getRawMIQty());
+                    rawMIDetails.setMoc(mcoll.getMoc());
+                    rawMIDetails.setRemarks(mcoll.getRemarks());
+                    rawMIDetails.setUnitPrice(mcoll.getUnitPrice());
+                    rawMIDetails.setRawMaterialDesc(mcoll.getRawMaterialDesc());
+                    rawMIDetails.setUnitOfMeasure(mcoll.getUnitOfMeasure());
                     rawMIDetails.setMatDimension(mcoll.getRawMatDimension());
                     rawMIDetails.setSeqVendorId(mcoll.getRawSeqVendorId());
+                    rawMIDetails.setRetQty(mcoll.getRetQty());
+                    rawMIDetails.setRetDim(mcoll.getRetDim());
                     purchaseItemService.addRawMI(rawMIDetails);
                 }
 
