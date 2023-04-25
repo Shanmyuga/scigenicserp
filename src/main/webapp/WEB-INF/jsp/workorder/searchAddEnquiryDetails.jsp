@@ -350,6 +350,7 @@
 
             </table>
             <input type="button"  value="Add Enquiry Docs" onclick="eventdirect('addEnquirydoc')"/>
+            <input type="button" value="Close Enquiry" onclick="eventdirect('closeenq')"/>
 
         </c:if>
         </c:if>
