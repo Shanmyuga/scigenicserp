@@ -112,7 +112,7 @@ public class TestPDFServlet extends HttpServlet {
 			
 	    //Setup Transformer
 			
-	    Source xsltSrc = new StreamSource(new File(getServletContext().getRealPath("/")+"/xslt/po_template.xsl"));
+	    Source xsltSrc = new StreamSource(new File(getServletContext().getRealPath("/")+"/xslt/dc_template.xsl"));
 	    Transformer transformer = tFactory.newTransformer(xsltSrc);
 //transformer.setURIResolver(uriResolver);
 	    //Make sure the XSL transformation's result is piped through to FOP
