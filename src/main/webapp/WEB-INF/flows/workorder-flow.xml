@@ -5,6 +5,7 @@
 <!-- WARNING: parameter-type is no longer supported.  Use <set name="temp" value="'inpection_key'" type="string" /> to convert the type before the evaluate action. --><webflow:evaluate expression="lookupbean.getDropDownList('inpection_key')" result="flowScope.inspitems"/>
 <!-- WARNING: parameter-type is no longer supported.  Use <set name="temp" value="'worktype_key'" type="string" /> to convert the type before the evaluate action. --><webflow:evaluate expression="lookupbean.getDropDownList('worktype_key')" result="flowScope.workorderitems"/>
 <!-- WARNING: parameter-type is no longer supported.  Use <set name="temp" value="'customer_key'" type="string" /> to convert the type before the evaluate action. --><webflow:evaluate expression="lookupbean.getDropDownList('customer_key')" result="flowScope.customerData"/>
+    <!-- WARNING: parameter-type is no longer supported.  Use <set name="temp" value="'customer_key'" type="string" /> to convert the type before the evaluate action. --><webflow:evaluate expression="lookupbean.getDropDownList('short_wo_key')" result="flowScope.shortkeydata"/>
     <webflow:evaluate expression="lookupcontbean.loadOrgNames"/>
     </webflow:on-start>
 <webflow:view-state id="addworkflow" view="workorder.display">

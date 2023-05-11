@@ -26,5 +26,6 @@ public interface EnquiryService {
 	public void addEnquiryDocMaster(SciEnquiryDocs enquiryDocs);
 	public List loadEnquiryDocs(SciEnquiryMaster enquiryMaster);
 	public List loadCustomerEnquiries(Long seqCustomerId);
+	public Boolean checkEnquiryCodeExists(String enqCode);
 	public Long findEnqCode(String orgCode,String stateCode,String customerCode);
 }

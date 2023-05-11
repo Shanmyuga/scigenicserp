@@ -40,8 +40,18 @@
 <form:option value="Stock">Stock WorkOrder</form:option>
 <form:option value="ShopFloor Work">ShopFloor WorkOrder</form:option>
 <form:option value="Sub contractWork">SubContract WorkOrder</form:option>
+    <form:option value="Installation">Installation WorkOrder</form:option>
 </form:select><span style="color:red;">*</span></td>
 </tr>
+<c:if    test="${workorderbean.wordOrderType == 'Installation'}">
+    <tr>
+        <td align="right" class="datatext">Installation Workorder Short Key</td>
+        <td ><form:select path="installationWoShortkey"  >
+
+            <form:options items="${shortkeydata}" itemLabel="lovName" itemValue="lovName"/>
+        </form:select><span style="color:red;">*</span></td>
+    </tr>
+</c:if>
 <tr>
 <td align="right" class="datatext">PO Number</td>
 <td ><form:input path="poNumber" /></td>

@@ -51,6 +51,7 @@ public class WorkOrderCommand implements Serializable {
 	private String shortKey;
 
 	private Date miCloseDate;
+	private String installationWoShortkey;
 	public String getAmendDetails() {
 		return amendDetails;
 	}
@@ -284,5 +285,13 @@ public class WorkOrderCommand implements Serializable {
 
 	public void setMiCloseDate(Date miCloseDate) {
 		this.miCloseDate = miCloseDate;
+	}
+
+	public String getInstallationWoShortkey() {
+		return installationWoShortkey;
+	}
+
+	public void setInstallationWoShortkey(String installationWoShortkey) {
+		this.installationWoShortkey = installationWoShortkey;
 	}
 }

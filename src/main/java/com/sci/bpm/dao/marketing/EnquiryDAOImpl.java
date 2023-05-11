@@ -192,6 +192,20 @@ wquery.setMaxResults(1000);
         return qry.getResultList();
     }
 
+    @Override
+    public Boolean checkEnquiryCodeExists(String enqCode) {
+          Query qry = em.createQuery("from SciEnquiryMaster em where em.enqFullCode =:enqCode");
+        qry.setParameter("enqCode",enqCode);;
+
+        List<SciEnquiryMaster> enquiryMasters =  qry.getResultList();
+        if(enquiryMasters.size() >0) {
+            return true;
+        }
+        else  {
+            return false;
+        }
+    }
+
 
     @Override
     public Long findEnqCode(String orgCode, String stateCode, String customerCode) {

@@ -116,6 +116,11 @@ public class EnquiryServiceImpl implements EnquiryService {
 		return dao.loadCustomerEnquiries(seqCustomerId);
 	}
 
+	@Override
+	public Boolean checkEnquiryCodeExists(String enqCode) {
+		return dao.checkEnquiryCodeExists(enqCode);
+	}
+
 	public Long findEnqCode(String orgCode, String stateCode, String customerCode) {
 		return dao.findEnqCode(orgCode,stateCode,customerCode);
 	}
