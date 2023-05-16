@@ -157,10 +157,13 @@ public class EnquiryController extends SciBaseController {
 
 			throw new Exception("Visit ref code cannot be null");
 		}
-
-		if(!service.checkEnquiryCodeExists(emaster.getVisitEnqRefCode())) {
-			throw new Exception("Not a valid enquiry code");
+		if("EV".equals(emaster.getEnqOrVisit()) && !StringUtils.isBlank(emaster.getVisitEnqRefCode())  ) {
+			if(!service.checkEnquiryCodeExists(emaster.getVisitEnqRefCode())) {
+				throw new Exception("Not a valid enquiry code");
+			}
 		}
+
+
 		Long enqCode = service.findEnqCode(clientOrgMaster.getOrgCode(),cmaster.getCustomerCityCode(),cmaster.getCustomerCode());
 		emaster.setEnquiryCode(enqCode);
 		emaster.setEnqStateCityCode(cmaster.getCustomerCityCode());

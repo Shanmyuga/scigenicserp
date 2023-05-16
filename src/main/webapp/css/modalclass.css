@@ -36,3 +36,12 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+.reportFilter{
+    position: absolute;
+    width: 100%;
+    z-index: 9;
+    color: #f00;
+    background: #87ceeb;
+}
+.ui-front { z-index: 9999;background: #2271A0 }

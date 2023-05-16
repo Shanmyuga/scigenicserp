@@ -19,7 +19,7 @@
             <tr><td colspan="2">
                 <label for="tags">Select Organization by Name: </label></td>  </tr>
             <tr><td>
-                <form:input path="reportFilter" size="100" /></td><td>
+                <form:input path="reportFilter" size="100"  cssStyle="background: #87ceeb"/></td><td>
                 <input type="button" value="Filter Client" onclick="eventdirect('filterReport')"/></td>  </tr>
 
         </table>
