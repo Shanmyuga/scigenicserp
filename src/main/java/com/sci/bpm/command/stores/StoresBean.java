@@ -20,7 +20,7 @@ public class StoresBean implements Serializable {
 	private Long currentCnt;
 	private Date issuedDate;
 	private BigDecimal issueCnt;
-	
+	private String shortKey;
 	
 	private String issueDimension;
 	private String remarks;
@@ -504,5 +504,21 @@ public class StoresBean implements Serializable {
 
 	public void setAvailableDimension(String availableDimension) {
 		this.availableDimension = availableDimension;
+	}
+
+	public String getShortKey() {
+		return shortKey;
+	}
+
+	public void setShortKey(String shortKey) {
+		this.shortKey = shortKey;
+	}
+
+	public String getMatCode() {
+		return matCode;
+	}
+
+	public void setMatCode(String matCode) {
+		this.matCode = matCode;
 	}
 }
