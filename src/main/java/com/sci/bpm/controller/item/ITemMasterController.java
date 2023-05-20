@@ -91,6 +91,7 @@ public class ITemMasterController extends SciBaseController {
 				
 			}
 			m.setUnitCost(new BigDecimal(estcost[idx]));
+
 			m.setMatQty(estquant);
 			if(m.getUnitCost().floatValue() <= 0) {
 				throw new Exception("Estimated Cost Cannot be null");

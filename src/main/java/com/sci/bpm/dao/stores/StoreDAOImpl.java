@@ -472,7 +472,7 @@ public class StoreDAOImpl implements StoresDAO {
 			parameters.put("wm", command.getSeqWorkId());
 		}
 
-		if (command.getShortKey() != null && !"".equals(command.getSeqWorkId() )) {
+		if (command.getShortKey() != null && !"0".equals(command.getShortKey() )) {
 			whereClause = whereClause + " and m.strequest.sciMiMaster.sciWorkorderMaster.seqWorkId in  (Select seqWorkId from ActiveWorkOrderView where shortKey = :shortKey)";
 			parameters.put("shortKey", command.getShortKey());
 		}
