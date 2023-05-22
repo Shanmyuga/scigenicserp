@@ -72,6 +72,7 @@ private String miForIssue;
 
 private Date vendorAgreeDate;
 private String poMatAssign;
+private String matcodeAddInfo;
 	// Constructors
 
 	private Set<SciAddMatInfoDocsEntity> matInfoDocsEntities = new HashSet<SciAddMatInfoDocsEntity>();
@@ -659,5 +660,13 @@ private String poMatAssign;
 
 	public void setPoMatAssign(String poMatAssign) {
 		this.poMatAssign = poMatAssign;
+	}
+	@Column(name = "MATCODE_ADDINFO",length = 250)
+	public String getMatcodeAddInfo() {
+		return matcodeAddInfo;
+	}
+
+	public void setMatcodeAddInfo(String matcodeAddInfo) {
+		this.matcodeAddInfo = matcodeAddInfo;
 	}
 }

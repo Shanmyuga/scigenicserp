@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLOutput;
 import java.sql.Time;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -90,7 +91,10 @@ public class MaterialIndentController extends SciBaseController {
                 if (master.getMiForType() == null || "".equals(master.getMiForType())) {
                     throw new Exception();
                 }
+                DecimalFormat df = new DecimalFormat();
+                df.setMaximumFractionDigits(2);
                 for (AdditionalInfoCommand additionalInfoCommand : mi.getAdditionalInfoCommandList()) {
+
                     if (!additionalInfoCommand.getAdditionalInfoType().equals("File")) {
                         SciMiMaterialAddinfoEntity entity = new SciMiMaterialAddinfoEntity();
                         entity.setSeqMiId(master);
@@ -105,6 +109,30 @@ public class MaterialIndentController extends SciBaseController {
                         if (entity.getAddInfoValue() != null && !StringUtils.isBlank(entity.getAddInfoValue())) {
                             master.getMatInfos().add(entity);
                         }
+
+                        if(additionalInfoCommand.getAdditionalInfoLabel().startsWith("REF") &&  !additionalInfoCommand.getAdditionalInfoLabel().startsWith("REF_SIZE")) {
+                            if(StringUtils.isBlank(master.getMatcodeAddInfo())) {
+                                master.setMatcodeAddInfo(additionalInfoCommand.getAdditionalInfoLabel()+":"+additionalInfoCommand.getAdditionalDetailText()+";");
+                            }
+                            else  {
+                                master.setMatcodeAddInfo(master.getMatcodeAddInfo()+";"+additionalInfoCommand.getAdditionalInfoLabel()+":"+additionalInfoCommand.getAdditionalDetailText()+";");
+                            }
+                        }
+
+                        if(additionalInfoCommand.getAdditionalInfoLabel().startsWith("REF_SIZE") ) {
+                            float flt = Float.parseFloat(additionalInfoCommand.getAdditionalDetailText());
+                            if(StringUtils.isBlank(master.getMatcodeAddInfo())) {
+
+
+
+
+                                master.setMatcodeAddInfo(additionalInfoCommand.getAdditionalInfoLabel()+":"+df.format(flt)+";");
+                            }
+                            else  {
+                                master.setMatcodeAddInfo(master.getMatcodeAddInfo()+";"+additionalInfoCommand.getAdditionalInfoLabel()+":"+df.format(flt)+";");
+                            }
+                        }
+
                     } else {
                         if (additionalInfoCommand.getOriginalDocName() != null) {
                             SciAddMatInfoDocsEntity addMatInfoDocsEntity = new SciAddMatInfoDocsEntity();

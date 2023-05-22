@@ -44,6 +44,7 @@ public class MatindCommand implements Serializable {
 	private String rowindex;
 	private Long seqprodID;
 	private String strapproval;
+	private String removeMachnined;
 	private String remarks;
 	private String miPhase;
 	private List<MatCollectionCommand> matList = new ArrayList();
@@ -76,7 +77,7 @@ public class MatindCommand implements Serializable {
 	private String isGroupMiId;
 	private Long matGroupMiId;
 	private String workOrderKey;
-
+	private String matcodeAddInfo;
 	public Long getSeqWorkorderId() {
 		return seqWorkorderId;
 	}
@@ -774,5 +775,21 @@ public class MatindCommand implements Serializable {
 
 	public void setMatKeyDesc(String matKeyDesc) {
 		this.matKeyDesc = matKeyDesc;
+	}
+
+	public String getMatcodeAddInfo() {
+		return matcodeAddInfo;
+	}
+
+	public void setMatcodeAddInfo(String matcodeAddInfo) {
+		this.matcodeAddInfo = matcodeAddInfo;
+	}
+
+	public String getRemoveMachnined() {
+		return removeMachnined;
+	}
+
+	public void setRemoveMachnined(String removeMachnined) {
+		this.removeMachnined = removeMachnined;
 	}
 }

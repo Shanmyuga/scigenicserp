@@ -44,8 +44,8 @@
 
   </c:forEach>
  </c:if>
- <c:if test="${addtionalInfoMessage.datatype == 'DropDown'}">
-  <form:select path="additionalInfoCommandList[${rowcnt.index}].additionalDetailText" size="1" id="productCat" >
+ <c:if test="${addtionalInfoMessage.datatype == 'DropDown'}" >
+  <form:select path="additionalInfoCommandList[${rowcnt.index}].additionalDetailText" size="1" id="productCat"  >
 <form:option value="">Select</form:option>
 
 
