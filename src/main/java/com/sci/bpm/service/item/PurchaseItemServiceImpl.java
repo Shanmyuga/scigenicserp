@@ -79,8 +79,8 @@ for(SciMatindMaster m: splitmilist) {
 	public List<SciRawMIDetails> loadRawMI(Long subContractMI) {
 		List<SciRawMIDetails> rawMIDetails = dao.loadRawMI(subContractMI);
 		for(SciRawMIDetails rawMIDetails1 : rawMIDetails) {
-			if(rawMIDetails1.getSeqVendorId() != null) {
-				SciVendorMaster vendorMaster = lookupValueDAO.loadVendor(rawMIDetails1.getSeqVendorId());
+			if(rawMIDetails1.getSciVendorMaster() != null) {
+				SciVendorMaster vendorMaster = rawMIDetails1.getSciVendorMaster();
 				rawMIDetails1.setVendorName(vendorMaster.getVendorName());
 			}
 		}

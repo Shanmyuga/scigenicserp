@@ -9,17 +9,19 @@ public class SciRawMIDetails implements java.io.Serializable {
 
 	private Long seqRawMIid;
 	
-	private Long seqOrigMIID;
+	private SciMatindMaster rawMIMaster;
 	
-	private Long seqSubContMIID;
+	private SciMatindMaster subcontractMIMaster;
 
 	private Float matQty;
 
 	private String matDimension;
 
-	private Long seqVendorId;
+
 
 	private String vendorName;
+
+	private SciVendorMaster sciVendorMaster;
 
 	private String rawMaterialDesc;
 
@@ -45,25 +47,32 @@ public class SciRawMIDetails implements java.io.Serializable {
 	public void setSeqRawMIid(Long seqRawMIid) {
 		this.seqRawMIid = seqRawMIid;
 	}
-	
-	@Column(name = "SEQ_ORIG_MI_ID", unique = false, nullable = false, insertable = true, updatable = true, precision = 9, scale = 0)
 
-	public Long getSeqOrigMIID() {
-		return seqOrigMIID;
+	@ManyToOne(cascade = {}, fetch = FetchType.EAGER)
+	@JoinColumn(name = "SEQ_ORIG_MI_ID", unique = false, nullable = false, insertable = true, updatable = true)
+	public SciMatindMaster getRawMIMaster() {
+		return rawMIMaster;
 	}
 
-	public void setSeqOrigMIID(Long seqOrigMIID) {
-		this.seqOrigMIID = seqOrigMIID;
+	public void setRawMIMaster(SciMatindMaster rawMIMaster) {
+		this.rawMIMaster = rawMIMaster;
 	}
 
-	@Column(name = "SEQ_SUB_CONT_MI_ID", unique = false, nullable = false, insertable = true, updatable = true, precision = 9, scale = 0)
-	public Long getSeqSubContMIID() {
-		return seqSubContMIID;
+	@ManyToOne(cascade = {}, fetch = FetchType.EAGER)
+	@JoinColumn(name = "SEQ_SUB_CONT_MI_ID", unique = false, nullable = false, insertable = true, updatable = true)
+	public SciMatindMaster getSubcontractMIMaster() {
+		return subcontractMIMaster;
 	}
 
-	public void setSeqSubContMIID(Long seqSubContMIID) {
-		this.seqSubContMIID = seqSubContMIID;
+	public void setSubcontractMIMaster(SciMatindMaster subcontractMIMaster) {
+		this.subcontractMIMaster = subcontractMIMaster;
 	}
+
+
+
+
+
+
 	@Column(name = "MAT_QTY", unique = false, nullable = true, insertable = true, updatable = true, precision = 9, scale = 2)
 	public Float getMatQty() {
 		return matQty;
@@ -80,14 +89,7 @@ public class SciRawMIDetails implements java.io.Serializable {
 	public void setMatDimension(String matDimension) {
 		this.matDimension = matDimension;
 	}
-	@Column(name = "SEQ_VENDOR_ID", unique = false, nullable = true, insertable = true, updatable = true, precision = 9, scale = 0)
-	public Long getSeqVendorId() {
-		return seqVendorId;
-	}
 
-	public void setSeqVendorId(Long seqVendorId) {
-		this.seqVendorId = seqVendorId;
-	}
 
 
 	@Column(name="RAW_MATERIAL_DESC", length=500)
@@ -159,5 +161,15 @@ public class SciRawMIDetails implements java.io.Serializable {
 
 	public void setRetQty(Float retQty) {
 		this.retQty = retQty;
+	}
+
+	@ManyToOne(cascade = {}, fetch = FetchType.EAGER)
+	@JoinColumn(name = "SEQ_VENDOR_ID", unique = false, nullable = false, insertable = true, updatable = true)
+	public SciVendorMaster getSciVendorMaster() {
+		return sciVendorMaster;
+	}
+
+	public void setSciVendorMaster(SciVendorMaster sciVendorMaster) {
+		this.sciVendorMaster = sciVendorMaster;
 	}
 }

@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import com.sci.bpm.command.mi.AdditionalInfoCommand;
 import com.sci.bpm.db.model.*;
 import com.sci.bpm.service.item.PurchaseItemService;
+import com.sci.bpm.service.lookup.LookUpValueService;
 import com.sci.bpm.service.task.DiskWriterJob;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
@@ -50,6 +51,8 @@ public class MaterialIndentController extends SciBaseController {
     private ProductMasterService prservice;
 
 
+    @Autowired
+    private LookUpValueService lookUpValueService;
     @Autowired
     private DiskWriterJob writerJob;
 
@@ -110,7 +113,7 @@ public class MaterialIndentController extends SciBaseController {
                             master.getMatInfos().add(entity);
                         }
 
-                        if(additionalInfoCommand.getAdditionalInfoLabel().startsWith("REF") &&  !additionalInfoCommand.getAdditionalInfoLabel().startsWith("REF_SIZE")) {
+                        if(additionalInfoCommand.getAdditionalInfoLabel().startsWith("REF_") &&  !additionalInfoCommand.getAdditionalInfoLabel().startsWith("REF_SIZE")) {
                             if(StringUtils.isBlank(master.getMatcodeAddInfo())) {
                                 master.setMatcodeAddInfo(additionalInfoCommand.getAdditionalInfoLabel()+":"+additionalInfoCommand.getAdditionalDetailText()+";");
                             }
@@ -119,7 +122,7 @@ public class MaterialIndentController extends SciBaseController {
                             }
                         }
 
-                        if(additionalInfoCommand.getAdditionalInfoLabel().startsWith("REF_SIZE") ) {
+                        if(additionalInfoCommand.getAdditionalInfoLabel().startsWith("REFNUM_") ) {
                             float flt = Float.parseFloat(additionalInfoCommand.getAdditionalDetailText());
                             if(StringUtils.isBlank(master.getMatcodeAddInfo())) {
 
@@ -730,8 +733,9 @@ public class MaterialIndentController extends SciBaseController {
                     throw new Exception("Raw mi not a valid MI");
                 } else {
                     SciRawMIDetails rawMIDetails = new SciRawMIDetails();
-                    rawMIDetails.setSeqOrigMIID(Long.parseLong(raw));
-                    rawMIDetails.setSeqSubContMIID(master.getSeqMiId());
+
+                    rawMIDetails.setRawMIMaster(service.loadMI(Long.parseLong(raw)));
+                    rawMIDetails.setSubcontractMIMaster(master);
                     rawMIDetails.setMatQty(mcoll.getRawMIQty());
                     rawMIDetails.setMoc(mcoll.getMoc());
                     rawMIDetails.setRemarks(mcoll.getRemarks());
@@ -739,7 +743,8 @@ public class MaterialIndentController extends SciBaseController {
                     rawMIDetails.setRawMaterialDesc(mcoll.getRawMaterialDesc());
                     rawMIDetails.setUnitOfMeasure(mcoll.getUnitOfMeasure());
                     rawMIDetails.setMatDimension(mcoll.getRawMatDimension());
-                    rawMIDetails.setSeqVendorId(mcoll.getRawSeqVendorId());
+                    SciVendorMaster vendorMaster = lookUpValueService.loadVendor(mcoll.getRawSeqVendorId());
+                    rawMIDetails.setSciVendorMaster(vendorMaster);
                     rawMIDetails.setRetQty(mcoll.getRetQty());
                     rawMIDetails.setRetDim(mcoll.getRetDim());
                     purchaseItemService.addRawMI(rawMIDetails);

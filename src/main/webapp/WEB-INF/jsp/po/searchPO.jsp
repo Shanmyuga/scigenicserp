@@ -215,6 +215,39 @@
         </form:form>
 
 
+    </div
+
+    <div style="float:left;width:750px;padding:10px;margin-top:50px">
+        <p>Subcontract MI's</p>
+        <display:table export="true" sort="list"   pagesize="10" name="rawMiList"  id="rows"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+            <display:column sortable="true"   title="Select" media="html"   >
+                <form:radiobutton path="scipurchID" value="${rows.subcontractMIMaster.seqMiId}"  />
+            </display:column>
+            <display:column sortable="true"   title="SubContractMI" >
+                <c:out value="${rows.subcontractMIMaster.seqMiId}" />
+
+            </display:column>
+            <display:column sortable="true"   title="Matcode"   >
+                <c:out value="${rows.subcontractMIMaster.matcode}" />
+            </display:column>
+
+            <display:column sortable="true"   title="matSpec"   >
+                <c:out value="${rows.subcontractMIMaster.matSpec}" />
+            </display:column>
+            <display:column sortable="true"   title="Sub Vendor"   >
+                <c:out value="${rows.sciVendorMaster.vendorName}" />
+            </display:column>
+            <display:column sortable="true"   title="Raw MI"   >
+                <c:out value="${rows.rawMIMaster.seqMiId}" />
+            </display:column>
+
+            <display:column sortable="true"   title="Raw Matcode"   >
+                <c:out value="${rows.rawMIMaster.matcode}" />
+            </display:column>
+            <display:column sortable="true"   title="Raw Mat Spec"   >
+                <c:out value="${rows.rawMIMaster.matSpec}" />
+            </display:column>
+        </display:table>
     </div>
     <div style="float:left;width:750px;padding:10px;margin-top:50px">
         <p>Store List for the Purchase Order</p>
