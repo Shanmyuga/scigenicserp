@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.sci.bpm.command.mi.ComponentDescription;
 import com.sci.bpm.command.mi.DeliveryChallanDTO;
 import com.sci.bpm.command.mi.RawComponentDesc;
+import com.sci.bpm.command.po.PurchaseOrder;
 import com.sci.bpm.db.model.*;
 import com.sci.bpm.service.mi.MaterialIndentService;
 import com.sci.bpm.service.qc.QCService;
@@ -187,7 +188,9 @@ public class PurchaseOrderController extends SciBaseController {
 				.getFlowScope().get("pomastlist");
 		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
 		List<SciPurchItemMaster> podetails = service.loadPODetails(selected);
+
 		context.getFlowScope().put("podetails", podetails);
+
 		context.getFlowScope().put("selectedPO", selected);
 		return success();
 	}
@@ -548,10 +551,28 @@ public class PurchaseOrderController extends SciBaseController {
 
 
 
+	public Event generateDTO(RequestContext context) throws Exception {
+
+		POCommand command = (POCommand) getFormObject(context);
+		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
+				.getFlowScope().get("pomastlist");
+		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
+
+		Long subContractMiId = command.getSciRawMiId();
+
+		List<SciRawMIDetails> details = service.loadSubContractMI(subContractMiId);
+
+		PurchaseOrder order = new PurchaseOrder();
+
+		return success();
+	}
+
   private DeliveryChallanDTO setupData(SciPurchaseMast pm,List<SciPurchItemMaster> itemlist) {
 
 	  DeliveryChallanDTO dto = new DeliveryChallanDTO();
 	  String workorders =  service.getWorkOrders(pm.getSeqPurchId());
+
+
 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 	  dto.setDcDate(dateFormat.format(pm.getPurchaseCreatedDt()));
 	  dto.setDeliveryChellanNo("DC"+pm.getSeqPurchId());
@@ -576,7 +597,7 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 				System.out.println("itemmi" + itemmi.getSeqMiId());
 				List<SciRawMIDetails> rawMIDetails = qcService.getRawMidata(itemmi.getSeqMiId());
 				for(SciRawMIDetails rawmi:rawMIDetails) {
-					SciMatindMaster mimaster = materialIndentService.loadMI(rawmi.getSeqOrigMIID());
+					SciMatindMaster mimaster = rawmi.getRawMIMaster();
 					RawComponentDesc rawComponentDesc = new RawComponentDesc();
 					rawComponentDesc.setRawMatMi(String.valueOf(mimaster.getSeqMiId()));
 					rawComponentDesc.setRawMatDesc(mimaster.getMatDesc());
@@ -773,6 +794,8 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
 		command.setScipurchID(selected.getSeqPurchId());
 		List postorelist = service.closePO(command);
+		List<SciRawMIDetails> rawMIDetails = service.loadMis(selected.getSeqPurchId());
+		context.getFlowScope().put("rawMiList",rawMIDetails);
 		context.getFlowScope().put("postorelist", postorelist);
 		return success();
 	}

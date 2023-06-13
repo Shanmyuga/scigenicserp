@@ -28,7 +28,7 @@
 <td ><c:out value="${addtionalInfoMessage.label}"/></td>
 <td>
  <c:if test="${addtionalInfoMessage.datatype == 'Text'}">
- <form:input path="additionalInfoCommandList[${rowcnt.index}].additionalDetailText"  size="20" />
+ <form:input path="additionalInfoCommandList[${rowcnt.index}].additionalDetailText"  size="20"  />
  </c:if>
  <c:if test="${addtionalInfoMessage.datatype == 'Radio'}">
   <c:forEach items="${addtionalInfoMessage.dropValues}" var="drop">
@@ -44,8 +44,8 @@
 
   </c:forEach>
  </c:if>
- <c:if test="${addtionalInfoMessage.datatype == 'DropDown'}">
-  <form:select path="additionalInfoCommandList[${rowcnt.index}].additionalDetailText" size="1" id="productCat" >
+ <c:if test="${addtionalInfoMessage.datatype == 'DropDown'}" >
+  <form:select path="additionalInfoCommandList[${rowcnt.index}].additionalDetailText" size="1" id="productCat"  >
 <form:option value="">Select</form:option>
 
 

@@ -76,6 +76,7 @@ public class WorkOrderController extends SciBaseController {
 			SciWorkorderMaster master = new SciWorkorderMaster();
 
 			master.setSciCustomerMaster(custmaster);
+
 			BeanUtils.copyProperties(master, command);
 			master.setWoStatus("Y");
 			Calendar cal = Calendar.getInstance();

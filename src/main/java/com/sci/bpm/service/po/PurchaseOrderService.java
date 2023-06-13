@@ -3,14 +3,8 @@ package com.sci.bpm.service.po;
 import java.util.List;
 
 import com.sci.bpm.command.po.POCommand;
-import com.sci.bpm.db.model.SciPaymentDetails;
-import com.sci.bpm.db.model.SciPurchItemMaster;
-import com.sci.bpm.db.model.SciPurchaseMast;
-import com.sci.bpm.db.model.SciRejectMaterialAudit;
-import com.sci.bpm.db.model.SciRejectedMaterials;
-import com.sci.bpm.db.model.SciVendorInvoiceMaster;
-import com.sci.bpm.db.model.SciVendorMaster;
-import com.sci.bpm.db.model.SciVendorPurchaseCost;
+import com.sci.bpm.db.model.*;
+
 /**
  * 
  * @author prakash
@@ -38,10 +32,10 @@ public interface PurchaseOrderService {
 	public List<SciVendorInvoiceMaster> loadInvoiceDetails();
 	public void addInvoiceDetails(SciVendorInvoiceMaster vmaster);
 	public List<SciPurchaseMast> loadPODetails(Long seqVendorID);
-	
+	public List<SciRawMIDetails> loadSubContractMI(Long seqSubcontractMIId);
 	public List<SciVendorInvoiceMaster> loadbillNo(Long seqVendorID);
 	public String getWorkOrders(Long seqPurchId);
 	public List<SciVendorPurchaseCost> loadQuotations(String matDept,String matCategory);
-	
+	public List<SciRawMIDetails> loadMis(Long seqPurchId);
 	public void addPurchaseVendorCost(SciVendorPurchaseCost purchaseCost);
 }

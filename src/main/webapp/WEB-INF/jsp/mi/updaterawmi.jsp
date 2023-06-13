@@ -177,6 +177,46 @@
 
  </display:column>
 
+ <display:column sortable="true"  title="Raw MI Desc"  >
+
+  <form:textarea path="matList[${row_rowNum%10}].rawMaterialDesc" />
+
+ </display:column>
+
+ <display:column sortable="true"  title="Raw MI UOM"  >
+
+  <form:input path="matList[${row_rowNum%10}].unitOfMeasure" />
+
+ </display:column>
+
+ <display:column sortable="true"  title="Raw MI UnitPrice"  >
+
+  <form:input path="matList[${row_rowNum%10}].unitPrice" />
+
+ </display:column>
+
+
+
+ <display:column sortable="true"  title="Raw MI moc"  >
+
+  <form:input path="matList[${row_rowNum%10}].moc" />
+
+ </display:column>
+ <display:column sortable="true"  title="Raw MI Remarks"  >
+
+  <form:input path="matList[${row_rowNum%10}].remarks" />
+
+ </display:column>
+ <display:column sortable="true"  title="Return Dim"  >
+
+  <form:input path="matList[${row_rowNum%10}].retDim" />
+
+ </display:column>
+ <display:column sortable="true"  title="Return Qty"  >
+
+  <form:input path="matList[${row_rowNum%10}].retQty" />
+
+ </display:column>
  <display:column sortable="true"  title="Raw MI Vendor"  >
 
   <form:select path="matList[${row_rowNum%10}].rawSeqVendorId" size="1" >

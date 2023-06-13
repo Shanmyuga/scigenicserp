@@ -11,18 +11,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.sci.bpm.db.model.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.sci.bpm.command.po.POCommand;
 import com.sci.bpm.command.po.PurchaseStatusCommand;
-import com.sci.bpm.db.model.SciPaymentDetails;
-import com.sci.bpm.db.model.SciPurchaseMast;
-import com.sci.bpm.db.model.SciRejectMaterialAudit;
-import com.sci.bpm.db.model.SciRejectedMaterials;
-import com.sci.bpm.db.model.SciVendorInvoiceMaster;
-import com.sci.bpm.db.model.SciVendorMaster;
-import com.sci.bpm.db.model.SciVendorPurchaseCost;
 
 @Repository
 public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
@@ -111,7 +105,7 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 
 		if (command.getFromdate() != null) {
 			whereClause = whereClause
-					+ " and m.inserted >= :purchasefromdate ";
+					+ " and m.insertedDate >= :purchasefromdate ";
 			// parameters.add(command.getMatDuedate());
 			parameters.put("purchasefromdate", command.getFromdate());
 		}
@@ -399,6 +393,24 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 		query.setParameter("seq_Work_id",seqWorkId);
 		BigDecimal cost = (BigDecimal) query.getResultList().get(0);
 		return cost.floatValue();
+	}
+
+	@Override
+	public List<SciRawMIDetails> loadMis(Long seqPurchId) {
+		String pseqquery = "from SciRawMIDetails p where  exists (SELECT 1 FROM PurchaseWorkOrderView ri where ri.seqPurchId = :seq_purch_id and ri.seqMiId = p.subcontractMIMaster.seqMiId)";
+		Query qry = em.createQuery(pseqquery);
+		qry.setParameter("seq_purch_id" ,seqPurchId);
+			List<SciRawMIDetails> subcontractMIs = qry.getResultList();
+		return subcontractMIs;
+	}
+
+	@Override
+	public List<SciRawMIDetails> loadSubContractMI(Long seqSubcontractMIId) {
+
+		String pseqquery = "from SciRawMIDetails p where  p.subcontractMIMaster.seqMiId = :seqMIId";
+		Query qry = em.createQuery(pseqquery);
+		qry.setParameter("seqMIId" ,seqSubcontractMIId);
+		return qry.getResultList();
 	}
 
 	@Override

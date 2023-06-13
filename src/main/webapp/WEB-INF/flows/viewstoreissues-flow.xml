@@ -8,6 +8,7 @@
 
 <webflow:evaluate expression="lookupbean.getDropDownList('matdept_key')" result="flowScope.matdeptlist"/>
 <webflow:evaluate expression="lookupbean.getDropDownList('workorder_key')" result="flowScope.workmastlist"/>
+    <webflow:evaluate expression="lookupbean.getDropDownList('short_wo_key')" result="flowScope.activemastlist"/>
     </webflow:on-start>
 <webflow:view-state id="entersearch" view="stores.viewissuelist">
 <webflow:transition on="loadCategory" to="entersearch">

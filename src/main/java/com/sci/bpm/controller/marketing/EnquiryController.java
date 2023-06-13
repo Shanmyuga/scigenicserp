@@ -3,6 +3,7 @@ package com.sci.bpm.controller.marketing;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import com.sci.bpm.command.LookupValueBean;
 import com.sci.bpm.db.model.*;
@@ -149,9 +150,20 @@ public class EnquiryController extends SciBaseController {
 		emaster.setUdpatedBy(getUserPreferences().getUserID());
 		emaster.setUpdatedDate(new Date());
 		emaster.setEnqCustomerCode(cmaster.getCustomerCode());
-		if("EV".equals(emaster.getEnqOrVisit()) && StringUtils.isBlank(emaster.getVisitEnqRefCode())) {
+		if("EV".equals(emaster.getEnqOrVisit()) && StringUtils.isBlank(emaster.getVisitEnqRefCode())  ) {
+
+
+
+
 			throw new Exception("Visit ref code cannot be null");
 		}
+		if("EV".equals(emaster.getEnqOrVisit()) && !StringUtils.isBlank(emaster.getVisitEnqRefCode())  ) {
+			if(!service.checkEnquiryCodeExists(emaster.getVisitEnqRefCode())) {
+				throw new Exception("Not a valid enquiry code");
+			}
+		}
+
+
 		Long enqCode = service.findEnqCode(clientOrgMaster.getOrgCode(),cmaster.getCustomerCityCode(),cmaster.getCustomerCode());
 		emaster.setEnquiryCode(enqCode);
 		emaster.setEnqStateCityCode(cmaster.getCustomerCityCode());

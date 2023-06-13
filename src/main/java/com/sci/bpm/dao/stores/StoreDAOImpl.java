@@ -471,6 +471,11 @@ public class StoreDAOImpl implements StoresDAO {
 			whereClause = whereClause + " and m.strequest.sciMiMaster.sciWorkorderMaster.seqWorkId = :wm ";
 			parameters.put("wm", command.getSeqWorkId());
 		}
+
+		if (command.getShortKey() != null && !"0".equals(command.getShortKey() )) {
+			whereClause = whereClause + " and m.strequest.sciMiMaster.sciWorkorderMaster.seqWorkId in  (Select seqWorkId from ActiveWorkOrderView where shortKey = :shortKey)";
+			parameters.put("shortKey", command.getShortKey());
+		}
 		if ("P".equals(command.getReturnCriteria())) {
 			whereClause = whereClause + " and not exists  (Select 1 from  SciReturnitemsRequest ms Join ms.stissue m2 where m2.seqStissueId =m.seqStissueId)";
 			

@@ -58,6 +58,8 @@ public class SciWorkorderMaster implements java.io.Serializable {
 	private String basis;
 	
 	private String woStatus;
+
+	private String installationWoShortkey;
 	
 	private Date woCloseDate;
 	private Set<SciWorkInspection> sciWorkInspections = new HashSet<SciWorkInspection>(
@@ -460,5 +462,13 @@ private String insertedBy;
 
 	public void setMiCloseDate(Date miCloseDate) {
 		this.miCloseDate = miCloseDate;
+	}
+	@Column(name = "INSTALLATION_WO", length = 50)
+	public String getInstallationWoShortkey() {
+		return installationWoShortkey;
+	}
+
+	public void setInstallationWoShortkey(String installationWoShortkey) {
+		this.installationWoShortkey = installationWoShortkey;
 	}
 }

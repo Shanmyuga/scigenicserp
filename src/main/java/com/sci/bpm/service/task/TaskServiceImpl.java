@@ -241,6 +241,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Transactional
+    public List<LinkedHashMap<String, Object>> downloadSelectedReport(SciReportConfiguration configuration) {
+        return  downloadExcelReports(configuration);
+    }
+
+    @Transactional
 
     public List<TableDynaBean> viewSelectedReport(SciReportConfiguration report) {
 
@@ -392,6 +397,15 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
+    private List downloadExcelReports(SciReportConfiguration report) {
+
+        List<LinkedHashMap<String, Object>> mylist = daoimpl.generateReports(report.getReportQuery());
+
+
+
+
+        return mylist;
+    }
 
     public static void main(String args[]) throws NoSuchProviderException {
         TaskServiceImpl impl = new TaskServiceImpl();

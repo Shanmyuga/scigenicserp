@@ -40,6 +40,8 @@
 
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
 <link href="images/myfreetemplates.css" rel="stylesheet" type="text/css">
 <link href="css/displaytag.css" rel="stylesheet" type="text/css">
     <link href="css/modalclass.css" rel="stylesheet" type="text/css">

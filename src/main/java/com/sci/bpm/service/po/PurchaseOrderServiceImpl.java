@@ -22,6 +22,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
+import com.sci.bpm.db.model.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,16 +32,6 @@ import com.sci.bpm.command.po.POCommand;
 import com.sci.bpm.dao.item.ISciPurchItemMasterDAO;
 import com.sci.bpm.dao.mi.ISciMatindMasterDAO;
 import com.sci.bpm.dao.po.ISciPurchaseMastDAO;
-import com.sci.bpm.db.model.SciItemmiDetails;
-import com.sci.bpm.db.model.SciMatindMaster;
-import com.sci.bpm.db.model.SciPaymentDetails;
-import com.sci.bpm.db.model.SciPurchItemMaster;
-import com.sci.bpm.db.model.SciPurchaseMast;
-import com.sci.bpm.db.model.SciRejectMaterialAudit;
-import com.sci.bpm.db.model.SciRejectedMaterials;
-import com.sci.bpm.db.model.SciVendorInvoiceMaster;
-import com.sci.bpm.db.model.SciVendorMaster;
-import com.sci.bpm.db.model.SciVendorPurchaseCost;
 
 @Transactional
 @Service
@@ -212,6 +203,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	}
 
 	@Override
+	public List<SciRawMIDetails> loadSubContractMI(Long seqSubcontractMIId) {
+		return dao.loadSubContractMI(seqSubcontractMIId);
+	}
+
+	@Override
 	public List<SciVendorInvoiceMaster> loadbillNo(Long seqVendorID) {
 		// TODO Auto-generated method stub
 		return dao.loadbillNo(seqVendorID);
@@ -234,9 +230,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		// TODO Auto-generated method stub
 		return dao.loadQuotations(matDept, matCategory);
 	}
-	
-	
 
-	
+	@Override
+	public List<SciRawMIDetails> loadMis(Long seqPurchId) {
+		return dao.loadMis(seqPurchId);
+	}
+
 
 }

@@ -3,13 +3,7 @@ package com.sci.bpm.dao.po;
 import java.util.List;
 
 import com.sci.bpm.command.po.POCommand;
-import com.sci.bpm.db.model.SciPaymentDetails;
-import com.sci.bpm.db.model.SciPurchaseMast;
-import com.sci.bpm.db.model.SciRejectMaterialAudit;
-import com.sci.bpm.db.model.SciRejectedMaterials;
-import com.sci.bpm.db.model.SciVendorInvoiceMaster;
-import com.sci.bpm.db.model.SciVendorMaster;
-import com.sci.bpm.db.model.SciVendorPurchaseCost;
+import com.sci.bpm.db.model.*;
 
 /**
  * Interface for SciPurchaseMastDAO.
@@ -136,5 +130,8 @@ public interface ISciPurchaseMastDAO {
 	
 	public void addPurchaseVendorCost(SciVendorPurchaseCost purchaseCost);
 	public Float getCostByWork(Long seqPurchaseId, Long seqWorkId);
-	
+	public List<SciRawMIDetails> loadMis(Long seqPurchId);
+	public List<SciRawMIDetails> loadSubContractMI(Long seqSubcontractMIId);
+
+
 }

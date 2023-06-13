@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLOutput;
 import java.sql.Time;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import com.sci.bpm.command.mi.AdditionalInfoCommand;
 import com.sci.bpm.db.model.*;
 import com.sci.bpm.service.item.PurchaseItemService;
+import com.sci.bpm.service.lookup.LookUpValueService;
 import com.sci.bpm.service.task.DiskWriterJob;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
@@ -49,6 +51,8 @@ public class MaterialIndentController extends SciBaseController {
     private ProductMasterService prservice;
 
 
+    @Autowired
+    private LookUpValueService lookUpValueService;
     @Autowired
     private DiskWriterJob writerJob;
 
@@ -90,7 +94,10 @@ public class MaterialIndentController extends SciBaseController {
                 if (master.getMiForType() == null || "".equals(master.getMiForType())) {
                     throw new Exception();
                 }
+                DecimalFormat df = new DecimalFormat();
+                df.setMaximumFractionDigits(2);
                 for (AdditionalInfoCommand additionalInfoCommand : mi.getAdditionalInfoCommandList()) {
+
                     if (!additionalInfoCommand.getAdditionalInfoType().equals("File")) {
                         SciMiMaterialAddinfoEntity entity = new SciMiMaterialAddinfoEntity();
                         entity.setSeqMiId(master);
@@ -105,6 +112,30 @@ public class MaterialIndentController extends SciBaseController {
                         if (entity.getAddInfoValue() != null && !StringUtils.isBlank(entity.getAddInfoValue())) {
                             master.getMatInfos().add(entity);
                         }
+
+                        if(additionalInfoCommand.getAdditionalInfoLabel().startsWith("REF_") &&  !additionalInfoCommand.getAdditionalInfoLabel().startsWith("REF_SIZE")) {
+                            if(StringUtils.isBlank(master.getMatcodeAddInfo())) {
+                                master.setMatcodeAddInfo(additionalInfoCommand.getAdditionalInfoLabel()+":"+additionalInfoCommand.getAdditionalDetailText()+";");
+                            }
+                            else  {
+                                master.setMatcodeAddInfo(master.getMatcodeAddInfo()+";"+additionalInfoCommand.getAdditionalInfoLabel()+":"+additionalInfoCommand.getAdditionalDetailText()+";");
+                            }
+                        }
+
+                        if(additionalInfoCommand.getAdditionalInfoLabel().startsWith("REFNUM_") ) {
+                            float flt = Float.parseFloat(additionalInfoCommand.getAdditionalDetailText());
+                            if(StringUtils.isBlank(master.getMatcodeAddInfo())) {
+
+
+
+
+                                master.setMatcodeAddInfo(additionalInfoCommand.getAdditionalInfoLabel()+":"+df.format(flt)+";");
+                            }
+                            else  {
+                                master.setMatcodeAddInfo(master.getMatcodeAddInfo()+";"+additionalInfoCommand.getAdditionalInfoLabel()+":"+df.format(flt)+";");
+                            }
+                        }
+
                     } else {
                         if (additionalInfoCommand.getOriginalDocName() != null) {
                             SciAddMatInfoDocsEntity addMatInfoDocsEntity = new SciAddMatInfoDocsEntity();
@@ -702,11 +733,20 @@ public class MaterialIndentController extends SciBaseController {
                     throw new Exception("Raw mi not a valid MI");
                 } else {
                     SciRawMIDetails rawMIDetails = new SciRawMIDetails();
-                    rawMIDetails.setSeqOrigMIID(Long.parseLong(raw));
-                    rawMIDetails.setSeqSubContMIID(master.getSeqMiId());
+
+                    rawMIDetails.setRawMIMaster(service.loadMI(Long.parseLong(raw)));
+                    rawMIDetails.setSubcontractMIMaster(master);
                     rawMIDetails.setMatQty(mcoll.getRawMIQty());
+                    rawMIDetails.setMoc(mcoll.getMoc());
+                    rawMIDetails.setRemarks(mcoll.getRemarks());
+                    rawMIDetails.setUnitPrice(mcoll.getUnitPrice());
+                    rawMIDetails.setRawMaterialDesc(mcoll.getRawMaterialDesc());
+                    rawMIDetails.setUnitOfMeasure(mcoll.getUnitOfMeasure());
                     rawMIDetails.setMatDimension(mcoll.getRawMatDimension());
-                    rawMIDetails.setSeqVendorId(mcoll.getRawSeqVendorId());
+                    SciVendorMaster vendorMaster = lookUpValueService.loadVendor(mcoll.getRawSeqVendorId());
+                    rawMIDetails.setSciVendorMaster(vendorMaster);
+                    rawMIDetails.setRetQty(mcoll.getRetQty());
+                    rawMIDetails.setRetDim(mcoll.getRetDim());
                     purchaseItemService.addRawMI(rawMIDetails);
                 }
 

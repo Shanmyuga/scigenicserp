@@ -77,7 +77,7 @@ public class QCServiceImpl implements QCService {
 			qcbean.setRawmis(dao.getRawMidata(qcbean.getSciMiMaster().getSeqMiId()));
 			List<SciRawMIDetails> rmidetails  = qcbean.getRawmis();
 			for(SciRawMIDetails rmi : rmidetails) {
-				qcbean.addmydocs(dao.loadmiQCDocs(rmi.getSeqOrigMIID()));
+				qcbean.addmydocs(dao.loadmiQCDocs(rmi.getRawMIMaster().getSeqMiId()));
 			}
 		}
 		
@@ -119,7 +119,7 @@ public class QCServiceImpl implements QCService {
 			qcbean.setRawmis(dao.getRawMidata(Long.parseLong(qcbean.getIssueMI())));
 			List<SciRawMIDetails> rmidetails  = qcbean.getRawmis();
 			for(SciRawMIDetails rmi : rmidetails) {
-				qcbean.addmydocs(dao.loadmiQCDocs(rmi.getSeqOrigMIID()));
+				qcbean.addmydocs(dao.loadmiQCDocs(rmi.getRawMIMaster().getSeqMiId()));
 			}
 		}
 		

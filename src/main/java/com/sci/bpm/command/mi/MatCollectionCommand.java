@@ -42,6 +42,20 @@ public class MatCollectionCommand implements Serializable {
 	private String miForIssue;
 
 	private String poMatAssign;
+
+	private String rawMaterialDesc;
+
+	private String unitOfMeasure;
+
+	private Float unitPrice;
+
+	private String moc;
+
+	private String remarks;
+
+	private String retDim;
+
+	private Float retQty;
 	private List<AdditionalInfoCommand> additionalInfoCommandList = new ArrayList();
 	
 	public String getMatEstUnitCost() {
@@ -234,5 +248,61 @@ public class MatCollectionCommand implements Serializable {
 
 	public void setPoMatAssign(String poMatAssign) {
 		this.poMatAssign = poMatAssign;
+	}
+
+	public String getRawMaterialDesc() {
+		return rawMaterialDesc;
+	}
+
+	public void setRawMaterialDesc(String rawMaterialDesc) {
+		this.rawMaterialDesc = rawMaterialDesc;
+	}
+
+	public String getUnitOfMeasure() {
+		return unitOfMeasure;
+	}
+
+	public void setUnitOfMeasure(String unitOfMeasure) {
+		this.unitOfMeasure = unitOfMeasure;
+	}
+
+	public Float getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(Float unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
+	public String getMoc() {
+		return moc;
+	}
+
+	public void setMoc(String moc) {
+		this.moc = moc;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public String getRetDim() {
+		return retDim;
+	}
+
+	public void setRetDim(String retDim) {
+		this.retDim = retDim;
+	}
+
+	public Float getRetQty() {
+		return retQty;
+	}
+
+	public void setRetQty(Float retQty) {
+		this.retQty = retQty;
 	}
 }

@@ -3,6 +3,7 @@ package com.sci.bpm.controller.lookup;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ import com.sci.bpm.service.marketing.EnquiryService;
 import com.sci.bpm.service.user.UserService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.webflow.execution.Event;
@@ -317,7 +319,16 @@ SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope()
 
 		return success();
 	}
+	public Event downloadSelectedReport(RequestContext context) throws Exception {
+		LookupValueBean value = (LookupValueBean)getFormObject(context);
+		List<SciReportConfiguration> reports = loadReports(context);
 
+		SciReportConfiguration config=   selectReport(reports, new Long(value.getSeqReportID()));
+		List<LinkedHashMap<String, Object>> wb = taskService.downloadSelectedReport(config);
+		context.getFlowScope().put("workbook",wb);
+		context.getExternalContext().getSessionMap().put("workbook",wb);
+		return success();
+	}
 	public Event viewSelectedReport(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		List<SciReportConfiguration> reports = loadReports(context);

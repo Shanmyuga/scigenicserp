@@ -1,11 +1,13 @@
 package com.sci.bpm.service.task;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.sci.bpm.command.LookupValueBean;
 import com.sci.bpm.command.user.TableDynaBean;
 import com.sci.bpm.db.model.*;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public interface TaskService {
 
@@ -36,5 +38,6 @@ public interface TaskService {
 	public void runSelectedReport(SciReportConfiguration configuration);
 
 
+	public List<LinkedHashMap<String, Object>> downloadSelectedReport(SciReportConfiguration configuration);
 	public List<TableDynaBean> viewSelectedReport(SciReportConfiguration configuration);
 }

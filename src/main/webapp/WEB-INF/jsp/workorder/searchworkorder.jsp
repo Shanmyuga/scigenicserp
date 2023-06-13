@@ -9,13 +9,13 @@
 
 
 <form:form modelAttribute="workorderbean" name="workorderbean">
+<div class="ui-widget">
+ <label for="reportFilter">Search Work order  by Job Desc: </label>
 
- <label for="tags">Search Work order  by Job Desc: </label>
-
- <form:input path="reportFilter" size="100" />
+ <form:input path="reportFilter" size="100" id="reportFilter"/>
 
  <p><input type="button" value="Filter report" onclick="eventdirect('filterReport')"/>&nbsp;&nbsp;</p>
-
+</div>
  <br/>
  <br/>
  <br/>

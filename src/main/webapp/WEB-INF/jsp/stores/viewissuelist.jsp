@@ -66,7 +66,14 @@
 <form:options items="${workmastlist}" itemValue="seqWorkId" itemLabel="jobDesc"/>
 </form:select>
 </td>
-
+    <td>Short Key</td>
+    <td  ><form:select path="shortKey" size="1" id="shortKey">
+        <form:option value="0">All</form:option>
+        <form:options items="${activemastlist}" itemValue="lovName" itemLabel="lovName"/>
+    </form:select>
+    </td>
+</tr>
+    <tr>
 <td>Set Max results</td>
 <td><form:input path="searchMax" id="searchMax"  />
 </td>

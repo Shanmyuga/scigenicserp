@@ -245,6 +245,12 @@
      
       <put-attribute name="body" value="/WEB-INF/jsp/po/pdfview.jsp" />
   </definition>
+
+    <definition name="po.excelview"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/lookup/excelview.jsp" />
+    </definition>
     <definition name="po.delchallanview"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
         <put-attribute name="menu" value="usermenu.jsp" />
 

@@ -91,6 +91,7 @@ public class ITemMasterController extends SciBaseController {
 				
 			}
 			m.setUnitCost(new BigDecimal(estcost[idx]));
+
 			m.setMatQty(estquant);
 			if(m.getUnitCost().floatValue() <= 0) {
 				throw new Exception("Estimated Cost Cannot be null");
@@ -157,8 +158,9 @@ public class ITemMasterController extends SciBaseController {
 					if(rawmisarr != null) {
 						for(String rawmi:rawmisarr) {
 							SciRawMIDetails rmidetails = new SciRawMIDetails();
-							rmidetails.setSeqOrigMIID(Long.parseLong(rawmi));
-							rmidetails.setSeqSubContMIID(m.getSeqMiId());
+
+							rmidetails.setRawMIMaster(miservice.loadMI(Long.parseLong(rawmi)));
+							rmidetails.setSubcontractMIMaster(m);
 							service.addRawMI(rmidetails);
 							 
 						}

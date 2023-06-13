@@ -129,7 +129,10 @@
         </td>
     </tr>
     <tr>
-<td colspan="4"> <input  type="button" value="Search MI  Items" onclick="eventdirect('searchMI')"/> </td>
+        <td>Remove Machined Components MI(Select Mech Dept filter to enable this)</td>
+        <td><form:checkbox path="removeMachnined" value="Y"/>
+        </td>
+<td colspan="2"> <input  type="button" value="Search MI  Items" onclick="eventdirect('searchMI')"/> </td>
 
 </tr>
  
