@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
+import java.util.ArrayList;
 import java.util.List;
 
 @XmlRootElement(name="PurchaseOrder")
@@ -12,7 +13,7 @@ public class PurchaseOrder {
     public PurchaseOrder () {
     }
 
-    private List rawMIList;
+    private List<RawMIDetails> rawMIList = new ArrayList();
 
 
     private String vendorDetails;
@@ -173,5 +174,9 @@ public class PurchaseOrder {
 
     public void setRawMIList(List rawMIList) {
         this.rawMIList = rawMIList;
+    }
+
+    public void addRawMi(RawMIDetails rawMIDetails) {
+        this.rawMIList.add(rawMIDetails);
     }
 }

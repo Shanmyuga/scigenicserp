@@ -131,9 +131,9 @@
                     <display:column sortable="true"   title="Select" media="html"   >
                         <form:radiobutton path="scipurchID" value="${row.seqPurchId}"  onclick="eventdirect('checkstatus')"/>
                     </display:column>
+                    <display:column sortable="true"  title="PO Name" property="vendorOrder" >
                     <display:column sortable="true"   title="Purchase ID" property="seqPurchId"  >
                     </display:column>
-                    <display:column sortable="true"  title="PO Name" property="vendorOrder" >
 
                     </display:column>
 
@@ -212,7 +212,7 @@
             </c:if>
                 </div>
             </c:if>
-        </form:form>
+
 
 
     </div
@@ -221,7 +221,7 @@
         <p>Subcontract MI's</p>
         <display:table export="true" sort="list"   pagesize="10" name="rawMiList"  id="rows"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
             <display:column sortable="true"   title="Select" media="html"   >
-                <form:radiobutton path="scipurchID" value="${rows.subcontractMIMaster.seqMiId}"  />
+                <form:radiobutton path="subContMI" value="${rows.subcontractMIMaster.seqMiId}"  />
             </display:column>
             <display:column sortable="true"   title="SubContractMI" >
                 <c:out value="${rows.subcontractMIMaster.seqMiId}" />
@@ -248,6 +248,7 @@
                 <c:out value="${rows.rawMIMaster.matSpec}" />
             </display:column>
         </display:table>
+        </form:form>
     </div>
     <div style="float:left;width:750px;padding:10px;margin-top:50px">
         <p>Store List for the Purchase Order</p>

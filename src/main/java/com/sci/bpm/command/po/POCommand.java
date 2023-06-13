@@ -80,7 +80,10 @@ public class POCommand implements Serializable {
 
 	private String workOrderKey;
 
+
 	private String vendorStatus;
+
+	private Long subContMI;
 
 	private Double gst = new Double(0);
 	private Double gstCharges = new Double(0);
@@ -615,4 +618,13 @@ public class POCommand implements Serializable {
 	public void setSciRawMiId(Long sciRawMiId) {
 		this.sciRawMiId = sciRawMiId;
 	}
+
+	public Long getSubContMI() {
+		return subContMI;
+	}
+
+	public void setSubContMI(Long subContMI) {
+		this.subContMI = subContMI;
+	}
+
 }

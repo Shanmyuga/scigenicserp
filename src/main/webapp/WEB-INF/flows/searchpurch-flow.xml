@@ -57,7 +57,7 @@
 
     <webflow:transition on="generateChallan" to="viewdelChallanPage">
         <webflow:evaluate expression="pocont.bind"/>
-        <webflow:evaluate expression="pocont.viewPOPDF"/>
+        <webflow:evaluate expression="pocont.generateDTO"/>
     </webflow:transition>
     <webflow:transition on="generateEmail" to="entersearch">
         <webflow:evaluate expression="pocont.bind"/>

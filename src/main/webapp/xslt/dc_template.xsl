@@ -133,7 +133,7 @@
 											   border-width="1pt" number-columns-spanned="2">
 									<fo:block line-height="12pt" font-size="8pt"
 											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"
-											  keep-together="always">01-01-2023</fo:block>
+											  keep-together="always"><xsl:value-of select="dcDate" /></fo:block>
 								</fo:table-cell>
 								<fo:table-cell border-style="solid" border-color="black"
 											   border-width="1pt" number-columns-spanned="1">
@@ -145,7 +145,7 @@
 											   border-width="1pt" number-columns-spanned="1">
 									<fo:block line-height="12pt" font-size="8pt"
 											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"
-											  keep-together="always">23</fo:block>
+											  keep-together="always"><xsl:value-of select="purchaseNo"/></fo:block>
 								</fo:table-cell>
 								<fo:table-cell border-style="solid" border-color="black"
 											   border-width="1pt" number-columns-spanned="1">
@@ -157,7 +157,7 @@
 											   border-width="1pt" number-columns-spanned="1">
 									<fo:block line-height="12pt" font-size="8pt"
 											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"
-											  keep-together="always">1235</fo:block>
+											linefeed-treatment="preserve"><xsl:value-of select="workOrderNo"/></fo:block>
 								</fo:table-cell>
 								<fo:table-cell border-style="solid" border-color="black"
 											   border-width="1pt" number-columns-spanned="2">
@@ -169,7 +169,7 @@
 											   border-width="1pt" number-columns-spanned="2">
 									<fo:block line-height="12pt" font-size="8pt"
 											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"
-											  keep-together="always">SC 03_R1</fo:block>
+											  keep-together="always"></fo:block>
 								</fo:table-cell>
 
 							</fo:table-row>
@@ -408,7 +408,7 @@
 											   border-width="1pt" number-columns-spanned="1">
 									<fo:block line-height="15pt" font-size="8pt"
 											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-											  keep-together="always">Remarks</fo:block>
+											  linefeed-treatment="preserve">Remarks</fo:block>
 								</fo:table-cell>
 								<fo:table-cell border-style="solid" border-color="black"
 											   border-width="1pt" number-columns-spanned="2">
@@ -442,13 +442,13 @@
 												   border-width="1pt" number-columns-spanned="1" height="2.0cm">
 										<fo:block line-height="30pt" font-size="8pt"
 												  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-												  keep-together="always"><xsl:value-of select="miDesc"></xsl:value-of></fo:block>
+												  linefeed-treatment="preserve"><xsl:value-of select="miDesc"></xsl:value-of></fo:block>
 									</fo:table-cell>
 									<fo:table-cell border-style="solid" border-color="black"
 												   border-width="1pt" number-columns-spanned="1" height="2.0cm">
 										<fo:block line-height="30pt" font-size="8pt"
 												  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-												  keep-together="always"><xsl:value-of select="miDimen"></xsl:value-of></fo:block>
+												  linefeed-treatment="preserve"><xsl:value-of select="miDimen"></xsl:value-of></fo:block>
 									</fo:table-cell>
 									<fo:table-cell border-style="solid" border-color="black"
 												   border-width="1pt" number-columns-spanned="2" height="2.0cm">
@@ -472,7 +472,7 @@
 												   border-width="1pt" number-columns-spanned="1" height="2.0cm">
 										<fo:block line-height="30pt" font-size="8pt"
 												  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-												  keep-together="always"><xsl:value-of select="remarks"></xsl:value-of></fo:block>
+												  linefeed-treatment="preserve"><xsl:value-of select="remarks"></xsl:value-of></fo:block>
 									</fo:table-cell>
 									<fo:table-cell border-style="solid" border-color="black"
 												   border-width="1pt" number-columns-spanned="2" height="2.0cm">

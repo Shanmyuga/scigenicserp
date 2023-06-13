@@ -24,6 +24,7 @@ import com.sci.bpm.command.mi.ComponentDescription;
 import com.sci.bpm.command.mi.DeliveryChallanDTO;
 import com.sci.bpm.command.mi.RawComponentDesc;
 import com.sci.bpm.command.po.PurchaseOrder;
+import com.sci.bpm.command.po.RawMIDetails;
 import com.sci.bpm.db.model.*;
 import com.sci.bpm.service.mi.MaterialIndentService;
 import com.sci.bpm.service.qc.QCService;
@@ -558,12 +559,50 @@ public class PurchaseOrderController extends SciBaseController {
 				.getFlowScope().get("pomastlist");
 		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
 
-		Long subContractMiId = command.getSciRawMiId();
+		Long subContractMiId = command.getSubContMI();
 
 		List<SciRawMIDetails> details = service.loadSubContractMI(subContractMiId);
 
+		SciRawMIDetails rawMIDetail = details.get(0);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 		PurchaseOrder order = new PurchaseOrder();
+		order.setVendorDetails(rawMIDetail.getSciVendorMaster().getVendorName()+"|"+rawMIDetail.getSciVendorMaster().getVendorAddress());
+		order.setPurchaseNo(String.valueOf(selected.getSeqPurchId()));
+		order.setWorkOrderNo(String.valueOf(rawMIDetail.getSubcontractMIMaster().getSciWorkorderMaster().getJobDesc()));
+		order.setMiId(String.valueOf(rawMIDetail.getSubcontractMIMaster().getSeqMiId()));
+		order.setMiQty(String.valueOf(rawMIDetail.getMatQty()));
+		order.setMiDimen(String.valueOf(rawMIDetail.getSubcontractMIMaster().getMatDimesion()));
+		order.setMiDesc(rawMIDetail.getSubcontractMIMaster().getMatSpec());
+		order.setDrawingRef(rawMIDetail.getSubcontractMIMaster().getDrawingRef());
+		order.setDelDate(dateFormat.format(rawMIDetail.getSubcontractMIMaster().getMatDuedate()));
+		order.setDcDate(dateFormat.format(new Date()));
+		order.setUnitCost(String.valueOf(rawMIDetail.getSubcontractMIMaster().getUnitCost()));
+		order.setTotalCost(String.valueOf(rawMIDetail.getSubcontractMIMaster().getUnitCost().floatValue()* rawMIDetail.getMatQty().floatValue()));
+		order.setSno("1.0");
+		for(SciRawMIDetails rawMI:details) {
 
+			RawMIDetails rawmi = new RawMIDetails();
+			//rawmi.setMiDesc(rawMI.getRawMIMaster().getMatSpec());
+			rawmi.setMiMoc(rawMI.getMoc());
+			rawmi.setMiId(String.valueOf(rawMI.getRawMIMaster().getSeqMiId()));
+			rawmi.setMiDimen(rawMI.getRawMIMaster().getMatDimesion());
+			rawmi.setRetDimen(rawMI.getRetDim());
+			rawmi.setRetQty(String.valueOf(rawMI.getRetQty()));
+			rawmi.setMiQty(String.valueOf(rawMI.getMatQty()));
+			rawmi.setRemarks(rawMI.getRemarks());
+			rawmi.setMiUom(rawMI.getUnitOfMeasure());
+			order.addRawMi(rawmi);
+		}
+		ByteArrayOutputStream outstream = new ByteArrayOutputStream();
+		JAXBContext jcontext = JAXBContext.newInstance(PurchaseOrder.class);
+		Marshaller marshaller = jcontext.createMarshaller();
+
+		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.valueOf(true));
+
+		marshaller.marshal(order, outstream);
+		String dtoxml = new String(outstream.toByteArray());
+		context.getExternalContext().getSessionMap()
+				.put("dtoxml",dtoxml);
 		return success();
 	}
 
