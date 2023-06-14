@@ -226,40 +226,51 @@
 
  </display:column>
 </display:table>
+
+ <c:if test="${fn:length(milist) > 0}" >
+  <div style="padding-left:10px;width:787px;float:left">
+   <display:table export="true" sort="list"   pagesize="10" name="rawMIDetails"  id="rows"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+
+
+
+
+    <display:column sortable="true"   title="SubContractMI" >
+     <c:out value="${rows.subcontractMIMaster.seqMiId}" />
+
+    </display:column>
+    <display:column sortable="true"   title="Matcode"   >
+     <c:out value="${rows.subcontractMIMaster.matcode}" />
+    </display:column>
+
+    <display:column sortable="true"   title="matSpec"   >
+     <c:out value="${rows.subcontractMIMaster.matSpec}" />
+    </display:column>
+    <display:column sortable="true"   title="Sub Vendor"   >
+     <c:out value="${rows.sciVendorMaster.vendorName}" />
+    </display:column>
+    <display:column sortable="true"   title="Raw MI"   >
+     <c:out value="${rows.rawMIMaster.seqMiId}" />
+    </display:column>
+
+    <display:column sortable="true"   title="Raw Matcode"   >
+     <c:out value="${rows.rawMIMaster.matcode}" />
+    </display:column>
+    <display:column sortable="true"   title="Raw Mat Spec"   >
+     <c:out value="${rows.rawMIMaster.matSpec}" />
+    </display:column>
+   </display:table>
+
+
+   <input type="button"  value="Update Raw MI " onclick="eventdirect('updateCostMI')"/>
+
+  </div>
+ </c:if>
+
 </div>
 <input type="hidden" name="_flowExecutionKey"  value="<c:out value="${flowExecutionKey}"/>" />
  <input type="hidden" name="_eventId"  id="_eventId" value="submit" >
  
 
-  <c:if test="${fn:length(milist) > 0}" >
-<div style="padding-left:10px;width:787px;float:left">
- <display:table export="true" sort="list"   pagesize="10" name="rawMIDetails"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
-
-
-
-  <display:column sortable="true"   title="Sub Contract MI ID"  property="seqSubContMIID">
-
-  </display:column>
-  <display:column sortable="true"   title="Raw MI Code" property="seqOrigMIID" >
-
-  </display:column>
-  <display:column sortable="true"  title="Material Qty"  property="matQty" >
-
-  </display:column>
-  <display:column sortable="true"  title="Material Dimension"  property="matDimension" >
-
-  </display:column>
-
-  <display:column sortable="true"  title="Vendor Name"  property="vendorName" >
-
-  </display:column>
-
-
- </display:table>
- <input type="button"  value="Update Raw MI " onclick="eventdirect('updateCostMI')"/>
-  
- </div>
- </c:if>
 
 
 

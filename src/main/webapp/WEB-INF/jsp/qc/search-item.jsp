@@ -77,7 +77,7 @@
 
      <display:column title="Raw MI">
       <c:forEach items="${nestedmis }" var="row1" varStatus="table">
-       <c:out value="${row1.seqOrigMIID}" />/
+       <c:out value="${row1.rawMIMaster.seqMiId}" />/
       </c:forEach>
      </display:column>
 

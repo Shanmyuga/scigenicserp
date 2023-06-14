@@ -26,7 +26,7 @@ public class PurchaseItemMasterDAOImpl implements ISciPurchItemMasterDAO {
 
 	@Override
 	public List<SciRawMIDetails> loadRawMI(Long subContractMI) {
-Query query =		em.createQuery("from SciRawMIDetails rawmi where rawmi.seqSubContMIID=:seqSubContMIID");
+Query query =		em.createQuery("from SciRawMIDetails rawmi where rawmi.subcontractMIMaster.seqMiId=:seqSubContMIID");
 query.setParameter("seqSubContMIID",subContractMI);
 return query.getResultList();
 
@@ -140,7 +140,7 @@ return query.getResultList();
 
 	@Override
 	public void deleteRawMI(Long seqMiId,Long rawMiId) {
-		Query qry = em.createQuery("delete from SciRawMIDetails rawmi where rawmi.seqSubContMIID=:seqSubContractId and rawmi.seqOrigMIID=:seqOrigMIID");
+		Query qry = em.createQuery("delete from SciRawMIDetails rawmi where rawmi.subcontractMIMaster.seqMiId=:seqSubContractId and rawmi.rawMIMaster.seqMiId=:seqOrigMIID");
 		qry.setParameter("seqSubContractId",seqMiId);
 		qry.setParameter("seqOrigMIID",rawMiId);
 		qry.executeUpdate();

@@ -314,7 +314,7 @@ public class QCDaoImpl implements QCDao {
 
 	public List<SciRawMIDetails> getRawMidata(Long seqsubcontMiId) {
 		System.out.println(seqsubcontMiId);
-		 Query qry = em.createQuery("select m from SciRawMIDetails m where  m.seqSubContMIID =:seqSubcontmiid   ");
+		 Query qry = em.createQuery("select m from SciRawMIDetails m where  m.subcontractMIMaster.seqMiId =:seqSubcontmiid   ");
 		 qry.setParameter("seqSubcontmiid", seqsubcontMiId);
 		 List mylist = qry.getResultList();
 		 

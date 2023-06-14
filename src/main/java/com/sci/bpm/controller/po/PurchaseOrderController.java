@@ -585,7 +585,7 @@ public class PurchaseOrderController extends SciBaseController {
 			//rawmi.setMiDesc(rawMI.getRawMIMaster().getMatSpec());
 			rawmi.setMiMoc(rawMI.getMoc());
 			rawmi.setMiId(String.valueOf(rawMI.getRawMIMaster().getSeqMiId()));
-			rawmi.setMiDimen(rawMI.getRawMIMaster().getMatDimesion());
+			rawmi.setMiDimen(rawMI.getMatDimension());
 			rawmi.setRetDimen(rawMI.getRetDim());
 			rawmi.setRetQty(String.valueOf(rawMI.getRetQty()));
 			rawmi.setMiQty(String.valueOf(rawMI.getMatQty()));
