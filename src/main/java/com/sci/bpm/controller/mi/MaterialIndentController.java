@@ -727,7 +727,7 @@ public class MaterialIndentController extends SciBaseController {
             String[] rawmi = StringUtils.split(rawMis, ",");
 
             for (String raw : rawmi) {
-                purchaseItemService.deleteRawMI(master.getSeqMiId(),mcoll.getRawSeqVendorId());
+                purchaseItemService.deleteRawMI(master.getSeqMiId(),mcoll.getRawSeqVendorId(),Long.parseLong(raw));
                 SciMatindMaster mi = service.loadMI(Long.parseLong(raw));
                 if (mi == null) {
                     throw new Exception("Raw mi not a valid MI");

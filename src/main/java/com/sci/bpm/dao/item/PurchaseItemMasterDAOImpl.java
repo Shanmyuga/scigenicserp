@@ -139,10 +139,11 @@ return query.getResultList();
 	}
 
 	@Override
-	public void deleteRawMI(Long seqMiId,Long rawMiId) {
-		Query qry = em.createQuery("delete from SciRawMIDetails rawmi where rawmi.subcontractMIMaster.seqMiId=:seqSubContractId and rawmi.sciVendorMaster.seqVendorId=:seqVendorId");
+	public void deleteRawMI(Long seqMiId,Long seqVendorId,Long rawMiId) {
+		Query qry = em.createQuery("delete from SciRawMIDetails rawmi where rawmi.subcontractMIMaster.seqMiId=:seqSubContractId and rawmi.sciVendorMaster.seqVendorId=:seqVendorId and rawmi.rawMIMaster.seqMiId=:seqrawMiId");
 		qry.setParameter("seqSubContractId",seqMiId);
-		qry.setParameter("seqVendorId",rawMiId);
+		qry.setParameter("seqVendorId",seqVendorId);
+		qry.setParameter("seqrawMiId",rawMiId);
 		qry.executeUpdate();
 	}
 

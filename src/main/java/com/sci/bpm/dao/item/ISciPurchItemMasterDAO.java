@@ -126,5 +126,5 @@ public interface ISciPurchItemMasterDAO {
 	
 	public void addRawMI(SciRawMIDetails midetails);
 
-	public void deleteRawMI(Long seqMiId,Long rawMiId);
+	public void deleteRawMI(Long seqMiId,Long seqVendorId,Long rawMiId);
 }
