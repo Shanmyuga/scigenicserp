@@ -221,7 +221,7 @@
         <p>Subcontract MI's</p>
         <display:table export="true" sort="list"   pagesize="10" name="rawMiList"  id="rows"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
             <display:column sortable="true"   title="Select" media="html"   >
-                <form:radiobutton path="subContMI" value="${rows.subcontractMIMaster.seqMiId}"  />
+                <form:radiobutton path="subContMI" value="${rows.seqRawMIid}"  />
             </display:column>
             <display:column sortable="true"   title="SubContractMI" >
                 <c:out value="${rows.subcontractMIMaster.seqMiId}" />

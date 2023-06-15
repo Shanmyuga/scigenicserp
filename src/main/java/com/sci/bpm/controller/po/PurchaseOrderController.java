@@ -551,21 +551,35 @@ public class PurchaseOrderController extends SciBaseController {
 	}
 
 
+	private SciRawMIDetails selectRawMI(List<SciRawMIDetails> details ,Long seqRawMiId) {
+		SciRawMIDetails selected = null;
+		for (SciRawMIDetails m : details) {
+			if (m.getSeqRawMIid().intValue() == seqRawMiId.intValue()) {
+				selected = m;
+				break;
+			}
+		}
+		return selected;
+
+	}
 
 	public Event generateDTO(RequestContext context) throws Exception {
 
 		POCommand command = (POCommand) getFormObject(context);
 		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
 				.getFlowScope().get("pomastlist");
+		List<SciRawMIDetails> rawMIDetails = (List<SciRawMIDetails>) context
+				.getFlowScope().get("rawMiList");
 		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
 
 		Long subContractMiId = command.getSubContMI();
-
-		List<SciRawMIDetails> details = service.loadSubContractMI(subContractMiId);
+		SciRawMIDetails selectedRaw = selectRawMI(rawMIDetails,subContractMiId);
+		List<SciRawMIDetails> details = service.loadSubContractMI(selectedRaw.getSubcontractMIMaster().getSeqMiId(),selectedRaw.getSciVendorMaster().getSeqVendorId());
 
 		SciRawMIDetails rawMIDetail = details.get(0);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 		PurchaseOrder order = new PurchaseOrder();
+		order.setSeqRawMIId(String.valueOf(rawMIDetail.getSeqRawMIid()));
 		order.setVendorDetails(rawMIDetail.getSciVendorMaster().getVendorName()+"|"+rawMIDetail.getSciVendorMaster().getVendorAddress());
 		order.setPurchaseNo(String.valueOf(selected.getSeqPurchId()));
 		order.setWorkOrderNo(String.valueOf(rawMIDetail.getSubcontractMIMaster().getSciWorkorderMaster().getJobDesc()));
@@ -576,18 +590,18 @@ public class PurchaseOrderController extends SciBaseController {
 		order.setDrawingRef(rawMIDetail.getSubcontractMIMaster().getDrawingRef());
 		order.setDelDate(dateFormat.format(rawMIDetail.getSubcontractMIMaster().getMatDuedate()));
 		order.setDcDate(dateFormat.format(new Date()));
-		order.setUnitCost(String.valueOf(rawMIDetail.getSubcontractMIMaster().getUnitCost()));
-		order.setTotalCost(String.valueOf(rawMIDetail.getSubcontractMIMaster().getUnitCost().floatValue()* rawMIDetail.getMatQty().floatValue()));
+		order.setUnitCost(String.valueOf(rawMIDetail.getUnitPrice()));
+		order.setTotalCost(String.valueOf(rawMIDetail.getUnitPrice().floatValue()* rawMIDetail.getMatQty().floatValue()));
 		order.setSno("1.0");
 		for(SciRawMIDetails rawMI:details) {
 
 			RawMIDetails rawmi = new RawMIDetails();
-			//rawmi.setMiDesc(rawMI.getRawMIMaster().getMatSpec());
+			rawmi.setMiDesc(rawMI.getRawMaterialDesc());
 			rawmi.setMiMoc(rawMI.getMoc());
 			rawmi.setMiId(String.valueOf(rawMI.getRawMIMaster().getSeqMiId()));
 			rawmi.setMiDimen(rawMI.getMatDimension());
-			rawmi.setRetDimen(rawMI.getRetDim());
-			rawmi.setRetQty(String.valueOf(rawMI.getRetQty()));
+			rawmi.setRetDimen(rawMI.getRetDim()==null?"":rawMI.getRetDim());
+			rawmi.setRetQty(String.valueOf(rawMI.getRetQty()==null?"":rawMI.getRetQty()));
 			rawmi.setMiQty(String.valueOf(rawMI.getMatQty()));
 			rawmi.setRemarks(rawMI.getRemarks());
 			rawmi.setMiUom(rawMI.getUnitOfMeasure());

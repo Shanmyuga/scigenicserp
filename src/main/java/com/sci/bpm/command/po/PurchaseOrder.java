@@ -46,6 +46,8 @@ public class PurchaseOrder {
 
     private String delDate;
 
+    private String seqRawMIId;
+
     public String getSno() {
         return sno;
     }
@@ -164,6 +166,14 @@ public class PurchaseOrder {
 
     public void setFmtNo(String fmtNo) {
         this.fmtNo = fmtNo;
+    }
+
+    public String getSeqRawMIId() {
+        return seqRawMIId;
+    }
+
+    public void setSeqRawMIId(String seqRawMIId) {
+        this.seqRawMIId = seqRawMIId;
     }
 
     @XmlElementWrapper(name = "rawMIList")

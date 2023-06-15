@@ -203,8 +203,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	}
 
 	@Override
-	public List<SciRawMIDetails> loadSubContractMI(Long seqSubcontractMIId) {
-		return dao.loadSubContractMI(seqSubcontractMIId);
+	public List<SciRawMIDetails> loadSubContractMI(Long seqSubcontractMIId,Long seqVendorId) {
+		return dao.loadSubContractMI(seqSubcontractMIId,seqVendorId);
 	}
 
 	@Override

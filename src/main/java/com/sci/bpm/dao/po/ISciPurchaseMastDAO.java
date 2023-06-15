@@ -131,7 +131,7 @@ public interface ISciPurchaseMastDAO {
 	public void addPurchaseVendorCost(SciVendorPurchaseCost purchaseCost);
 	public Float getCostByWork(Long seqPurchaseId, Long seqWorkId);
 	public List<SciRawMIDetails> loadMis(Long seqPurchId);
-	public List<SciRawMIDetails> loadSubContractMI(Long seqSubcontractMIId);
+	public List<SciRawMIDetails> loadSubContractMI(Long seqSubcontractMIId,Long seqVendorId);
 
 
 }

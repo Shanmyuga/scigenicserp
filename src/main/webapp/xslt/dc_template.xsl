@@ -115,13 +115,13 @@
 											   border-width="1pt" number-columns-spanned="1">
 									<fo:block line-height="12pt" font-size="8pt"
 											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"
-											  keep-together="always"></fo:block>
+											  linefeed-treatment="preserve">DC NO</fo:block>
 								</fo:table-cell>
 								<fo:table-cell border-style="solid" border-color="black"
 											   border-width="1pt" number-columns-spanned="1">
-									<fo:block line-height="12pt" font-size="8pt"
+									<fo:block line-height="12pt" font-size="8pt" text-align="center"
 											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"
-											  keep-together="always"></fo:block>
+											  keep-together="always"><xsl:value-of select="seqRawMIId" /></fo:block>
 								</fo:table-cell>
 								<fo:table-cell border-style="solid" border-color="black"
 											   border-width="1pt" number-columns-spanned="1">
