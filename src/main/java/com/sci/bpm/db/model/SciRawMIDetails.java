@@ -34,6 +34,7 @@ public class SciRawMIDetails implements java.io.Serializable {
 	private String remarks;
 
 	private String retDim;
+	private String stageDesc;
 
 	private Float retQty;
 	@Id
@@ -171,5 +172,14 @@ public class SciRawMIDetails implements java.io.Serializable {
 
 	public void setSciVendorMaster(SciVendorMaster sciVendorMaster) {
 		this.sciVendorMaster = sciVendorMaster;
+	}
+
+	@Column(name="STAGE_DESC", length=20)
+	public String getStageDesc() {
+		return stageDesc;
+	}
+
+	public void setStageDesc(String stageDesc) {
+		this.stageDesc = stageDesc;
 	}
 }

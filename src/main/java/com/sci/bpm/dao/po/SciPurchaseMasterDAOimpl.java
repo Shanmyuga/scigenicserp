@@ -405,12 +405,13 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 	}
 
 	@Override
-	public List<SciRawMIDetails> loadSubContractMI(Long seqSubcontractMIId,Long seqVendorId) {
+	public List<SciRawMIDetails> loadSubContractMI(Long seqSubcontractMIId,Long seqVendorId,String stageDesc) {
 
-		String pseqquery = "from SciRawMIDetails p where  p.subcontractMIMaster.seqMiId = :seqMIId and p.sciVendorMaster.seqVendorId=:seqVendorId";
+		String pseqquery = "from SciRawMIDetails p where  p.subcontractMIMaster.seqMiId = :seqMIId and p.sciVendorMaster.seqVendorId=:seqVendorId and p.stageDesc=:stageDesc";
 		Query qry = em.createQuery(pseqquery);
 		qry.setParameter("seqMIId" ,seqSubcontractMIId);
 		qry.setParameter("seqVendorId" ,seqVendorId);
+		qry.setParameter("stageDesc",stageDesc);
 		return qry.getResultList();
 	}
 

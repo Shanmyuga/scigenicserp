@@ -16,7 +16,7 @@ public interface PurchaseItemService {
 	public boolean checkRawMI(Long rawMI);
 	
 	public void addRawMI(SciRawMIDetails midetails);
-	public void deleteRawMI(Long seqMiId,Long seqVendorId,Long rawMiId);
+	public void deleteRawMI(Long seqMiId,Long seqVendorId,Long rawMiId,String stageDesc);
 
 	public List<SciRawMIDetails> loadRawMI(Long subContractMI);
 }

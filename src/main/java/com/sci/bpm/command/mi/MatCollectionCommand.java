@@ -34,6 +34,7 @@ public class MatCollectionCommand implements Serializable {
 	private Long rawSeqVendorId;
 	private String miPhase;
 	private String matDesc;
+	private String stageDesc;
 	private String productSpecid;
 	private String matDept;
 	private String matindex;
@@ -304,5 +305,13 @@ public class MatCollectionCommand implements Serializable {
 
 	public void setRetQty(Float retQty) {
 		this.retQty = retQty;
+	}
+
+	public String getStageDesc() {
+		return stageDesc;
+	}
+
+	public void setStageDesc(String stageDesc) {
+		this.stageDesc = stageDesc;
 	}
 }

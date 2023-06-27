@@ -287,7 +287,7 @@
 											   border-width="1pt" number-columns-spanned="1" height="2.5cm">
 									<fo:block line-height="30pt" font-size="8pt"
 											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-											  keep-together="always"><xsl:value-of select="miDimen"></xsl:value-of></fo:block>
+											  linefeed-treatment="preserve"><xsl:value-of select="miDimen"></xsl:value-of></fo:block>
 								</fo:table-cell>
 								<fo:table-cell border-style="solid" border-color="black"
 											   border-width="1pt" number-columns-spanned="1" height="2.5cm">

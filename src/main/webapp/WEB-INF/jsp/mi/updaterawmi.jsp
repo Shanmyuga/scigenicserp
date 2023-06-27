@@ -207,6 +207,17 @@
   <form:input path="matList[${row_rowNum%10}].remarks" />
 
  </display:column>
+ <display:column sortable="true"  title="Stage"  >
+
+  <form:select path="matList[${row_rowNum%10}].stageDesc" >
+   <form:option value="Stage1">Stage1</form:option>
+   <form:option value="Stage2">Stage2</form:option>
+   <form:option value="Stage3">Stage3</form:option>
+   <form:option value="Stage4">Stage4</form:option>
+
+  </form:select>
+
+ </display:column>
  <display:column sortable="true"  title="Return Dim"  >
 
   <form:input path="matList[${row_rowNum%10}].retDim" />

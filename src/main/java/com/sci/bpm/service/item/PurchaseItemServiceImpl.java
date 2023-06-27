@@ -71,9 +71,11 @@ for(SciMatindMaster m: splitmilist) {
 	}
 
 	@Override
-	public void deleteRawMI(Long seqMiId,Long seqVendorId,Long rawMiId) {
-		dao.deleteRawMI(seqMiId,seqVendorId,rawMiId);
+	public void deleteRawMI(Long seqMiId, Long seqVendorId, Long rawMiId, String stageDesc) {
+		dao.deleteRawMI(seqMiId,seqVendorId,rawMiId,stageDesc);
 	}
+
+
 
 	@Override
 	public List<SciRawMIDetails> loadRawMI(Long subContractMI) {

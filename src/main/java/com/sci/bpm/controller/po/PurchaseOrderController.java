@@ -574,7 +574,7 @@ public class PurchaseOrderController extends SciBaseController {
 
 		Long subContractMiId = command.getSubContMI();
 		SciRawMIDetails selectedRaw = selectRawMI(rawMIDetails,subContractMiId);
-		List<SciRawMIDetails> details = service.loadSubContractMI(selectedRaw.getSubcontractMIMaster().getSeqMiId(),selectedRaw.getSciVendorMaster().getSeqVendorId());
+		List<SciRawMIDetails> details = service.loadSubContractMI(selectedRaw.getSubcontractMIMaster().getSeqMiId(),selectedRaw.getSciVendorMaster().getSeqVendorId(),selectedRaw.getStageDesc());
 
 		SciRawMIDetails rawMIDetail = details.get(0);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
@@ -587,15 +587,17 @@ public class PurchaseOrderController extends SciBaseController {
 		order.setMiQty(String.valueOf(rawMIDetail.getMatQty()));
 		order.setMiDimen(String.valueOf(rawMIDetail.getSubcontractMIMaster().getMatDimesion()));
 		order.setMiDesc(rawMIDetail.getSubcontractMIMaster().getMatSpec());
-		order.setDrawingRef(rawMIDetail.getSubcontractMIMaster().getDrawingRef());
+		order.setDrawingRef(rawMIDetail.getSubcontractMIMaster().getRecommend());
 		order.setDelDate(dateFormat.format(rawMIDetail.getSubcontractMIMaster().getMatDuedate()));
 		order.setDcDate(dateFormat.format(new Date()));
 		order.setUnitCost(String.valueOf(rawMIDetail.getUnitPrice()));
 		order.setTotalCost(String.valueOf(rawMIDetail.getUnitPrice().floatValue()* rawMIDetail.getMatQty().floatValue()));
 		order.setSno("1.0");
+		int idx = 1;
 		for(SciRawMIDetails rawMI:details) {
 
 			RawMIDetails rawmi = new RawMIDetails();
+			rawmi.setSno(String.valueOf(idx)+".0");
 			rawmi.setMiDesc(rawMI.getRawMaterialDesc());
 			rawmi.setMiMoc(rawMI.getMoc());
 			rawmi.setMiId(String.valueOf(rawMI.getRawMIMaster().getSeqMiId()));
@@ -606,6 +608,7 @@ public class PurchaseOrderController extends SciBaseController {
 			rawmi.setRemarks(rawMI.getRemarks());
 			rawmi.setMiUom(rawMI.getUnitOfMeasure());
 			order.addRawMi(rawmi);
+			idx = idx +1;
 		}
 		ByteArrayOutputStream outstream = new ByteArrayOutputStream();
 		JAXBContext jcontext = JAXBContext.newInstance(PurchaseOrder.class);

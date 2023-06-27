@@ -32,7 +32,7 @@ public interface PurchaseOrderService {
 	public List<SciVendorInvoiceMaster> loadInvoiceDetails();
 	public void addInvoiceDetails(SciVendorInvoiceMaster vmaster);
 	public List<SciPurchaseMast> loadPODetails(Long seqVendorID);
-	public List<SciRawMIDetails> loadSubContractMI(Long seqSubcontractMIId,Long seqVendorId);
+	public List<SciRawMIDetails> loadSubContractMI(Long seqSubcontractMIId,Long seqVendorId,String stageDesc);
 	public List<SciVendorInvoiceMaster> loadbillNo(Long seqVendorID);
 	public String getWorkOrders(Long seqPurchId);
 	public List<SciVendorPurchaseCost> loadQuotations(String matDept,String matCategory);

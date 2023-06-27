@@ -244,8 +244,13 @@
             <display:column sortable="true"   title="Raw Matcode"   >
                 <c:out value="${rows.rawMIMaster.matcode}" />
             </display:column>
+
+
             <display:column sortable="true"   title="Raw Mat Spec"   >
                 <c:out value="${rows.rawMIMaster.matSpec}" />
+            </display:column>
+            <display:column sortable="true"   title="Stage"   >
+                <c:out value="${rows.stageDesc}" />
             </display:column>
         </display:table>
         </form:form>
