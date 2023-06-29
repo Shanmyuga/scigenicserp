@@ -78,6 +78,16 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 		return null;
 	}
 
+	@Override
+	public void updateDCNO(SciRawMIDetails details) {
+		Query query = em.createQuery("update SciRawMIDetails mi set dcNo=:dcno where mi.stageDesc=:stageDesc and mi.sciVendorMaster.seqVendorId=:seqVendorID and mi.subcontractMIMaster.seqMiId=:seqMIId  ");
+		query.setParameter("dcno",details.getSeqRawMIid());
+		query.setParameter("stageDesc",details.getStageDesc());
+		query.setParameter("seqVendorID",details.getSciVendorMaster().getSeqVendorId());
+		query.setParameter("seqMIId",details.getSubcontractMIMaster().getSeqMiId());
+		query.executeUpdate();
+	}
+
 	public List searchPO(POCommand command) {
 
 		String query = "from SciPurchaseMast m where m.purchaseStatus >= 0 ";

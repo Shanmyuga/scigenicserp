@@ -14,6 +14,8 @@ public interface PurchaseOrderService {
 
 	public SciPurchaseMast loadPOById(Long seqPurchId);
 	public  void addPurchOrder(SciPurchaseMast master,List<SciPurchItemMaster> itemlist) ;
+
+	public void updateDCNO(SciRawMIDetails details);
 	public  void addPurchOrder(SciPurchaseMast master,List<SciPurchItemMaster> itemlist,Long mistatus) ;
 	public List<SciPurchaseMast> searchPOs(POCommand command);
 	public List searchMatCodePO(POCommand command);

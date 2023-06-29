@@ -80,6 +80,7 @@ public interface ISciPurchaseMastDAO {
 	 *             if the operation fails
 	 */
 	public SciPurchaseMast update(SciPurchaseMast entity);
+	public void updateDCNO(SciRawMIDetails details);
 
 	public SciPurchaseMast findById(Long id);
 

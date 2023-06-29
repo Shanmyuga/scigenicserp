@@ -35,7 +35,7 @@ public class SciRawMIDetails implements java.io.Serializable {
 
 	private String retDim;
 	private String stageDesc;
-
+private Long dcNo;
 	private Float retQty;
 	@Id
 	@Column(name = "SEQ_RAW_MI_ID", unique = true, nullable = false, insertable = true, updatable = true, precision = 9, scale = 0)
@@ -181,5 +181,13 @@ public class SciRawMIDetails implements java.io.Serializable {
 
 	public void setStageDesc(String stageDesc) {
 		this.stageDesc = stageDesc;
+	}
+	@Column(name = "DC_NO", unique = false, nullable = true, insertable = true, updatable = true, precision = 9, scale = 0)
+	public Long getDcNo() {
+		return dcNo;
+	}
+
+	public void setDcNo(Long dcNo) {
+		this.dcNo = dcNo;
 	}
 }

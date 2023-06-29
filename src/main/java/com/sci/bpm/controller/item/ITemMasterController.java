@@ -1,11 +1,9 @@
 package com.sci.bpm.controller.item;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
+import com.sci.bpm.db.model.*;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.StringUtils;
@@ -16,10 +14,6 @@ import org.springframework.webflow.execution.RequestContext;
 
 import com.sci.bpm.command.mi.ItemCommand;
 import com.sci.bpm.controller.base.SciBaseController;
-import com.sci.bpm.db.model.SciItemmiDetails;
-import com.sci.bpm.db.model.SciMatindMaster;
-import com.sci.bpm.db.model.SciPurchItemMaster;
-import com.sci.bpm.db.model.SciRawMIDetails;
 import com.sci.bpm.service.item.PurchaseItemService;
 import com.sci.bpm.service.mi.MaterialIndentService;
 
@@ -64,6 +58,8 @@ public class ITemMasterController extends SciBaseController {
 			 throw new Exception("Raw mi are not valid issued MI");
 		 }
 		 itemmaster.setRawmis(command.getRawmiid());
+		 Set<SciAddMatInfoDocsEntity> addMatInfoDocsEntities = new HashSet<SciAddMatInfoDocsEntity>();
+		Set<SciMiMaterialAddinfoEntity> sciMiMaterialAddinfoEntities = new HashSet<SciMiMaterialAddinfoEntity>();
 		for(SciMatindMaster m : milist){
 			SciItemmiDetails midetails = new SciItemmiDetails();
 			m = miservice.loadMI(m.getSeqMiId());
@@ -86,6 +82,23 @@ public class ITemMasterController extends SciBaseController {
 				
 				remain.setInsertedBy("PO_SPLIT");
 				remain.setInsertedDate(new Date());
+				 for(SciAddMatInfoDocsEntity addMatInfoDocsEntity: m.getMatInfoDocsEntities()) {
+				 	SciAddMatInfoDocsEntity entity = new SciAddMatInfoDocsEntity();
+				 	BeanUtils.copyProperties(entity,addMatInfoDocsEntity);
+					 addMatInfoDocsEntities.add(entity);
+				 }
+
+				 for(SciMiMaterialAddinfoEntity sciMiMaterialAddinfoEntity: m.getMatInfos()) {
+				 	SciMiMaterialAddinfoEntity sciMiMaterialAddinfoEntity1 = new SciMiMaterialAddinfoEntity();
+				 	sciMiMaterialAddinfoEntity1.setSeqMiId(remain);
+				 	sciMiMaterialAddinfoEntity1.setInsertedBy(sciMiMaterialAddinfoEntity.getInsertedBy());
+				 	sciMiMaterialAddinfoEntity1.setInsertedDate(sciMiMaterialAddinfoEntity.getInsertedDate());
+				 	sciMiMaterialAddinfoEntity1.setAddInfoValue(sciMiMaterialAddinfoEntity.getAddInfoValue());
+				 	sciMiMaterialAddinfoEntity1.setAddInfoLabel(sciMiMaterialAddinfoEntity.getAddInfoLabel());
+					 sciMiMaterialAddinfoEntities.add(sciMiMaterialAddinfoEntity1);
+				 }
+				remain.setMatInfoDocsEntities(addMatInfoDocsEntities);
+				 remain.setMatInfos(sciMiMaterialAddinfoEntities);
 				remain.setUpdatedBy(getUserPreferences().getUserID());
 				splitdatalist.add(remain);
 				

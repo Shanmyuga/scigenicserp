@@ -60,6 +60,8 @@ public class PurchaseOrderController extends SciBaseController {
 	@Autowired
 	private ProductMasterService prservice;
 
+
+
 	@Autowired
 	private QCService qcService;
 
@@ -618,6 +620,7 @@ public class PurchaseOrderController extends SciBaseController {
 
 		marshaller.marshal(order, outstream);
 		String dtoxml = new String(outstream.toByteArray());
+		service.updateDCNO(selectedRaw);
 		context.getExternalContext().getSessionMap()
 				.put("dtoxml",dtoxml);
 		return success();

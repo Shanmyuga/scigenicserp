@@ -64,6 +64,13 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		}
 	}
 
+	@Override
+	public void updateDCNO(SciRawMIDetails details) {
+		if(details.getDcNo() == null) {
+			dao.updateDCNO(details);
+		}
+	}
+
 	public List<SciPurchaseMast> searchPOs(POCommand command) {
 
 		List<SciPurchaseMast> purchaseMastList = this.dao.searchPO(command);
