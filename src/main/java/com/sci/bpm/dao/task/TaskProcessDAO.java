@@ -35,6 +35,7 @@ public interface TaskProcessDAO {
 	public List<SciReportConfiguration>  loadDailyReports();
 	public List<SciReportConfiguration>  loadWeeklyReports();
 	
+	public List<LinkedHashMap<String,Object>> generateReportsWithFilter(String sqlQuery,String filter);
 	public List<LinkedHashMap<String,Object>> generateReports(String sqlQuery);
 
 }

@@ -245,7 +245,7 @@ public class TaskServiceImpl implements TaskService {
         return  downloadExcelReports(configuration,null);
     }
 
-    @Override
+    @Transactional
     public List<LinkedHashMap<String, Object>> downloadSelectedReportWithFilter(SciReportConfiguration configuration, String shortKey) {
         return downloadExcelReports(configuration,shortKey);
     }
@@ -433,9 +433,9 @@ public class TaskServiceImpl implements TaskService {
         }
         else {
 
-            String finalQuery = "select * from ( "+ report.getReportQuery() + " ) abc where abc.short_key = '"+filter+"'";
-            System.out.println(finalQuery);
-            mylist = daoimpl.generateReports(finalQuery);
+            String sqlQuery = "Select * from ( " + report.getReportQuery()+ " ) abc where abc.short_key = '"+ filter+ "'";
+
+            mylist = daoimpl.generateReportsWithFilter(sqlQuery,filter);
         }
 
 

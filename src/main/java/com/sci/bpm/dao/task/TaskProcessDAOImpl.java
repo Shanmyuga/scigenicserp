@@ -295,7 +295,7 @@ public class TaskProcessDAOImpl implements TaskProcessDAO {
 						System.out.println("");
 					}
 
-				} catch (SQLException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -312,6 +312,53 @@ public class TaskProcessDAOImpl implements TaskProcessDAO {
 				.createQuery("Select m from SciReportConfiguration m where m.reportStatus  = 'A' and m.reportSchedule= 'WEEKLY' ");
 
 		return qry.getResultList();
+	}
+
+	@Override
+	public List<LinkedHashMap<String, Object>> generateReportsWithFilter(String sqlQuery, String filter) {
+
+		Session session = (Session) em.getDelegate();
+		final List<LinkedHashMap<String, Object>> mylist = new ArrayList<LinkedHashMap<String, Object>>();
+		session.doWork(new Work() {
+			@Override
+			public void execute(Connection conn) throws SQLException {
+
+
+				Statement st;
+				try {
+					st = conn.createStatement();
+
+					ResultSet rs = st.executeQuery(sqlQuery);
+					ResultSetMetaData metadata = rs.getMetaData();
+					LinkedHashMap<String, Object> colnamemap = new LinkedHashMap<String, Object>();
+					for (int i = 0; i < metadata.getColumnCount(); i++) {
+						colnamemap.put(metadata.getColumnName(i + 1),
+								metadata.getColumnName(i + 1));
+					}
+					mylist.add(colnamemap);
+
+					while (rs.next()) {
+						LinkedHashMap<String, Object> rowMap = new java.util.LinkedHashMap<String, Object>();
+
+						for (int i = 0; i < metadata.getColumnCount(); i++) {
+							Object value = rs.getObject(i + 1);
+							String colname = metadata.getColumnName(i + 1);
+							rowMap.put(colname, value);
+						}
+
+							mylist.add(rowMap);
+
+						System.out.println("");
+					}
+
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+	return mylist;
+
 	}
 
 }
