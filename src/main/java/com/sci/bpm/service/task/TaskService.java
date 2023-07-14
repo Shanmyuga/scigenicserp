@@ -39,5 +39,8 @@ public interface TaskService {
 
 
 	public List<LinkedHashMap<String, Object>> downloadSelectedReport(SciReportConfiguration configuration);
+	public List<LinkedHashMap<String, Object>> downloadSelectedReportWithFilter(SciReportConfiguration configuration,String shortKey);
 	public List<TableDynaBean> viewSelectedReport(SciReportConfiguration configuration);
+
+	public List<TableDynaBean> viewSelectedReportWithFilter(SciReportConfiguration configuration,String shortKey);
 }

@@ -242,7 +242,12 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional
     public List<LinkedHashMap<String, Object>> downloadSelectedReport(SciReportConfiguration configuration) {
-        return  downloadExcelReports(configuration);
+        return  downloadExcelReports(configuration,null);
+    }
+
+    @Override
+    public List<LinkedHashMap<String, Object>> downloadSelectedReportWithFilter(SciReportConfiguration configuration, String shortKey) {
+        return downloadExcelReports(configuration,shortKey);
     }
 
     @Transactional
@@ -250,6 +255,29 @@ public class TaskServiceImpl implements TaskService {
     public List<TableDynaBean> viewSelectedReport(SciReportConfiguration report) {
 
         List<LinkedHashMap<String, Object>> mylist = daoimpl.generateReports(report.getReportQuery());
+        HashMap<String, Object> colnameMap = mylist.get(0);
+        TableDynaBean tableDynaBean = new TableDynaBean();
+        Set<String> colNames = colnameMap.keySet();
+        for (String keys : colNames) {
+            List<String> rowValues = new ArrayList<String>();
+            for (int idx = 1; idx < mylist.size(); idx++) {
+
+                HashMap<String, Object> rowMap = mylist.get(idx);
+                rowValues.add(((Object) rowMap.get(keys))!= null?((Object) rowMap.get(keys)).toString():" ");
+            }
+            tableDynaBean.addDynaBean(new DynaBean(keys, rowValues));
+        }
+
+        List<TableDynaBean> dynalist = new ArrayList<TableDynaBean>();
+        dynalist.add(tableDynaBean);
+        return dynalist;
+    }
+
+    @Override
+    public List<TableDynaBean> viewSelectedReportWithFilter(SciReportConfiguration report, String shortKey) {
+        String finalQuery = "select * from ( "+ report.getReportQuery() + " ) abc where abc.short_key = '"+shortKey+"'";
+
+        List<LinkedHashMap<String, Object>> mylist = daoimpl.generateReports(finalQuery);
         HashMap<String, Object> colnameMap = mylist.get(0);
         TableDynaBean tableDynaBean = new TableDynaBean();
         Set<String> colNames = colnameMap.keySet();
@@ -397,10 +425,18 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
-    private List downloadExcelReports(SciReportConfiguration report) {
+    private List downloadExcelReports(SciReportConfiguration report,String filter) {
 
-        List<LinkedHashMap<String, Object>> mylist = daoimpl.generateReports(report.getReportQuery());
+        List<LinkedHashMap<String, Object>> mylist = null;
+        if(filter == null) {
+            mylist = daoimpl.generateReports(report.getReportQuery());
+        }
+        else {
 
+            String finalQuery = "select * from ( "+ report.getReportQuery() + " ) abc where abc.short_key = '"+filter+"'";
+            System.out.println(finalQuery);
+            mylist = daoimpl.generateReports(finalQuery);
+        }
 
 
 

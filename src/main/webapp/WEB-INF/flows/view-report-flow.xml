@@ -4,7 +4,7 @@
         <webflow:evaluate expression="lookupcontbean.setupForm"/>
          <webflow:evaluate expression="lookupbean.loadReports()" result="flowScope.reportsdata"/>
     <webflow:evaluate expression="lookupbean.loadReportNames()" result="flowScope.reportNames"/>
-
+    <webflow:evaluate expression="lookupbean.getDropDownList('workordershort_key')" result="flowScope.workordershortkey"/>
 </webflow:on-start>
 <webflow:view-state id="addReport" view="view.schedule.add">
 

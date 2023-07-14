@@ -40,7 +40,7 @@ public class LookupValueBean implements Serializable{
 	private String vendorAddress;
 	private String customerStatus;
 
-
+	private String shortKey;
 	
 	
 	private String seqReportID;
@@ -337,5 +337,13 @@ public class LookupValueBean implements Serializable{
 
 	public void setCustomerStatus(String customerStatus) {
 		this.customerStatus = customerStatus;
+	}
+
+	public String getShortKey() {
+		return shortKey;
+	}
+
+	public void setShortKey(String shortKey) {
+		this.shortKey = shortKey;
 	}
 }

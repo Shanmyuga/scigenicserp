@@ -15,6 +15,7 @@ import com.sci.bpm.service.user.UserService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.webflow.execution.Event;
@@ -322,20 +323,39 @@ SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope()
 	public Event downloadSelectedReport(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		List<SciReportConfiguration> reports = loadReports(context);
+		List<LinkedHashMap<String, Object>> wb = null;
 
 		SciReportConfiguration config=   selectReport(reports, new Long(value.getSeqReportID()));
-		List<LinkedHashMap<String, Object>> wb = taskService.downloadSelectedReport(config);
+
+		if(StringUtils.isNotBlank(value.getShortKey() )) {
+			 wb = taskService.downloadSelectedReportWithFilter(config,value.getShortKey());
+
+		}
+		else {
+			 wb = taskService.downloadSelectedReport(config);
+
+		}
+
 		context.getFlowScope().put("workbook",wb);
 		context.getExternalContext().getSessionMap().put("workbook",wb);
 		return success();
 	}
 	public Event viewSelectedReport(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
+
 		List<SciReportConfiguration> reports = loadReports(context);
 
 		SciReportConfiguration config=   selectReport(reports, new Long(value.getSeqReportID()));
-		List<TableDynaBean> items = taskService.viewSelectedReport(config);
-		context.getFlowScope().put("ViewReportsData",items);
+		if(StringUtils.isNotBlank(value.getShortKey() )) {
+			List<TableDynaBean> items = taskService.viewSelectedReport(config);
+			context.getFlowScope().put("ViewReportsData",items);
+		}
+		else {
+			List<TableDynaBean> items = taskService.viewSelectedReport(config);
+			context.getFlowScope().put("ViewReportsData",items);
+		}
+
+
 		return success();
 	}
 

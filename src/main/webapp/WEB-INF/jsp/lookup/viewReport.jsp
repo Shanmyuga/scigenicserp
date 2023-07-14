@@ -33,6 +33,11 @@ Data</font></p>
         <p><input type="button" value="Filter report" onclick="eventdirect('filterReport')"/>&nbsp;&nbsp;</p>
 
    <br/>
+    <label for="tags">Work Order Filter: </label>
+    <form:select path="shortKey" size="1" id="shortKey" >
+        <form:option value="">All</form:option>
+        <form:options items="${workordershortkey}" />
+    </form:select>
     <br/>
     <br/>
 
