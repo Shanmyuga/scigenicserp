@@ -17,8 +17,8 @@
 									   page-width="21cm" page-height="29.7cm" master-name="first">
 
 
-					<fo:region-body margin-bottom="3cm" margin-top="8.5cm" />
-					<fo:region-before extent="8.5cm"/>
+					<fo:region-body margin-bottom="3cm" margin-top="3cm" />
+					<fo:region-before extent="4cm"/>
 					<fo:region-after extent="3cm"/>
 
 				</fo:simple-page-master>
@@ -94,6 +94,40 @@
 
 
 
+
+
+
+
+				</fo:static-content>
+
+
+
+
+
+
+
+				<fo:static-content flow-name="xsl-region-after">
+					<fo:block line-height="12pt" font-size="10pt"
+							  space-before.optimum="1.5pt" space-after.optimum="1.5pt"
+							  keep-together="always" text-align="center">
+						<fo:inline white-space-collapse="false" />
+					</fo:block>
+					<fo:block line-height="12pt" font-size="10pt"
+							  space-before.optimum="1.5pt" space-after.optimum="1.5pt"
+							  keep-together="always" text-align="center">
+						<fo:inline white-space-collapse="false" />
+					</fo:block>
+					<fo:block text-align="center">
+						Page <fo:page-number/> of <fo:page-number-citation ref-id="last-page" />  </fo:block>
+
+
+				</fo:static-content>
+
+
+
+				<fo:flow flow-name="xsl-region-body">
+
+
 					<fo:table text-align="left" table-layout="fixed">
 						<fo:table-column column-width="0.80cm" />
 						<fo:table-column column-width="1.96cm" />
@@ -157,7 +191,7 @@
 											   border-width="1pt" number-columns-spanned="1">
 									<fo:block line-height="12pt" font-size="8pt"
 											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"
-											linefeed-treatment="preserve"><xsl:value-of select="workOrderNo"/></fo:block>
+											  linefeed-treatment="preserve"><xsl:value-of select="workOrderNo"/></fo:block>
 								</fo:table-cell>
 								<fo:table-cell border-style="solid" border-color="black"
 											   border-width="1pt" number-columns-spanned="2">
@@ -489,157 +523,149 @@
 
 								</fo:table-row>
 
+								<xsl:choose>
+									<xsl:when test="position() = last()">
+										<fo:table-row>
+											<fo:table-cell border-style="solid" border-color="black"
+														   border-width="1pt" number-columns-spanned="2" >
+												<fo:block line-height="15pt" font-size="8pt"
+														  space-before.optimum="1.5pt" space-after.optimum="1.5pt" text-align="center"
+														  keep-together="always"></fo:block>
+											</fo:table-cell>
+											<fo:table-cell border-style="solid" border-color="black"
+														   border-width="1pt" number-columns-spanned="1" >
+												<fo:block line-height="15pt" font-size="8pt"
+														  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
+														  keep-together="always">Prepared By</fo:block>
+											</fo:table-cell>
+											<fo:table-cell border-style="solid" border-color="black"
+														   border-width="1pt" number-columns-spanned="1" >
+												<fo:block line-height="15pt" font-size="8pt"
+														  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
+														  keep-together="always">Approved By</fo:block>
+											</fo:table-cell>
+											<fo:table-cell border-style="solid" border-color="black"
+														   border-width="1pt" number-columns-spanned="3" >
+												<fo:block line-height="15pt" font-size="8pt"
+														  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
+														  keep-together="always">Vendor</fo:block>
+											</fo:table-cell>
+											<fo:table-cell border-style="solid" border-color="black"
+														   border-width="1pt" number-columns-spanned="2" >
+												<fo:block line-height="15pt" font-size="8pt"
+														  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
+														  keep-together="always">Mode of Dispatch</fo:block>
+											</fo:table-cell>
+											<fo:table-cell border-style="solid" border-color="black"
+														   border-width="1pt" number-columns-spanned="4" >
+												<fo:block line-height="15pt" font-size="8pt"
+														  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
+														  keep-together="always">Vehicle Details</fo:block>
+											</fo:table-cell>
+
+										</fo:table-row>
+										<fo:table-row>
+											<fo:table-cell border-style="solid" border-color="black"
+														   border-width="1pt" number-columns-spanned="2" height="1.0cm">
+												<fo:block line-height="15pt" font-size="8pt"
+														  space-before.optimum="1.5pt" space-after.optimum="1.5pt" text-align="center"
+														  keep-together="always">Name</fo:block>
+											</fo:table-cell>
+											<fo:table-cell border-style="solid" border-color="black"
+														   border-width="1pt" number-columns-spanned="1" height="1.0cm" >
+												<fo:block line-height="15pt" font-size="8pt"
+														  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
+														  keep-together="always"></fo:block>
+											</fo:table-cell>
+											<fo:table-cell border-style="solid" border-color="black"
+														   border-width="1pt" number-columns-spanned="1" height="1.0cm">
+												<fo:block line-height="15pt" font-size="8pt"
+														  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
+														  keep-together="always"></fo:block>
+											</fo:table-cell>
+											<fo:table-cell border-style="solid" border-color="black"
+														   border-width="1pt" number-columns-spanned="3" height="1.0cm">
+												<fo:block line-height="15pt" font-size="8pt"
+														  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
+														  keep-together="always"></fo:block>
+											</fo:table-cell>
+											<fo:table-cell border-style="solid" border-color="black"
+														   border-width="1pt" number-columns-spanned="2" height="1.0cm">
+												<fo:block line-height="15pt" font-size="8pt"
+														  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
+														  keep-together="always"></fo:block>
+											</fo:table-cell>
+											<fo:table-cell border-style="solid" border-color="black"
+														   border-width="1pt" number-columns-spanned="4" height="1.0cm">
+												<fo:block line-height="15pt" font-size="8pt"
+														  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
+														  keep-together="always"></fo:block>
+											</fo:table-cell>
+
+										</fo:table-row>
+										<fo:table-row>
+											<fo:table-cell border-style="solid" border-color="black"
+														   border-width="1pt" number-columns-spanned="2" height="1.0cm">
+												<fo:block line-height="15pt" font-size="8pt"
+														  space-before.optimum="1.5pt" space-after.optimum="1.5pt" text-align="center"
+														  keep-together="always">Signature</fo:block>
+											</fo:table-cell>
+											<fo:table-cell border-style="solid" border-color="black"
+														   border-width="1pt" number-columns-spanned="1" height="1.0cm">
+												<fo:block line-height="15pt" font-size="8pt"
+														  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
+														  keep-together="always"></fo:block>
+											</fo:table-cell>
+											<fo:table-cell border-style="solid" border-color="black"
+														   border-width="1pt" number-columns-spanned="1" height="1.0cm">
+												<fo:block line-height="15pt" font-size="8pt"
+														  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
+														  keep-together="always"></fo:block>
+											</fo:table-cell>
+											<fo:table-cell border-style="solid" border-color="black"
+														   border-width="1pt" number-columns-spanned="3" height="1.0cm">
+												<fo:block line-height="15pt" font-size="8pt"
+														  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
+														  keep-together="always"></fo:block>
+											</fo:table-cell>
+											<fo:table-cell border-style="solid" border-color="black"
+														   border-width="1pt" number-columns-spanned="2" height="1.0cm">
+												<fo:block line-height="15pt" font-size="8pt"
+														  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
+														  keep-together="always"></fo:block>
+											</fo:table-cell>
+											<fo:table-cell border-style="solid" border-color="black"
+														   border-width="1pt" number-columns-spanned="4" height="1.0cm">
+												<fo:block line-height="15pt" font-size="8pt"
+														  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
+														  keep-together="always"></fo:block>
+											</fo:table-cell>
+
+										</fo:table-row>
+
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:if test="(position() mod 4) =0">
+											<xsl:choose>
+
+												<xsl:when test="position() != last()">
+													<fo:table-row>
+														<fo:table-cell border-style="none" border-color="none"
+																	   border-width="1pt" number-columns-spanned="13" height="0.2cm">
+															<fo:block page-break-before="always"/>
+														</fo:table-cell>
+													</fo:table-row>
+												</xsl:when>
+											</xsl:choose>
+										</xsl:if>
+
+									</xsl:otherwise>
+								</xsl:choose>
+
 							</xsl:for-each>
-							<fo:table-row>
-								<fo:table-cell border-style="solid" border-color="black"
-											   border-width="1pt" number-columns-spanned="2" >
-									<fo:block line-height="15pt" font-size="8pt"
-											  space-before.optimum="1.5pt" space-after.optimum="1.5pt" text-align="center"
-											  keep-together="always"></fo:block>
-								</fo:table-cell>
-								<fo:table-cell border-style="solid" border-color="black"
-											   border-width="1pt" number-columns-spanned="1" >
-									<fo:block line-height="15pt" font-size="8pt"
-											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-											  keep-together="always">Prepared By</fo:block>
-								</fo:table-cell>
-								<fo:table-cell border-style="solid" border-color="black"
-											   border-width="1pt" number-columns-spanned="1" >
-									<fo:block line-height="15pt" font-size="8pt"
-											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-											  keep-together="always">Approved By</fo:block>
-								</fo:table-cell>
-								<fo:table-cell border-style="solid" border-color="black"
-											   border-width="1pt" number-columns-spanned="3" >
-									<fo:block line-height="15pt" font-size="8pt"
-											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-											  keep-together="always">Vendor</fo:block>
-								</fo:table-cell>
-								<fo:table-cell border-style="solid" border-color="black"
-											   border-width="1pt" number-columns-spanned="2" >
-									<fo:block line-height="15pt" font-size="8pt"
-											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-											  keep-together="always">Mode of Dispatch</fo:block>
-								</fo:table-cell>
-								<fo:table-cell border-style="solid" border-color="black"
-											   border-width="1pt" number-columns-spanned="4" >
-									<fo:block line-height="15pt" font-size="8pt"
-											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-											  keep-together="always">Vehicle Details</fo:block>
-								</fo:table-cell>
 
-							</fo:table-row>
-							<fo:table-row>
-								<fo:table-cell border-style="solid" border-color="black"
-											   border-width="1pt" number-columns-spanned="2" height="1.0cm">
-									<fo:block line-height="15pt" font-size="8pt"
-											  space-before.optimum="1.5pt" space-after.optimum="1.5pt" text-align="center"
-											  keep-together="always">Name</fo:block>
-								</fo:table-cell>
-								<fo:table-cell border-style="solid" border-color="black"
-											   border-width="1pt" number-columns-spanned="1" height="1.0cm" >
-									<fo:block line-height="15pt" font-size="8pt"
-											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-											  keep-together="always"></fo:block>
-								</fo:table-cell>
-								<fo:table-cell border-style="solid" border-color="black"
-											   border-width="1pt" number-columns-spanned="1" height="1.0cm">
-									<fo:block line-height="15pt" font-size="8pt"
-											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-											  keep-together="always"></fo:block>
-								</fo:table-cell>
-								<fo:table-cell border-style="solid" border-color="black"
-											   border-width="1pt" number-columns-spanned="3" height="1.0cm">
-									<fo:block line-height="15pt" font-size="8pt"
-											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-											  keep-together="always"></fo:block>
-								</fo:table-cell>
-								<fo:table-cell border-style="solid" border-color="black"
-											   border-width="1pt" number-columns-spanned="2" height="1.0cm">
-									<fo:block line-height="15pt" font-size="8pt"
-											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-											  keep-together="always"></fo:block>
-								</fo:table-cell>
-								<fo:table-cell border-style="solid" border-color="black"
-											   border-width="1pt" number-columns-spanned="4" height="1.0cm">
-									<fo:block line-height="15pt" font-size="8pt"
-											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-											  keep-together="always"></fo:block>
-								</fo:table-cell>
-
-							</fo:table-row>
-							<fo:table-row>
-								<fo:table-cell border-style="solid" border-color="black"
-											   border-width="1pt" number-columns-spanned="2" height="1.0cm">
-									<fo:block line-height="15pt" font-size="8pt"
-											  space-before.optimum="1.5pt" space-after.optimum="1.5pt" text-align="center"
-											  keep-together="always">Signature</fo:block>
-								</fo:table-cell>
-								<fo:table-cell border-style="solid" border-color="black"
-											   border-width="1pt" number-columns-spanned="1" height="1.0cm">
-									<fo:block line-height="15pt" font-size="8pt"
-											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-											  keep-together="always"></fo:block>
-								</fo:table-cell>
-								<fo:table-cell border-style="solid" border-color="black"
-											   border-width="1pt" number-columns-spanned="1" height="1.0cm">
-									<fo:block line-height="15pt" font-size="8pt"
-											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-											  keep-together="always"></fo:block>
-								</fo:table-cell>
-								<fo:table-cell border-style="solid" border-color="black"
-											   border-width="1pt" number-columns-spanned="3" height="1.0cm">
-									<fo:block line-height="15pt" font-size="8pt"
-											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-											  keep-together="always"></fo:block>
-								</fo:table-cell>
-								<fo:table-cell border-style="solid" border-color="black"
-											   border-width="1pt" number-columns-spanned="2" height="1.0cm">
-									<fo:block line-height="15pt" font-size="8pt"
-											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-											  keep-together="always"></fo:block>
-								</fo:table-cell>
-								<fo:table-cell border-style="solid" border-color="black"
-											   border-width="1pt" number-columns-spanned="4" height="1.0cm">
-									<fo:block line-height="15pt" font-size="8pt"
-											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"  text-align="center"
-											  keep-together="always"></fo:block>
-								</fo:table-cell>
-
-							</fo:table-row>
 						</fo:table-body>
 					</fo:table>
-
-				</fo:static-content>
-
-
-
-
-
-
-
-				<fo:static-content flow-name="xsl-region-after">
-					<fo:block line-height="12pt" font-size="10pt"
-							  space-before.optimum="1.5pt" space-after.optimum="1.5pt"
-							  keep-together="always" text-align="center">
-						<fo:inline white-space-collapse="false" />
-					</fo:block>
-					<fo:block line-height="12pt" font-size="10pt"
-							  space-before.optimum="1.5pt" space-after.optimum="1.5pt"
-							  keep-together="always" text-align="center">
-						<fo:inline white-space-collapse="false" />
-					</fo:block>
-					<fo:block text-align="center">
-						Page <fo:page-number/> of <fo:page-number-citation ref-id="last-page" />  </fo:block>
-
-
-				</fo:static-content>
-
-
-
-				<fo:flow flow-name="xsl-region-body">
-					<xsl:variable name="tempvar1"></xsl:variable>
-
 
 					<fo:block id="last-page">
 					</fo:block>
