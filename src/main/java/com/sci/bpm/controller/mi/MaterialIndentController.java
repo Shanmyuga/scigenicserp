@@ -115,24 +115,24 @@ public class MaterialIndentController extends SciBaseController {
 
                         if(additionalInfoCommand.getAdditionalInfoLabel().startsWith("REF_") &&  !additionalInfoCommand.getAdditionalInfoLabel().startsWith("REF_SIZE")) {
                             if(StringUtils.isBlank(master.getMatcodeAddInfo())) {
-                                master.setMatcodeAddInfo(additionalInfoCommand.getAdditionalInfoLabel()+":"+additionalInfoCommand.getAdditionalDetailText()+";");
+                                //master.setMatcodeAddInfo(additionalInfoCommand.getAdditionalInfoLabel()+":"+additionalInfoCommand.getAdditionalDetailText()+";");
                             }
                             else  {
-                                master.setMatcodeAddInfo(master.getMatcodeAddInfo()+";"+additionalInfoCommand.getAdditionalInfoLabel()+":"+additionalInfoCommand.getAdditionalDetailText()+";");
+                                //master.setMatcodeAddInfo(master.getMatcodeAddInfo()+";"+additionalInfoCommand.getAdditionalInfoLabel()+":"+additionalInfoCommand.getAdditionalDetailText()+";");
                             }
                         }
 
-                        if(additionalInfoCommand.getAdditionalInfoLabel().startsWith("REFNUM_") ) {
+                        if(additionalInfoCommand.getAdditionalInfoLabel().startsWith("REF_SIZE_NUM") ) {
                             float flt = Float.parseFloat(additionalInfoCommand.getAdditionalDetailText());
                             if(StringUtils.isBlank(master.getMatcodeAddInfo())) {
 
 
 
 
-                                master.setMatcodeAddInfo(additionalInfoCommand.getAdditionalInfoLabel()+":"+df.format(flt)+";");
+                                //master.setMatcodeAddInfo(additionalInfoCommand.getAdditionalInfoLabel()+":"+df.format(flt)+";");
                             }
                             else  {
-                                master.setMatcodeAddInfo(master.getMatcodeAddInfo()+";"+additionalInfoCommand.getAdditionalInfoLabel()+":"+df.format(flt)+";");
+                                //master.setMatcodeAddInfo(master.getMatcodeAddInfo()+";"+additionalInfoCommand.getAdditionalInfoLabel()+":"+df.format(flt)+";");
                             }
                         }
 

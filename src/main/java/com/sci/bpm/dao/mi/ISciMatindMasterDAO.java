@@ -37,7 +37,7 @@ public interface ISciMatindMasterDAO {
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(SciMatindMaster entity);
+	public Long save(SciMatindMaster entity);
 
 	/**
 	 * Delete a persistent SciMatindMaster entity. This operation must be
@@ -148,6 +148,8 @@ public interface ISciMatindMasterDAO {
 	public List<SciSubcontJobstatus> getLoadDetails(Long jobCode,String jobType,Long seqWorkId);
 	public List<SciMIAdditionalInfoDTO> loadAdditionalInfoMaster(String categoryId, String dept);
 	public List loadMisWithoutStoresRequest(MatindCommand command);
+
+	public String addInfo(Long seqMiId);
 
 
 }

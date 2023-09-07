@@ -42,7 +42,8 @@ public class MaterialIndentServiceImpl implements MaterialIndentService {
 		
 			//miitem.setMatDuedate(fullmi.getMatDuedate());
 			//miitem.setSciWorkorderMaster(fullmi.getSciWorkorderMaster());
-			
+			String addInfo = daoimpl.addInfo(miitem.getSeqMiId());
+			miitem.setMatcodeAddInfo(addInfo);
 			if(miitem.getPoID() != null) {
 				miitem.setDeliverySchedule(daoimpl.loadDeliverySchedule(miitem.getPoID()));
 			}

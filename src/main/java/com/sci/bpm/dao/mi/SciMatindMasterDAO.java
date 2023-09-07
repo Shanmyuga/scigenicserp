@@ -68,7 +68,7 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		return null;
 	}
 
-	public void save(SciMatindMaster entity) {
+	public Long save(SciMatindMaster entity) {
 		// TODO Auto-generated method stub
 		SciWorkorderMaster workorder = em.getReference(
 				SciWorkorderMaster.class, entity.getSciWorkorderMaster()
@@ -79,6 +79,8 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		
 		entity.setSciWorkorderMaster(workorder);
 		em.persist(entity);
+
+		return entity.getSeqMiId();
 	}
 
 	public SciMatindMaster update(SciMatindMaster entity) {
@@ -988,6 +990,12 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		List milist = wquery.getResultList();
 
 		return milist;
+	}
+
+	@Override
+	public String addInfo(Long seqMiId) {
+		SciMIAddInfoView view = em.find(SciMIAddInfoView.class,seqMiId);
+		return view.getAddInfo();
 	}
 
 
