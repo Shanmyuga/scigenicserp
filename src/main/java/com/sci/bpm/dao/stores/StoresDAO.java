@@ -33,7 +33,8 @@ public void updateIssueMaster(SciStoreissueMaster issuemaster);
 public void updateQCData(SciStoreMiMaster stmi,SciQcMiMaster qcdata,SciAvailableMaterials availmat,Long mistatus);
 public List getQCUpdateS();
 public SciStoreMiMaster getStoreData(Long seqMiid);
-public List<SciAvailableMaterials> getMiData(Long seqMiId,String matCode);
+    public List<SciAvailableMaterials> getMiData(Long seqMiId,String matCode,String addInfos);
+
 public List getRecdMIs(Long seqMiid);
 public List loadStoreRequest(StoresBean command);
 public List loadStoreissueList(StoresBean bean);

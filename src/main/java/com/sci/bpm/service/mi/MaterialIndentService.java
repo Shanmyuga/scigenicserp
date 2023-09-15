@@ -12,8 +12,9 @@ import com.sci.bpm.db.model.SciSubcontJobstatus;
 public interface MaterialIndentService {
 
 	
-	public void addNewMI(SciMatindMaster master);
+	public Long addNewMI(SciMatindMaster master);
 	public List<SciMatindMaster>  loadChildMi(Long seqParentGroupMIId);
+	public void updateAddInfo(Long seqMiId);
 	public void addSubContStatus(SciSubcontJobstatus jobstatus);
 	public List searchMI(MatindCommand command);
 	public void approveMilist(List<SciMatindMaster> milist);

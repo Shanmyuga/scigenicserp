@@ -203,6 +203,9 @@
         <display:column sortable="true"  title="Work Order Details"  property="workorderDesc"  >
 
         </display:column>
+        <display:column sortable="true"  title="Add Info"  property="matcodeAddInfo" >
+
+        </display:column>
         <display:column sortable="true"   title="Mat Estimated Cost"   >
             <fmt:parseNumber var="ut" type="NUMBER" value="${row.estUnintCost}"></fmt:parseNumber>
             <fmt:parseNumber var="issquantity" type="NUMBER" value="${row.matQty}"></fmt:parseNumber>

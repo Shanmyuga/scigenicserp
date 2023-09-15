@@ -173,7 +173,8 @@ public class MaterialIndentController extends SciBaseController {
                 master.setInsertedDate(new java.util.Date());
                 System.out.println("mi data" + master.getMatQty());
 
-                service.addNewMI(master);
+                Long seqMiId = service.addNewMI(master);
+                            service.updateAddInfo(seqMiId);
                 mi.reset();
             }
             writerJob.writeMIAdditionalDocs();
@@ -339,6 +340,7 @@ public class MaterialIndentController extends SciBaseController {
         MatindCommand command = (MatindCommand) getFormObject(context);
         List itemmilist = new ArrayList();
         String chkmatcode = null;
+        String chkAddInfo = null;
         String matSpec = null;
         String[] milist = command.getMiindex();
         List<SciMatindMaster> childmiList = new ArrayList<SciMatindMaster>();
@@ -346,6 +348,10 @@ public class MaterialIndentController extends SciBaseController {
         for (int idx = 0; idx < milist.length; idx++) {
             SciMatindMaster mi = (SciMatindMaster) fullmilist.get(Integer.parseInt(milist[idx]) - 1);
             String matcode = mi.getMatcode();
+            String addInfo = mi.getMatcodeAddInfo();
+            if(addInfo == null) {
+                addInfo = "";
+            }
             if ("Y".equals(mi.getIsGroupMiId()) && milist.length > 1) {
                 context.getFlashScope().put("groupError", "groupError");
                 return error();
@@ -357,9 +363,13 @@ public class MaterialIndentController extends SciBaseController {
             matSpec = mi.getMatSpec();
             if (idx == 0) {
                 chkmatcode = mi.getMatcode();
+                chkAddInfo = mi.getMatcodeAddInfo();
+                if(chkAddInfo == null) {
+                    chkAddInfo = "";
+                }
 
             }
-            if (chkmatcode.equals(matcode)) {
+            if (chkmatcode.equals(matcode) && chkAddInfo.equals(addInfo)) {
                 itemmilist.add(fullmilist.get(Integer.parseInt(milist[idx]) - 1));
             } else {
                 context.getFlashScope().put("itemerror", "itemerror");

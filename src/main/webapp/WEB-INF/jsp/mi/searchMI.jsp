@@ -145,6 +145,9 @@ Cannot select different material code to create items
 
 </display:column>
 
+ <display:column sortable="true"  title="Add Info"  property="matcodeAddInfo" >
+
+ </display:column>
 <display:column sortable="true"  title="Work Order Details"  property="workorderDesc"  >
 
 </display:column>

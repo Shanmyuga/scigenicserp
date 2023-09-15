@@ -39,6 +39,9 @@ public interface ISciMatindMasterDAO {
 	 */
 	public Long save(SciMatindMaster entity);
 
+	public void updateAddInfo(Long seqMiId);
+
+
 	/**
 	 * Delete a persistent SciMatindMaster entity. This operation must be
 	 * performed within the a database transaction context for the entity's data

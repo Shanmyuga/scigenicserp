@@ -111,9 +111,9 @@ public class StoreServiceImpl implements StoreService {
 
 
 
-	public List<SciAvailableMaterials> getMiData(Long seqMiId, String matCode) {
+	public List<SciAvailableMaterials> getMiData(Long seqMiId, String matCode,String addInfos) {
 		// TODO Auto-generated method stub
-		return dao.getMiData(seqMiId, matCode);
+		return dao.getMiData(seqMiId, matCode,addInfos);
 	}
 
 

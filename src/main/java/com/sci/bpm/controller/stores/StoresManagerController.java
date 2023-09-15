@@ -84,7 +84,7 @@ public class StoresManagerController extends SciBaseController {
         List<SciAvailableMaterials> storelist = null;
 
         storelist = service.getMiData(request.getSciMiMaster().getSeqMiId(), request
-                .getMatcode());
+                .getMatcode(),request.getSciMiMaster().getMatcodeAddInfo());
         System.out.println(storelist.size());
         for (SciAvailableMaterials mat : storelist) {
             System.out.println(mat.getSeqAvailId());

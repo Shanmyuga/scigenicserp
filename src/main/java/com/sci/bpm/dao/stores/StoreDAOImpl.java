@@ -99,7 +99,7 @@ public class StoreDAOImpl implements StoresDAO {
 
 	}
 
-	public List<SciAvailableMaterials> getMiData(Long seqMiId, String matCode) {
+	public List<SciAvailableMaterials> getMiData(Long seqMiId, String matCode,String addInfos) {
 		List stlist = new ArrayList();
 		if (seqMiId != null) {
 			Query qc = em
@@ -110,9 +110,10 @@ public class StoreDAOImpl implements StoresDAO {
 		System.out.println("stlist" +stlist.size());
 		if (matCode != null) {
 			Query qc = em
-					.createQuery("Select ms from SciAvailableMaterials ms Join ms.sciMiMaster m where ms.matcode =:matcode and  ms.availQty <> '0.0' and m.seqMiId !=:miid");
+					.createQuery("Select ms from SciAvailableMaterials ms Join ms.sciMiMaster m where ms.matcode =:matcode and m.matcodeAddInfo=:matCodeInfo and   ms.availQty <> '0.0' and m.seqMiId !=:miid");
 			qc.setParameter("matcode", matCode);
 			qc.setParameter("miid", seqMiId);
+			qc.setParameter("matCodeInfo",addInfos);
 			if(qc.getResultList().size() > 0 ) {
 				
 				stlist.addAll(qc.getResultList());
@@ -363,6 +364,8 @@ public class StoreDAOImpl implements StoresDAO {
 
 		return stmi;
 	}
+
+
 
 	public List getRecdMIs(Long seqMiid) {
 

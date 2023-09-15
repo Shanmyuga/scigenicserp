@@ -24,6 +24,7 @@ public interface StoreService {
 	public void addNewStore(SciStoreMaster storeitems,SciPurchItemMaster master,List<SciMatindMaster> status);
 	public List searchQCApprovedMI(Long seqmiid);
 	public List<SciMatindMaster> selectMis(SciPurchItemMaster seqitemid);
+
 	public void issueItems(SciStoreissueMaster master);
 	public void issueItems(SciStoreissueMaster master,SciAvailableMaterials availdata,SciStoresRequest request);
 	public List getMatItems(SciPurchItemMaster master);
@@ -33,7 +34,8 @@ public interface StoreService {
 
 	public void addNewtoStores(SciStoreMiMaster master ,SciQcMiMaster qcmi,String qcstatus,SciRecdMaterials recd);
 	public void updateQCData(SciStoreMiMaster stmi,SciQcMiMaster qcdata,SciAvailableMaterials availmat,Long miStatus);
-	public List<SciAvailableMaterials> getMiData(Long seqMiId,String matCode);
+	public List<SciAvailableMaterials> getMiData(Long seqMiId,String matCode,String addInfos);
+
 	public List loadStoreRequest(StoresBean command);
 	public List getRecdMIs(Long seqMiid);
 	public List getQCUpdateS();

@@ -90,6 +90,10 @@ document.storesbean.submit();
 
 </display:column>
 
+
+ <display:column sortable="true"  title="MI Add info"  >
+  <c:out value="${row.sciMiMaster.matcodeAddInfo}"/>
+ </display:column>
 <display:column sortable="true"   title="Mat Type" property="matType"  >
 </display:column>
 <display:column sortable="true"   title="Mat Spec" property="matSpec"  >
@@ -168,6 +172,11 @@ Cancellation Reason :
 <display:column sortable="true"  title="MI ID"  >
 <c:out value="${row2.sciMiMaster.seqMiId}"/>
 </display:column>
+
+
+ <display:column sortable="true"  title="MI Add info"  >
+  <c:out value="${row2.sciMiMaster.matcodeAddInfo}"/>
+ </display:column>
 <display:column sortable="true"  title="Mat Code" property="matcode" />
 <display:column sortable="true"  title="Avail Qty" property="availQty" />
 <display:column sortable="true"  title="Avail Dim" property="availDimension" >

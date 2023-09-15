@@ -161,7 +161,7 @@ private String matcodeAddInfo;
 			Object object4, Object object5, Object object6, Object object7,
 			Object object8, Object object9, Object object10, Object object11,
 			Object object12, Object object13, Object object14, Object object15,
-			Object object16,Object object17,Object object18,Object object19,Object object20,Object Object21,Object object22,Object object23,Object object24) {
+			Object object16,Object object17,Object object18,Object object19,Object object20,Object Object21,Object object22,Object object23,Object object24,Object object25) {
 		// TODO Auto-generated constructor stub
 		
 		this.seqMiId = (Long) object;
@@ -188,6 +188,7 @@ private String matcodeAddInfo;
 		this.vendorAgreeDate = (Date)object22;
 		this.miForIssue = (String)object23;
 		this.poMatAssign = (String)object24;
+		this.matcodeAddInfo = (String)object25;
 
 	}
 

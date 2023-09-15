@@ -24,14 +24,19 @@ public class MaterialIndentServiceImpl implements MaterialIndentService {
 	private ISciMatindMasterDAO daoimpl;
 	
 	
-	public void addNewMI(SciMatindMaster master) {
+	public Long addNewMI(SciMatindMaster master) {
 		
-	daoimpl.save(master);
+	return daoimpl.save(master);
 	}
 
 	@Override
 	public List<SciMatindMaster> loadChildMi(Long seqParentGroupMIId) {
 		return daoimpl.loadChildMi(seqParentGroupMIId);
+	}
+
+	@Override
+	public void updateAddInfo(Long seqMiId) {
+		daoimpl.updateAddInfo(seqMiId);
 	}
 
 
@@ -42,8 +47,8 @@ public class MaterialIndentServiceImpl implements MaterialIndentService {
 		
 			//miitem.setMatDuedate(fullmi.getMatDuedate());
 			//miitem.setSciWorkorderMaster(fullmi.getSciWorkorderMaster());
-			String addInfo = daoimpl.addInfo(miitem.getSeqMiId());
-			miitem.setMatcodeAddInfo(addInfo);
+			//String addInfo = daoimpl.addInfo(miitem.getSeqMiId());
+			//miitem.setMatcodeAddInfo(addInfo);
 			if(miitem.getPoID() != null) {
 				miitem.setDeliverySchedule(daoimpl.loadDeliverySchedule(miitem.getPoID()));
 			}

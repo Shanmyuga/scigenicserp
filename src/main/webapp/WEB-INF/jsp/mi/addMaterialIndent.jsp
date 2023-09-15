@@ -226,6 +226,10 @@
 <display:column sortable="true"  title="Created Date"  property="insertedDate" >
 
 </display:column>
+
+ <display:column sortable="true"  title="Add Info"  property="matcodeAddInfo" >
+
+ </display:column>
 </display:table>
 
  <c:if test="${fn:length(addInfos) > 0}">
