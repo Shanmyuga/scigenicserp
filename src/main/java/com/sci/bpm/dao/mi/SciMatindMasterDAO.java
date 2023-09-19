@@ -178,25 +178,26 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 			parameters.put("createdUser", command.getCreatedByUser());
 		}
 		if (command.getMatKeyDesc() != null && !"".equals(command.getMatKeyDesc().trim()) ) {
-			StringTokenizer tokens = new StringTokenizer(command.getMatKeyDesc(),",");
+			String tokens[] = command.getMatKeyDesc().split(",");
 			StringBuffer buffer = new StringBuffer("");
-			int countTokens = tokens.countTokens();
+			int countTokens = tokens.length;
 			int idx = 0;
-			while(tokens.hasMoreTokens()) {
+			for(String token:tokens) {
 				idx = idx +1;
 				if(idx == 1) {
 					buffer.append(" (   ");
 				}
-				buffer.append("  UPPER(m.matcodeAddInfo) like UPPER(:matcodeAddInfo) ");
+				buffer.append("  UPPER(m.matcodeAddInfo) like UPPER(:matcodeAddInfo"+idx+") ");
 				if(idx == countTokens) {
 					buffer.append(" ) ");
 				}
 				else {
-					buffer.append("  || ");
+					buffer.append("  OR ");
 				}
+				parameters.put("matcodeAddInfo"+idx, "%"+token+"%");
 			}
-			whereClause = whereClause + buffer.toString();
-			parameters.put("matcodeAddInfo", "%"+command.getMatKeyDesc()+"%");
+			whereClause = whereClause + " AND " + buffer.toString();
+
 		}
 		if (command.getMatDescription() != null && !"".equals(command.getMatDescription().trim()) ) {
 			whereClause = whereClause + " and UPPER(m.matSpec) like UPPER(:matSpec) ";
