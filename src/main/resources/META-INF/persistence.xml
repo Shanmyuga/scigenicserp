@@ -53,20 +53,20 @@
                                      value="jdbc:oracle:thin:@//192.168.1.115:32771/xe.oraslim.com" />
 
 
-			<!--  <property name="hibernate.connection.url"
-                    value="jdbc:oracle:thin:@//122.165.141.17:8050/xe.oraslim.com" />-->
-    <property name="hibernate.connection.username"
-              value="scigenics" />
-    <property name="hibernate.connection.password"
-              value="scigenics" />
-    <property name="hibernate.show_sql"
-              value="false" />
-    <property name="hibernate.dialect"  value="org.hibernate.dialect.Oracle10gDialect"/>
-    <property name="hibernate.event.merge.entity_copy_observer" value="allow"/>
-  <property name="hibernate.hikari.connectionTimeout" value="20000"/>
-  <property name="hibernate.hikari.maximumPoolSize" value="10"/>
-  <property name="hibernate.hikari.minimumIdle" value="5"/>
-  <property name="hibernate.hikari.idleTimeout" value="30000"/>
+			<!-- <property name="hibernate.connection.url"
+                   value="jdbc:oracle:thin:@//122.165.141.17:8050/xe.oraslim.com" /> -->
+   <property name="hibernate.connection.username"
+             value="scigenics" />
+   <property name="hibernate.connection.password"
+             value="scigenics" />
+   <property name="hibernate.show_sql"
+             value="false" />
+   <property name="hibernate.dialect"  value="org.hibernate.dialect.Oracle10gDialect"/>
+   <property name="hibernate.event.merge.entity_copy_observer" value="allow"/>
+ <property name="hibernate.hikari.connectionTimeout" value="20000"/>
+ <property name="hibernate.hikari.maximumPoolSize" value="10"/>
+ <property name="hibernate.hikari.minimumIdle" value="5"/>
+ <property name="hibernate.hikari.idleTimeout" value="30000"/>
 </properties>
 
 </persistence-unit>

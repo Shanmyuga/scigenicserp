@@ -100,6 +100,7 @@ public class StoreDAOImpl implements StoresDAO {
 	}
 
 	public List<SciAvailableMaterials> getMiData(Long seqMiId, String matCode,String addInfos) {
+		System.out.println(addInfos);
 		List stlist = new ArrayList();
 		if (seqMiId != null) {
 			Query qc = em
@@ -108,7 +109,7 @@ public class StoreDAOImpl implements StoresDAO {
 			stlist.addAll(qc.getResultList());
 		}
 		System.out.println("stlist" +stlist.size());
-		if (matCode != null) {
+		if (matCode != null && addInfos != null) {
 			Query qc = em
 					.createQuery("Select ms from SciAvailableMaterials ms Join ms.sciMiMaster m where ms.matcode =:matcode and m.matcodeAddInfo=:matCodeInfo and   ms.availQty <> '0.0' and m.seqMiId !=:miid");
 			qc.setParameter("matcode", matCode);
@@ -116,6 +117,18 @@ public class StoreDAOImpl implements StoresDAO {
 			qc.setParameter("matCodeInfo",addInfos);
 			if(qc.getResultList().size() > 0 ) {
 				
+				stlist.addAll(qc.getResultList());
+			}
+		}
+
+		if (matCode != null && addInfos == null) {
+			Query qc = em
+					.createQuery("Select ms from SciAvailableMaterials ms Join ms.sciMiMaster m where ms.matcode =:matcode and m.matcodeAddInfo is null and   ms.availQty <> '0.0' and m.seqMiId !=:miid");
+			qc.setParameter("matcode", matCode);
+			qc.setParameter("miid", seqMiId);
+			//qc.setParameter("matCodeInfo",addInfos);
+			if(qc.getResultList().size() > 0 ) {
+
 				stlist.addAll(qc.getResultList());
 			}
 		}
