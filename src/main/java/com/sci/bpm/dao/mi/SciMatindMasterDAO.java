@@ -86,10 +86,12 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 	@Override
 	public void updateAddInfo(Long seqMiId) {
 		SciMIAddInfoView view = em.find(SciMIAddInfoView.class,seqMiId);
-		String addInfo = view.getAddInfo();
-		SciMatindMaster master = em.find(SciMatindMaster.class,seqMiId);
-		master.setMatcodeAddInfo(addInfo);
-		em.merge(master);
+		if(view != null){
+			String addInfo = view.getAddInfo();
+			SciMatindMaster master = em.find(SciMatindMaster.class, seqMiId);
+			master.setMatcodeAddInfo(addInfo);
+			em.merge(master);
+		}
 	}
 
 	public SciMatindMaster update(SciMatindMaster entity) {
