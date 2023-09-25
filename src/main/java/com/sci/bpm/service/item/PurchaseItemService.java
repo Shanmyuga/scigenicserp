@@ -12,6 +12,8 @@ public interface PurchaseItemService {
 	public  void addNewItem(SciPurchItemMaster command,List<SciMatindMaster> milist,List<SciMatindMaster> splitmilist,SciRawMIDetails details,List<SciMatindMaster> childMiList);
 	
 	public List<SciPurchItemMaster> search(ItemCommand  entity);
+
+	public boolean checkEstCost(SciMatindMaster mi);
 	
 	public boolean checkRawMI(Long rawMI);
 	

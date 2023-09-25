@@ -57,7 +57,13 @@ for(SciMatindMaster m: splitmilist) {
 		
 		return dao.findByItemStatus(entity.getItemStatus());
 	}
-	
+
+	@Override
+	public boolean checkEstCost(SciMatindMaster mi) {
+
+		return dao.checkEstCost(mi);
+	}
+
 	public boolean checkRawMI(Long rawMI) {
 		// TODO Auto-generated method stub
 		return dao.checkRawMI(rawMI);

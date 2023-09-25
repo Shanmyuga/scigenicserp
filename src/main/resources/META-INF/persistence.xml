@@ -46,6 +46,9 @@
 		<class>com.sci.bpm.db.model.SciRecdMaterials</class>
 		<class>com.sci.bpm.db.model.SciStoresRequest</class>
         <class>com.sci.bpm.db.model.SciActiveWorkordersReportEntity</class>
+		<class>com.sci.bpm.db.model.SciMatcatEstCost</class>
+		<class>com.sci.bpm.db.model.SciMatcatWoEstCostEntity</class>
+        <class>com.sci.bpm.db.model.MatcatCurrentCostViewEntity</class>
         <properties>
 			<property name="hibernate.connection.driver_class"
 					  value="oracle.jdbc.OracleDriver" />

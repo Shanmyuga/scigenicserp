@@ -2,6 +2,7 @@ package com.sci.bpm.dao.item;
 
 import java.util.List;
 
+import com.sci.bpm.db.model.SciMatindMaster;
 import com.sci.bpm.db.model.SciPurchItemMaster;
 import com.sci.bpm.db.model.SciPurchaseMast;
 import com.sci.bpm.db.model.SciRawMIDetails;
@@ -122,6 +123,8 @@ public interface ISciPurchItemMasterDAO {
 	public List<SciPurchItemMaster> findAll();
 	
 	public boolean checkRawMI(Long rawMI);
+
+	public boolean checkEstCost(SciMatindMaster mi);
 	public List<SciPurchItemMaster> loadPODetails(SciPurchaseMast master);
 	
 	public void addRawMI(SciRawMIDetails midetails);

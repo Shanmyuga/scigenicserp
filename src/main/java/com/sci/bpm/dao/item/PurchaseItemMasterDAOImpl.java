@@ -1,16 +1,15 @@
 package com.sci.bpm.dao.item;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sci.bpm.db.model.*;
 import org.springframework.stereotype.Repository;
-
-import com.sci.bpm.db.model.SciPurchItemMaster;
-import com.sci.bpm.db.model.SciPurchaseMast;
-import com.sci.bpm.db.model.SciRawMIDetails;
 
 @Repository
 public class PurchaseItemMasterDAOImpl implements ISciPurchItemMasterDAO {
@@ -131,6 +130,58 @@ return query.getResultList();
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public boolean checkEstCost(SciMatindMaster mi) {
+
+		String matcode = mi.getMatcode();
+		String matcat = mi.getMatcode().substring(2, 4);
+		BigDecimal currcost = null;
+		Query deptqry = em.createQuery("Select mtm from SciMattypeMaster  mtm where mtm.matCode=:matcode");
+		deptqry.setParameter("matcode", matcode.substring(1, 3));
+		SciMattypeMaster mtm = (SciMattypeMaster) deptqry.getSingleResult();
+		String dept = mtm.getMatDept();
+
+
+		Query qry = em.createNativeQuery("Select nvl(current_cost,0) from MATCAT_CURRENT_COST_VIEW mtm where seq_work_id=:seqworkid and mtm.matcat_Code=:matcatcode and mtm.mat_dept=:matdept");
+		qry.setParameter("matcatcode", matcat);
+		qry.setParameter("seqworkid", mi.getSciWorkorderMaster().getSeqWorkId());
+		qry.setParameter("matdept", dept);
+		List<BigDecimal> sizes = qry.getResultList();
+		if (sizes.size() > 0) {
+			BigDecimal objects = sizes.get(0);
+
+			currcost = objects.add(mi.getUnitCost());
+		} else {
+			currcost = new BigDecimal(0);
+			currcost = currcost.add(mi.getUnitCost());
+		}
+
+
+		Query estcostQuery = em.createNativeQuery("Select estimated_cost from SCI_MATCAT_WO_EST_COST mtm where mtm.mat_Dept=:matdept and mtm.matcat_Code=:matcatcode and mtm.seq_Work_Id=:seqworkId");
+		estcostQuery.setParameter("matcatcode", matcat);
+		estcostQuery.setParameter("seqworkId", mi.getSciWorkorderMaster().getSeqWorkId());
+		estcostQuery.setParameter("matdept", dept);
+		List<BigDecimal> estcostList = estcostQuery.getResultList();
+		for (BigDecimal object : estcostList) {
+
+
+			BigDecimal estiCost = object;
+			if (estiCost.compareTo(currcost) == 1) {
+				return true;
+			}
+			if (estiCost.compareTo(currcost) == -1) {
+				return false;
+			}
+			if (estiCost.compareTo(currcost) == 0) {
+				return true;
+			}
+		}
+
+
+		return false;
+
 	}
 
 	public void addRawMI(SciRawMIDetails midetails) {

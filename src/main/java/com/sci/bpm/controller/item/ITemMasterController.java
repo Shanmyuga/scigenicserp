@@ -103,8 +103,12 @@ public class ITemMasterController extends SciBaseController {
 				splitdatalist.add(remain);
 				
 			}
-			m.setUnitCost(new BigDecimal(estcost[idx]));
 
+			m.setUnitCost(new BigDecimal(estcost[idx]));
+			boolean result = service.checkEstCost(m);
+			if(!result) {
+				throw new Exception("Bigger than the estimated cost");
+			}
 			m.setMatQty(estquant);
 			if(m.getUnitCost().floatValue() <= 0) {
 				throw new Exception("Estimated Cost Cannot be null");
