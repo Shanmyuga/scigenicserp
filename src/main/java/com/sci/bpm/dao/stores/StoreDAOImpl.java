@@ -109,7 +109,7 @@ public class StoreDAOImpl implements StoresDAO {
 			stlist.addAll(qc.getResultList());
 		}
 		System.out.println("stlist" +stlist.size());
-		if (matCode != null && addInfos != null) {
+		if (matCode != null && addInfos != null && "000".equals(matCode.substring(4))) {
 			Query qc = em
 					.createQuery("Select ms from SciAvailableMaterials ms Join ms.sciMiMaster m where ms.matcode =:matcode and m.matcodeAddInfo=:matCodeInfo and   ms.availQty <> '0.0' and m.seqMiId !=:miid");
 			qc.setParameter("matcode", matCode);
@@ -132,6 +132,19 @@ public class StoreDAOImpl implements StoresDAO {
 				stlist.addAll(qc.getResultList());
 			}
 		}
+		if (matCode != null && !"000".equals(matCode.substring(4))) {
+			Query qc = em
+					.createQuery("Select ms from SciAvailableMaterials ms Join ms.sciMiMaster m where ms.matcode =:matcode  and   ms.availQty <> '0.0' and m.seqMiId !=:miid");
+			qc.setParameter("matcode", matCode);
+			qc.setParameter("miid", seqMiId);
+			//qc.setParameter("matCodeInfo",addInfos);
+			if(qc.getResultList().size() > 0 ) {
+
+				stlist.addAll(qc.getResultList());
+			}
+		}
+
+
 		System.out.println("mat stlist" +stlist.size());
 		return stlist;
 	}
