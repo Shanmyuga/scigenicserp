@@ -138,6 +138,7 @@ return query.getResultList();
 		String matcode = mi.getMatcode();
 		String matcat = mi.getMatcode().substring(2, 4);
 		BigDecimal currcost = null;
+		BigDecimal estiCost = null;
 		Query deptqry = em.createQuery("Select mtm from SciMattypeMaster  mtm where mtm.matCode=:matcode");
 		deptqry.setParameter("matcode", matcode.substring(1, 3));
 		SciMattypeMaster mtm = (SciMattypeMaster) deptqry.getSingleResult();
@@ -167,7 +168,7 @@ return query.getResultList();
 		for (BigDecimal object : estcostList) {
 
 
-			BigDecimal estiCost = object;
+			 estiCost = object;
 			if (estiCost.compareTo(currcost) == 1) {
 				return true;
 			}
@@ -179,7 +180,9 @@ return query.getResultList();
 			}
 		}
 
-
+		if(currcost != null && estiCost == null) {
+			return true;
+		}
 		return false;
 
 	}
