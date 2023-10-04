@@ -160,7 +160,7 @@ return query.getResultList();
 		}
 
 
-		Query estcostQuery = em.createNativeQuery("Select estimated_cost from SCI_MATCAT_WO_EST_COST mtm where mtm.mat_Dept=:matdept and mtm.matcat_Code=:matcatcode and mtm.seq_Work_Id=:seqworkId");
+		Query estcostQuery = em.createNativeQuery("Select estimated_cost from SCI_MATCAT_WO_EST_COST mtm where mtm.mat_Dept=:matdept and mtm.matcat_Code=:matcatcode and mtm.seq_Work_Id=:seqworkId and mtm.estimated_cost <> 0");
 		estcostQuery.setParameter("matcatcode", matcat);
 		estcostQuery.setParameter("seqworkId", mi.getSciWorkorderMaster().getSeqWorkId());
 		estcostQuery.setParameter("matdept", dept);

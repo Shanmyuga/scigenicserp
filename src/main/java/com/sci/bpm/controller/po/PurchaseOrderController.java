@@ -30,6 +30,7 @@ import com.sci.bpm.service.mi.MaterialIndentService;
 import com.sci.bpm.service.qc.QCService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.servlet.ServletContextURIResolver;
@@ -935,6 +936,10 @@ public Event loadQuotationsDetails(RequestContext context) throws Exception {
 		BeanUtils.copyProperties(payment, command);
 		if(StringUtils.isBlank(payment.getWorkOrderKey())) {
 			throw new Exception("Payment Cannot Be Blank");
+		}
+		Date current = new Date();
+		if(current.before(payment.getPaymentDate())) {
+			throw new Exception("Payment date cannot be future");
 		}
 		payment.setInsertedBy(getUserPreferences().getUserID());
 		SciVendorMaster master = service.loadSciVendorMaster(command.getSeqVendorId());
