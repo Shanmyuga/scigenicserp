@@ -140,7 +140,7 @@ return query.getResultList();
 		BigDecimal currcost = null;
 		BigDecimal estiCost = null;
 		Query deptqry = em.createQuery("Select mtm from SciMattypeMaster  mtm where mtm.matCode=:matcode");
-		deptqry.setParameter("matcode", matcode.substring(1, 3));
+		deptqry.setParameter("matcode", matcode.substring(0, 2));
 		SciMattypeMaster mtm = (SciMattypeMaster) deptqry.getSingleResult();
 		String dept = mtm.getMatDept();
 
