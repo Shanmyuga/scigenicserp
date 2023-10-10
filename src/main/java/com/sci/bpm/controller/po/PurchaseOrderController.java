@@ -587,14 +587,14 @@ public class PurchaseOrderController extends SciBaseController {
 		order.setPurchaseNo(String.valueOf(selected.getSeqPurchId()));
 		order.setWorkOrderNo(String.valueOf(rawMIDetail.getSubcontractMIMaster().getSciWorkorderMaster().getJobDesc()));
 		order.setMiId(String.valueOf(rawMIDetail.getSubcontractMIMaster().getSeqMiId()));
-		order.setMiQty(String.valueOf(rawMIDetail.getMatQty()));
+		order.setMiQty(String.valueOf(rawMIDetail.getSubcontractMIMaster().getMatQty()));
 		order.setMiDimen(String.valueOf(rawMIDetail.getSubcontractMIMaster().getMatDimesion()));
 		order.setMiDesc(rawMIDetail.getSubcontractMIMaster().getMatSpec());
 		order.setDrawingRef(rawMIDetail.getSubcontractMIMaster().getRecommend());
 		order.setDelDate(dateFormat.format(rawMIDetail.getSubcontractMIMaster().getMatDuedate()));
 		order.setDcDate(dateFormat.format(new Date()));
 		order.setUnitCost(String.valueOf(rawMIDetail.getUnitPrice()));
-		order.setTotalCost(String.valueOf(rawMIDetail.getUnitPrice().floatValue()* rawMIDetail.getMatQty().floatValue()));
+		order.setTotalCost(String.valueOf(rawMIDetail.getUnitPrice().floatValue()* rawMIDetail.getSubcontractMIMaster().getMatQty().floatValue()));
 		order.setSno("1.0");
 		int idx = 1;
 		for(SciRawMIDetails rawMI:details) {
