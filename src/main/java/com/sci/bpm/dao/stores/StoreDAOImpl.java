@@ -132,7 +132,7 @@ public class StoreDAOImpl implements StoresDAO {
 				stlist.addAll(qc.getResultList());
 			}
 		}
-		if (matCode != null && !"000".equals(matCode.substring(4)) && addInfos != null) {
+		if (matCode != null && !"000".equals(matCode.substring(4))) {
 			Query qc = em
 					.createQuery("Select ms from SciAvailableMaterials ms Join ms.sciMiMaster m where ms.matcode =:matcode  and   ms.availQty <> '0.0' and m.seqMiId !=:miid");
 			qc.setParameter("matcode", matCode);
