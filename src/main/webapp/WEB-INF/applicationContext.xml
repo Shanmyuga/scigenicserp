@@ -119,7 +119,7 @@
 
 		<property name="jobDetail" ref="emailJob" />
 		<!--<property name="cronExpression" value="0 0/50 * *  * ?" />-->
-		<property name="cronExpression" value="*/5 * * * * ?" />
+		<property name="cronExpression" value="*/55 * * * * ?" />
 </bean>
 <bean id="WeeklycronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 
