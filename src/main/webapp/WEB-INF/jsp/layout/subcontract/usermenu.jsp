@@ -19,6 +19,13 @@
                <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=updatemi-flow">Update MI</a></td>
               </tr>
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=view-report-flow">View Run Report</a></td>
+              </tr>
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=updatemicost-flow">Update MI Cost</a></td>
+
+              </tr>
            <tr> 
           
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=updateoldQc-flow">Update QC ID for Subcontract Items</a></td>

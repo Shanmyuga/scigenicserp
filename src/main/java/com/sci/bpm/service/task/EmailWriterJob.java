@@ -47,9 +47,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class EmailWriterJob extends QuartzJobBean  {
+public class EmailWriterJob  extends QuartzJobBean {
 
-    private static final String APPLICATION_NAME = "Gmail API Java Quickstart";
+    private static final String APPLICATION_NAME = "testapp_scigenics";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
 
@@ -188,8 +188,8 @@ public class EmailWriterJob extends QuartzJobBean  {
 
                                 docs.add(doc);
                             System.out.println(fileName);
-                           /* attachFiles += fileName + ", ";
-                            part.saveFile(saveDirectory + File.separator + fileName);*/
+                           //* attachFiles += fileName + ", ";
+                           // part.saveFile(saveDirectory + File.separator + fileName);
                         } else {
                             // this part may be the message content
                             messageContent = part.getContent().toString();
@@ -273,6 +273,49 @@ public class EmailWriterJob extends QuartzJobBean  {
         return false;
     }
 
+   /* private  Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT)
+            throws IOException {
+        // Load client secrets.
+        InputStream in = this.getClass().getClassLoader().getResourceAsStream(CREDENTIALS_FILE_PATH);
+        if (in == null) {
+            throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
+        }
+        GoogleClientSecrets clientSecrets =
+                GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+
+        // Build flow and trigger user authorization request.
+        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
+                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
+                .setAccessType("offline")
+                .build();
+        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
+        Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
+        //returns an authorized Credential object.
+        return credential;
+    }
+
+    public static void main(String... args) throws IOException, GeneralSecurityException {
+        // Build a new authorized API client service.
+        EmailWriterJob writerJob = new EmailWriterJob();
+        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        Gmail service = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY,writerJob.getCredentials(HTTP_TRANSPORT))
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+
+        // Print the labels in the user's account.
+        String user = "me";
+        ListLabelsResponse listResponse = service.users().labels().list(user).execute();
+        List<Label> labels = listResponse.getLabels();
+        if (labels.isEmpty()) {
+            System.out.println("No labels found.");
+        } else {
+            System.out.println("Labels:");
+            for (Label label : labels) {
+                System.out.printf("- %s\n", label.getName());
+            }
+        }
+    }*/
     public DiskWriterJob getDiskWriterJob() {
         return diskWriterJob;
     }

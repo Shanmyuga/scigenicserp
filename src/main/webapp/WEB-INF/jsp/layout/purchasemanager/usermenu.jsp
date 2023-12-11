@@ -23,7 +23,9 @@
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=searchpurch-flow">Approve/View Purchase Order</a></td>
                 
               </tr>
-
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=updatemi-flow">Update MI</a></td>
+              </tr>
               <tr>
                   <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addprojprop-flow">Add Project  Proposals</a></td>
               </tr>
