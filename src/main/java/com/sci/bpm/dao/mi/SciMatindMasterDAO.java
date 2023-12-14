@@ -872,7 +872,10 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		// Query query = em.createQuery("Select * from SciMatindMaster m ");
 		Map parameters = new HashMap();
 		String whereClause = "";
-		
+		if (command.getSeqStoreReqId() != null ) {
+			whereClause = whereClause + " and m.seqStreqId= :seqStreqId ";
+			parameters.put("seqStreqId", command.getSeqStoreReqId());
+		}
 		if (command.getProdAppStatus() != null && !"".equals(command.getProdAppStatus()) ) {
 			whereClause = whereClause + " and m.prodApproval = :prodApproval ";
 			parameters.put("prodApproval", command.getProdAppStatus());

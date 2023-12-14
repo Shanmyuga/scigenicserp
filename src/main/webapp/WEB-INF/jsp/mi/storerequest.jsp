@@ -86,10 +86,16 @@
 <form:option value="">All</form:option>
 <form:option value="Y">Stores Issued</form:option>
 <form:option value="N">Stores Not Issued</form:option>
+ <form:option value="C">Stores closed</form:option>
 </form:select>
 
 </td>
-<td colspan="2"> <input  type="button" value="Search Stores Request" onclick="eventdirect('searchst')"/> </td>
+ <td>Store request ID</td>
+ <td><form:input path="seqStoreReqId" id="seqStoreReqId"  />
+ </td>
+</tr>
+ <tr>
+<td colspan="4"> <input  type="button" value="Search Stores Request" onclick="eventdirect('searchst')"/> </td>
 
 </tr>
  
@@ -183,7 +189,25 @@
 </c:if>
 </table>
 </c:if>
+ <c:if test="${(rolelevel == 'prodSuper' &&  matindbean.stIssued == 'C') ||(rolelevel == 'purchaseSuper' &&  matindbean.stIssued == 'C')  }">
+  <table>
+   <tr>
+    <td align="right">Reopen Stores Request</td><td  align="left"><form:radiobutton path="strapproval" value="Y"/></td>
 
+
+   </tr>
+   <c:if test="${rolelevel == 'prodSuper' }">
+    <tr>
+     <td colspan="2"><input type="button" value="Reopen Store Request" onclick="eventdirect('reOpenStores')"/></td>
+    </tr>
+   </c:if>
+   <c:if test="${rolelevel == 'purchaseSuper'}">
+    <tr>
+     <td colspan="2"><input type="button" value="Reopen Store Request" onclick="eventdirect('reOpenStores')"/></td>
+    </tr>
+   </c:if>
+  </table>
+ </c:if>
 <br/>
 <br/>
 <br/>

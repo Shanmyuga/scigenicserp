@@ -40,6 +40,7 @@ public class MatindCommand implements Serializable {
 	private String[] miindex;
 	private String[] miindex2;
 	private Date[] modduedate;
+	private Long seqStoreReqId;
 	private String productCat;
 	private String rowindex;
 	private Long seqprodID;
@@ -791,5 +792,13 @@ public class MatindCommand implements Serializable {
 
 	public void setRemoveMachnined(String removeMachnined) {
 		this.removeMachnined = removeMachnined;
+	}
+
+	public Long getSeqStoreReqId() {
+		return seqStoreReqId;
+	}
+
+	public void setSeqStoreReqId(Long seqStoreReqId) {
+		this.seqStoreReqId = seqStoreReqId;
 	}
 }
