@@ -41,6 +41,33 @@ public class MaterialStoresRequestController extends SciBaseController {
 		setPropertyEditorRegistrar(new DatePropertyEditorRegistrar());
 		return super.setupForm(context);
 	}
+
+	public Event reOpenStoresRequest(RequestContext context) throws Exception {
+
+		MatindCommand command = (MatindCommand) getFormObject(context);
+		List storelist = (List) context.getFlowScope().get("openstreq");
+		String[] stindex = command.getMiindex();
+		for(int idx =0;idx < stindex.length;idx++) {
+			SciStoresRequest request = selectRequest(storelist,Long.parseLong(stindex[idx]));
+			request.setPurchApproval("N");
+			request.setPurhRemarks("reopen");
+			request.setProdApproval("N");
+			request.setProdRemarks("reopen");
+			request.setRequestStatus("N");
+			//request.setPurchApprBy(getUserPreferences().getUserID());
+			request.setUpdatedBy(getUserPreferences().getUserID());
+
+			request.setUpdatedDt(new Date());
+
+			//request.setApprovedDate(new Date());
+
+			service.updateStoreRequest(request);
+
+		}
+		context.getFlowScope().remove("openstreq");
+		resetForm(context);
+		return success();
+	}
 	
 	public Event loadStoreRequest(RequestContext context) throws Exception {
 		MatindCommand command = (MatindCommand) getFormObject(context);

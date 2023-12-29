@@ -38,6 +38,11 @@
             <webflow:evaluate expression="storeRequestCont.updatebyPurch"/>
             <webflow:evaluate expression="storeRequestCont.resetForm"/>
         </webflow:transition>
+    <webflow:transition on="reOpenStores" to="entersearch">
+        <webflow:evaluate expression="storeRequestCont.bind"/>
+        <webflow:evaluate expression="storeRequestCont.reOpenStoresRequest"/>
+        <webflow:evaluate expression="storeRequestCont.resetForm"/>
+    </webflow:transition>
         <webflow:transition on="loadCategory" to="entersearch">
             <webflow:evaluate expression="storeRequestCont.bind"/>
             <webflow:evaluate expression="storeRequestCont.loadMatCatItems"/>

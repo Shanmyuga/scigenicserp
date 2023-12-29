@@ -115,12 +115,12 @@
 		<property name="cronExpression" value="0 0 12 * * ?" />
 		<!--<property name="cronExpression" value="*/5 * * * * ?" /> -->
 	</bean>
-	<bean id="emailcronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	<!--<bean id="emailcronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 
 		<property name="jobDetail" ref="emailJob" />
-		<!--<property name="cronExpression" value="0 0/50 * *  * ?" />-->
+		&lt;!&ndash;<property name="cronExpression" value="0 0/50 * *  * ?" />&ndash;&gt;
 		<property name="cronExpression" value="*/55 * * * * ?" />
-</bean>
+</bean>-->
 <bean id="WeeklycronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 
 <property name="jobDetail" ref="reportWeeklyQueryJob" />
@@ -137,7 +137,7 @@
 				<ref bean="dailycronTrigger" />
 				<ref bean="dailycronTriggerStoresRequest" />
 				<ref bean="WeeklycronTrigger" />
-				<ref bean="emailcronTrigger" />
+				<!--<ref bean="emailcronTrigger" />-->
 			</list>
 		</property>
 

@@ -191,21 +191,14 @@
 </c:if>
  <c:if test="${(rolelevel == 'prodSuper' &&  matindbean.stIssued == 'C') ||(rolelevel == 'purchaseSuper' &&  matindbean.stIssued == 'C')  }">
   <table>
-   <tr>
-    <td align="right">Reopen Stores Request</td><td  align="left"><form:radiobutton path="strapproval" value="Y"/></td>
 
 
-   </tr>
-   <c:if test="${rolelevel == 'prodSuper' }">
     <tr>
      <td colspan="2"><input type="button" value="Reopen Store Request" onclick="eventdirect('reOpenStores')"/></td>
     </tr>
-   </c:if>
-   <c:if test="${rolelevel == 'purchaseSuper'}">
-    <tr>
-     <td colspan="2"><input type="button" value="Reopen Store Request" onclick="eventdirect('reOpenStores')"/></td>
-    </tr>
-   </c:if>
+
+
+
   </table>
  </c:if>
 <br/>
