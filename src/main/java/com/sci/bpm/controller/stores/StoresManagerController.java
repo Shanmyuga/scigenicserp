@@ -85,7 +85,7 @@ public class StoresManagerController extends SciBaseController {
 
         storelist = service.getMiData(request.getSciMiMaster().getSeqMiId(), request
                 .getMatcode(),request.getSciMiMaster().getMatcodeAddInfo());
-        System.out.println(storelist.size());
+
         for (SciAvailableMaterials mat : storelist) {
             System.out.println(mat.getSeqAvailId());
         }
@@ -182,19 +182,19 @@ public class StoresManagerController extends SciBaseController {
         return success();
     }
 
-    /*
-     * public Event searchByMatCode(RequestContext context) throws Exception {
-     * StoresBean bean = (StoresBean) getFormObject(context); List streqList =
-     * (List) context.getFlowScope().get("openstreq"); SciStoresRequest request
-     * = selectRequest(streqList, bean .getSeqSelectMIID());
-     *
-     * List storelist = null;
-     *
-     * storelist = service.getMiData(null, request.getMatcode());
-     *
-     * context.getFlowScope().put("storeavailmi", storelist); return success();
-     * }
-     */
+
+     /*public Event searchByMatCode(RequestContext context) throws Exception {
+      StoresBean bean = (StoresBean) getFormObject(context); List streqList =
+      (List) context.getFlowScope().get("openstreq"); SciStoresRequest request
+      = selectRequest(streqList, bean .getSeqSelectMIID());
+
+     List storelist = null;
+
+      storelist = service.getMiData(null, request.getMatcode(),request.geta);
+
+     context.getFlowScope().put("storeavailmi", storelist); return success();
+      }*/
+
     public Event viewstores(RequestContext context) throws Exception {
         StoresBean bean = (StoresBean) getFormObject(context);
 

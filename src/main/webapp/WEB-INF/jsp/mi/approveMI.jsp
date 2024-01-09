@@ -74,6 +74,10 @@
  <display:column sortable="true"  title="MI For Issue"  property="miForIssue">
 
  </display:column>
+
+ <display:column sortable="true"  title="MI Addinfo"  property="matcodeAddInfo">
+
+ </display:column>
  <display:column sortable="true"  title="MI Created By"  property="insertedBy">
 
  </display:column>
