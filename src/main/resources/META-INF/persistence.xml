@@ -46,9 +46,11 @@
 		<class>com.sci.bpm.db.model.SciRecdMaterials</class>
 		<class>com.sci.bpm.db.model.SciStoresRequest</class>
         <class>com.sci.bpm.db.model.SciActiveWorkordersReportEntity</class>
+		<class>com.sci.bpm.db.model.VendorPurchasePaymentInvoice</class>
 		<class>com.sci.bpm.db.model.SciMatcatEstCost</class>
 		<class>com.sci.bpm.db.model.SciMatcatWoEstCostEntity</class>
         <class>com.sci.bpm.db.model.MatcatCurrentCostViewEntity</class>
+        <class>com.sci.bpm.db.model.VendorPurchasePaymentInvoice</class>
         <properties>
 			<property name="hibernate.connection.driver_class"
 					  value="oracle.jdbc.OracleDriver" />
@@ -57,7 +59,7 @@
 
 
 			<!-- <property name="hibernate.connection.url"
-                   value="jdbc:oracle:thin:@//122.165.141.17:8050/xe.oraslim.com" />-->
+                   value="jdbc:oracle:thin:@//122.165.141.17:8050/xe.oraslim.com" /> -->
    <property name="hibernate.connection.username"
              value="scigenics" />
    <property name="hibernate.connection.password"

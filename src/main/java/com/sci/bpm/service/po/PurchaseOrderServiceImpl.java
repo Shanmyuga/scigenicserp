@@ -243,5 +243,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		return dao.loadMis(seqPurchId);
 	}
 
+	@Override
+	public List<VendorPurchasePaymentInvoice> searchInvoicePaymentDetails(POCommand command) {
+		return dao.searchInvoicePaymentDetails(command);
+	}
+
 
 }

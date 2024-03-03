@@ -580,7 +580,11 @@
      
       <put-attribute name="body" value="/WEB-INF/jsp/po/addInvoiceDetails.jsp" />
   </definition>
-  
+    <definition name="view.invoice" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="/WEB-INF/jsp/po/viewInvoiceDetails.jsp" />
+    </definition>
    <definition name="subcont.add" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
   <put-attribute name="menu" value="usermenu.jsp" />
      

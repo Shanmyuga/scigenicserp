@@ -1,6 +1,7 @@
 package com.sci.bpm.controller.po;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -887,7 +888,30 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 		loadInvoiceDetails(context);
 		return success();
 	}
-	
+
+
+	public Event searchViewPaymentDetails(RequestContext context) throws Exception {
+		POCommand command = (POCommand) getFormObject(context);
+		List<VendorPurchasePaymentInvoice> vendorPurchasePaymentInvoiceList = service.searchInvoicePaymentDetails(command);
+
+		if(vendorPurchasePaymentInvoiceList != null && vendorPurchasePaymentInvoiceList.size() > 0) {
+			Double totalPoCost = vendorPurchasePaymentInvoiceList.stream().mapToDouble(i -> i.getPurchaseCost().doubleValue()).sum();
+			Double invoiceCost = vendorPurchasePaymentInvoiceList.stream().mapToDouble(i -> i.getInvoiceAmt().doubleValue()).sum();
+			Double paymentCost = vendorPurchasePaymentInvoiceList.stream().mapToDouble(i -> i.getPaymentAmt().doubleValue()).sum();
+			VendorPurchasePaymentInvoice vendorPurchasePaymentInvoice = vendorPurchasePaymentInvoiceList.get(0);
+			VendorPurchasePaymentInvoice invoice = new VendorPurchasePaymentInvoice();
+			invoice.setInvoiceAmt(new BigDecimal(invoiceCost));
+			invoice.setPaymentAmt(new BigDecimal(paymentCost));
+			invoice.setPurchaseCost(new BigDecimal(totalPoCost));
+			invoice.setVendorName(vendorPurchasePaymentInvoice.getVendorName());
+			List<VendorPurchasePaymentInvoice> aggList = new ArrayList<VendorPurchasePaymentInvoice>();
+			aggList.add(invoice);
+			context.getFlowScope().put("vendorAgg",aggList);
+		}
+
+		context.getFlowScope().put("vendorpaymentlist",vendorPurchasePaymentInvoiceList);
+		return success();
+	}
 	
 	public Event addVendorPurchCost(RequestContext context) throws Exception {
 		POCommand command = (POCommand) getFormObject(context);

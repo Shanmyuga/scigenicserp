@@ -124,7 +124,8 @@ public interface ISciPurchaseMastDAO {
 	public void addInvoiceDetails(SciVendorInvoiceMaster vmaster);
 	public List<SciVendorInvoiceMaster> loadInvoiceDetails();
 	public List<SciPurchaseMast> loadPODetails(Long seqVendorID);
-	
+	public List<VendorPurchasePaymentInvoice> searchInvoicePaymentDetails(POCommand command);
+
 	public List<SciVendorInvoiceMaster> loadbillNo(Long seqVendorID);      
 	
 	public List<SciVendorPurchaseCost> loadQuotations(String matDept,String matCategory);

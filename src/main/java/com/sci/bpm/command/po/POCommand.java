@@ -11,6 +11,7 @@ import com.sci.bpm.command.mi.MatCollectionCommand;
 public class POCommand implements Serializable {
 
 	private String vendorOrder;
+	private Date purchaseDate;
 	private String vendorAddress;
 	private Date purchaseDueDate;
 	private Long seqVendorId;
@@ -627,4 +628,11 @@ public class POCommand implements Serializable {
 		this.subContMI = subContMI;
 	}
 
+	public Date getPurchaseDate() {
+		return purchaseDate;
+	}
+
+	public void setPurchaseDate(Date purchaseDate) {
+		this.purchaseDate = purchaseDate;
+	}
 }

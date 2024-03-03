@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webflow:flow xmlns:webflow="http://www.springframework.org/schema/webflow" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd" start-state="entersearch">
+<webflow:on-start>
+        <webflow:evaluate expression="pocont.setupForm"/>
+<!-- WARNING: parameter-type is no longer supported.  Use <set name="temp" value="'purstats_key'" type="string" /> to convert the type before the evaluate action. -->
+<webflow:evaluate expression="lookupbean.getDropDownList('vendor_key')" result="flowScope.vendorlist"/>
+    </webflow:on-start>
+<webflow:view-state id="entersearch" view="view.invoice">
+
+        <webflow:transition on="searchVoice" to="entersearch">
+            <webflow:evaluate expression="pocont.bind"/>
+            <webflow:evaluate expression="pocont.searchViewPaymentDetails"/>
+        </webflow:transition>
+
+    </webflow:view-state>
+
+<webflow:exception-handler bean="exceptionresol"/>
+</webflow:flow>

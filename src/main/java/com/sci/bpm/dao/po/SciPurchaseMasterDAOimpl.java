@@ -381,6 +381,44 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 	}
 
 	@Override
+	public List<VendorPurchasePaymentInvoice> searchInvoicePaymentDetails(POCommand command) {
+		String query =  " Select p from VendorPurchasePaymentInvoice p where p.vendorId >= 0 ";
+
+		Map parameters = new HashMap();
+		String whereClause = "";
+		if (command.getPurchaseDate() != null) {
+			whereClause = whereClause + " and ( p.purchaseDate >= :fromdate  or p.purchaseDate is null) ";
+			// parameters.add(command.getMatDuedate());
+			parameters.put("fromdate", command.getPurchaseDate());
+		}
+		if(command.getSeqVendorId() != null) {
+			whereClause = whereClause + " and  p.vendorId = :vendorid ";
+			// parameters.add(command.getMatDuedate());
+			parameters.put("vendorid", command.getSeqVendorId());
+		}
+
+		Query wquery = null;
+		if (parameters.size() > 0) {
+			wquery = em.createQuery(query
+					+ whereClause.replaceAll("where and", "where"));
+		} else {
+			wquery = em.createQuery(query);
+		}
+		System.out.println(query + whereClause.replaceAll("where and", "where"));
+		Iterator keyset = parameters.keySet().iterator();
+
+		while (keyset.hasNext()) {
+			String key = (String) keyset.next();
+			wquery.setParameter(key, parameters.get(key));
+		}
+		List<VendorPurchasePaymentInvoice> vendorPurchasePaymentInvoiceList = wquery.getResultList();
+		for(VendorPurchasePaymentInvoice inv: vendorPurchasePaymentInvoiceList) {
+			System.out.println(inv.getPaymentRemarks());
+		}
+		return vendorPurchasePaymentInvoiceList;
+	}
+
+	@Override
 	public List<SciVendorInvoiceMaster> loadbillNo(Long seqVendorID) {
 		// TODO Auto-generated method stub
 		

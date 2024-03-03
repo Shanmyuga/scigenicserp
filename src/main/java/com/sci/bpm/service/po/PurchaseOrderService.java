@@ -39,5 +39,6 @@ public interface PurchaseOrderService {
 	public String getWorkOrders(Long seqPurchId);
 	public List<SciVendorPurchaseCost> loadQuotations(String matDept,String matCategory);
 	public List<SciRawMIDetails> loadMis(Long seqPurchId);
+	public List<VendorPurchasePaymentInvoice> searchInvoicePaymentDetails(POCommand command);
 	public void addPurchaseVendorCost(SciVendorPurchaseCost purchaseCost);
 }
