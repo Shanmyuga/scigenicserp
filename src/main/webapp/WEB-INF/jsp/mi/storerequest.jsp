@@ -168,7 +168,7 @@
 <input type="hidden" name="_flowExecutionKey" value='<c:out value="${flowExecutionKey}"/>'>
  <input type="hidden" name="_eventId"  id="_eventId" value="viewmi" > 
  
- <c:if test="${(rolelevel == 'prodSuper' &&  matindbean.stIssued == 'N') ||(rolelevel == 'purchaseSuper' &&  matindbean.stIssued == 'N')  }">
+ <c:if test="${(rolelevel == 'prodSuper' &&  matindbean.stIssued == 'N') ||(rolelevel == 'purchaseSuper' &&  matindbean.stIssued == 'N')  ||  (rolelevel == 'purchaseSuper' &&  purAppStatus.purAppStatus != '') ||  (rolelevel == 'prodSuper' &&  purAppStatus.purAppStatus != '')}">
 <table>
 <tr>
 <td align="right">Approve</td><td  align="left"><form:radiobutton path="strapproval" value="Y"/></td>

@@ -819,7 +819,7 @@ public class MaterialIndentController extends SciBaseController {
         master = service.loadMI(master.getSeqMiId());
         master.setUpdatedBy(getUserPreferences().getUserID());
         master.setPurStatus(getLookupservice().loadIDData("MI_CANCEL"));
-
+        master.setRecommend(command.getRecommend());
         master.setUpdatedDate(new Date());
         SciWorkorderMaster wmaster = master.getSciWorkorderMaster();
         service.cancelMI(master);
