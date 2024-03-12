@@ -105,10 +105,10 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Transactional
-    public List searchTasks(String status, int startpage, String userid) {
+    public List searchTasks(String status, int startpage, String userid,String roleName) {
 
 
-        return daoimpl.searchOpenTask(status, startpage, userid);
+        return daoimpl.searchOpenTask(status, startpage, userid,roleName);
     }
 
     @Transactional

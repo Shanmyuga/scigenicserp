@@ -58,6 +58,9 @@ public class TaskProcessController extends SciBaseController {
 		    issueDetails.setIssueStatus(SciDataConstans.TASK_OPEN_STATUS);
 		    issueDetails.setAssignedFrom(userpref.getUserID());
 		    issueDetails.setAssignedTo(assignto);
+			issueDetails.setAssignedDept(bean.getAssignedDept());
+			issueDetails.setFromUser(bean.getFromUser());
+		    issueDetails.setFromDept(bean.getFromDept());
 		    issueDetails.setUpdatedBy(userpref.getUserID());
 		    issueDetails.setUpdatedDate(new java.util.Date());
 		   
@@ -79,14 +82,14 @@ public class TaskProcessController extends SciBaseController {
 		try{
 			 UserPreference userobject = getUserPreferences();
 
-			 mylist = taskService.searchTasks(SciDataConstans.TASK_OPEN_STATUS, 0,userobject.getUserID());
+			 mylist = taskService.searchTasks(SciDataConstans.TASK_OPEN_STATUS, 0,userobject.getUserID(),getUserPreferences().getRoleName());
 			 System.out.println("tasks" + mylist.size());
-			for(ScigenicsRoleMaster roleMaster:userobject.getRolemasterset()) {
+			/*for(ScigenicsRoleMaster roleMaster:userobject.getRolemasterset()) {
 				List roletasklist = taskService.searchTasks(SciDataConstans.TASK_OPEN_STATUS, 0,roleMaster.getRoleName());
 				if(roletasklist.size() > 0) {
 					mylist.addAll(roletasklist);
 				}
-			}
+			}*/
 		}
 		catch(Exception e) {
 			
@@ -130,11 +133,14 @@ public class TaskProcessController extends SciBaseController {
 		master.setIssueStatus(SciDataConstans.TASK_OPEN_STATUS);
 ;		newdetails.setSciIssueMaster(master);
 		   newdetails.setIssueSubject(details.getIssueSubject());
+		   newdetails.setFromDept(details.getFromDept());
 		newdetails.setIssueDetails(commandBean.getIssueDetails());
 		newdetails.setAssignedDate(new java.util.Date());
+		newdetails.setAssignedDept(commandBean.getAssignedDept());
 		newdetails.setIssueStatus(SciDataConstans.TASK_OPEN_STATUS);
 		newdetails.setAssignedFrom(userpref.getUserID());
 		newdetails.setAssignedTo(commandBean.getUpdateTo());
+		newdetails.setFromUser(details.getFromUser());
 		newdetails.setUpdatedBy(userpref.getUserID());
 		newdetails.setUpdatedDate(new java.util.Date());
 	    taskService.forwardTasks(newdetails);

@@ -38,6 +38,12 @@ public class SciIssueDetails implements java.io.Serializable {
 
 	private String issueStatus;
 	private String issueSubject;
+
+	private String assignedDept;
+
+	private String fromDept;
+
+	private String fromUser;
 	// Constructors
 
 	/** default constructor */
@@ -162,5 +168,28 @@ public class SciIssueDetails implements java.io.Serializable {
 	public void setIssueSubject(String issueSubject) {
 		this.issueSubject = issueSubject;
 	}
+	@Column(name = "ASSIGNED_DEPT", unique = false, nullable = true, insertable = true, updatable = true, length = 20)
+	public String getAssignedDept() {
+		return assignedDept;
+	}
 
+	public void setAssignedDept(String assignedDept) {
+		this.assignedDept = assignedDept;
+	}
+	@Column(name = "FROM_DEPT", unique = false, nullable = true, insertable = true, updatable = true, length = 20)
+	public String getFromDept() {
+		return fromDept;
+	}
+
+	public void setFromDept(String fromDept) {
+		this.fromDept = fromDept;
+	}
+	@Column(name = "FROM_USER", unique = false, nullable = true, insertable = true, updatable = true, length = 200)
+	public String getFromUser() {
+		return fromUser;
+	}
+
+	public void setFromUser(String fromUser) {
+		this.fromUser = fromUser;
+	}
 }

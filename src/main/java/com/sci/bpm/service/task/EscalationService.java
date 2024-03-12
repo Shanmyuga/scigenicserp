@@ -41,8 +41,8 @@ private TaskService tservice;
 		}
 		List<SciIssueDetails> opentasks = tservice.loadForEscalation(Integer.parseInt(props.getProperty("escalation.Interval")));
 		System.out.println(opentasks.size());
-		try {
-			for(SciIssueDetails details:opentasks){
+
+			/*for(SciIssueDetails details:opentasks){
 				SciIssueDetails newdetails = new SciIssueDetails();
 				SciIssueMaster master = details.getSciIssueMaster();
 				
@@ -62,11 +62,8 @@ private TaskService tservice;
 				newdetails.setUpdatedDate(new java.util.Date());
 				
 				tservice.esclateTasks(newdetails);
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			}*/
+
 		
 	
 	}

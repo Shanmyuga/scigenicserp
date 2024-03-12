@@ -18,6 +18,14 @@
 <td align="right" class="datatext">Your Comments</td>
 <td><form:textarea path="issueDetails" /></td>
 </tr>
+
+    <tr>
+        <td align="right" class="datatext">Assigned Dept</td>
+        <td><form:select path="assignedDept" multiple="false"  >
+
+            <form:options items="${roleitems}" itemValue="roleName" itemLabel="roleName"/>
+        </form:select> </td>
+    </tr>
 <tr>
 <td align="right" class="datatext">Assign To</td>
 <td><form:select path="updateTo"  >

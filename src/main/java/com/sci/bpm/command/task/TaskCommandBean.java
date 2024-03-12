@@ -11,9 +11,13 @@ public class TaskCommandBean implements Serializable{
 	private String[] assignedTo;
 private String updateTo;
 	private String taskid;
-	
-	
-	
+
+	private String assignedDept;
+	private String fromDept;
+
+	private String fromUser;
+
+
 	public String getTaskid() {
 		return taskid;
 	}
@@ -62,7 +66,28 @@ private String updateTo;
 		this.updateTo = updateTo;
 	}
 
-	
-	
-	
+
+	public String getAssignedDept() {
+		return assignedDept;
+	}
+
+	public void setAssignedDept(String assignedDept) {
+		this.assignedDept = assignedDept;
+	}
+
+	public String getFromDept() {
+		return fromDept;
+	}
+
+	public void setFromDept(String fromDept) {
+		this.fromDept = fromDept;
+	}
+
+	public String getFromUser() {
+		return fromUser;
+	}
+
+	public void setFromUser(String fromUser) {
+		this.fromUser = fromUser;
+	}
 }

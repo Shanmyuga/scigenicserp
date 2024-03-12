@@ -4,6 +4,8 @@
         <webflow:on-entry>
             <webflow:evaluate expression="bulletinController.searchBulletin()" result="flowScope.bulletinitems"/>
             <webflow:evaluate expression="taskcontroller.searchMyTasks()" result="flowScope.taskItems"/>
+            <webflow:evaluate expression="lookupbean.getDropDownList('roles_key')" result="flowScope.roleitems"/>
+
             <webflow:evaluate expression="taskcontroller.setupForm"/>
         </webflow:on-entry>
         <webflow:transition on="addnewnews" to="addnewnews">
@@ -16,8 +18,14 @@
         </webflow:transition>
         <webflow:transition on="closeTask" to="closeTask">
             <webflow:evaluate expression="taskcontroller.bind"/>
+            <webflow:evaluate expression="taskcontroller.loadTaskDetail"/>
         </webflow:transition>
-    </webflow:view-state>
+
+    <webflow:transition on="loaddetails" to="viewhomepage">
+        <webflow:evaluate expression="taskcontroller.bind"/>
+    </webflow:transition>
+
+</webflow:view-state>
 <webflow:view-state id="addnewTask" view="home.addNewTask">
         <webflow:on-entry>
             <webflow:evaluate expression="taskcontroller.setupForm"/>

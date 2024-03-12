@@ -21,7 +21,7 @@ public interface TaskProcessDAO {
 
 	public boolean updateDetails(List<SciIssueDetails> detailList);
 	
-	public List searchOpenTask(String status ,int startpage,String userid);
+	public List searchOpenTask(String status ,int startpage,String userid,String roleName);
 	
 	public String getNextSeqTaskID();
 	

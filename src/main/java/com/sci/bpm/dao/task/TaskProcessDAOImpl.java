@@ -52,7 +52,7 @@ public class TaskProcessDAOImpl implements TaskProcessDAO {
 	}
 
 	public List<SciIssueDetails> searchOpenTask(String status, int startpage,
-			String userid) {
+			String userid,String roleName) {
 
 		List<SciIssueDetails> mylist = new ArrayList();
 		Query qe = em
@@ -60,7 +60,11 @@ public class TaskProcessDAOImpl implements TaskProcessDAO {
 						" SELECT D.* FROM SCI_ISSUE_MASTER M ,SCI_ISSUE_DETAILS d WHERE M.SEQ_ISSUE_ID = D.SEQ_ISSUE_ID and"
 								+ " M.issue_status != 'closed' and m.ISSUE_ASSIGNEDTO like ?  and d.seq_issue_dtl_id = (select max(p.seq_issue_dtl_id) from  SCI_ISSUE_DETAILS p where p.SEQ_ISSUE_ID = M.SEQ_ISSUE_ID)"
 								+
-
+						" union "
+								+
+								" SELECT D.* FROM SCI_ISSUE_MASTER M ,SCI_ISSUE_DETAILS d WHERE M.SEQ_ISSUE_ID = D.SEQ_ISSUE_ID and"
+								+ " M.issue_status != 'closed' and d.assigned_dept  like ?  and d.seq_issue_dtl_id = (select max(p.seq_issue_dtl_id) from  SCI_ISSUE_DETAILS p where p.SEQ_ISSUE_ID = M.SEQ_ISSUE_ID)"
+								+
 								" union "
 								+
 
@@ -69,7 +73,8 @@ public class TaskProcessDAOImpl implements TaskProcessDAO {
 						SciIssueDetails.class);
 
 		qe.setParameter(1, "%" + userid + "%");
-		qe.setParameter(2, "%" + userid + "%");
+		qe.setParameter(2, "%" + roleName + "%");
+		qe.setParameter(3, "%" + userid + "%");
 		mylist.addAll(qe.getResultList());
 
 		return mylist;

@@ -16,13 +16,16 @@
 
 <display:table export="true" sort="list"   pagesize="10" name="taskItems"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
   <display:column title="Select task" >
-<form:radiobutton path="taskid" value="${row.seqIssueDtlId}" />
+<form:radiobutton path="taskid" value="${row.seqIssueDtlId}" onclick="submitform('loaddetails')" />
   </display:column>
 <display:column sortable="true"  title="Task Subject" property="issueSubject"></display:column>
 <display:column sortable="true" title="Task Details" property="issueDetails"></display:column>
+    <display:column sortable="true" title="Assigned Dept" property="assignedDept"></display:column>
+    <display:column sortable="true" title="From Dept" property="fromDept"></display:column>
 <display:column sortable="true" title="Assigned From" property="assignedFrom"></display:column>
 <display:column sortable="true" title="Assigned To" property="assignedTo"></display:column>
 <display:column sortable="true" title="Assigned Date" property="assignedDate"></display:column>
+    <display:column sortable="true" title="From User" property="fromUser"></display:column>
 <display:column sortable="true" title="Task Created By" >
 <c:out value="${row.sciIssueMaster.issueCreatedBy}"></c:out>
 </display:column>

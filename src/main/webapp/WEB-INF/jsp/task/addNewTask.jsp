@@ -23,6 +23,28 @@
 <form:options items="${userlistitems}" itemValue="userId" itemLabel="userName"/>
 </form:select> </td>
 </tr>
+    <tr>
+        <td align="right" class="datatext">Assigned To</td>
+        <td><form:select path="fromUser" multiple="true"  >
+
+            <form:options items="${userlistitems}" itemValue="userId" itemLabel="userName"/>
+        </form:select> </td>
+    </tr>
+    <tr>
+        <td align="right" class="datatext">Assigned Dept</td>
+        <td><form:select path="assignedDept" multiple="false"  >
+
+            <form:options items="${roleitems}" itemValue="roleName" itemLabel="roleName"/>
+        </form:select> </td>
+    </tr>
+
+    <tr>
+        <td align="right" class="datatext">From Dept</td>
+        <td><form:select path="fromDept" multiple="false"  >
+
+            <form:options items="${roleitems}" itemValue="roleName" itemLabel="roleName"/>
+        </form:select> </td>
+    </tr>
 <tr >
 <td align="right" >&nbsp;</td>
 <td><input type="submit" value="Add New Task" /></td>

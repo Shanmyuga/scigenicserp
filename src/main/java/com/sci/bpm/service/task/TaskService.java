@@ -25,7 +25,7 @@ public interface TaskService {
 
 	public List loadForEscalation(int numberOfdays);
 	
-	public List searchTasks(String status ,int startpage,String userid);
+	public List searchTasks(String status ,int startpage,String userid,String roleName);
 	public SciIssueDetails loadDetails(String seqid);
 	
 	public String getNextSeqID();
