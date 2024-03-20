@@ -39,11 +39,22 @@
 
  <table>
  <tr>
-<td  align="center"><input type='submit' value='Forward Task' onclick="submitform('forwardTask')"/></td>
-<td  align="center"><input type='submit' value='Add New Task' onclick="submitform('addnewTask')"/></td>
+<td  align="center"><input type='submit' value='Update  Task' onclick="submitform('forwardTask')"/></td>
+<td  align="center"><input type='submit' value='Add New Task' onclick="submitform('addnewTask')"/></td
+     <c:if test="${userPreferences.roleName == 'admin'  }">
+
+
 <td  align="center"><input type='submit' value='Close Task' onclick="submitform('closeTask')"/></td>
-<td colspan="3">
-</td>
+         <td colspan="3">
+         </td>
+     </c:if>
+     <c:if test="${userPreferences.roleName != 'admin'  }">
+
+
+
+         <td colspan="4">
+         </td>
+     </c:if>
 </tr>
 </table>
 

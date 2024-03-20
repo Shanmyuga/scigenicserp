@@ -24,7 +24,7 @@
 </form:select> </td>
 </tr>
     <tr>
-        <td align="right" class="datatext">Assigned To</td>
+        <td align="right" class="datatext">From user</td>
         <td><form:select path="fromUser" multiple="true"  >
 
             <form:options items="${userlistitems}" itemValue="userId" itemLabel="userName"/>
