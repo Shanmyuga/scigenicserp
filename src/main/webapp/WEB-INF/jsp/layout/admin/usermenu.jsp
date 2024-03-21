@@ -16,6 +16,9 @@
                <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=updateuser-flow">Update User</a></td>
               </tr>
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=searchworkproposal-flow">Proposal MI</a></td>
+              </tr>
             <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addrole-flow">Add New Role</a></td>
               </tr>

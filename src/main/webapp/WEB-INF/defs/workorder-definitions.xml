@@ -90,6 +90,13 @@
      
       <put-attribute name="body" value="mi.add.body" />
   </definition>
+
+    <definition name="mi.add.proposal"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+        <put-attribute name="menu" value="usermenu.jsp" />
+
+        <put-attribute name="body" value="mi.add.proposal.body" />
+    </definition>
+
     <definition name="mi.addrequest"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
         <put-attribute name="menu" value="usermenu.jsp" />
 
@@ -105,7 +112,11 @@
      
       <put-attribute name="body1" value="/WEB-INF/jsp/mi/addmi_frag.jsp" />
   </definition>
+    <definition name="mi.add.proposal.body" template="/WEB-INF/jsp/mi/addProposalMaterialIndent.jsp" >
 
+
+        <put-attribute name="body1" value="/WEB-INF/jsp/mi/addmi_frag.jsp" />
+    </definition>
     <definition name="mi.add.bodyrequest" template="/WEB-INF/jsp/mi/addMaterialIndentStRequest.jsp" >
 
 

@@ -21,6 +21,9 @@
               </tr>
                <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewqcresults-flow">View QC Docs</a></td>
+              </tr
+              <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=searchworkproposal-flow">Proposal MI</a></td>
               </tr>
                <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20" ><a href="springtest.htm?_flowId=changerole-flow">Change my role</a></td>

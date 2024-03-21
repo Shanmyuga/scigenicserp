@@ -194,7 +194,138 @@ public class MaterialIndentController extends SciBaseController {
         return success();
     }
 
+    public Event addProspectivenewMI(RequestContext context) {
 
+        try {
+            System.out.println("inside add");
+            MatindCommand command = (MatindCommand) getFormObject(context);
+            WorkOrderCommand wrkcommand = (WorkOrderCommand) context
+                    .getFlowScope().get("workorderbean");
+            List wlist = (List) context.getFlowScope().get("workorderlist");
+            List<MatCollectionCommand> matslist = command.getMatList();
+
+            SciWorkorderMaster wmaster = (SciWorkorderMaster) wlist.get(Integer
+                    .parseInt(wrkcommand.getWindex()) - 1);
+            SciMatindMaster groupMaster = (SciMatindMaster) context
+                    .getFlowScope().get("groupMI");
+
+            for (MatCollectionCommand mi : matslist) {
+                SciMatindMaster master = new SciMatindMaster();
+                if (mi.getProductSpecid() == null) {
+                    continue;
+                }
+
+                String prodSpecid = mi.getProductSpecid().substring(0, 5);
+                master.setSciWorkorderMaster(wmaster);
+                BeanUtils.copyProperties(master, mi);
+                master.setMiForIssue(mi.getMiForIssue());
+                System.out.println(command.getDrawingRef());
+				/*if(!"".equals(mi.getDrawingRef())) {
+					String[] arra = StringUtils.split(mi.getDrawingRef(),",");
+					master.setDrawingRef(arra[0]);
+					master.setDesignRef(arra[1]);
+				}*/
+
+                DecimalFormat df = new DecimalFormat();
+                df.setMaximumFractionDigits(2);
+                for (AdditionalInfoCommand additionalInfoCommand : mi.getAdditionalInfoCommandList()) {
+
+                    if (!additionalInfoCommand.getAdditionalInfoType().equals("File")) {
+                        SciMiMaterialAddinfoEntity entity = new SciMiMaterialAddinfoEntity();
+                        entity.setSeqMiId(master);
+                        entity.setAddInfoLabel(additionalInfoCommand.getAdditionalInfoLabel());
+                        if (additionalInfoCommand.getAdditionalInfoType().equals("Check")) {
+                            entity.setAddInfoValue(String.join(",", additionalInfoCommand.getAdditionalDropValues()));
+                        } else {
+                            entity.setAddInfoValue(additionalInfoCommand.getAdditionalDetailText());
+                        }
+                        entity.setInsertedDate(new Time(Calendar.getInstance().getTime().getTime()));
+                        entity.setInsertedBy(getUserPreferences().getUserID());
+                        if (entity.getAddInfoValue() != null && !StringUtils.isBlank(entity.getAddInfoValue())) {
+                            master.getMatInfos().add(entity);
+                        }
+
+                        if(additionalInfoCommand.getAdditionalInfoLabel().startsWith("REF_") &&  !additionalInfoCommand.getAdditionalInfoLabel().startsWith("REF_SIZE")) {
+                            if(StringUtils.isBlank(master.getMatcodeAddInfo())) {
+                                //master.setMatcodeAddInfo(additionalInfoCommand.getAdditionalInfoLabel()+":"+additionalInfoCommand.getAdditionalDetailText()+";");
+                            }
+                            else  {
+                                //master.setMatcodeAddInfo(master.getMatcodeAddInfo()+";"+additionalInfoCommand.getAdditionalInfoLabel()+":"+additionalInfoCommand.getAdditionalDetailText()+";");
+                            }
+                        }
+
+                        if(additionalInfoCommand.getAdditionalInfoLabel().startsWith("REF_SIZE_NUM") ) {
+                            float flt = Float.parseFloat(additionalInfoCommand.getAdditionalDetailText());
+                            if(StringUtils.isBlank(master.getMatcodeAddInfo())) {
+
+
+
+
+                                //master.setMatcodeAddInfo(additionalInfoCommand.getAdditionalInfoLabel()+":"+df.format(flt)+";");
+                            }
+                            else  {
+                                //master.setMatcodeAddInfo(master.getMatcodeAddInfo()+";"+additionalInfoCommand.getAdditionalInfoLabel()+":"+df.format(flt)+";");
+                            }
+                        }
+
+                    } else {
+                        if (additionalInfoCommand.getOriginalDocName() != null) {
+                            SciAddMatInfoDocsEntity addMatInfoDocsEntity = new SciAddMatInfoDocsEntity();
+
+                            addMatInfoDocsEntity.setSeqMiId(master);
+                            addMatInfoDocsEntity.setDocData(additionalInfoCommand.getFileData());
+                            addMatInfoDocsEntity.setOriginalDocName(additionalInfoCommand.getOriginalDocName());
+                            addMatInfoDocsEntity.setDocType(additionalInfoCommand.getDocType());
+                            addMatInfoDocsEntity.setAddinfoLabel(additionalInfoCommand.getAdditionalInfoLabel());
+                            addMatInfoDocsEntity.setInsertedBy(getUserPreferences().getUserID());
+                            addMatInfoDocsEntity.setInsertedDate(new Time(Calendar.getInstance().getTime().getTime()));
+                            master.getMatInfoDocsEntities().add(addMatInfoDocsEntity);
+
+                        }
+                    }
+
+
+                }
+
+                master.setDrawingRef(command.getDrawingRef());
+                String dept = getDelimitedTokens(mi.getProductCat(), 1);
+                String cat = getDelimitedTokens(mi.getProductCat(), 0);
+                master.setMatType(prservice.getMatType(cat, dept));
+                master.setApprovedStatus("Y");
+                master.setIsGroupMiId("N");
+                master.setUnitCost(new BigDecimal(mi.getUnitPrice()));
+                master.setMatGroupMiId(groupMaster == null ? null : groupMaster.getSeqMiId());
+                master.setMatSpec(mi.getMatSpec());
+                master.setPurStatus(getLookupservice().loadIDData("MI_PROPOSAL_STATUS"));
+                master.setUpdatedBy(getUserPreferences().getUserID());
+                master.setUpdatedDate(new java.util.Date());
+                master.setMatcode(getDelimitedTokens(mi.getProductType(), 0)
+                        + mi.getProductSpecid().substring(0, 5));
+                master.setPreparedBy(getUserPreferences().getUserID());
+                master.setInsertedBy(getUserPreferences().getUserID());
+                master.setInsertedDate(new java.util.Date());
+                System.out.println("mi data" + master.getMatQty());
+
+                Long seqMiId = service.addNewMI(master);
+                service.updateAddInfo(seqMiId);
+                mi.reset();
+            }
+            writerJob.writeMIAdditionalDocs();
+            SciMatindMaster master = new SciMatindMaster();
+            master.setSciWorkorderMaster(wmaster);
+            List milist = service.searchMIWorkOrder(master, command);
+            context.getFlowScope().put("workmis", milist);
+            context.getFlowScope().remove("productspecmap");
+            context.getFlowScope().remove("productcatmap");
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // service.addNewMI(master)
+        return success();
+    }
     public Event searchMI(RequestContext context) throws Exception {
         MatindCommand command = (MatindCommand) getFormObject(context);
 

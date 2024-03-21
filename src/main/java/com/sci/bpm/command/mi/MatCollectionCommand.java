@@ -42,6 +42,7 @@ public class MatCollectionCommand implements Serializable {
 	private String matEstUnitCost;
 	private String miForIssue;
 
+
 	private String poMatAssign;
 
 	private String rawMaterialDesc;
