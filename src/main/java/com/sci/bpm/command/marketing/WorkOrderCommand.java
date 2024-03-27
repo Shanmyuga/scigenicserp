@@ -29,7 +29,9 @@ public class WorkOrderCommand implements Serializable {
 	private String frieght;
 	private String transportation;
 
+	private String propWoType;
 
+	private String propWoVolume;
 
 	private String octroi;
 	private String reportFilter;
@@ -293,5 +295,21 @@ public class WorkOrderCommand implements Serializable {
 
 	public void setInstallationWoShortkey(String installationWoShortkey) {
 		this.installationWoShortkey = installationWoShortkey;
+	}
+
+	public String getPropWoType() {
+		return propWoType;
+	}
+
+	public void setPropWoType(String propWoType) {
+		this.propWoType = propWoType;
+	}
+
+	public String getPropWoVolume() {
+		return propWoVolume;
+	}
+
+	public void setPropWoVolume(String propWoVolume) {
+		this.propWoVolume = propWoVolume;
 	}
 }

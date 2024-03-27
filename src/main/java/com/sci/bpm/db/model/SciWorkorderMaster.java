@@ -69,6 +69,10 @@ public class SciWorkorderMaster implements java.io.Serializable {
 	private Set<SciWorkDeliInst> sciWorkDeliInsts = new HashSet<SciWorkDeliInst>(
 			0);
 	private SciCustomerMaster sciCustomerMaster;
+
+	private String propWoType;
+
+	private String propWoVolume;
 	
 	
 	// Constructors
@@ -470,5 +474,25 @@ private String insertedBy;
 
 	public void setInstallationWoShortkey(String installationWoShortkey) {
 		this.installationWoShortkey = installationWoShortkey;
+	}
+
+	@Column(name = "PROPOSAL_WO_TYPE", length = 200)
+	public String getPropWoType() {
+		return propWoType;
+	}
+
+
+
+	public void setPropWoType(String propWoType) {
+		this.propWoType = propWoType;
+	}
+
+	@Column(name = "PROPOSAL_WO_VOLUME", length = 20)
+	public String getPropWoVolume() {
+		return propWoVolume;
+	}
+
+	public void setPropWoVolume(String propWoVolume) {
+		this.propWoVolume = propWoVolume;
 	}
 }

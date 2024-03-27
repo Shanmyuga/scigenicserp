@@ -29,20 +29,40 @@
 
             <span style="color:red;">*</span></td></tr>
     <tr>
-<td align="right" class="datatext">Work Order Type</td>
-<td ><form:select path="wordOrderType" size="1" id="worktype" onchange="changeDtd('changeWtype')">
+<td align="right" class="datatext">Proposal Work Order Type</td>
+<td ><form:select path="propWoType" size="1" id="worktype" >
 
-<form:option value="Fermenter">Fermenter</form:option>
-<form:option value="Mixing Vessel">Mixing Vessel</form:option>
-<form:option value="Down Stream Equipments">Down Stream Equipments</form:option>
-<form:option value="Glass">Glass Vessel</form:option>
-<form:option value="Service">Service</form:option>
-<form:option value="Stock">Stock WorkOrder</form:option>
-<form:option value="ShopFloor Work">ShopFloor WorkOrder</form:option>
-<form:option value="Sub contractWork">SubContract WorkOrder</form:option>
-    <form:option value="Installation">Installation WorkOrder</form:option>
+<form:option value="Agriculture_Economical_media_animal_probiotic">Agriculture_Economical_media_animal_probiotic</form:option>
+<form:option value="SemiAuto_Enzymes_Therapeuti">SemiAuto_Enzymes_Therapeuti</form:option>
+<form:option value="FullyAutoPharma_Vaccine">Down Stream Equipments</form:option>
+
 </form:select><span style="color:red;">*</span></td>
 </tr>
+    <tr>
+        <td align="right" class="datatext">Proposal Work Order Volume in Litres</td>
+        <td ><form:input path="propWoVolume" size="1" id="propWoVolume" />
+
+
+
+
+    </tr>
+
+    <tr>
+        <td align="right" class="datatext">Regular Work Order Order Type</td>
+        <td ><form:select path="wordOrderType" size="1" id="worktype" onchange="changeDtd('changeWtype')">
+
+            <form:option value="Fermenter">Fermenter</form:option>
+            <form:option value="Mixing Vessel">Mixing Vessel</form:option>
+            <form:option value="Down Stream Equipments">Down Stream Equipments</form:option>
+            <form:option value="Glass">Glass Vessel</form:option>
+            <form:option value="Service">Service</form:option>
+            <form:option value="Stock">Stock WorkOrder</form:option>
+            <form:option value="Proposal">Proposal WorkOrder</form:option>
+            <form:option value="ShopFloor Work">ShopFloor WorkOrder</form:option>
+            <form:option value="Sub contractWork">SubContract WorkOrder</form:option>
+            <form:option value="Installation">Installation WorkOrder</form:option>
+        </form:select><span style="color:red;">*</span></td>
+    </tr>
 <c:if    test="${workorderbean.wordOrderType == 'Installation'}">
     <tr>
         <td align="right" class="datatext">Installation Workorder Short Key</td>
@@ -68,6 +88,11 @@
 
 </td>
 </tr>
+
+    <tr>
+        <td align="right" class="datatext">PO Number</td>
+        <td ><form:input path="poNumber" /></td>
+    </tr>
 <tr>
 <td align="right" class="datatext">Job Description</td>
 <td ><form:input path="jobDesc" /><span style="color:red;">*</span></td>
