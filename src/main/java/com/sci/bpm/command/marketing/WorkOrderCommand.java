@@ -51,6 +51,7 @@ public class WorkOrderCommand implements Serializable {
 	private Long seqCustId;
 	private Long seqClientOrgId;
 	private String shortKey;
+	private Long proposalRef;
 
 	private Date miCloseDate;
 	private String installationWoShortkey;
@@ -311,5 +312,13 @@ public class WorkOrderCommand implements Serializable {
 
 	public void setPropWoVolume(String propWoVolume) {
 		this.propWoVolume = propWoVolume;
+	}
+
+	public Long getProposalRef() {
+		return proposalRef;
+	}
+
+	public void setProposalRef(Long proposalRef) {
+		this.proposalRef = proposalRef;
 	}
 }

@@ -58,6 +58,7 @@ public class SciWorkorderMaster implements java.io.Serializable {
 	private String basis;
 	
 	private String woStatus;
+	private Long proposalRef;
 
 	private String installationWoShortkey;
 	
@@ -494,5 +495,13 @@ private String insertedBy;
 
 	public void setPropWoVolume(String propWoVolume) {
 		this.propWoVolume = propWoVolume;
+	}
+	@Column(name = "PROPOSAL_REF", unique = true, nullable = true, insertable = true, updatable = true, precision = 9, scale = 0)
+	public Long getProposalRef() {
+		return proposalRef;
+	}
+
+	public void setProposalRef(Long proposalRef) {
+		this.proposalRef = proposalRef;
 	}
 }

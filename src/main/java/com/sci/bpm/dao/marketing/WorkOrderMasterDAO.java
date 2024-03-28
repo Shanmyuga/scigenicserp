@@ -1,10 +1,8 @@
 package com.sci.bpm.dao.marketing;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 import javax.persistence.EntityManager;
@@ -14,6 +12,7 @@ import javax.persistence.Query;
 import com.sci.bpm.chart.model.ChartModel;
 import com.sci.bpm.chart.model.DataPoint;
 import com.sci.bpm.db.model.*;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -57,9 +56,30 @@ public class WorkOrderMasterDAO implements ISciWorkorderMasterDAO {
 		return null;
 	}
 
-	public void save(SciWorkorderMaster entity) {
+	public void save(SciWorkorderMaster entity)  {
 		// TODO Auto-generated method stub
 		em.persist(entity);
+
+		if(entity.getProposalRef() != null) {
+			SciWorkorderMaster wmref = em.find(SciWorkorderMaster.class,entity.getProposalRef());
+			Query query = em.createQuery("from SciMatindMaster  mi where mi.sciWorkorderMaster.seqWorkId = :seqWorkId");
+			query.setParameter("seqWorkId",entity.getProposalRef());
+			List<SciMatindMaster> milist = query.getResultList();
+			for (SciMatindMaster mi:milist) {
+				SciMatindMaster master = new SciMatindMaster();
+				try {
+					BeanUtils.copyProperties(master,mi);
+					Set<SciAddMatInfoDocsEntity> entities = mi.getMatInfoDocsEntities();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+				master.setSeqMiId(null);
+				master.setSciWorkorderMaster(wmref);
+				em.persist(master);
+			}
+		}
 	}
 
 	public SciWorkorderMaster update(SciWorkorderMaster entity) {
@@ -85,6 +105,16 @@ public class WorkOrderMasterDAO implements ISciWorkorderMasterDAO {
 	public void addAmendment(SciAmendmentMaster master) {
 		// TODO Auto-generated method stub
 		em.persist(master);
+	}
+
+	@Override
+	public List<SciWorkorderMaster> searchWorkOrderMIProposal() {
+
+		Query query = em.createQuery("from SciWorkorderMaster  wm where wm.miCloseDate > :currentDate and wm.wordOrderType = 'Proposal'");
+
+		query.setParameter("currentDate", new Date());
+		return query.getResultList();
+
 	}
 
 	public List<SciAmendmentMaster> searchAmend(SciWorkorderMaster master) {

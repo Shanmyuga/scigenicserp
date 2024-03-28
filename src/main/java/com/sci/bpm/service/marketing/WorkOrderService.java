@@ -12,6 +12,8 @@ public interface WorkOrderService {
 	
 	public List<SciWorkorderMaster> searchWorkOrder();
 	public List<SciWorkorderMaster> searchWorkOrderMIActive();
+	public List<SciWorkorderMaster> searchWorkOrderMIProposal();
+
 	public List<SciActiveWorkordersReportEntity> searchActiveWorkOrders();
 	public List<SciWorkorderMaster> searchAllWorkOrder();
 public List<SciAmendmentMaster> searchAmend(SciWorkorderMaster master);

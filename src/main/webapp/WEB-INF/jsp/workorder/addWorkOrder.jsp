@@ -40,13 +40,21 @@
 </tr>
     <tr>
         <td align="right" class="datatext">Proposal Work Order Volume in Litres</td>
-        <td ><form:input path="propWoVolume" size="1" id="propWoVolume" />
+        <td ><form:input path="propWoVolume" size ="6" id="propWoVolume" />
 
 
 
 
     </tr>
+    <tr>
+        <td align="right" class="datatext">Proposal Work Order Volume in Litres</td>
+        <td ><form:select path="proposalRef" size="1" id="proposalRef" >
+            <form:option value="">None</form:option>
+                <form:options items="${propkeydata}" itemLabel="jobDesc" itemValue="seqWorkId"/>
 
+</form:select>
+
+    </tr>
     <tr>
         <td align="right" class="datatext">Regular Work Order Order Type</td>
         <td ><form:select path="wordOrderType" size="1" id="worktype" onchange="changeDtd('changeWtype')">
@@ -73,9 +81,7 @@
     </tr>
 </c:if>
 <tr>
-<td align="right" class="datatext">PO Number</td>
-<td ><form:input path="poNumber" /></td>
-</tr>
+
 <tr>
 <td align="right" class="datatext">PO Date</td>
 <td ><form:input path="poDate" id="poDate" />

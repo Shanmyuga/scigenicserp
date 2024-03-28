@@ -1,5 +1,6 @@
 package com.sci.bpm.dao.marketing;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +40,7 @@ public interface ISciWorkorderMasterDAO {
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(SciWorkorderMaster entity);
+	public void save(SciWorkorderMaster entity) ;
 
 	/**
 	 * Delete a persistent SciWorkorderMaster entity. This operation must be
@@ -137,7 +138,7 @@ public interface ISciWorkorderMasterDAO {
 	public List<SciAmendmentMaster> searchAmend(SciWorkorderMaster master);
 	public List<SciActiveWorkordersReportEntity> searchActiveWorkOrders();
 	public void addAmendment(SciAmendmentMaster master);
-	
+	public List<SciWorkorderMaster> searchWorkOrderMIProposal();
 	public void addWorkOrderwithDetails(Map workbeans);
 	
 	public List<SciJdrDocs> getJDRDocs(Long seqWorkId);
