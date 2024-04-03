@@ -32,6 +32,16 @@ public class WorkOrderMasterDAO implements ISciWorkorderMasterDAO {
 		em.merge(wm);
 	}
 
+	@Override
+	public List<SciWorkorderMaster> searchProposalWorkorder() {
+
+		Query query = em.createQuery("from SciWorkorderMaster  wm where wm.miCloseDate > :currentDate and wm.wordOrderType = 'Proposal'");
+
+		query.setParameter("currentDate", new Date());
+		return query.getResultList();
+
+	}
+
 	public List<SciWorkorderMaster> findAll(int rowStartIdxAndCount) {
 		// TODO Auto-generated method stub
 		return null;
@@ -44,7 +54,7 @@ public class WorkOrderMasterDAO implements ISciWorkorderMasterDAO {
 
 	@Override
 	public List<SciWorkorderMaster> searchWorkOrderMIActive() {
-		Query query = em.createQuery("from SciWorkorderMaster  wm where wm.miCloseDate > :currentDate");
+		Query query = em.createQuery("from SciWorkorderMaster  wm where wm.miCloseDate > :currentDate and wm.wordOrderType != 'Proposal'");
 
 		query.setParameter("currentDate", new Date());
 		return query.getResultList();
@@ -64,6 +74,7 @@ public class WorkOrderMasterDAO implements ISciWorkorderMasterDAO {
 			SciWorkorderMaster wmref = em.find(SciWorkorderMaster.class,entity.getProposalRef());
 			Query query = em.createQuery("from SciMatindMaster  mi where mi.sciWorkorderMaster.seqWorkId = :seqWorkId");
 			query.setParameter("seqWorkId",entity.getProposalRef());
+			System.out.println(wmref.getSeqWorkId());
 			List<SciMatindMaster> milist = query.getResultList();
 			for (SciMatindMaster mi:milist) {
 				SciMatindMaster master = new SciMatindMaster();
@@ -76,7 +87,11 @@ public class WorkOrderMasterDAO implements ISciWorkorderMasterDAO {
 					e.printStackTrace();
 				}
 				master.setSeqMiId(null);
-				master.setSciWorkorderMaster(wmref);
+				master.setSciWorkorderMaster(entity);
+				master.setMatInfos(null);
+				master.setMatInfoDocsEntities(null);
+				System.out.println(master.getMatcode());
+				System.out.println(master.getMatcodeAddInfo());
 				em.persist(master);
 			}
 		}

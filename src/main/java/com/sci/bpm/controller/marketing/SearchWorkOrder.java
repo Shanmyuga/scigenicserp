@@ -52,6 +52,17 @@ public class SearchWorkOrder extends SciBaseController{
 		return success();
 	}
 
+	public Event searchPropsalWorkOrderMIActive(RequestContext context) {
+
+		List<SciWorkorderMaster> mylist = service.searchProposalWorkorder();
+		context.getFlowScope().put("workorderlist", mylist);
+		StringBuilder builder = new StringBuilder();
+		for(SciWorkorderMaster wm:mylist) {
+			builder.append(wm.getJobDesc()+"|");
+		}
+		context.getFlowScope().put("workorderlistNames", builder.toString());
+		return success();
+	}
 	public Event searchActiveWorkOrder(RequestContext context) {
 
 		List<SciActiveWorkordersReportEntity> mylist = service.searchActiveWorkOrders();

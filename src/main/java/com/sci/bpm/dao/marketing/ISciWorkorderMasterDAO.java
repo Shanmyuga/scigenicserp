@@ -70,6 +70,8 @@ public interface ISciWorkorderMasterDAO {
 	 */
 	public void delete(SciWorkorderMaster entity);
 	public void extendMiCloseDate(SciWorkorderMaster wm);
+	public List<SciWorkorderMaster> searchProposalWorkorder();
+
 	/**
 	 * Persist a previously saved SciWorkorderMaster entity and return it or a
 	 * copy of it to the sender. A copy of the SciWorkorderMaster entity

@@ -47,6 +47,11 @@ public class WorkOrderServiceImpl implements WorkOrderService {
 	}
 
 	@Override
+	public List<SciWorkorderMaster> searchProposalWorkorder() {
+		return daoimpl.searchProposalWorkorder();
+	}
+
+	@Override
 	public List<SciWorkorderMaster> searchWorkOrderMIProposal() {
 		return daoimpl.searchWorkOrderMIProposal();
 	}
