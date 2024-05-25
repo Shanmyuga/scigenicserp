@@ -39,6 +39,7 @@ import org.apache.xmlgraphics.util.MimeConstants;
 import org.omg.PortableServer.REQUEST_PROCESSING_POLICY_ID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.webflow.context.servlet.ServletExternalContext;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
@@ -871,8 +872,20 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 	
 	public Event addInvoiceDetails(RequestContext context) throws Exception {
 		POCommand command = (POCommand) getFormObject(context);
+		MultipartFile file = command.getFiledoc();
+		SciInvoiceDocs invoiceDocs = new SciInvoiceDocs();
+		invoiceDocs.setDocCnttype(file.getContentType());
+		invoiceDocs.setDocVersion("1.0");
+		invoiceDocs.setInvoiceDesc("invoice");
+		invoiceDocs.setUpdatedBy(getUserPreferences().getUserID());
+		invoiceDocs.setUpdatedDate(new Date());
+		invoiceDocs.setInvoiceDoc(file.getBytes());
+		invoiceDocs.setDocType(1L);
+
 
 		SciVendorInvoiceMaster vInvoice = new SciVendorInvoiceMaster();
+		invoiceDocs.setVendorInvoiceMaster(vInvoice);
+		vInvoice.addInvoiceDoc(invoiceDocs);
 		BeanUtils.copyProperties(vInvoice, command);
 		vInvoice.setInsertedBy(getUserPreferences().getUserID());
 		SciVendorMaster master = service.loadSciVendorMaster(command.getSeqVendorId());

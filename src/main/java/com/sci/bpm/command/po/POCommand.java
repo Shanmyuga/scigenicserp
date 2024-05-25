@@ -7,11 +7,13 @@ import java.util.Date;
 import java.util.List;
 
 import com.sci.bpm.command.mi.MatCollectionCommand;
+import org.springframework.web.multipart.MultipartFile;
 
 public class POCommand implements Serializable {
 
 	private String vendorOrder;
 	private Date purchaseDate;
+	private transient MultipartFile filedoc;
 	private String vendorAddress;
 	private Date purchaseDueDate;
 	private Long seqVendorId;
@@ -85,6 +87,14 @@ public class POCommand implements Serializable {
 	private String vendorStatus;
 
 	private Long subContMI;
+
+	public MultipartFile getFiledoc() {
+		return filedoc;
+	}
+
+	public void setFiledoc(MultipartFile filedoc) {
+		this.filedoc = filedoc;
+	}
 
 	private Double gst = new Double(0);
 	private Double gstCharges = new Double(0);

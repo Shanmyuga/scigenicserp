@@ -40,7 +40,16 @@
 <td ><form:input path="billNo" />
 <span style="color:red;">*</span></td>
 </tr>
+<tr>
 
+
+
+        <td  align="left" class="datatext">Upload Invoice Document </td>
+        <td ><input type="file" name="filedoc" id="filedoc"/><span style="color:red;">*</span></td>
+        <td colspan="2">&nbsp</td>
+
+
+</tr>
 <tr>
 <td align="left" class="datatext">Bill  Date</td>
 <td ><form:input path="billDate" />

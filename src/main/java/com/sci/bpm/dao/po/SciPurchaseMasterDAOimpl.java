@@ -367,6 +367,7 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 	public void addInvoiceDetails(SciVendorInvoiceMaster vmaster) {
 		// TODO Auto-generated method stub
 		em.persist(vmaster);
+
 	}
 
 	public List<SciVendorInvoiceMaster> loadInvoiceDetails() {
@@ -377,6 +378,7 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 	public List<SciPurchaseMast> loadPODetails(Long seqVendorID) {
 		Query qry = em.createQuery("Select m from SciPurchaseMast m where m.sciVendorMaster.seqVendorId =:seqVendorID ");
 		qry.setParameter("seqVendorID", seqVendorID);
+
 		return qry.getResultList();
 	}
 
