@@ -155,6 +155,14 @@
         <display:column sortable="true"   title="Material Dimension" property="matDimesion" >
 
         </display:column>
+
+        <display:column sortable="true"   title="Ref size" property="refSize" >
+
+        </display:column>
+
+        <display:column sortable="true"   title="Ref Make" property="refMake" >
+
+        </display:column>
         <display:column sortable="true"  title="Created Date"  property="insertedDate" >
 
         </display:column>

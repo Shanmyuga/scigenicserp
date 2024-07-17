@@ -57,6 +57,10 @@ private int tempestCost;
 
 private String requestStatus;
 
+private String refSize;
+
+private String refMake;
+
 private Date unitCostDate;
 private float tempunitCost;
 private String prodRequestStatus;
@@ -161,7 +165,7 @@ private String matcodeAddInfo;
 			Object object4, Object object5, Object object6, Object object7,
 			Object object8, Object object9, Object object10, Object object11,
 			Object object12, Object object13, Object object14, Object object15,
-			Object object16,Object object17,Object object18,Object object19,Object object20,Object Object21,Object object22,Object object23,Object object24,Object object25) {
+			Object object16,Object object17,Object object18,Object object19,Object object20,Object Object21,Object object22,Object object23,Object object24,Object object25,Object object26,Object object27) {
 		// TODO Auto-generated constructor stub
 		
 		this.seqMiId = (Long) object;
@@ -189,7 +193,8 @@ private String matcodeAddInfo;
 		this.miForIssue = (String)object23;
 		this.poMatAssign = (String)object24;
 		this.matcodeAddInfo = (String)object25;
-
+		this.refSize = (String)object26;
+		this.refMake = (String)object27;
 	}
 
 	// Property accessors
@@ -669,5 +674,22 @@ private String matcodeAddInfo;
 
 	public void setMatcodeAddInfo(String matcodeAddInfo) {
 		this.matcodeAddInfo = matcodeAddInfo;
+	}
+
+	@Transient
+	public String getRefSize() {
+		return refSize;
+	}
+
+	public void setRefSize(String refSize) {
+		this.refSize = refSize;
+	}
+	@Transient
+	public String getRefMake() {
+		return refMake;
+	}
+
+	public void setRefMake(String refMake) {
+		this.refMake = refMake;
 	}
 }

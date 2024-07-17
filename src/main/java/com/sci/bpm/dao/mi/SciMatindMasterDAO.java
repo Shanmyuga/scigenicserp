@@ -106,7 +106,7 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 			wmaster = em.find(SciWorkorderMaster.class, new Long(command.getSeqWorkId()));
 		}
 
-		String query = "select  m.seqMiId,m.matType,m.matSpec,m.matDesc,m.matQty,m.matDimesion,m.recommend,m.purStatus,m.preparedBy,m.estUnintCost,m.matcode,(select CASE  WHEN requestStatus = 'Y' then 'Request Issued' WHEN requestStatus = 'N' then 'Request Not Issued'   WHEN requestStatus = 'C' then 'Request Cancelled by Stores'  WHEN requestStatus = 'R' then 'Request Rejected' ELSE 'Not raised' END from SciStoresRequest r  where  r.sciMiMaster.seqMiId =m.seqMiId ),(select r.prodApproval from SciStoresRequest r where r.sciMiMaster.seqMiId =m.seqMiId),(select r.purchApproval from SciStoresRequest r where r.sciMiMaster.seqMiId =m.seqMiId),m.insertedBy,m.insertedDate,(select wm.jobDesc from SciWorkorderMaster wm where wm.seqWorkId=m.sciWorkorderMaster.seqWorkId),(select  max(pm.seqPurchId) from SciPurchaseMast pm,SciPurchItemMaster im,SciItemmiDetails immi,SciPurchaseItemdetails pmmd where immi.seqMiId =m.seqMiId and immi.sciPurchItemMaster.seaPuritemId=im.seaPuritemId and im.seaPuritemId=pmmd.seqItemId and pm.seqPurchId=pmmd.sciPurchaseMast.seqPurchId) ,m.matDuedate ,m.isGroupMiId ,m.stockMI,(select  max(pm.vendorAgreedDate) from SciPurchaseMast pm,SciPurchItemMaster im,SciItemmiDetails immi,SciPurchaseItemdetails pmmd where immi.seqMiId =m.seqMiId and immi.sciPurchItemMaster.seaPuritemId=im.seaPuritemId and im.seaPuritemId=pmmd.seqItemId and pm.seqPurchId=pmmd.sciPurchaseMast.seqPurchId) ,m.miForIssue ,m.poMatAssign, m.matcodeAddInfo from SciMatindMaster m ,SciMattypeMaster mt  where mt.matCode  = substr(m.matcode,1,2)  ";
+		String query = "select  m.seqMiId,m.matType,m.matSpec,m.matDesc,m.matQty,m.matDimesion,m.recommend,m.purStatus,m.preparedBy,m.estUnintCost,m.matcode,(select CASE  WHEN requestStatus = 'Y' then 'Request Issued' WHEN requestStatus = 'N' then 'Request Not Issued'   WHEN requestStatus = 'C' then 'Request Cancelled by Stores'  WHEN requestStatus = 'R' then 'Request Rejected' ELSE 'Not raised' END from SciStoresRequest r  where  r.sciMiMaster.seqMiId =m.seqMiId ),(select r.prodApproval from SciStoresRequest r where r.sciMiMaster.seqMiId =m.seqMiId),(select r.purchApproval from SciStoresRequest r where r.sciMiMaster.seqMiId =m.seqMiId),m.insertedBy,m.insertedDate,(select wm.jobDesc from SciWorkorderMaster wm where wm.seqWorkId=m.sciWorkorderMaster.seqWorkId),(select  max(pm.seqPurchId) from SciPurchaseMast pm,SciPurchItemMaster im,SciItemmiDetails immi,SciPurchaseItemdetails pmmd where immi.seqMiId =m.seqMiId and immi.sciPurchItemMaster.seaPuritemId=im.seaPuritemId and im.seaPuritemId=pmmd.seqItemId and pm.seqPurchId=pmmd.sciPurchaseMast.seqPurchId) ,m.matDuedate ,m.isGroupMiId ,m.stockMI,(select  max(pm.vendorAgreedDate) from SciPurchaseMast pm,SciPurchItemMaster im,SciItemmiDetails immi,SciPurchaseItemdetails pmmd where immi.seqMiId =m.seqMiId and immi.sciPurchItemMaster.seaPuritemId=im.seaPuritemId and im.seaPuritemId=pmmd.seqItemId and pm.seqPurchId=pmmd.sciPurchaseMast.seqPurchId) ,m.miForIssue ,m.poMatAssign, m.matcodeAddInfo,(select addInfoValue from SciMiMaterialAddinfoEntity ami where m.seqMiId=ami.seqMiId.seqMiId and addInfoLabel='REF_SIZE'),(select addInfoValue from SciMiMaterialAddinfoEntity ami where m.seqMiId=ami.seqMiId.seqMiId and addInfoLabel='REF_MAKE') from SciMatindMaster m ,SciMattypeMaster mt  where mt.matCode  = substr(m.matcode,1,2)  ";
 		// Query query = em.createQuery("Select * from SciMatindMaster m ");
 		Map parameters = new HashMap();
 		String whereClause = "";
@@ -277,7 +277,7 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		List<SciMatindMaster> finalList = new ArrayList<SciMatindMaster>();
 		List<SciMatindMaster> deptList = new ArrayList<SciMatindMaster>();
 		for(Object[]  obj :milist) {
-			finalList.add(new SciMatindMaster(obj[0], obj[1], obj[2], obj[3], obj[4], obj[5], obj[6], obj[7], obj[8], obj[9], obj[10], obj[11], obj[12], obj[13], obj[14], obj[15],obj[16],obj[17],obj[18],obj[19],obj[20],obj[21],obj[22],obj[23],obj[24]));
+			finalList.add(new SciMatindMaster(obj[0], obj[1], obj[2], obj[3], obj[4], obj[5], obj[6], obj[7], obj[8], obj[9], obj[10], obj[11], obj[12], obj[13], obj[14], obj[15],obj[16],obj[17],obj[18],obj[19],obj[20],obj[21],obj[22],obj[23],obj[24],obj[25],obj[26]));
 		}
 
 		Query totalAvailableqry = em.createNativeQuery("select nvl(sum(AVAIL_QTY),0) as availQty from sci_available_materials where matcode = :matcode");
@@ -797,7 +797,7 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 
 	public List<SciStoresRequest> checkStockedMI(String matcode, Long lovid) {
 		
-		Query qry = em.createQuery("Select distinct mi from SciStoresRequest mi where av.issuedFully = 'N' and av.matcode = :matcode");
+		Query qry = em.createQuery("Select distinct mi from SciStoresRequest mi where mi.issuedFully = 'N' and mi.matcode = :matcode");
 		qry.setParameter("matcode", matcode);
 		
 		
