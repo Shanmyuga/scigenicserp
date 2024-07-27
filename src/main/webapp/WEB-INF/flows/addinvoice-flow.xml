@@ -4,16 +4,16 @@
         <webflow:evaluate expression="pocont.setupForm"/>
 <!-- WARNING: parameter-type is no longer supported.  Use <set name="temp" value="'purstats_key'" type="string" /> to convert the type before the evaluate action. -->
 <webflow:evaluate expression="lookupbean.getDropDownList('vendor_key')" result="flowScope.vendorlist"/>
+    <webflow:evaluate expression="pocont.loadInvoiceDetails" result="flowScope.invoiceItemlist"></webflow:evaluate>
+
     </webflow:on-start>
 <webflow:view-state id="entersearch" view="add.invoice">
-       <webflow:on-entry>
-       <webflow:evaluate expression="pocont.loadInvoiceDetails"></webflow:evaluate>
-       </webflow:on-entry>
+
         <webflow:transition on="addInvoiceDetail" to="entersearch">
             <webflow:evaluate expression="pocont.bind"/>
             <webflow:evaluate expression="pocont.addInvoiceDetails"/>
         </webflow:transition>
-         <webflow:transition on="loadPOID" to="entersearch">
+         <webflow:transition on="loadPOIDs" to="entersearch">
             <webflow:evaluate expression="pocont.bind"/>
             <webflow:evaluate expression="pocont.loadPODetailsForVendor"/>
         </webflow:transition>

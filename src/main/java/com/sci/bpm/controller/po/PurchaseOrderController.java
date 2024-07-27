@@ -958,12 +958,20 @@ public Event loadQuotationsDetails(RequestContext context) throws Exception {
 		context.getFlowScope().put("quotationsList", details);
 		return success();
 	}
-	
+
+	@Override
+	public Event bind(RequestContext context) throws Exception {
+		System.out.println("inside binder");
+		super.bind(context);
+		return success();
+	}
+
 	public Event loadPODetailsForVendor(RequestContext context) throws Exception {
-		
+		System.out.println("inside po load");
 		POCommand command = (POCommand) getFormObject(context);
 		List<SciPurchaseMast> details  = service.loadPODetails(command.getSeqVendorId());
-		context.getFlashScope().put("poDetailsList", details);
+
+		context.getFlowScope().put("poDetailsList", details);
 		return success();
 	}
 	public Event addPayMentDetails(RequestContext context) throws Exception {

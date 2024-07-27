@@ -19,7 +19,7 @@
 
 
 <td align="left" class="datatext">Bill Vendor Details</td>
-<td ><form:select path="seqVendorId" size="1" id="seqVendorId" onchange="eventdirect('loadPOID') ">
+<td ><form:select path="seqVendorId" size="1" id="seqVendorId" onchange="eventdirect('loadPOIDs') ">
 <form:option value="">Select</form:option>
 <form:options items="${vendorlist}" itemValue="seqVendorId" itemLabel="vendorName"/>
 </form:select><span style="color:red;">*</span></td>
