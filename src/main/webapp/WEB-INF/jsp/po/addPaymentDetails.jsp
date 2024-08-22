@@ -9,7 +9,7 @@
 <p style="padding-left:20px" align="center"><font color="#0080ff" size="4" face="Baskerville Old Face"> Add Payment Details  </font></p>
 <p style="padding-left:20px" align="center"></p>
 <div width="787px"  style="float:left;">
-<form:form modelAttribute="pocommand" name="pocommand" >
+<form:form modelAttribute="pocommand" name="pocommand"  enctype="multipart/form-data">
 
 <table border="0" width="100%" cellpadding="10x" >
 
@@ -49,6 +49,7 @@
 <td align="left" class="datatext">Vendor Invoice Bill No</td>
 <td ><form:select path="billNo" size="1" id="billNo">
 <form:option value="">Select</form:option>
+
 <form:options items="${billdetails}" itemValue="billNo" itemLabel="billNo"/>
 </form:select><span style="color:red;">*</span></td>
     <td> Workorder </td>

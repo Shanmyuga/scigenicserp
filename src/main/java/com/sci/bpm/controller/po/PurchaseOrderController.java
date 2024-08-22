@@ -881,11 +881,12 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 		invoiceDocs.setUpdatedDate(new Date());
 		invoiceDocs.setInvoiceDoc(file.getBytes());
 		invoiceDocs.setDocType(1L);
+		invoiceDocs.setInvoiceDocName(file.getOriginalFilename());
 
 
 		SciVendorInvoiceMaster vInvoice = new SciVendorInvoiceMaster();
-		invoiceDocs.setVendorInvoiceMaster(vInvoice);
-		vInvoice.addInvoiceDoc(invoiceDocs);
+		//invoiceDocs.setVendorInvoiceMaster(vInvoice);
+		//vInvoice.addInvoiceDoc(invoiceDocs);
 		BeanUtils.copyProperties(vInvoice, command);
 		vInvoice.setInsertedBy(getUserPreferences().getUserID());
 		SciVendorMaster master = service.loadSciVendorMaster(command.getSeqVendorId());
@@ -963,6 +964,7 @@ public Event loadQuotationsDetails(RequestContext context) throws Exception {
 	public Event bind(RequestContext context) throws Exception {
 		System.out.println("inside binder");
 		super.bind(context);
+
 		return success();
 	}
 

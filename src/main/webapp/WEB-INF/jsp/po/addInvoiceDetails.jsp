@@ -9,7 +9,7 @@
 <p style="padding-left:20px" align="center"><font color="#0080ff" size="4" face="Baskerville Old Face"> Add Invoice Details  </font></p>
 <p style="padding-left:20px" align="center"></p>
 <div width="787px"  style="float:left;">
-<form:form modelAttribute="pocommand" name="pocommand" >
+<form:form  modelAttribute="pocommand" name="pocommand"  enctype="multipart/form-data">
 
 <table border="0" width="100%" cellpadding="10x" >
 
@@ -88,6 +88,9 @@
 <display:column sortable="true" title="adjusted due"  property="adjustAmount">
 
 </display:column>
+    <display:column sortable="true" title="Inserted Date"  property="insertedDate">
+
+    </display:column>
 <display:column sortable="true" title="Final Due"  property="finalAmount">
 
 </display:column>

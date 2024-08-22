@@ -1,6 +1,7 @@
 package com.sci.bpm.db.model;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -20,7 +21,7 @@ public class SciVendorInvoiceMaster implements java.io.Serializable {
 	private String billNo;
 	private String insertedBy;
 	private Date insertedDate;
-	private Set<SciInvoiceDocs> invoiceDocs;
+	private Set<SciInvoiceDocs> invoiceDocs = new HashSet<SciInvoiceDocs>();
 	private String updatedBy;
 	private Date updatedDate;
 	private Long poId;

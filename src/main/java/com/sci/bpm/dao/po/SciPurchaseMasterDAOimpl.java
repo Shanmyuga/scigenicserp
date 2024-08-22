@@ -371,7 +371,8 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 	}
 
 	public List<SciVendorInvoiceMaster> loadInvoiceDetails() {
-		Query qry = em.createQuery("Select m from SciVendorInvoiceMaster m order by billDate desc");
+		Query qry = em.createQuery("Select m from SciVendorInvoiceMaster m order by insertedDate desc");
+		qry.setMaxResults(1000);
 		return qry.getResultList();
 	}
 
