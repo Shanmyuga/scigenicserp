@@ -16,6 +16,7 @@
          <webflow:transition on="loadPOIDs" to="entersearch">
             <webflow:evaluate expression="pocont.bind"/>
             <webflow:evaluate expression="pocont.loadPODetailsForVendor"/>
+
         </webflow:transition>
     </webflow:view-state>
 <webflow:view-state id="createPOview" view="po.view">

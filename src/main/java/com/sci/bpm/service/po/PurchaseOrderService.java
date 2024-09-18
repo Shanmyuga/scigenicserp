@@ -30,8 +30,10 @@ public interface PurchaseOrderService {
 	public void updatePOStatus(SciPurchaseMast master,Long mistatus);
 	public void addPaymentDetails(SciPaymentDetails details);
 	public List<SciPaymentDetails> loadPaymentDetails();
+	public List<SciPaymentDetails> loadPaymentDetails(Long seqVendorId);
 	public SciVendorMaster loadSciVendorMaster(Long seqVendorID);
 	public List<SciVendorInvoiceMaster> loadInvoiceDetails();
+	public List<SciVendorInvoiceMaster> loadInvoiceDetails(Long seqVendorID);
 	public void addInvoiceDetails(SciVendorInvoiceMaster vmaster);
 	public List<SciPurchaseMast> loadPODetails(Long seqVendorID);
 	public List<SciRawMIDetails> loadSubContractMI(Long seqSubcontractMIId,Long seqVendorId,String stageDesc);

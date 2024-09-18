@@ -972,7 +972,10 @@ public Event loadQuotationsDetails(RequestContext context) throws Exception {
 		System.out.println("inside po load");
 		POCommand command = (POCommand) getFormObject(context);
 		List<SciPurchaseMast> details  = service.loadPODetails(command.getSeqVendorId());
-
+		if(command.getSeqVendorId() !=null) {
+			List<SciVendorInvoiceMaster> detailsve  = service.loadInvoiceDetails(command.getSeqVendorId());
+			context.getFlowScope().put("invoiceItemlist", detailsve);
+		}
 		context.getFlowScope().put("poDetailsList", details);
 		return success();
 	}
@@ -1009,12 +1012,18 @@ public Event loadbillDetails(RequestContext context) throws Exception {
 
 
 		List<SciVendorInvoiceMaster> list = service.loadbillNo(command.getSeqVendorId());
+		if(command.getSeqVendorId() != null) {
+			List<SciPaymentDetails> details =	service.loadPaymentDetails(command.getSeqVendorId());
+			context.getFlowScope().put("paymentItemlist", details);
+
+		}
 		context.getFlowScope().put("billdetails", list);
 		return success();
 	}
 	public Event loadMatCatItems(RequestContext context) throws Exception {
 		POCommand command = (POCommand) getFormObject(context);
 		List matcatlist = prservice.selectCategory(command.getMatDept());
+
 		context.getFlowScope().put("matcatitems", matcatlist);
 		return success();
 	}

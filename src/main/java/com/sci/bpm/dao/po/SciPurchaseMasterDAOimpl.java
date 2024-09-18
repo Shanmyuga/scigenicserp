@@ -359,6 +359,13 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 		return qry.getResultList();
 	}
 
+	@Override
+	public List<SciPaymentDetails> loadPaymentDetails(Long seqVendorId) {
+		Query qry = em.createQuery("Select m from SciPaymentDetails m where m.sciVendorMaster.seqVendorId=:seqVendorID order by paymentDate desc");
+		qry.setParameter("seqVendorID",seqVendorId);
+		return qry.getResultList();
+	}
+
 	public SciVendorMaster loadSciVendorMaster(Long seqVendorID) {
 		// TODO Auto-generated method stub
 		return em.find(SciVendorMaster.class, seqVendorID);
@@ -372,8 +379,15 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 
 	public List<SciVendorInvoiceMaster> loadInvoiceDetails() {
 		Query qry = em.createQuery("Select m from SciVendorInvoiceMaster m order by insertedDate desc");
-		qry.setMaxResults(1000);
+		qry.setMaxResults(100000);
 		return qry.getResultList();
+	}
+
+	@Override
+	public List<SciVendorInvoiceMaster> loadInvoiceDetails(Long seqVendorId) {
+		Query qry = em.createQuery("Select m from SciVendorInvoiceMaster m where m.sciVendorMaster.seqVendorId =:seqVendorID order by insertedDate desc");
+		qry.setParameter("seqVendorID", seqVendorId);
+		return  qry.getResultList();
 	}
 
 	public List<SciPurchaseMast> loadPODetails(Long seqVendorID) {

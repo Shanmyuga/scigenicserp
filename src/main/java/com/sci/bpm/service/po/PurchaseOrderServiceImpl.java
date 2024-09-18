@@ -188,6 +188,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		return dao.loadPaymentDetails();
 	}
 
+	@Override
+	public List<SciPaymentDetails> loadPaymentDetails(Long seqVendorId) {
+		return dao.loadPaymentDetails(seqVendorId);
+	}
+
 	public SciVendorMaster loadSciVendorMaster(Long seqVendorID) {
 		// TODO Auto-generated method stub
 		return dao.loadSciVendorMaster(seqVendorID);
@@ -201,6 +206,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	public List<SciVendorInvoiceMaster> loadInvoiceDetails() {
 		// TODO Auto-generated method stub
 		return dao.loadInvoiceDetails();
+	}
+
+	@Override
+	public List<SciVendorInvoiceMaster> loadInvoiceDetails(Long seqVendorID) {
+		return dao.loadInvoiceDetails(seqVendorID);
 	}
 
 	public List<SciPurchaseMast> loadPODetails(Long seqVendorID) {

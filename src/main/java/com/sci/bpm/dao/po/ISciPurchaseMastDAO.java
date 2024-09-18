@@ -120,9 +120,11 @@ public interface ISciPurchaseMastDAO {
 	public void despatchPO(SciPurchaseMast master);
 	public void addPaymentDetails(SciPaymentDetails details);
 	public List<SciPaymentDetails> loadPaymentDetails();
+	public List<SciPaymentDetails> loadPaymentDetails(Long seqVendorId);
 	public SciVendorMaster loadSciVendorMaster(Long seqVendorID);
 	public void addInvoiceDetails(SciVendorInvoiceMaster vmaster);
 	public List<SciVendorInvoiceMaster> loadInvoiceDetails();
+	public List<SciVendorInvoiceMaster> loadInvoiceDetails(Long seqVendorId);
 	public List<SciPurchaseMast> loadPODetails(Long seqVendorID);
 	public List<VendorPurchasePaymentInvoice> searchInvoicePaymentDetails(POCommand command);
 
