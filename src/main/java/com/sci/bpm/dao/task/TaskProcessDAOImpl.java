@@ -333,7 +333,7 @@ public class TaskProcessDAOImpl implements TaskProcessDAO {
 				try {
 					st = conn.createStatement();
 
-					ResultSet rs = st.executeQuery(sqlQuery);
+					ResultSet rs = st.executeQuery("select * from ( "+sqlQuery+" ) xjy where xjy.SHORT_KEY='"+filter+"'");
 					ResultSetMetaData metadata = rs.getMetaData();
 					LinkedHashMap<String, Object> colnamemap = new LinkedHashMap<String, Object>();
 					for (int i = 0; i < metadata.getColumnCount(); i++) {

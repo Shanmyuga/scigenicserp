@@ -432,9 +432,14 @@ public class TaskServiceImpl implements TaskService {
             mylist = daoimpl.generateReports(report.getReportQuery());
         }
         else {
+            String sqlQuery = null;
+            if(report.getReportQuery().indexOf("XYX") > 0) {
+                sqlQuery = report.getReportQuery().replaceAll("XYX",filter);
+            }
 
-            String sqlQuery = "Select * from ( " + report.getReportQuery()+ " ) abc where abc.short_key = '"+ filter+ "'";
-
+            else {
+                 sqlQuery = "Select * from ( " + report.getReportQuery() + " ) abc where abc.short_key = '" + filter + "'";
+            }
             mylist = daoimpl.generateReportsWithFilter(sqlQuery,filter);
         }
 

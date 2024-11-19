@@ -347,7 +347,7 @@ SciClientOrgMaster clientOrgMaster = (SciClientOrgMaster) context.getFlowScope()
 
 		SciReportConfiguration config=   selectReport(reports, new Long(value.getSeqReportID()));
 		if(StringUtils.isNotBlank(value.getShortKey() )) {
-			List<TableDynaBean> items = taskService.viewSelectedReport(config);
+			List<TableDynaBean> items = taskService.viewSelectedReportWithFilter(config,value.getShortKey());
 			context.getFlowScope().put("ViewReportsData",items);
 		}
 		else {
