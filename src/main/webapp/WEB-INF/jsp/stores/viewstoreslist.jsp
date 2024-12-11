@@ -123,6 +123,11 @@
 <display:column sortable="true"  title="Client Details"  >
 <c:out value='${row.sciMiMaster.sciWorkorderMaster.sciCustomerMaster.customerName}'/>
 </display:column>
+
+
+ <display:column sortable="true"   title="Additional Mat Spec"   >
+  <c:out value="${row.sciMiMaster.matcodeAddInfo}"/>
+ </display:column>
 </display:table>
 
 
