@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.sci.bpm.db.model.*;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.sci.bpm.command.design.DrawingDetailsBean;
@@ -568,18 +569,32 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 	}
 
 	public void updateMI(SciMatindMaster master) {
-		String query = "update SciMatindMaster set isGroupMiId =:isGroupMiId ,recommend = :reco ,updatedBy=:updatedBy ,updatedDate= :updatedDate "
-			+ " where seqMiId = :seqmiid";
-	Query wquery = em.createQuery(query);
-	wquery.setParameter("reco", master.getRecommend());
-	wquery.setParameter("updatedBy", master.getUpdatedBy());
-	wquery.setParameter("updatedDate", new Date());
-	wquery.setParameter("seqmiid", master.getSeqMiId());
+		if(!StringUtils.isBlank(master.getRecommend())) {
+			String query = "update SciMatindMaster set isGroupMiId =:isGroupMiId ,recommend = :reco ,updatedBy=:updatedBy ,updatedDate= :updatedDate "
+					+ " where seqMiId = :seqmiid";
+			Query wquery = em.createQuery(query);
+			wquery.setParameter("reco", master.getRecommend());
+			wquery.setParameter("updatedBy", master.getUpdatedBy());
+			wquery.setParameter("updatedDate", new Date());
+			wquery.setParameter("seqmiid", master.getSeqMiId());
 
-		wquery.setParameter("isGroupMiId", master.getIsGroupMiId());
-	wquery.executeUpdate();
+			wquery.setParameter("isGroupMiId", master.getIsGroupMiId());
+			wquery.executeUpdate();
 
-		
+		}
+		if(!StringUtils.isBlank(master.getMatcodeAddInfo())) {
+			String query = "update SciMatindMaster set isGroupMiId =:isGroupMiId ,matcodeAddInfo = :matcodeAddInfo ,updatedBy=:updatedBy ,updatedDate= :updatedDate "
+					+ " where seqMiId = :seqmiid";
+			Query wquery = em.createQuery(query);
+			wquery.setParameter("matcodeAddInfo", master.getMatcodeAddInfo());
+			wquery.setParameter("updatedBy", master.getUpdatedBy());
+			wquery.setParameter("updatedDate", new Date());
+			wquery.setParameter("seqmiid", master.getSeqMiId());
+
+			wquery.setParameter("isGroupMiId", master.getIsGroupMiId());
+			wquery.executeUpdate();
+
+		}
 	}
 
 	public String getMatType(String cat, String dept) {

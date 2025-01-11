@@ -61,7 +61,14 @@
       </form:select>
       </td>
      </tr>
+     <tr>
 
+
+      <td colspan="2">MI Code</td>
+      <td  colspan="2"><form:input path="seqMatindid" size="10" id="seqMatindid"/>
+
+      </td>
+     </tr>
 
      <tr>
       <td>Work Order</td>
@@ -122,7 +129,9 @@
      <display:column sortable="true"  title="Recomm"  property="recommend" >
 
      </display:column>
+     <display:column sortable="true"  title="Add Info"  property="matcodeAddInfo" >
 
+     </display:column>
      <display:column sortable="true"  title="Work Order Details"  property="workorderDesc"  >
 
      </display:column>
@@ -144,15 +153,31 @@
    <input type="hidden" name="_eventId"  id="_eventId" value="searchMI" >
 
 
-    <c:if test="${fn:length(milist) > 0 && (matindbean.purStatus == Openmi || matindbean.purStatus == approveMI ||  matindbean.purStatus == AssignedMI  || matindbean.purStatus == StockMI)}" >
+    <c:if test="${fn:length(milist) > 0 && (matindbean.purStatus == Openmi || matindbean.purStatus == approveMI ||  matindbean.purStatus == AssignedMI  || matindbean.purStatus == StockMI )}" >
      <div style="padding-left:10px;width:787px;float:left">
       <input type="button"  value="Cancel MI " onclick="eventdirect('updateMI')"/>
       <input type="button"  value="Update Remarks" onclick="eventdirect('updateRemarks')"/>
+
       <p>New Remarks</p>
       <form:textarea path="recommend"/>
      </div>
-    </c:if>
 
+ </div>
+    </c:if>
+   <c:if test="${fn:length(milist) > 0 && (matindbean.purStatus == StoresMI || matindbean.purStatus == IssuedMI  )}" >
+    <div style="padding-left:10px;width:787px;float:left">
+
+     <c:if test="${userPreferences.roleName == 'purchase'}">
+      <input type="button"  value="Update AddInfo" onclick="eventdirect('updateRemarks')"/>
+     </c:if>
+
+    </div>
+    <c:if test="${userPreferences.roleName == 'purchase'}">
+     <p>New AddInfo</p>
+     <form:textarea path="matcodeAddInfo"/>
+    </c:if>
+    </div>
+   </c:if>
    <c:out value="${openMI}"></c:out>
   </form:form>
  </div>

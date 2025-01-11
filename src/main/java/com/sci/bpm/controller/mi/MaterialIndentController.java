@@ -355,6 +355,10 @@ public class MaterialIndentController extends SciBaseController {
 
         context.getFlowScope().put("StockMI",
                 getLookupservice().loadIDData("MI_APP_STOCKS"));
+        context.getFlowScope().put("StoresMI",
+                getLookupservice().loadIDData("MI_INSTORES"));
+        context.getFlowScope().put("IssuedMI",
+                getLookupservice().loadIDData("MI_ISSUED"));
         return success();
     }
 
@@ -998,11 +1002,17 @@ public class MaterialIndentController extends SciBaseController {
 
     public Event updateRemarks(RequestContext context) throws Exception {
         MatindCommand command = (MatindCommand) getFormObject(context);
-
-        SciMatindMaster master = new SciMatindMaster();
+        List<SciMatindMaster> masterList = (List<SciMatindMaster>) context.getFlowScope().get("milist");
+        SciMatindMaster master = selectMI(masterList, command.getMiindexID());
+        
         master.setSeqMiId(command.getMiindexID());
         master.setUpdatedBy(getUserPreferences().getUserID());
-        master.setRecommend(command.getRecommend());
+        if(!StringUtils.isBlank(command.getRecommend())) {
+            master.setRecommend(command.getRecommend());
+        }
+        if(!StringUtils.isBlank(command.getMatcodeAddInfo())) {
+            master.setMatcodeAddInfo(command.getMatcodeAddInfo());
+        }
         service.updateMI(master);
         return success();
     }

@@ -39,7 +39,7 @@
     <webflow:transition on="updateRemarks" to="entersearch">
         <webflow:evaluate expression="micont.bind"/>
         <webflow:evaluate expression="micont.updateRemarks"/>
-        <webflow:evaluate expression="micont.searchMI"/>
+
     </webflow:transition>
     </webflow:view-state>
 
