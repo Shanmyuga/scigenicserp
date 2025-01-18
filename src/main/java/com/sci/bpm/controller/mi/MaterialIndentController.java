@@ -359,6 +359,9 @@ public class MaterialIndentController extends SciBaseController {
                 getLookupservice().loadIDData("MI_INSTORES"));
         context.getFlowScope().put("IssuedMI",
                 getLookupservice().loadIDData("MI_ISSUED"));
+
+        context.getFlowScope().put("IssuedForAnotherMI",
+                getLookupservice().loadIDData("MI_ISSUED_FOR_OTHERS"));
         return success();
     }
 

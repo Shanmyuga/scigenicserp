@@ -164,7 +164,7 @@
 
  </div>
     </c:if>
-   <c:if test="${fn:length(milist) > 0 && (matindbean.purStatus == StoresMI || matindbean.purStatus == IssuedMI  )}" >
+   <c:if test="${fn:length(milist) > 0 && (matindbean.purStatus == StoresMI || matindbean.purStatus == IssuedMI || matindbean.purStatus == IssuedForAnotherMI )}" >
     <div style="padding-left:10px;width:787px;float:left">
 
      <c:if test="${userPreferences.roleName == 'purchase'}">
