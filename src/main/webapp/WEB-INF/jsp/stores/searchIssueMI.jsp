@@ -110,6 +110,12 @@ document.storesbean.submit();
 <display:column sortable="true"  title= "Production Remarks" property="prodRemarks" >
 
 </display:column>
+ <display:column sortable="true"  title= "Request Created By" property="insertedBy" >
+
+ </display:column>
+ <display:column sortable="true"  title= "Request Approved on" property="approvedDate" >
+
+ </display:column>
 <display:column sortable="true"  title="MI Remarks"  >
 <c:out value='${row.sciMiMaster.recommend}'/>
 </display:column>
