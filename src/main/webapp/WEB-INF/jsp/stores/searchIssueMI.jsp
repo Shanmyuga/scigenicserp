@@ -1,6 +1,8 @@
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
@@ -113,8 +115,8 @@ document.storesbean.submit();
  <display:column sortable="true"  title= "Request Created By" property="insertedBy" >
 
  </display:column>
- <display:column sortable="true"  title= "Request Approved on" property="approvedDate" >
-
+ <display:column sortable="true"  title= "Request Approved on" >
+  <fmt:formatDate type="date" value="${row.approvedDate}" /> <fmt:formatDate type="time" value="${row.approvedDate}" />
  </display:column>
 <display:column sortable="true"  title="MI Remarks"  >
 <c:out value='${row.sciMiMaster.recommend}'/>

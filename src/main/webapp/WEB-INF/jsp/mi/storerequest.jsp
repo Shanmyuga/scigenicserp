@@ -1,7 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
  <div width="787px"  style="float:left;padding-left:20px">
  
 <br>
@@ -145,6 +145,9 @@
 <display:column sortable="true"  title= "Purch Remarks" property="purhRemarks" >
 
 </display:column>
+ <display:column sortable="true"  title= "Approved Date"  >
+  <fmt:formatDate type="date" value="${row.approvedDate}" /> <fmt:formatDate type="time" value="${row.approvedDate}" />
+ </display:column>
 <display:column sortable="true"  title="WO DESC"  >
 <c:out value='${row.sciMiMaster.sciWorkorderMaster.jobDesc}'/>
 </display:column>
