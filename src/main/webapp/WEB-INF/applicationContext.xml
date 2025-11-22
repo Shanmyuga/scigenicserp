@@ -88,9 +88,9 @@
     </bean>-->
 
         <bean name="diskjob" class="com.sci.bpm.service.task.DiskWriterJob">
-              <property name="host" value="192.168.1.115"></property>
-              <property name="port" value="32771"></property>
-              <property name="diskfileloc" value="/home/scigenics/datafolder/"></property>
+              <property name="host" value="localhost"></property>
+              <property name="port" value="1521"></property>
+              <property name="diskfileloc" value="/home/standard-scigenics-01/datafolder/"></property>
           </bean>
           <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
               <property name="jobDetail" ref="exampleJob" />
@@ -174,7 +174,7 @@
 
 	<bean id="docfilelocation" class="com.sci.bpm.command.design.DocPropery">
 		<!--<property name="docfilelocation" value="C:\projects\scigenics\scigenicserp\"></property>-->
-			<property name="docfilelocation" value="/home/scigenics/datafolder/"></property>
+			<property name="docfilelocation" value="/home/standard-scigenics-01/datafolder/"></property>
 		<!--  <property name="docfilelocation" value="/Users/prakash/tools/"></property>-->
 
 
