@@ -47,6 +47,9 @@ public class SciStoreissueMaster implements java.io.Serializable {
 	private String acceptedBy;
 	private BigDecimal finalCount;
 	private float totalReturnQty;
+
+	private Long seqPurchId;
+	private Date purchaseCreatedDate;
 	
 	// Constructors
 
@@ -308,6 +311,22 @@ private SciMatindMaster sciMiMaster;
 	public void setTotalReturnQty(float totalReturnQty) {
 		this.totalReturnQty = totalReturnQty;
 	}
-	
-	
+
+
+	@Transient
+	public Long getSeqPurchId() {
+		return seqPurchId;
+	}
+
+	public void setSeqPurchId(Long seqPurchId) {
+		this.seqPurchId = seqPurchId;
+	}
+	@Transient
+	public Date getPurchaseCreatedDate() {
+		return purchaseCreatedDate;
+	}
+
+	public void setPurchaseCreatedDate(Date purchaseCreatedDate) {
+		this.purchaseCreatedDate = purchaseCreatedDate;
+	}
 }

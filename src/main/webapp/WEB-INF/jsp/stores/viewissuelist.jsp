@@ -108,16 +108,12 @@
 </display:column>
 <display:column sortable="true"   title="Mat Spec" property="matSpec"  >
 </display:column>
-
-<display:column sortable="true"   title="Requested MI Estimated Mat Cost"   >
-<fmt:parseNumber var="ut1" type="NUMBER" value="${row.strequest.sciMiMaster.unitCost}"></fmt:parseNumber>
-<fmt:parseNumber var="issquantity1" type="NUMBER" value="${row.finalCount}"></fmt:parseNumber>
-
-            
-       <c:set var="utcost1" value="${issquantity1 * ut1}" />     
-<fmt:formatNumber type="number" 
-            maxFractionDigits="2" value="${utcost1}" />
-</display:column>
+    <display:column sortable="true"   title="Mat Type" property="seqPurchId"  >
+    </display:column>
+    <display:column sortable="true"   title="PO Id" property="seqPurchId"  >
+    </display:column>
+    <display:column sortable="true"   title="PO Created Date" property="purchaseCreatedDate"  >
+    </display:column>
 <display:column sortable="true"   title="Issued Mat Cost"   >
 <fmt:parseNumber var="ut" type="NUMBER" value="${row.sciMiMaster.unitCost}"></fmt:parseNumber>
 <fmt:parseNumber var="issquantity" type="NUMBER" value="${row.finalCount}"></fmt:parseNumber>
@@ -126,9 +122,6 @@
        <c:set var="utcost" value="${issquantity * ut}" />     
 <fmt:formatNumber type="number" 
             maxFractionDigits="2" value="${utcost}" />
-</display:column>
-<display:column sortable="true"  title="Issue Dimension" property="issueDimension" >
-
 </display:column>
 
 

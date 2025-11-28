@@ -8,23 +8,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.sci.bpm.command.mi.MatindCommand;
+import com.sci.bpm.db.model.*;
 import org.springframework.stereotype.Repository;
 
 import com.sci.bpm.command.stores.StoresBean;
-import com.sci.bpm.db.model.SciAvailableMaterials;
-import com.sci.bpm.db.model.SciItemmiDetails;
-import com.sci.bpm.db.model.SciLookupMaster;
-import com.sci.bpm.db.model.SciMatindMaster;
-import com.sci.bpm.db.model.SciPurchItemMaster;
-import com.sci.bpm.db.model.SciPurchaseMast;
-import com.sci.bpm.db.model.SciQcMiMaster;
-import com.sci.bpm.db.model.SciRecdMaterials;
-import com.sci.bpm.db.model.SciRejectedMaterials;
-import com.sci.bpm.db.model.SciReturnitemsRequest;
-import com.sci.bpm.db.model.SciStoreMaster;
-import com.sci.bpm.db.model.SciStoreMiMaster;
-import com.sci.bpm.db.model.SciStoreissueMaster;
-import com.sci.bpm.db.model.SciStoresRequest;
 
 
 @Repository
@@ -532,8 +519,11 @@ public class StoreDAOImpl implements StoresDAO {
 		}
 		wquery.setMaxResults(command.getSearchMax());
 		List<SciStoreissueMaster> milist = wquery.getResultList();
-		 Query storeqry = em.createQuery("Select m from SciReturnitemsRequest m Join m.stissue ms where ms.seqStissueId =:seqStissueId and m.requestStatus='Y'"); 
-		 for(SciStoreissueMaster mi:milist) {
+		 Query storeqry = em.createQuery("Select m from SciReturnitemsRequest m Join m.stissue ms where ms.seqStissueId =:seqStissueId and m.requestStatus='Y'");
+
+		Query purchase_order_query = em.createQuery("Select m from PurchaseWorkOrderView m where m.seqMiId=:seqMIId and m.seqPurchId is not null");
+		Query purchase_order_select = em.createQuery("Select m from SciPurchaseMast m where m.seqPurchId=:seqPurchId");
+		for(SciStoreissueMaster mi:milist) {
 				storeqry.setParameter("seqStissueId", mi.getSeqStissueId());
 				List<SciReturnitemsRequest> stlist = storeqry.getResultList();
 				float totalret = 0;
@@ -546,10 +536,23 @@ public class StoreDAOImpl implements StoresDAO {
 				  
 					mi.setFinalCount(new BigDecimal(String.valueOf(finalqty)));
 					mi.setTotalReturnQty(totalret);
+
+
+					purchase_order_query.setParameter("seqMIId",mi.getSciMiMaster().getSeqMiId());
+			List<PurchaseWorkOrderView> purchaseWorkOrderViewList = purchase_order_query.getResultList();
+			if(purchaseWorkOrderViewList != null && purchaseWorkOrderViewList.size() >0 ) {
+				PurchaseWorkOrderView view = purchaseWorkOrderViewList.get(0);
+				mi.setSeqPurchId(view.getSeqPurchId());
+				purchase_order_select.setParameter("seqPurchId",view.getSeqPurchId());
+
+				SciPurchaseMast pm = (SciPurchaseMast) purchase_order_select.getSingleResult();
+
+				mi.setPurchaseCreatedDate(pm.getPurchaseCreatedDt());
+			}
 				}
 				
 				
-			
+
 		return milist;
 	}
 
