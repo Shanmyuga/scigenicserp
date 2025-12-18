@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.sci.bpm.db.model.*;
+import com.sci.bpm.util.QueryBuilderUtil;
 import org.springframework.dao.support.DaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -57,30 +58,14 @@ public class LookupValueDAOImpl implements LookupValueDAO {
 
 	@Override
 	public List<SciCustomerMaster> loadCustomerforOrgandState(Long seqClientOrgId, Long stateCode) {
-		String query = "Select cm from SciCustomerMaster cm  where ";
-		System.out.println(stateCode + " - " + seqClientOrgId);
-		Map parameters = new HashMap();
-		String whereClause = "";
-		if(seqClientOrgId != null) {
-			whereClause = whereClause + "and cm.sciClientOrgMaster.seqClientOrgId=:seqClientOrgId ";
-			parameters.put("seqClientOrgId",seqClientOrgId);
-		}
-		if(stateCode != null) {
-			whereClause = whereClause + "and cm.customerState=:stateCode ";
-			parameters.put("stateCode",stateCode);
-		}
-		if (!"".equals(whereClause)) {
-			whereClause = whereClause.substring(3,whereClause.length());
-		}
-		Query wquery = em.createQuery(query+whereClause);
+		QueryBuilderUtil.DynamicQueryBuilder builder = QueryBuilderUtil.createBuilder(
+			"Select cm from SciCustomerMaster cm where 1=1");
 
-		Iterator keyset = parameters.keySet().iterator();
-		while (keyset.hasNext()) {
-			String key = (String) keyset.next();
-			wquery.setParameter(key, parameters.get(key));
-		}
+		builder.addCondition(" and cm.sciClientOrgMaster.seqClientOrgId=:seqClientOrgId", "seqClientOrgId", seqClientOrgId)
+		       .addCondition(" and cm.customerState=:stateCode", "stateCode", stateCode);
+
+		Query wquery = builder.buildQuery(em);
 		List<SciCustomerMaster> customerMasterList = wquery.getResultList();
-
 
 		return customerMasterList;
 	}
