@@ -189,8 +189,7 @@ public class QCDaoImpl implements QCDao {
 		builder.addStringCondition(bean.getDept(), " and mt1.mat_dept = :matdept", "matdept")
 		       .addStringCondition(bean.getSeqWorkId(), " and mi.seq_work_id = :seqworkid", "seqworkid");
 
-		Query wquery = em.createNativeQuery(builder.buildQueryString());
-		QueryBuilderUtil.setQueryParameters(wquery, builder.getParameters());
+		Query wquery = builder.buildNativeQuery(em);
 
 		return loadItemsList(wquery.getResultList());
 	}

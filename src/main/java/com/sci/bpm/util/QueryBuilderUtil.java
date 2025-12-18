@@ -84,7 +84,8 @@ public class QueryBuilderUtil {
          */
         public String buildQueryString() {
             if (whereClause.length() > 0) {
-                return baseQuery + whereClause.toString().replaceAll("where and", "where");
+                // Use replace() instead of replaceAll() to avoid regex interpretation
+                return baseQuery + whereClause.toString().replace("where and", "where");
             }
             return baseQuery;
         }
@@ -98,6 +99,26 @@ public class QueryBuilderUtil {
         public Query buildQuery(EntityManager em) {
             String queryString = buildQueryString();
             Query query = em.createQuery(queryString);
+            
+            // Set all parameters on the query
+            Iterator<String> keyset = parameters.keySet().iterator();
+            while (keyset.hasNext()) {
+                String key = keyset.next();
+                query.setParameter(key, parameters.get(key));
+            }
+            
+            return query;
+        }
+
+        /**
+         * Build and create a native SQL Query object with all parameters set.
+         * 
+         * @param em The EntityManager to create the query
+         * @return The native Query object with all parameters set
+         */
+        public Query buildNativeQuery(EntityManager em) {
+            String queryString = buildQueryString();
+            Query query = em.createNativeQuery(queryString);
             
             // Set all parameters on the query
             Iterator<String> keyset = parameters.keySet().iterator();

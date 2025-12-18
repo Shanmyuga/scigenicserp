@@ -55,6 +55,8 @@ public class EnquiryDAOImpl implements EnquiryDAO {
     }
 
     public List loadOpenEnquiry(EnqBean command) {
+        // Using "where 1=1" allows all conditions to consistently use "AND" prefix,
+        // simplifying dynamic query building
         QueryBuilderUtil.DynamicQueryBuilder builder = QueryBuilderUtil.createBuilder("select m from SciEnquiryMaster m where 1=1");
 
         builder.addStringCondition(command.getEnqStatus(), " and m.enqStatus = :enqStatus", "enqStatus")
