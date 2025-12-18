@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.sci.bpm.util.QueryBuilderUtil;
 import org.springframework.stereotype.Repository;
 
 import com.sci.bpm.command.qc.QualityControlBean;
@@ -116,60 +117,23 @@ public class QCDaoImpl implements QCDao {
 	}
 
 	public List loadAllList(QualityControlBean command) {
-		// TODO Auto-generated method stub
-		String query = "Select distinct m from SciQcMiMaster m ,SciMattypeMaster mt where mt.matCode  = substr(m.matCode,1,2) and m.ocStatus != 'N' ";
-		// Query query = em.createQuery("Select * from SciMatindMaster m ");
 		SciWorkorderMaster wmaster = null;
 		if(command.getSeqWorkId() != null && !"".equals(command.getSeqWorkId())) {
 			wmaster = em.find(SciWorkorderMaster.class, new Long(command.getSeqWorkId()));
 		}
-		Map parameters = new HashMap();
-		String whereClause = "";
-		if (command.getFromdate() != null) {
-			whereClause = whereClause + " and  m.updatedDt >= :fromdate ";
-			// parameters.add(command.getMatDuedate());
-			parameters.put("fromdate", command.getFromdate());
-		}
-		if (command.getTodate() != null ) {
-			whereClause = whereClause + " and m.updatedDt <= :todate ";
-			parameters.put("todate", command.getTodate());
-		}
 		
-		
-		if (command.getMatCategory() != null && !"".equals(command.getMatCategory())) {
-			whereClause = whereClause + " and substr(m.matCode,3,2) = :matcat ";
-			parameters.put("matcat", command.getMatCategory());
-		}
-		if (command.getMaterialCode() != null && !"".equals(command.getMaterialCode())) {
-			whereClause = whereClause + " and m.matCode = :matcode ";
-			parameters.put("matcode", command.getMaterialCode());
-		}
-		if (command.getMatDept() != null && !"".equals(command.getMatDept())) {
-			whereClause = whereClause + " and mt.matDept = :matdept ";
-			parameters.put("matdept", command.getMatDept());
-		}
-		
-		if (command.getSeqQcMiId() != null) {
-			whereClause = whereClause + " and  m.sciMiMaster.seqMiId=:seqQCMIid ";
-			parameters.put("seqQCMIid", command.getSeqQcMiId());
-		}
-		if (wmaster != null) {
-			whereClause = whereClause + " and m.sciMiMaster.sciWorkorderMaster = :wm ";
-			parameters.put("wm", wmaster);
-		}
-		Query wquery = null;
-		if (parameters.size() > 0) {
-			wquery = em.createQuery(query
-					+ whereClause.replaceAll("where and", "where"));
-		} else {
-			wquery = em.createQuery(query);
-		}
-		Iterator keyset = parameters.keySet().iterator();
+		QueryBuilderUtil.DynamicQueryBuilder builder = QueryBuilderUtil.createBuilder(
+			"Select distinct m from SciQcMiMaster m ,SciMattypeMaster mt where mt.matCode = substr(m.matCode,1,2) and m.ocStatus != 'N'");
 
-		while (keyset.hasNext()) {
-			String key = (String) keyset.next();
-			wquery.setParameter(key, parameters.get(key));
-		}
+		builder.addCondition(" and m.updatedDt >= :fromdate", "fromdate", command.getFromdate())
+		       .addCondition(" and m.updatedDt <= :todate", "todate", command.getTodate())
+		       .addStringCondition(command.getMatCategory(), " and substr(m.matCode,3,2) = :matcat", "matcat")
+		       .addStringCondition(command.getMaterialCode(), " and m.matCode = :matcode", "matcode")
+		       .addStringCondition(command.getMatDept(), " and mt.matDept = :matdept", "matdept")
+		       .addCondition(" and m.sciMiMaster.seqMiId=:seqQCMIid", "seqQCMIid", command.getSeqQcMiId())
+		       .addCondition(" and m.sciMiMaster.sciWorkorderMaster = :wm", "wm", wmaster);
+
+		Query wquery = builder.buildQuery(em);
 		Query docquery = em.createQuery("from SciQcDocs d where d.seqQcId =:seqQCId order by updatedDt desc");
 		List<SciQcMiMaster> qcmilist = wquery.getResultList();
 		for(SciQcMiMaster m : qcmilist) {
@@ -193,64 +157,24 @@ public class QCDaoImpl implements QCDao {
 	}
 
 	public List loadAllListDocs(QualityControlBean command) {
-		// TODO Auto-generated method stub
-		String query = "Select distinct m from SciQcMiMaster m ,SciMattypeMaster mt where mt.matCode  = substr(m.matCode,1,2)  ";
-		// Query query = em.createQuery("Select * from SciMatindMaster m ");
 		SciWorkorderMaster wmaster = null;
 		if(command.getSeqWorkId() != null && !"".equals(command.getSeqWorkId())) {
 			wmaster = em.find(SciWorkorderMaster.class, new Long(command.getSeqWorkId()));
 		}
-		Map parameters = new HashMap();
-		String whereClause = "";
-		if (command.getFromdate() != null) {
-			whereClause = whereClause + " and  m.updatedDt >= :fromdate ";
-			// parameters.add(command.getMatDuedate());
-			parameters.put("fromdate", command.getFromdate());
-		}
-		if (command.getTodate() != null ) {
-			whereClause = whereClause + " and m.updatedDt <= :todate ";
-			parameters.put("todate", command.getTodate());
-		}
-		if (command.getQcTestsApproval() != null ) {
-			whereClause = whereClause + " and m.qcTestsApproval = :approval ";
-			parameters.put("approval", command.getQcTestsApproval());
-		}
 		
-		
-		
-		if (command.getMatCategory() != null && !"".equals(command.getMatCategory())) {
-			whereClause = whereClause + " and substr(m.matCode,3,2) = :matcat ";
-			parameters.put("matcat", command.getMatCategory());
-		}
-		if (command.getMaterialCode() != null && !"".equals(command.getMaterialCode())) {
-			whereClause = whereClause + " and m.matCode = :matcode ";
-			parameters.put("matcode", command.getMaterialCode());
-		}
-		if (command.getMatDept() != null && !"".equals(command.getMatDept())) {
-			whereClause = whereClause + " and mt.matDept = :matdept ";
-			parameters.put("matdept", command.getMatDept());
-		}
-		if (command.getSeqMiID() != null && !"".equals(command.getSeqMiID())) {
-			whereClause = whereClause + " and m.sciMiMaster.seqMiId = :seqMiId ";
-			parameters.put("seqMiId", command.getSeqMiID());
-		}
-		if (wmaster != null) {
-			whereClause = whereClause + " and m.sciMiMaster.sciWorkorderMaster = :wm ";
-			parameters.put("wm", wmaster);
-		}
-		Query wquery = null;
-		if (parameters.size() > 0) {
-			wquery = em.createQuery(query
-					+ whereClause.replaceAll("where and", "where"));
-		} else {
-			wquery = em.createQuery(query);
-		}
-		Iterator keyset = parameters.keySet().iterator();
+		QueryBuilderUtil.DynamicQueryBuilder builder = QueryBuilderUtil.createBuilder(
+			"Select distinct m from SciQcMiMaster m ,SciMattypeMaster mt where mt.matCode = substr(m.matCode,1,2)");
 
-		while (keyset.hasNext()) {
-			String key = (String) keyset.next();
-			wquery.setParameter(key, parameters.get(key));
-		}
+		builder.addCondition(" and m.updatedDt >= :fromdate", "fromdate", command.getFromdate())
+		       .addCondition(" and m.updatedDt <= :todate", "todate", command.getTodate())
+		       .addCondition(" and m.qcTestsApproval = :approval", "approval", command.getQcTestsApproval())
+		       .addStringCondition(command.getMatCategory(), " and substr(m.matCode,3,2) = :matcat", "matcat")
+		       .addStringCondition(command.getMaterialCode(), " and m.matCode = :matcode", "matcode")
+		       .addStringCondition(command.getMatDept(), " and mt.matDept = :matdept", "matdept")
+		       .addStringCondition(command.getSeqMiID(), " and m.sciMiMaster.seqMiId = :seqMiId", "seqMiId")
+		       .addCondition(" and m.sciMiMaster.sciWorkorderMaster = :wm", "wm", wmaster);
+
+		Query wquery = builder.buildQuery(em);
 		if(command.getMaxResults() != null) {
 			wquery.setMaxResults(Integer.parseInt(command.getMaxResults()));
 		}
@@ -259,33 +183,14 @@ public class QCDaoImpl implements QCDao {
 	}
 
 	public List loadAllListIssueDocs(QualityControlBean bean) {
-		String query = "SELECT ism.SEQ_MI_ID  AS ISSUE_MI,    req.SEQ_MI_ID       AS REQUEST_MI,    ism.matcode         AS mat_code,    mi.RECOMMEND        AS REMARKS,    to_char(ism.ISSUE_DATE,'dd-MM-yyyy')      AS issue_date,    ism.MAT_SPEC        AS ISSUE_MAT,    ISSUE_CNT_MOD -(select nvl(sum(ret_quantity),0) from sci_returnitems_request rt where rt.seq_stissue_id = ism.seq_stissue_id and rt.request_status = 'Y')    AS issue_CNT,    ism.ISSUE_DIMENSION AS issue_dim,    qc.SEQ_QC_MI_ID,    qc.qc_tests_cond,    qc.mat_spec,    wm.job_desc       AS Job_Desc,    wm.client_details AS Client_details,    mi.mi_for_type    AS mifortype,    (select mat_type from sci_mattype_master mt where mt.mat_code = substr(ism.MATCODE,1,2)) as mat_type   FROM SCI_STOREISSUE_MASTER ism,    sci_matind_master mi,    SCI_STORES_REQUEST req,    sci_qc_mi_master qc,    sci_Workorder_master wm ,sci_mattype_master mt1 WHERE  substr(ism.matcode,1,2) = mt1.mat_code and ism.SEQ_STREQ_ID = req.SEQ_STREQ_ID  AND qc.SEQ_MI_ID       = ism.SEQ_MI_ID  AND mi.SEQ_MI_ID       = req.SEQ_MI_ID  AND mi.seq_work_id     = wm.seq_work_id  ";
-		Map parameters = new HashMap();
-		String whereClause = "";
-		Query wquery = null;
+		QueryBuilderUtil.DynamicQueryBuilder builder = QueryBuilderUtil.createBuilder(
+			"SELECT ism.SEQ_MI_ID  AS ISSUE_MI,    req.SEQ_MI_ID       AS REQUEST_MI,    ism.matcode         AS mat_code,    mi.RECOMMEND        AS REMARKS,    to_char(ism.ISSUE_DATE,'dd-MM-yyyy')      AS issue_date,    ism.MAT_SPEC        AS ISSUE_MAT,    ISSUE_CNT_MOD -(select nvl(sum(ret_quantity),0) from sci_returnitems_request rt where rt.seq_stissue_id = ism.seq_stissue_id and rt.request_status = 'Y')    AS issue_CNT,    ism.ISSUE_DIMENSION AS issue_dim,    qc.SEQ_QC_MI_ID,    qc.qc_tests_cond,    qc.mat_spec,    wm.job_desc       AS Job_Desc,    wm.client_details AS Client_details,    mi.mi_for_type    AS mifortype,    (select mat_type from sci_mattype_master mt where mt.mat_code = substr(ism.MATCODE,1,2)) as mat_type   FROM SCI_STOREISSUE_MASTER ism,    sci_matind_master mi,    SCI_STORES_REQUEST req,    sci_qc_mi_master qc,    sci_Workorder_master wm ,sci_mattype_master mt1 WHERE  substr(ism.matcode,1,2) = mt1.mat_code and ism.SEQ_STREQ_ID = req.SEQ_STREQ_ID  AND qc.SEQ_MI_ID       = ism.SEQ_MI_ID  AND mi.SEQ_MI_ID       = req.SEQ_MI_ID  AND mi.seq_work_id     = wm.seq_work_id");
 
+		builder.addStringCondition(bean.getDept(), " and mt1.mat_dept = :matdept", "matdept")
+		       .addStringCondition(bean.getSeqWorkId(), " and mi.seq_work_id = :seqworkid", "seqworkid");
 
-		if (bean.getDept() != null && !"".equals(bean.getDept())) {
-			whereClause = whereClause + " and mt1.mat_dept = :matdept ";
-			parameters.put("matdept", bean.getDept());
-		}
-
-		if (bean.getSeqWorkId() != null && !"".equals(bean.getSeqWorkId())) {
-			whereClause = whereClause + " and mi.seq_work_id = :seqworkid ";
-			parameters.put("seqworkid", bean.getSeqWorkId());
-		}
-		if (parameters.size() > 0) {
-			wquery = em.createNativeQuery(query
-					+ whereClause.replaceAll("where and", "where"));
-		} else {
-			wquery = em.createNativeQuery(query);
-		}
-		Iterator keyset = parameters.keySet().iterator();
-
-		while (keyset.hasNext()) {
-			String key = (String) keyset.next();
-			wquery.setParameter(key, parameters.get(key));
-		}
+		Query wquery = em.createNativeQuery(builder.buildQueryString());
+		QueryBuilderUtil.setQueryParameters(wquery, builder.getParameters());
 
 		return loadItemsList(wquery.getResultList());
 	}

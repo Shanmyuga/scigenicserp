@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.sci.bpm.command.mi.MatindCommand;
+import com.sci.bpm.util.QueryBuilderUtil;
 import org.springframework.stereotype.Repository;
 
 import com.sci.bpm.command.stores.StoresBean;
@@ -139,55 +140,18 @@ public class StoreDAOImpl implements StoresDAO {
 	}
 
 	public List<SciQcMiMaster> viewApprovedQCs(StoresBean command) {
-		String query = "Select distinct m from SciQcMiMaster m ,SciMattypeMaster mt ,SciPurchaseMast pm where mt.matCode  = substr(m.matCode,1,2) and pm.seqPurchId = m.poId  and m.qcTestsApproval = 'Y' ";
-		// Query query = em.createQuery("Select * from SciMatindMaster m ");
-		Map parameters = new HashMap();
-		String whereClause = "";
-		if (command.getFromdate() != null) {
-			whereClause = whereClause + " and  m.qcApprovalDate >= :fromdate ";
-			// parameters.add(command.getMatDuedate());
-			parameters.put("fromdate", command.getFromdate());
-		}
-		if (command.getSeqVendorID() != null) {
-			whereClause = whereClause + " and  pm.sciVendorMaster.seqVendorId = :seqvendorID ";
-			// parameters.add(command.getMatDuedate());
-			parameters.put("seqvendorID", command.getSeqVendorID());
-		}
-		if (command.getSeqmiid() != null) {
-			whereClause = whereClause + " and m.sciMiMaster.seqMiId =:seqMiId ";
-			parameters.put("seqMiId", command.getSeqmiid());
-		}
-		if (command.getTodate() != null ) {
-			whereClause = whereClause + " and m.qcApprovalDate <= :todate ";
-			parameters.put("todate", command.getTodate());
-		}
+		QueryBuilderUtil.DynamicQueryBuilder builder = QueryBuilderUtil.createBuilder(
+			"Select distinct m from SciQcMiMaster m ,SciMattypeMaster mt ,SciPurchaseMast pm where mt.matCode = substr(m.matCode,1,2) and pm.seqPurchId = m.poId and m.qcTestsApproval = 'Y'");
 
-		if (command.getMatCategory() != null && !"".equals(command.getMatCategory())) {
-			whereClause = whereClause + " and substr(m.matcode,3,2) = :matcat ";
-			parameters.put("matcat", command.getMatCategory());
-		}
-		if (command.getMatcode() != null && !"".equals(command.getMatcode().trim())) {
-			whereClause = whereClause + " and m.matcode =:matcode ";
-			parameters.put("matcode", command.getMatcode());
-		}
-		if (command.getMatDept() != null && !"".equals(command.getMatDept())) {
-			whereClause = whereClause + " and mt.matDept = :matdept ";
-			parameters.put("matdept", command.getMatDept());
-		}
+		builder.addCondition(" and m.qcApprovalDate >= :fromdate", "fromdate", command.getFromdate())
+		       .addCondition(" and pm.sciVendorMaster.seqVendorId = :seqvendorID", "seqvendorID", command.getSeqVendorID())
+		       .addCondition(" and m.sciMiMaster.seqMiId =:seqMiId", "seqMiId", command.getSeqmiid())
+		       .addCondition(" and m.qcApprovalDate <= :todate", "todate", command.getTodate())
+		       .addStringCondition(command.getMatCategory(), " and substr(m.matcode,3,2) = :matcat", "matcat")
+		       .addStringCondition(command.getMatcode(), " and m.matcode =:matcode", "matcode")
+		       .addStringCondition(command.getMatDept(), " and mt.matDept = :matdept", "matdept");
 
-		Query wquery = null;
-		if (parameters.size() > 0) {
-			wquery = em.createQuery(query
-					+ whereClause.replaceAll("where and", "where"));
-		} else {
-			wquery = em.createQuery(query);
-		}
-		Iterator keyset = parameters.keySet().iterator();
-
-		while (keyset.hasNext()) {
-			String key = (String) keyset.next();
-			wquery.setParameter(key, parameters.get(key));
-		}
+		Query wquery = builder.buildQuery(em);
 		List<SciQcMiMaster> milist = wquery.getResultList();
 		return wquery.getResultList();
 
@@ -204,53 +168,17 @@ public class StoreDAOImpl implements StoresDAO {
 	}
 
 	public List<SciAvailableMaterials> viewStore(StoresBean command) {
-		// TODO Auto-generated method stub
+		QueryBuilderUtil.DynamicQueryBuilder builder = QueryBuilderUtil.createBuilder(
+			"Select distinct m from SciAvailableMaterials m ,SciMattypeMaster mt where mt.matCode = substr(m.matcode,1,2) and m.availQty not in ( '0.0','0')");
 
-		
-		String query = "Select distinct m from SciAvailableMaterials m ,SciMattypeMaster mt where mt.matCode  = substr(m.matcode,1,2) and m.availQty not in ( '0.0','0')  ";
-		// Query query = em.createQuery("Select * from SciMatindMaster m ");
-		Map parameters = new HashMap();
-		String whereClause = "";
-		if (command.getFromdate() != null) {
-			whereClause = whereClause + " and  m.insertedDate >= :fromdate ";
-			// parameters.add(command.getMatDuedate());
-			parameters.put("fromdate", command.getFromdate());
-		}
-		if (command.getTodate() != null ) {
-			whereClause = whereClause + " and m.insertedDate <= :todate ";
-			parameters.put("todate", command.getTodate());
-		}
-		if (command.getMatcode() != null && !"".equals(command.getMatcode().trim())) {
-			whereClause = whereClause + " and m.matcode =:matcode ";
-			parameters.put("matcode", command.getMatcode());
-		}
-		
-		if (command.getMatCategory() != null && !"".equals(command.getMatCategory())) {
-			whereClause = whereClause + " and substr(m.matcode,3,2) = :matcat ";
-			parameters.put("matcat", command.getMatCategory());
-		}
-		if (command.getMatDept() != null && !"".equals(command.getMatDept())) {
-			whereClause = whereClause + " and mt.matDept = :matdept ";
-			parameters.put("matdept", command.getMatDept());
-		}
-		
-		if (command.getSeqmiid() != null ) {
-			whereClause = whereClause + " and m.sciMiMaster.seqMiId = :seqmiid ";
-			parameters.put("seqmiid", command.getSeqmiid());
-		}
-		Query wquery = null;
-		if (parameters.size() > 0) {
-			wquery = em.createQuery(query
-					+ whereClause.replaceAll("where and", "where"));
-		} else {
-			wquery = em.createQuery(query);
-		}
-		Iterator keyset = parameters.keySet().iterator();
+		builder.addCondition(" and m.insertedDate >= :fromdate", "fromdate", command.getFromdate())
+		       .addCondition(" and m.insertedDate <= :todate", "todate", command.getTodate())
+		       .addStringCondition(command.getMatcode(), " and m.matcode =:matcode", "matcode")
+		       .addStringCondition(command.getMatCategory(), " and substr(m.matcode,3,2) = :matcat", "matcat")
+		       .addStringCondition(command.getMatDept(), " and mt.matDept = :matdept", "matdept")
+		       .addCondition(" and m.sciMiMaster.seqMiId = :seqmiid", "seqmiid", command.getSeqmiid());
 
-		while (keyset.hasNext()) {
-			String key = (String) keyset.next();
-			wquery.setParameter(key, parameters.get(key));
-		}
+		Query wquery = builder.buildQuery(em);
 		List<SciAvailableMaterials> milist = wquery.getResultList();
 
 		String stockquery = "select qty from VW_ASSIGNED_STOCK_MI_LIST wm where matcode=:matcode ";

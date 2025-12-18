@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.sci.bpm.db.model.*;
+import com.sci.bpm.util.QueryBuilderUtil;
 import org.springframework.stereotype.Repository;
 
 import com.sci.bpm.command.design.DrawingDetailsBean;

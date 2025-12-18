@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.sci.bpm.db.model.SciEnquiryDocs;
+import com.sci.bpm.util.QueryBuilderUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
@@ -54,83 +55,24 @@ public class EnquiryDAOImpl implements EnquiryDAO {
     }
 
     public List loadOpenEnquiry(EnqBean command) {
+        QueryBuilderUtil.DynamicQueryBuilder builder = QueryBuilderUtil.createBuilder("select m from SciEnquiryMaster m where 1=1");
 
+        builder.addStringCondition(command.getEnqStatus(), " and m.enqStatus = :enqStatus", "enqStatus")
+               .addStringCondition(command.getInsertedBy(), " and m.insertedBy = :insertedBy", "insertedBy")
+               .addCondition(" and m.sciCustomerMaster.seqCustId = :seqCustomerId", "seqCustomerId", command.getSeqCustomerId())
+               .addCondition(" and m.seqEnqryId = :seqEnqryId", "seqEnqryId", command.getSeqEnqMasterId())
+               .addCondition(" and m.insertedDate > :fromDate", "fromDate", command.getEnqCreateFromDate())
+               .addCondition(" and m.insertedDate < :toDate", "toDate", command.getEnqCreateToDate())
+               .addCondition(" and m.enqPriority = :enqPriority", "enqPriority", command.getEnqPriority())
+               .addCondition(" and m.enqCategory = :enqCategory", "enqCategory", command.getEnqCategory())
+               .addStringCondition(command.getOrgCode(), " and m.enqOrgCode = :enqOrgCode", "enqOrgCode")
+               .addStringCondition(command.getStateCode(), " and SUBSTRING(m.enqStateCityCode,1,2) = :enqStateCityCode", "enqStateCityCode")
+               .addStringCondition(command.getEnqFullCode(), " and enqFullCode = :enqFullCode", "enqFullCode")
+               .addStringCondition(command.getCustomerCityCode(), " and m.enqStateCityCode = :enqCityCode", "enqCityCode")
+               .addCondition(" and SUBSTRING(m.enqStateCityCode,1,2) IN :enqStateCodeDelimited", "enqStateCodeDelimited", command.getStateCodeDelimited());
 
-        String query = "select  m from SciEnquiryMaster m  ";
-        // Query query = em.createQuery("Select * from SciMatindMaster m ");
-        Map parameters = new HashMap();
-        String whereClause = "where";
-
-        if (command.getEnqStatus() != null && !"".equals(command.getEnqStatus())) {
-            whereClause = whereClause + " and m.enqStatus = :enqStatus ";
-            parameters.put("enqStatus", command.getEnqStatus());
-        }
-
-        if (command.getInsertedBy() != null && !"".equals(command.getInsertedBy())) {
-            whereClause = whereClause + " and m.insertedBy = :insertedBy ";
-            parameters.put("insertedBy", command.getInsertedBy());
-        }
-        if (command.getSeqCustomerId() != null) {
-            whereClause = whereClause + " and m.sciCustomerMaster.seqCustId = :seqCustomerId ";
-            parameters.put("seqCustomerId", command.getSeqCustomerId());
-        }
-
-        if (command.getSeqEnqMasterId() != null) {
-            whereClause = whereClause + " and m.seqEnqryId = :seqEnqryId ";
-            parameters.put("seqEnqryId", command.getSeqEnqMasterId());
-        }
-        if (command.getEnqCreateFromDate() != null) {
-            whereClause = whereClause + " and m.insertedDate > :fromDate ";
-            parameters.put("fromDate", command.getEnqCreateFromDate());
-        }
-        if (command.getEnqCreateToDate() != null) {
-            whereClause = whereClause + " and m.insertedDate < :toDate ";
-            parameters.put("toDate", command.getEnqCreateToDate());
-        }
-        if (command.getEnqPriority() != null) {
-            whereClause = whereClause + " and m.enqPriority = :enqPriority ";
-            parameters.put("enqPriority", command.getEnqPriority());
-        }
-        if (command.getEnqCategory() != null) {
-            whereClause = whereClause + " and m.enqCategory = :enqCategory ";
-            parameters.put("enqCategory", command.getEnqCategory());
-        }
-        if (command.getOrgCode() != null && !StringUtils.isEmpty(command.getOrgCode())) {
-            whereClause = whereClause + " and m.enqOrgCode = :enqOrgCode ";
-            parameters.put("enqOrgCode", command.getOrgCode());
-        }
-        if (command.getStateCode() != null && !StringUtils.isEmpty(command.getStateCode())) {
-            whereClause = whereClause + " and SUBSTRING(m.enqStateCityCode,1,2) = :enqStateCityCode ";
-            parameters.put("enqStateCityCode", command.getStateCode());
-        }
-
-        if (command.getEnqFullCode() != null && !StringUtils.isEmpty(command.getEnqFullCode())) {
-            whereClause = whereClause + " and enqFullCode = :enqFullCode ";
-            parameters.put("enqFullCode", command.getEnqFullCode());
-        }
-        if (command.getCustomerCityCode() != null && !StringUtils.isEmpty(command.getCustomerCityCode())) {
-            whereClause = whereClause + " and m.enqStateCityCode = :enqCityCode ";
-            parameters.put("enqCityCode", command.getCustomerCityCode());
-        }
-        if (command.getStateCodeDelimited() != null ) {
-            whereClause = whereClause + " and SUBSTRING(m.enqStateCityCode,1,2) IN  :enqStateCodeDelimited ";
-            parameters.put("enqStateCodeDelimited", command.getStateCodeDelimited());
-        }
-        Query wquery = null;
-        if (parameters.size() > 0) {
-            wquery = em.createQuery(query
-                    + whereClause.replaceAll("where and", "where"));
-        } else {
-            System.out.println("myquery " + query);
-            wquery = em.createQuery(query);
-        }
-        Iterator keyset = parameters.keySet().iterator();
-
-        while (keyset.hasNext()) {
-            String key = (String) keyset.next();
-            wquery.setParameter(key, parameters.get(key));
-        }
-wquery.setMaxResults(1000);
+        Query wquery = builder.buildQuery(em);
+        wquery.setMaxResults(1000);
         List<SciEnquiryMaster> enqList = wquery.getResultList();
         for(SciEnquiryMaster sciEnquiryMaster:enqList) {
 
