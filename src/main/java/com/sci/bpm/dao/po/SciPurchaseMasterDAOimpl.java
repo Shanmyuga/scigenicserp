@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.sci.bpm.util.QueryBuilderUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
@@ -85,71 +86,19 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 	}
 
 	public List searchPO(POCommand command) {
+		QueryBuilderUtil.DynamicQueryBuilder builder = QueryBuilderUtil.createBuilder(
+			"from SciPurchaseMast m where m.purchaseStatus >= 0");
 
-		String query = "from SciPurchaseMast m where m.purchaseStatus >= 0 ";
+		builder.addStringCondition(command.getPurchaseType(), " and m.purchaseType =:purtype", "purtype")
+		       .addConditionIf(command.getPurchaseStatus().intValue() != 0, " and m.purchaseStatus = :purstatus", "purstatus", command.getPurchaseStatus())
+		       .addCondition(" and m.seqPurchId =:purchaseid", "purchaseid", command.getPurchaseID())
+		       .addCondition(" and m.purchaseCreatedDt >= :purchasefromdate", "purchasefromdate", command.getFromdate())
+		       .addStringCondition(command.getPoPaidFully(), " and m.poPaidFully = :poPaidFully", "poPaidFully")
+		       .addCondition(" and m.purchaseCreatedDt <=:purchasetodate", "purchasetodate", command.getTodate())
+		       .addConditionIf(command.getSeqVendorId() != 0, " and m.sciVendorMaster.seqVendorId =:vendorid", "vendorid", command.getSeqVendorId())
+		       .addCondition(" and m.seqPurchId in (select  p.seqPurchId from PurchaseWorkOrderView p where p.seqWorkId=:seqWorkId)", "seqWorkId", command.getSeqWorkId());
 
-		
-		
-		Map parameters = new HashMap();
-		String whereClause = "";
-		if (command.getPurchaseType() != null
-				&& !"".equals(command.getPurchaseType())) {
-			whereClause = whereClause + " and m.purchaseType =:purtype ";
-			// parameters.add(command.getMatDuedate());
-			parameters.put("purtype", command.getPurchaseType());
-		}
-		if (command.getPurchaseStatus().intValue() != 0) {
-			whereClause = whereClause + " and m.purchaseStatus = :purstatus ";
-			// parameters.add(command.getMatDuedate());
-			parameters.put("purstatus", command.getPurchaseStatus());
-		}
-		if (command.getPurchaseID() != null) {
-			whereClause = whereClause + " and m.seqPurchId =:purchaseid ";
-			// parameters.add(command.getMatDuedate());
-			parameters.put("purchaseid", command.getPurchaseID());
-		}
-
-		if (command.getFromdate() != null) {
-			whereClause = whereClause
-					+ " and m.purchaseCreatedDt >= :purchasefromdate ";
-			// parameters.add(command.getMatDuedate());
-			parameters.put("purchasefromdate", command.getFromdate());
-		}
-
-		if (command.getPoPaidFully() != null && !"".equals(command.getPoPaidFully())) {
-			whereClause = whereClause
-					+ " and m.poPaidFully = :poPaidFully ";
-			// parameters.add(command.getMatDuedate());
-			parameters.put("poPaidFully", command.getPoPaidFully());
-		}
-
-		if (command.getTodate() != null) {
-			whereClause = whereClause
-					+ " and m.purchaseCreatedDt <=:purchasetodate ";
-			// parameters.add(command.getMatDuedate());
-			parameters.put("purchasetodate", command.getTodate());
-		}
-		
-		if (command.getSeqVendorId() !=0 ) {
-			whereClause = whereClause
-					+ " and m.sciVendorMaster.seqVendorId =:vendorid ";
-			// parameters.add(command.getMatDuedate());
-			parameters.put("vendorid", command.getSeqVendorId());
-		}
-		
-		if (command.getSeqWorkId() != null ) {
-			whereClause = whereClause
-					+ " and m.seqPurchId in (select  p.seqPurchId from PurchaseWorkOrderView p where p.seqWorkId=:seqWorkId) ";
-			// parameters.add(command.getMatDuedate());
-			parameters.put("seqWorkId", command.getSeqWorkId());
-		}
-		Iterator keyset = parameters.keySet().iterator();
-
-		Query wquery = em.createQuery(query + whereClause);
-		while (keyset.hasNext()) {
-			String key = (String) keyset.next();
-			wquery.setParameter(key, parameters.get(key));
-		}
+		Query wquery = builder.buildQuery(em);
 		List<SciPurchaseMast> datalist = wquery.getResultList();
 		String pseqquery = "select  JOB_DESC from WORKORDER_MI_PURCHASE_VIEW p where p.SEQ_PURCH_ID=:SEQ_PURCH_ID";
 		Query qry = em.createNativeQuery(pseqquery);
