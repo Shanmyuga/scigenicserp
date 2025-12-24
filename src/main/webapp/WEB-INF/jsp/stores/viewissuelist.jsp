@@ -112,6 +112,8 @@
     </display:column>
     <display:column sortable="true"   title="PO Id" property="seqPurchId"  >
     </display:column>
+    <display:column sortable="true"   title="Recd Date" property="recdDate"  >
+    </display:column>
     <display:column sortable="true"   title="PO Created Date" property="purchaseCreatedDate"  >
     </display:column>
 <display:column sortable="true"   title="Issued Mat Cost"   >

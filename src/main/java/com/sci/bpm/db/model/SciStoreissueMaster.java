@@ -50,6 +50,8 @@ public class SciStoreissueMaster implements java.io.Serializable {
 
 	private Long seqPurchId;
 	private Date purchaseCreatedDate;
+	private Date recdDate;
+
 	
 	// Constructors
 
@@ -328,5 +330,13 @@ private SciMatindMaster sciMiMaster;
 
 	public void setPurchaseCreatedDate(Date purchaseCreatedDate) {
 		this.purchaseCreatedDate = purchaseCreatedDate;
+	}
+	@Transient
+	public Date getRecdDate() {
+		return recdDate;
+	}
+
+	public void setRecdDate(Date recdDate) {
+		this.recdDate = recdDate;
 	}
 }

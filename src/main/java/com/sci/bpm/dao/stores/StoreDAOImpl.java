@@ -523,6 +523,7 @@ public class StoreDAOImpl implements StoresDAO {
 
 		Query purchase_order_query = em.createQuery("Select m from PurchaseWorkOrderView m where m.seqMiId=:seqMIId and m.seqPurchId is not null");
 		Query purchase_order_select = em.createQuery("Select m from SciPurchaseMast m where m.seqPurchId=:seqPurchId");
+		Query recd_materials = em.createQuery("Select m from SciRecdMaterials m where m.sciMiMaster.seqMiId=:seqMIId");
 		for(SciStoreissueMaster mi:milist) {
 				storeqry.setParameter("seqStissueId", mi.getSeqStissueId());
 				List<SciReturnitemsRequest> stlist = storeqry.getResultList();
@@ -539,6 +540,9 @@ public class StoreDAOImpl implements StoresDAO {
 
 
 					purchase_order_query.setParameter("seqMIId",mi.getSciMiMaster().getSeqMiId());
+			recd_materials.setParameter("seqMIId",mi.getSciMiMaster().getSeqMiId());
+			List<SciRecdMaterials> materialsList = recd_materials.getResultList();
+
 			List<PurchaseWorkOrderView> purchaseWorkOrderViewList = purchase_order_query.getResultList();
 			if(purchaseWorkOrderViewList != null && purchaseWorkOrderViewList.size() >0 ) {
 				PurchaseWorkOrderView view = purchaseWorkOrderViewList.get(0);
@@ -549,7 +553,13 @@ public class StoreDAOImpl implements StoresDAO {
 
 				mi.setPurchaseCreatedDate(pm.getPurchaseCreatedDt());
 			}
+
+			if(materialsList != null && materialsList.size() >0) {
+				SciRecdMaterials recdMaterials = materialsList.get(0);
+				mi.setRecdDate(recdMaterials.getRecdDate());
+			}
 				}
+
 				
 				
 
