@@ -112,7 +112,7 @@ public class TestPDFServlet extends HttpServlet {
 			}
 			Source xsltSrc = null;
 	    //Setup Transformer
-			if("SS".equals(poCompany)) {
+			if("SIPL".equals(poCompany)) {
 				 xsltSrc = new StreamSource(new File(getServletContext().getRealPath("/") + "/xslt/po_template.xsl"));
 			}
 			else {

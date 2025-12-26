@@ -116,8 +116,8 @@
                         <td>PO Company</td>
                         <td><form:select path="poCompany"    >
                             <form:option value="">ALL</form:option>
-                            <form:option value="SS">Scigenics</form:option>
-                            <form:option value="SSC">Standard Scigenics</form:option>
+                            <form:option value="SIPL">Scigenics</form:option>
+                            <form:option value="SSPL">Standard Scigenics</form:option>
                         </form:select>
 
                         </td>

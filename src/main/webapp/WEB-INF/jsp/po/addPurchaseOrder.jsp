@@ -182,8 +182,8 @@
     <tr>
     <td align="left" class="datatext">PO company</td>
     <td ><form:select path="poCompany"  id="poCompany">
-    <form:option value="SC">Scigenics India Private Limited</form:option>
-    <form:option value="SSC">Standard Scigenics India private Limited</form:option>
+    <form:option value="SIPL">Scigenics India Private Limited</form:option>
+    <form:option value="SSPL">Standard Scigenics India private Limited</form:option>
 
     </form:select>
     <span style="color:red;">*</span></td>
