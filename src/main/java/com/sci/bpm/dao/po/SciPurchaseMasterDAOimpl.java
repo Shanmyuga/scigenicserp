@@ -133,7 +133,18 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 			// parameters.add(command.getMatDuedate());
 			parameters.put("purchasetodate", command.getTodate());
 		}
-		
+		if (command.getPoCompany() != null && !"".equals(command.getPoCompany())) {
+			whereClause = whereClause
+					+ " and m.poCompany =:poCompany ";
+			// parameters.add(command.getMatDuedate());
+			parameters.put("poCompany", command.getPoCompany());
+		}
+		if (command.getCustomPOId() != null && !"".equals(command.getCustomPOId())) {
+			whereClause = whereClause
+					+ " and m.customPOId =:customPOId ";
+			// parameters.add(command.getMatDuedate());
+			parameters.put("customPOId", command.getCustomPOId());
+		}
 		if (command.getSeqVendorId() !=0 ) {
 			whereClause = whereClause
 					+ " and m.sciVendorMaster.seqVendorId =:vendorid ";

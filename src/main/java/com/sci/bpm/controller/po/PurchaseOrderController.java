@@ -322,7 +322,7 @@ public class PurchaseOrderController extends SciBaseController {
 		JAXBContext jcontext = JAXBContext.newInstance("org.tempuri.po");
 		ObjectFactory factory = new ObjectFactory();
 		PurchaseOrderType ptype = factory.createPurchaseOrderType();
-		ptype.setPonumber(selected.getSeqPurchId().toString());
+		ptype.setPonumber(selected.getCustomPOId());
 		ptype.setPoDate(selected.getPurchaseCreatedDt().toString());
 		ptype.setExciseAmount(selected.getExciseCharges().toString());
 		ptype.setExcisePecentage(selected.getExcisePercent().toString());
@@ -342,6 +342,7 @@ public class PurchaseOrderController extends SciBaseController {
 		ptype.setItemtotal(selected.getItemTotalCost().toString());
 		ptype.setRefDate(selected.getRefDate()!=null?selected.getRefDate().toString():"");
 		ptype.setQutrefno(selected.getQutRefNo());
+		ptype.setPoCompany(selected.getPoCompany());
 		System.out.println(selected.getVendorAddress());
 		System.out.println(selected.getVendorOrder());
 		
@@ -535,6 +536,8 @@ public class PurchaseOrderController extends SciBaseController {
 
 		context.getExternalContext().getSessionMap()
 				.put("poxml", "<purchaseOrder>"+poxml);
+		context.getExternalContext().getSessionMap()
+				.put("pocompany", selected.getPoCompany());
 		context.getFlowScope().put("poxml_flow","<purchaseOrder>"+poxml);
 		context.getFlowScope().put("PO_ID",selected.getSeqPurchId());
 		return success();

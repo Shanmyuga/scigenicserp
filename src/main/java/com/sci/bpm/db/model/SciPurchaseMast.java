@@ -67,6 +67,9 @@ public class SciPurchaseMast implements java.io.Serializable {
 	private String workOrders;
 	private String vendorStatus;
 	private Long dcVendorId;
+    private String poCompany; // new field
+	private String customPOId;
+	//
 	// Constructors
 
 	@Column(name = "GST_CHARGES", precision = 11, scale = 2)
@@ -537,5 +540,22 @@ private String insertedBy;
 
 	public void setDcVendorId(Long dcVendorId) {
 		this.dcVendorId = dcVendorId;
+	}
+    @Column(name = "PO_COMPANY", length = 20)
+    public String getPoCompany() {
+        return poCompany;
+    }
+
+    public void setPoCompany(String poCompany) {
+        this.poCompany = poCompany;
+    }
+
+	@Column(name = "CUSTOM_PO_ID", length = 20)
+	public String getCustomPOId() {
+		return customPOId;
+	}
+
+	public void setCustomPOId(String customPOId) {
+		this.customPOId = customPOId;
 	}
 }

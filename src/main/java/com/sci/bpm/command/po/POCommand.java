@@ -64,6 +64,7 @@ public class POCommand implements Serializable {
 	private Double poId;
 	private Long seqMaterialId;
 	private Double matCost;
+    private String poCompany;
 	
 	private String specDetails;
 	
@@ -87,6 +88,7 @@ public class POCommand implements Serializable {
 	private String vendorStatus;
 
 	private Long subContMI;
+	private String customPOId;
 
 	public MultipartFile getFiledoc() {
 		return filedoc;
@@ -644,5 +646,21 @@ public class POCommand implements Serializable {
 
 	public void setPurchaseDate(Date purchaseDate) {
 		this.purchaseDate = purchaseDate;
+	}
+
+    public String getPoCompany() {
+        return poCompany;
+    }
+
+    public void setPoCompany(String poCompany) {
+        this.poCompany = poCompany;
+    }
+
+	public String getCustomPOId() {
+		return customPOId;
+	}
+
+	public void setCustomPOId(String customPOId) {
+		this.customPOId = customPOId;
 	}
 }

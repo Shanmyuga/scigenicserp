@@ -113,9 +113,21 @@
 
                         </td>
 
+                        <td>PO Company</td>
+                        <td><form:select path="poCompany"    >
+                            <form:option value="">ALL</form:option>
+                            <form:option value="SS">Scigenics</form:option>
+                            <form:option value="SSC">Standard Scigenics</form:option>
+                        </form:select>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Custom PO ID</td>
+                        <td><form:input path="customPOId"/></td>
+
                         <td colspan="2" align="left"><input type="submit" value="Search PO"/></td>
                     </tr>
-
 
 
                 </table>
@@ -134,6 +146,10 @@
                     <display:column sortable="true"  title="PO Name" property="vendorOrder" >
                     <display:column sortable="true"   title="Purchase ID" property="seqPurchId"  >
                     </display:column>
+
+                    </display:column>
+
+                    <display:column sortable="true"  title="Custom PO ID"  property="customPOId">
 
                     </display:column>
 

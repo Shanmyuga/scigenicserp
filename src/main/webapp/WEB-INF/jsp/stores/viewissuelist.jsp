@@ -108,8 +108,7 @@
 </display:column>
 <display:column sortable="true"   title="Mat Spec" property="matSpec"  >
 </display:column>
-    <display:column sortable="true"   title="Mat Type" property="seqPurchId"  >
-    </display:column>
+
     <display:column sortable="true"   title="PO Id" property="seqPurchId"  >
     </display:column>
     <display:column sortable="true"   title="Recd Date" property="recdDate"  >
