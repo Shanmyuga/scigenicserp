@@ -252,6 +252,16 @@ public class StoreDAOImpl implements StoresDAO {
 			whereClause = whereClause + " and m.sciMiMaster.seqMiId = :seqmiid ";
 			parameters.put("seqmiid", command.getSeqmiid());
 		}
+
+		if (command.getSeqWorkId() != null ) {
+			whereClause = whereClause + " and m.sciMiMaster.sciWorkorderMaster.seqWorkId = :seqWorkId ";
+			parameters.put("seqWorkId", command.getSeqWorkId());
+		}
+
+		if (command.getWorkOrderKey() != null  && !"".equals(command.getWorkOrderKey())) {
+			whereClause = whereClause + " and m.sciMiMaster.sciWorkorderMaster.seqWorkId in (Select seqWorkId from SciActiveWorkordersReportEntity b where b.shortKey=:shortKey) ";
+			parameters.put("shortKey", command.getWorkOrderKey());
+		}
 		Query wquery = null;
 		if (parameters.size() > 0) {
 			wquery = em.createQuery(query

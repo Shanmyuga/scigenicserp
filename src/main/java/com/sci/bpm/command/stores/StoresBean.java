@@ -66,6 +66,16 @@ public class StoresBean implements Serializable {
 	private String isScrap;
 	private String cancelReason;
 	private String availableDimension;
+	private String workOrderKey;
+
+
+	public String getWorkOrderKey() {
+		return workOrderKey;
+	}
+
+	public void setWorkOrderKey(String workOrderKey) {
+		this.workOrderKey = workOrderKey;
+	}
 
 	public Long getSeqVendorID() {
 		return seqVendorID;

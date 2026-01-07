@@ -59,6 +59,24 @@
 
 </td>
 </tr>
+ <tr>
+
+  <td> Workorder Short Key</td>
+  <td>
+   <form:select path="workOrderKey" size="1" id="workOrderKey" >
+    <form:option value="">All</form:option>
+    <form:options items="${workordershortkey}" />
+   </form:select>
+  </td>
+
+  <td>Work Order</td>
+  <td><form:select path="seqWorkId"    >
+   <form:option value="">All</form:option>
+    <form:options items="${workmastlist}" itemLabel="jobDesc" itemValue="seqWorkId"/>
+   </form:select>
+
+
+ </tr>
 <tr>
  <td colspan="4" align="right"><input type="button" value="Search Stores" onclick="eventdirect('searchStores')"/></td>
 
