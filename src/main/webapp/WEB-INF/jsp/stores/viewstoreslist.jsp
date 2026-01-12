@@ -135,6 +135,10 @@
 <display:column sortable="true"  title="QC ID" property="seqQcId" >
 
 </display:column>
+ <display:column sortable="true"   title="PO Id" property="seqPurchId"  >
+ </display:column>
+ <display:column sortable="true"   title="Custom PO Id" property="customPOId"  >
+ </display:column>
 <display:column sortable="true"  title="WO DESC"  >
 <c:out value='${row.sciMiMaster.sciWorkorderMaster.jobDesc}'/>
 </display:column>

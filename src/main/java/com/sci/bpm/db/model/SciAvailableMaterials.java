@@ -34,6 +34,25 @@ public class SciAvailableMaterials  implements java.io.Serializable {
      private BigDecimal totalStockByMatCode;
      private BigDecimal actualStockMatCode;
 
+     private String customPOId;
+     private Long seqPurchId;
+
+     @Transient
+    public String getCustomPOId() {
+        return customPOId;
+    }
+
+    public void setCustomPOId(String customPOId) {
+        this.customPOId = customPOId;
+    }
+    @Transient
+    public Long getSeqPurchId() {
+        return seqPurchId;
+    }
+
+    public void setSeqPurchId(Long seqPurchId) {
+        this.seqPurchId = seqPurchId;
+    }
     // Constructors
 
     /** default constructor */

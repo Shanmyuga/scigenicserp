@@ -49,13 +49,23 @@ public class SciStoreissueMaster implements java.io.Serializable {
 	private float totalReturnQty;
 
 	private Long seqPurchId;
+	private String customPOId;
+
 	private Date purchaseCreatedDate;
 	private Date recdDate;
 
 	
 	// Constructors
 
-	
+
+	@Transient
+	public String getCustomPOId() {
+		return customPOId;
+	}
+
+	public void setCustomPOId(String customPOId) {
+		this.customPOId = customPOId;
+	}
 
 	/** default constructor */
 	public SciStoreissueMaster() {

@@ -279,6 +279,12 @@ public class StoreDAOImpl implements StoresDAO {
 
 		String stockquery = "select qty from VW_ASSIGNED_STOCK_MI_LIST wm where matcode=:matcode ";
 		Query stqry = em.createNativeQuery(stockquery);
+		String purchaseQuerystr = "select wm from PurchaseWorkOrderView wm where wm.seqMiId=:seqMiId  and wm.seqPurchId is not null";
+		Query purchaseQuery = em.createQuery(purchaseQuerystr);
+
+		String customPurchaseQuerystr = "select wm from SciPurchaseMast wm where wm.seqPurchId=:seqPurchId ";
+
+		Query customPurchaseQuery = em.createQuery(customPurchaseQuerystr);
 		String totalStockquery = "select qty from VW_AVAIL_MATERIALS wm where matcode=:matcode ";
 		Query totalStockqry = em.createNativeQuery(totalStockquery);
 		String actualStockQuery = "select avail_qty from VW_ACTUAL_AVAIL_STOCK wm where matcode=:matcode ";
@@ -292,6 +298,19 @@ public class StoreDAOImpl implements StoresDAO {
 			if(datalist != null && datalist.size()> 0) {
 				materials.setAssignedStock(datalist.get(0));
 			}
+			purchaseQuery.setParameter("seqMiId",materials.getSciMiMaster().getSeqMiId());
+			List<PurchaseWorkOrderView> results = purchaseQuery.getResultList();
+			if(results != null && results.size()>0) {
+				PurchaseWorkOrderView wmview = results.get(0);
+				materials.setSeqPurchId(wmview.getSeqPurchId());
+				customPurchaseQuery.setParameter("seqPurchId",wmview.getSeqPurchId());
+				List<SciPurchaseMast> qresults = customPurchaseQuery.getResultList();
+				if(qresults.size() > 0) {
+					SciPurchaseMast mast = qresults.get(0);
+					materials.setCustomPOId(mast.getCustomPOId());
+				}
+			}
+
 
 			List<BigDecimal> tdatalist  = totalStockqry.getResultList();
 			if(tdatalist != null && tdatalist.size()> 0) {
@@ -561,7 +580,9 @@ public class StoreDAOImpl implements StoresDAO {
 
 				SciPurchaseMast pm = (SciPurchaseMast) purchase_order_select.getSingleResult();
 
+
 				mi.setPurchaseCreatedDate(pm.getPurchaseCreatedDt());
+				mi.setCustomPOId(pm.getCustomPOId());
 			}
 
 			if(materialsList != null && materialsList.size() >0) {

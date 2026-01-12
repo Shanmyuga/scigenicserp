@@ -111,10 +111,13 @@
 
     <display:column sortable="true"   title="PO Id" property="seqPurchId"  >
     </display:column>
+    <display:column sortable="true"   title="Custom PO Id" property="customPOId"  >
+    </display:column>
     <display:column sortable="true"   title="Recd Date" property="recdDate"  >
     </display:column>
     <display:column sortable="true"   title="PO Created Date" property="purchaseCreatedDate"  >
     </display:column>
+
 <display:column sortable="true"   title="Issued Mat Cost"   >
 <fmt:parseNumber var="ut" type="NUMBER" value="${row.sciMiMaster.unitCost}"></fmt:parseNumber>
 <fmt:parseNumber var="issquantity" type="NUMBER" value="${row.finalCount}"></fmt:parseNumber>
