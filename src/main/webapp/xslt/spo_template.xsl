@@ -50,7 +50,7 @@
       	                     scaling="uniform"
       	                    
       	                     src="servlet-context:/SIPL-PO-Filtered_files/image001.jpg" />
-											STANDARD SCIGENICS (INDIA) PVT. LTD.
+											STANDARD SCIGENICS PVT. LTD.
 										</fo:block>
 										<fo:block font-size="8pt"
 											space-before.optimum="1.5pt" space-after.optimum="1.5pt"
