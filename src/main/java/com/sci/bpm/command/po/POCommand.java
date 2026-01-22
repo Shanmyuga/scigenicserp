@@ -89,6 +89,15 @@ public class POCommand implements Serializable {
 
 	private Long subContMI;
 	private String customPOId;
+	private String shortKey;
+
+	public String getShortKey() {
+		return shortKey;
+	}
+
+	public void setShortKey(String shortKey) {
+		this.shortKey = shortKey;
+	}
 
 	public MultipartFile getFiledoc() {
 		return filedoc;

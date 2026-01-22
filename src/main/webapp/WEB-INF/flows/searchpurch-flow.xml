@@ -5,6 +5,7 @@
 <!-- WARNING: parameter-type is no longer supported.  Use <set name="temp" value="'purstats_key'" type="string" /> to convert the type before the evaluate action. --><webflow:evaluate expression="lookupbean.getDropDownList('purstats_key')" result="flowScope.purstats"/>
 <webflow:evaluate expression="lookupbean.getDropDownList('vendor_key')" result="flowScope.vendorlist"/>
  <webflow:evaluate expression="lookupbean.getDropDownList('workorder_key')" result="flowScope.workmastlist"/>
+    <webflow:evaluate expression="lookupbean.getDropDownList('workordershort_key')" result="flowScope.workordershortkey"/>
     </webflow:on-start>
 <webflow:view-state id="entersearch" view="po.search">
         <webflow:transition on="seachPO" to="entersearch">

@@ -123,12 +123,21 @@
                         </td>
                     </tr>
                     <tr>
+                        <td> Workorder Short Key</td>
+                        <td>
+                            <form:select path="workOrderKey" size="1" id="workOrderKey" >
+                                <form:option value="">All</form:option>
+                                <form:options items="${workordershortkey}" />
+                            </form:select>
+                        </td>
                         <td>Custom PO ID</td>
                         <td><form:input path="customPOId"/></td>
 
-                        <td colspan="2" align="left"><input type="submit" value="Search PO"/></td>
                     </tr>
+<tr>
 
+    <td colspan="4" align="left"><input type="submit" value="Search PO"/></td>
+</tr>
 
                 </table>
 

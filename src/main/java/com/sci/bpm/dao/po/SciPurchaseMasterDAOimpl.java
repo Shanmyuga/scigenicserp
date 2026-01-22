@@ -158,6 +158,13 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 			// parameters.add(command.getMatDuedate());
 			parameters.put("seqWorkId", command.getSeqWorkId());
 		}
+
+		if (command.getWorkOrderKey() != null  && !"".equals(command.getWorkOrderKey())) {
+			whereClause = whereClause
+					+ " and m.seqPurchId in (select  pq.seqPurchId from PurchaseWorkOrderView pq where pq.seqWorkId in (select p.seqWorkId from SciActiveWorkordersReportEntity p where  p.shortKey=:shortKey) ) ";
+			// parameters.add(command.getMatDuedate());
+			parameters.put("shortKey", command.getWorkOrderKey());
+		}
 		Iterator keyset = parameters.keySet().iterator();
 
 		Query wquery = em.createQuery(query + whereClause);
