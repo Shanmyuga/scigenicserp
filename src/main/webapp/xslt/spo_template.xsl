@@ -58,7 +58,7 @@
 </fo:block>
 <fo:block font-size="8pt"
 											space-before.optimum="1.5pt" space-after.optimum="1.5pt"
-											 text-align="center">Voice: +91 - 44 - 2454 4100 - 4 Lines. Fax: +91- 44 - 2454 4105. Email: purchase@scigenics.in</fo:block>
+											 text-align="center">Voice: +91 - 44 - 2454 4100 - 4 Lines. Fax: +91- 44 - 2454 4105. Email: purchase@standardscigenics.com</fo:block>
 									</fo:table-cell>
 									<fo:table-cell border-style="solid" border-color="black"
 										border-width="1pt">
@@ -79,7 +79,7 @@
 										border-width="1pt" number-columns-spanned="2">
 										<fo:block line-height="12pt" font-size="10pt"
 											space-before.optimum="1.5pt" space-after.optimum="1.5pt"
-											keep-together="always" text-align="center">TIN No.:33550924587, GSTNo.: 33AAACS8529H1ZB </fo:block>
+											keep-together="always" text-align="center">GSTNo.: 33ABRCS3555P1ZJ </fo:block>
 									</fo:table-cell>
 								</fo:table-row>
 							</fo:table-body>
@@ -1000,7 +1000,7 @@
 
 									<fo:block line-height="12pt" font-size="10pt"
 										space-before.optimum="1.5pt" space-after.optimum="1.5pt"
-										keep-together="always" text-align="center">For SCIGENICS (INDIA)
+										keep-together="always" text-align="center">For STANDARD SCIGENICS
 										PRIVATE LTD.</fo:block>
 									<fo:block line-height="12pt" font-size="10pt"
 										space-before.optimum="1.5pt" space-after.optimum="1.5pt"
