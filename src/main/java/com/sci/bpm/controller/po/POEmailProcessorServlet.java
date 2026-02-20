@@ -70,6 +70,8 @@ public class POEmailProcessorServlet extends HttpServlet {
 			this.fopFactory.setURIResolver(this.uriResolver);
 			String poxml = (String) request.getSession(true)
 					.getAttribute("poxml");
+			String poCompany = (String) request.getSession(false)
+					.getAttribute("pocompany");
 			String vendorEmailId = (String) request.getSession(true)
 					.getAttribute("vendorEmailID");
 			if(poxml == null) {
@@ -77,8 +79,13 @@ public class POEmailProcessorServlet extends HttpServlet {
 			}
 			
 	    //Setup Transformer
-			
-	    Source xsltSrc = new StreamSource(new File(getServletContext().getRealPath("/")+"/xslt/po_template.xsl"));
+			Source xsltSrc = null;
+			if("SIPL".equals(poCompany)) {
+				xsltSrc = new StreamSource(new File(getServletContext().getRealPath("/") + "/xslt/po_template.xsl"));
+			}
+			else {
+				xsltSrc = new StreamSource(new File(getServletContext().getRealPath("/") + "/xslt/spo_template.xsl"));
+			}
 	    Transformer transformer = tFactory.newTransformer(xsltSrc);
 //transformer.setURIResolver(uriResolver);
 	    //Make sure the XSL transformation's result is piped through to FOP

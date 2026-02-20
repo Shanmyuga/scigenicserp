@@ -540,6 +540,7 @@ public class PurchaseOrderController extends SciBaseController {
 				.put("pocompany", selected.getPoCompany());
 		context.getFlowScope().put("poxml_flow","<purchaseOrder>"+poxml);
 		context.getFlowScope().put("PO_ID",selected.getSeqPurchId());
+
 		return success();
 	}
 
@@ -693,13 +694,21 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 			fopFactory.setURIResolver(uriResolver);
 			String poxml = (String) context.getFlowScope().get("poxml_flow");
 			Long seqPurchID = (Long) context.getFlowScope().get("PO_ID");
+
+			String poCompany = (String) context.getExternalContext().getSessionMap().get("pocompany");
 			String vendorEmailId = (String) context.getFlowScope().get("vendorEmailID_flow");
 			if (poxml == null) {
 
 			}
-
+			Source xsltSrc = null;
+			if("SIPL".equals(poCompany)) {
+				xsltSrc = new StreamSource(new File(externalContext.getRealPath("/") + "/xslt/po_template_sign.xsl"));
+			}
+			else {
+				xsltSrc = new StreamSource(new File(externalContext.getRealPath("/") + "/xslt/spo_template_sign.xsl"));
+			}
 			//Setup TransformerRequestContext rc = RequestContextHolder.getRequestContext();
-			Source xsltSrc = new StreamSource(new File(externalContext.getRealPath("/") + "/xslt/po_template_sign.xsl"));
+		//	Source xsltSrc = new StreamSource(new File(externalContext.getRealPath("/") + "/xslt/po_template_sign.xsl"));
 			Transformer transformer = tFactory.newTransformer(xsltSrc);
 //transformer.setURIResolver(uriResolver);
 			//Make sure the XSL transformation's result is piped through to FOP
@@ -711,9 +720,13 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 			//Start the transformation and rendering process
 			transformer.transform(src, res);
 			byte[] pdfarray = out.toByteArray();
-
-			//Send content to Browser
-			sendEmail("purchase@scigenics.in",vendorEmailId,"Purchase Order From Scigenics - PO-ID "+seqPurchID,"Dear Sir/Madam \n Please find the attached purchase order from Scigenics India Pvt Ltd. \n\n\n Thanks and Regards \n Scigenics Purchase Manager \n email : purchase@scigenics.in ",pdfarray);
+			if("SIPL".equals(poCompany)) {
+				//Send content to Browser
+				sendEmail("purchase@scigenics.in", vendorEmailId, "Purchase Order From Scigenics - PO-ID " + seqPurchID, "Dear Sir/Madam \n Please find the attached purchase order from Scigenics India Pvt Ltd. \n\n\n Thanks and Regards \n Scigenics Purchase Manager \n email : purchase@scigenics.in ", pdfarray);
+			}
+			else {
+				sendEmail("purchase@scigenics.in", vendorEmailId, "Purchase Order From Scigenics - PO-ID " + seqPurchID, "Dear Sir/Madam \n Please find the attached purchase order from Standard Scigenics Pvt Ltd. \n\n\n Thanks and Regards \n Standard Scigenics Purchase Manager \n email : purchase@standardscigenics.com ", pdfarray);
+			}
 			context.getFlashScope().put("mailMessage","Mail Successfully sent");
 		}
 		catch(Exception e) {
