@@ -52,32 +52,20 @@ public class TaskProcessDAOImpl implements TaskProcessDAO {
 	}
 
 	public List<SciIssueDetails> searchOpenTask(String status, int startpage,
-			String userid,String roleName) {
+			String userid, String roleName) {
 
-		List<SciIssueDetails> mylist = new ArrayList();
-		Query qe = em
-				.createNativeQuery(
-						" SELECT D.* FROM SCI_ISSUE_MASTER M ,SCI_ISSUE_DETAILS d WHERE M.SEQ_ISSUE_ID = D.SEQ_ISSUE_ID and"
-								+ " M.issue_status != 'closed' and m.ISSUE_ASSIGNEDTO like ?  and d.seq_issue_dtl_id = (select max(p.seq_issue_dtl_id) from  SCI_ISSUE_DETAILS p where p.SEQ_ISSUE_ID = M.SEQ_ISSUE_ID)"
-								+
-						" union "
-								+
-								" SELECT D.* FROM SCI_ISSUE_MASTER M ,SCI_ISSUE_DETAILS d WHERE M.SEQ_ISSUE_ID = D.SEQ_ISSUE_ID and"
-								+ " M.issue_status != 'closed' and d.assigned_dept  like ?  and d.seq_issue_dtl_id = (select max(p.seq_issue_dtl_id) from  SCI_ISSUE_DETAILS p where p.SEQ_ISSUE_ID = M.SEQ_ISSUE_ID)"
-								+
-								" union "
-								+
+		String jpql = "SELECT DISTINCT d FROM SciIssueDetails d"
+				+ " JOIN FETCH d.sciIssueMaster m"
+				+ " WHERE m.issueStatus != 'closed'"
+				+ " AND d.seqIssueDtlId = (SELECT MAX(p.seqIssueDtlId) FROM SciIssueDetails p WHERE p.sciIssueMaster = m)"
+				+ " AND (m.issueAssignedTo LIKE :useridPattern"
+				+ "   OR d.assignedDept LIKE :rolePattern"
+				+ "   OR m.issueCreatedBy LIKE :useridPattern)";
 
-								" SELECT D.* FROM SCI_ISSUE_MASTER M ,SCI_ISSUE_DETAILS d WHERE M.SEQ_ISSUE_ID = D.SEQ_ISSUE_ID and"
-								+ " M.issue_status != 'closed' and m.ISSUE_CREATED_BY like ?  and d.seq_issue_dtl_id = (select max(p.seq_issue_dtl_id) from  SCI_ISSUE_DETAILS p where p.SEQ_ISSUE_ID = M.SEQ_ISSUE_ID)",
-						SciIssueDetails.class);
-
-		qe.setParameter(1, "%" + userid + "%");
-		qe.setParameter(2, "%" + roleName + "%");
-		qe.setParameter(3, "%" + userid + "%");
-		mylist.addAll(qe.getResultList());
-
-		return mylist;
+		return em.createQuery(jpql, SciIssueDetails.class)
+				.setParameter("useridPattern", "%" + userid + "%")
+				.setParameter("rolePattern", "%" + roleName + "%")
+				.getResultList();
 	}
 
 	public boolean updateDetails(List<SciIssueDetails> detailList) {
@@ -107,11 +95,11 @@ public class TaskProcessDAOImpl implements TaskProcessDAO {
 
 		List mylist = new ArrayList();
 		try {
-			String myqry = " select idt  from SciIssueDetails idt join idt.sciIssueMaster im"
-					+ " where  im.issueStatus = 'open' and "
-					+ "idt.seqIssueDtlId =   (select max(imt.seqIssueDtlId) from "
-					+ " SciIssueDetails imt where imt.sciIssueMaster.seqIssueId =im.seqIssueId ) and "
-					+ "idt.assignedDate < :assignedDate ";
+			String myqry = "SELECT idt FROM SciIssueDetails idt"
+					+ " JOIN FETCH idt.sciIssueMaster im"
+					+ " WHERE im.issueStatus = 'open'"
+					+ " AND idt.seqIssueDtlId = (SELECT MAX(imt.seqIssueDtlId) FROM SciIssueDetails imt WHERE imt.sciIssueMaster = im)"
+					+ " AND idt.assignedDate < :assignedDate";
 
 			Query qry = em.createQuery(myqry);
 

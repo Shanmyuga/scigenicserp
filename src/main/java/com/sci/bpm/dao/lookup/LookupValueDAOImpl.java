@@ -59,7 +59,8 @@ public class LookupValueDAOImpl implements LookupValueDAO {
 	}
 
 	public List<SciCustomerMaster> loadCustomerforOrg(Long seqClientOrgId) {
-		Query qry = em.createQuery("from SciCustomerMaster cm where cm.sciClientOrgMaster.seqClientOrgId=:seqClientOrgId");
+		Query qry = em.createQuery(
+				"from SciCustomerMaster cm join fetch cm.sciClientOrgMaster org where org.seqClientOrgId=:seqClientOrgId");
 		qry.setParameter("seqClientOrgId",seqClientOrgId);
 
 		return qry.getResultList();
@@ -67,12 +68,12 @@ public class LookupValueDAOImpl implements LookupValueDAO {
 
 	@Override
 	public List<SciCustomerMaster> loadCustomerforOrgandState(Long seqClientOrgId, Long stateCode) {
-		String query = "Select cm from SciCustomerMaster cm  where ";
+		String query = "Select cm from SciCustomerMaster cm join fetch cm.sciClientOrgMaster org where ";
 		System.out.println(stateCode + " - " + seqClientOrgId);
 		Map parameters = new HashMap();
 		String whereClause = "";
 		if(seqClientOrgId != null) {
-			whereClause = whereClause + "and cm.sciClientOrgMaster.seqClientOrgId=:seqClientOrgId ";
+			whereClause = whereClause + "and org.seqClientOrgId=:seqClientOrgId ";
 			parameters.put("seqClientOrgId",seqClientOrgId);
 		}
 		if(stateCode != null) {

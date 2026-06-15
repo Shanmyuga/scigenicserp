@@ -114,7 +114,7 @@ private String userfullname;
 		this.password = password;
 	}
 
-	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	@JoinTable(name = "SCI_USER_ROLE_DET", schema = "SCIGENICS", joinColumns = { @JoinColumn(name = "SEQ_USER_ID", unique = false, nullable = true, insertable = true, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "SEQ_ROLE_ID", unique = false, nullable = true, insertable = true, updatable = false) })
 	public Set<ScigenicsRoleMaster> getScigenicsRoleMasters() {
 		return this.scigenicsRoleMasters;

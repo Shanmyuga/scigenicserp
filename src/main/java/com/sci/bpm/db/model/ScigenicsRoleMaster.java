@@ -70,7 +70,7 @@ public class ScigenicsRoleMaster implements java.io.Serializable {
 		this.roleName = roleName;
 	}
 
-	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, mappedBy = "scigenicsRoleMasters")
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "scigenicsRoleMasters")
 	public Set<ScigenicsUserMaster> getScigenicsUserMasters() {
 		return this.scigenicsUserMasters;
 	}

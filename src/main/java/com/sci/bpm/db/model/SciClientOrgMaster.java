@@ -108,7 +108,7 @@ public class SciClientOrgMaster implements java.io.Serializable {
 		this.insertedDate = insertedDate;
 	}
 
-	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, mappedBy = "sciClientOrgMaster")
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "sciClientOrgMaster")
 	public Set<SciCustomerMaster> getSciCustomerMasters() {
 		return sciCustomerMasters;
 	}

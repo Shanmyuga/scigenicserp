@@ -1,6 +1,5 @@
 package com.sci.bpm.dao.user;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -95,35 +94,18 @@ public class UserMasterDAO implements IScigenicsUserMasterDAO {
 	}
 
 	public List selectUserList() {
-		// TODO Auto-generated method stub
-		List<ScigenicsUserMaster> users = em.createQuery("from ScigenicsUserMaster  um where um.userStatus = 'Y' ").getResultList();
-		for(ScigenicsUserMaster sm:users) {
-			sm.getScigenicsRoleMasters();
-		}
-		return users;
+		return em.createQuery(
+				"select distinct um from ScigenicsUserMaster um join fetch um.scigenicsRoleMasters where um.userStatus = 'Y'")
+				.getResultList();
 	}
 
 	@Override
 	public List<ScigenicsUserMaster> selectUserList(String role) {
-		// TODO Auto-generated method stub
-		System.out.println(role);
-		List<ScigenicsUserMaster> users = em.createQuery("from ScigenicsUserMaster  um where um.userStatus = 'Y' ").getResultList();
-		List<ScigenicsUserMaster> filteredUsers = new ArrayList<ScigenicsUserMaster>();
-		for(ScigenicsUserMaster sm:users) {
-			System.out.println(sm.getUserId());
-			for(ScigenicsRoleMaster rm : sm.getScigenicsRoleMasters()) {
-				if(rm.getRoleName() !=null && rm.getRoleName().equals(role)) {
-					filteredUsers.add(sm);
-					break;
-				}
-			}
-			/*boolean isExist = sm.getScigenicsRoleMasters().stream().anyMatch(element -> element.getRoleName().contains(role));
-			if(isExist) {
-				filteredUsers.add(sm);
-			}*/
-
-		}
-		return filteredUsers;
+		return em.createQuery(
+				"select distinct um from ScigenicsUserMaster um join fetch um.scigenicsRoleMasters r where um.userStatus = 'Y' and r.roleName = :role",
+				ScigenicsUserMaster.class)
+				.setParameter("role", role)
+				.getResultList();
 	}
 
 
@@ -147,14 +129,12 @@ public class UserMasterDAO implements IScigenicsUserMasterDAO {
 	}
 
 	public ScigenicsUserMaster findUser(String userID) {
-		// TODO Auto-generated method stub
-		Query qp = em.createQuery("from ScigenicsUserMaster  um where um.userId =:userID");
-		qp.setParameter("userID", userID);
-		List mylist = qp.getResultList();
-		if(mylist.size() > 0) {
-			return (ScigenicsUserMaster)mylist.get(0);
-		}
-		return null;
+		List<ScigenicsUserMaster> mylist = em.createQuery(
+				"select distinct um from ScigenicsUserMaster um join fetch um.scigenicsRoleMasters where um.userId = :userID",
+				ScigenicsUserMaster.class)
+				.setParameter("userID", userID)
+				.getResultList();
+		return mylist.isEmpty() ? null : mylist.get(0);
 	}
 
 }

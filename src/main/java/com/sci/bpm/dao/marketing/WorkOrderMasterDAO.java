@@ -35,7 +35,9 @@ public class WorkOrderMasterDAO implements ISciWorkorderMasterDAO {
 	@Override
 	public List<SciWorkorderMaster> searchProposalWorkorder() {
 
-		Query query = em.createQuery("from SciWorkorderMaster  wm where wm.miCloseDate > :currentDate and wm.wordOrderType = 'Proposal'");
+		Query query = em.createQuery(
+				"from SciWorkorderMaster wm left join fetch wm.sciCustomerMaster cust left join fetch cust.sciClientOrgMaster"
+				+ " where wm.miCloseDate > :currentDate and wm.wordOrderType = 'Proposal'");
 
 		query.setParameter("currentDate", new Date());
 		return query.getResultList();
@@ -54,7 +56,9 @@ public class WorkOrderMasterDAO implements ISciWorkorderMasterDAO {
 
 	@Override
 	public List<SciWorkorderMaster> searchWorkOrderMIActive() {
-		Query query = em.createQuery("from SciWorkorderMaster  wm where wm.miCloseDate > :currentDate and wm.wordOrderType != 'Proposal'");
+		Query query = em.createQuery(
+				"from SciWorkorderMaster wm left join fetch wm.sciCustomerMaster cust left join fetch cust.sciClientOrgMaster"
+				+ " where wm.miCloseDate > :currentDate and wm.wordOrderType != 'Proposal'");
 
 		query.setParameter("currentDate", new Date());
 		return query.getResultList();
@@ -103,13 +107,15 @@ public class WorkOrderMasterDAO implements ISciWorkorderMasterDAO {
 	}
 
 	public List<SciWorkorderMaster> searchWork() {
-		
-		
-		return em.createQuery("from SciWorkorderMaster m where m.woStatus = 'Y' ").getResultList();
+		return em.createQuery(
+				"from SciWorkorderMaster m left join fetch m.sciCustomerMaster cust left join fetch cust.sciClientOrgMaster"
+				+ " where m.woStatus = 'Y'").getResultList();
 	}
 
 	public List<SciWorkorderMaster> searchAllWork() {
-		return em.createQuery("from SciWorkorderMaster m").getResultList();
+		return em.createQuery(
+				"from SciWorkorderMaster m left join fetch m.sciCustomerMaster cust left join fetch cust.sciClientOrgMaster")
+				.getResultList();
 	}
 
 	public List<SciWorkorderMaster> findAll(int... rowStartIdxAndCount) {
@@ -125,7 +131,9 @@ public class WorkOrderMasterDAO implements ISciWorkorderMasterDAO {
 	@Override
 	public List<SciWorkorderMaster> searchWorkOrderMIProposal() {
 
-		Query query = em.createQuery("from SciWorkorderMaster  wm where wm.miCloseDate > :currentDate and wm.wordOrderType = 'Proposal'");
+		Query query = em.createQuery(
+				"from SciWorkorderMaster wm left join fetch wm.sciCustomerMaster cust left join fetch cust.sciClientOrgMaster"
+				+ " where wm.miCloseDate > :currentDate and wm.wordOrderType = 'Proposal'");
 
 		query.setParameter("currentDate", new Date());
 		return query.getResultList();
