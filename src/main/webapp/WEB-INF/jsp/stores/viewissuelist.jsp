@@ -13,8 +13,13 @@
 <div width="787px"  style="float:left;">
 <table  cellspacing="5" cellpadding="5" align="left" border="0" >
 <tr>
+    <td>  <form:input path="reportFilter" size="100" /></td>
+    <td>
+        <p><input type="button" value="Filter report" onclick="eventdirect('filterReport')"/>&nbsp;&nbsp;</p>
+    </td>
 
- 
+
+
 
 <td> Material Dept</td>
 <td>
@@ -176,4 +181,13 @@ document.getElementById('_eventId').value = event;
 
 document.storesbean.submit();
 }
+</script>
+<script>
+    $( function() {
+        var temp = "<c:out value='${workorderlistNames}'/>";
+        var availableTags =temp.split('|');
+        $( "#reportFilter" ).autocomplete({
+            source: availableTags
+        });
+    } );
 </script>

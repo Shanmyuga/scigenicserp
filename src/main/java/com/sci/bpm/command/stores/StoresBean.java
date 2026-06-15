@@ -66,6 +66,15 @@ public class StoresBean implements Serializable {
 	private String isScrap;
 	private String cancelReason;
 	private String availableDimension;
+private String reportFilter;
+
+	public String getReportFilter() {
+		return reportFilter;
+	}
+
+	public void setReportFilter(String reportFilter) {
+		this.reportFilter = reportFilter;
+	}
 
 	public Long getSeqVendorID() {
 		return seqVendorID;

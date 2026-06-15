@@ -78,7 +78,7 @@ public class SciIssueDetails implements java.io.Serializable {
 		this.seqIssueDtlId = seqIssueDtlId;
 	}
 
-	@ManyToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "SEQ_ISSUE_ID", unique = false, nullable = false)
 	public SciIssueMaster getSciIssueMaster() {
 		return this.sciIssueMaster;

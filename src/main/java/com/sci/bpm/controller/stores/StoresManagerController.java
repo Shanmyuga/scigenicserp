@@ -1,8 +1,11 @@
 package com.sci.bpm.controller.stores;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.sci.bpm.command.marketing.WorkOrderCommand;
+import com.sci.bpm.service.marketing.WorkOrderService;
 import com.sci.bpm.service.mi.MaterialIndentService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
@@ -47,7 +50,8 @@ public class StoresManagerController extends SciBaseController {
 
     @Autowired
     private MaterialIndentService miservice;
-
+    @Autowired
+    private WorkOrderService workOrderService;
 
     public Event loadPOItems(RequestContext context) throws Exception {
         String[] status = new String[]{String.valueOf(getLookupservice().loadIDData("PO_CANCELLED")),
@@ -218,7 +222,49 @@ public class StoresManagerController extends SciBaseController {
         context.getFlowScope().put("recdlist", stlist);
         return success();
     }
+    public Event filterReport(RequestContext context) throws Exception {
+        StoresBean value = (StoresBean)getFormObject(context);
+        List<SciWorkorderMaster> workorderMasters = searchWorkOrderList(context);
+        List<SciWorkorderMaster> workorderMastersList = null;
+        if(!StringUtils.isEmpty(value.getReportFilter())) {
+            workorderMastersList = selectWorkOrderByJobDesc(workorderMasters, value.getReportFilter());
+        }
+        else {
+            workorderMastersList = searchWorkOrderList(context);
+        }
+        context.getFlowScope().put("workmastlist", workorderMastersList);
 
+        return success();
+    }
+
+    public Event searchWorkOrder(RequestContext context) {
+
+        List<SciWorkorderMaster> mylist = workOrderService.searchWorkOrder();
+        context.getFlowScope().put("workorderlist", mylist);
+        StringBuilder builder = new StringBuilder();
+        for(SciWorkorderMaster wm:mylist) {
+            builder.append(wm.getJobDesc()+"|");
+        }
+        context.getFlowScope().put("workorderlistNames", builder.toString());
+        return success();
+    }
+    private List<SciWorkorderMaster> selectWorkOrderByJobDesc(List<SciWorkorderMaster> master, String filter) {
+        System.out.println("filter " + filter);
+        List<SciWorkorderMaster> configurationList = new ArrayList<SciWorkorderMaster>();
+        for(SciWorkorderMaster m : master) {
+            if(m.getJobDesc().matches(".*"+filter+".*")) {
+                configurationList.add(m);
+            }
+        }
+
+        return configurationList;
+    }
+    public List<SciWorkorderMaster> searchWorkOrderList(RequestContext context) {
+
+        List<SciWorkorderMaster> mylist = workOrderService.searchWorkOrder();
+
+        return mylist;
+    }
 
     public Event viewApprovedQC(RequestContext context) throws Exception {
         StoresBean bean = (StoresBean) getFormObject(context);

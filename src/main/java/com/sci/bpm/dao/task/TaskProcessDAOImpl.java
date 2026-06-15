@@ -54,25 +54,14 @@ public class TaskProcessDAOImpl implements TaskProcessDAO {
 	public List<SciIssueDetails> searchOpenTask(String status, int startpage,
 			String userid) {
 
-		List<SciIssueDetails> mylist = new ArrayList();
-		Query qe = em
-				.createNativeQuery(
-						" SELECT D.* FROM SCI_ISSUE_MASTER M ,SCI_ISSUE_DETAILS d WHERE M.SEQ_ISSUE_ID = D.SEQ_ISSUE_ID and"
-								+ " M.issue_status != 'closed' and m.ISSUE_ASSIGNEDTO like ?  and d.seq_issue_dtl_id = (select max(p.seq_issue_dtl_id) from  SCI_ISSUE_DETAILS p where p.SEQ_ISSUE_ID = M.SEQ_ISSUE_ID)"
-								+
+		Query qe = em.createQuery(
+				"select idt from SciIssueDetails idt join fetch idt.sciIssueMaster im"
+				+ " where im.issueStatus != 'closed'"
+				+ " and (im.issueAssignedTo like :userid or im.issueCreatedBy like :userid)"
+				+ " and idt.seqIssueDtlId = (select max(idt2.seqIssueDtlId) from SciIssueDetails idt2 where idt2.sciIssueMaster = im)");
 
-								" union "
-								+
-
-								" SELECT D.* FROM SCI_ISSUE_MASTER M ,SCI_ISSUE_DETAILS d WHERE M.SEQ_ISSUE_ID = D.SEQ_ISSUE_ID and"
-								+ " M.issue_status != 'closed' and m.ISSUE_CREATED_BY like ?  and d.seq_issue_dtl_id = (select max(p.seq_issue_dtl_id) from  SCI_ISSUE_DETAILS p where p.SEQ_ISSUE_ID = M.SEQ_ISSUE_ID)",
-						SciIssueDetails.class);
-
-		qe.setParameter(1, "%" + userid + "%");
-		qe.setParameter(2, "%" + userid + "%");
-		mylist.addAll(qe.getResultList());
-
-		return mylist;
+		qe.setParameter("userid", "%" + userid + "%");
+		return qe.getResultList();
 	}
 
 	public boolean updateDetails(List<SciIssueDetails> detailList) {
@@ -102,7 +91,7 @@ public class TaskProcessDAOImpl implements TaskProcessDAO {
 
 		List mylist = new ArrayList();
 		try {
-			String myqry = " select idt  from SciIssueDetails idt join idt.sciIssueMaster im"
+			String myqry = " select idt  from SciIssueDetails idt join fetch idt.sciIssueMaster im"
 					+ " where  im.issueStatus = 'open' and "
 					+ "idt.seqIssueDtlId =   (select max(imt.seqIssueDtlId) from "
 					+ " SciIssueDetails imt where imt.sciIssueMaster.seqIssueId =im.seqIssueId ) and "

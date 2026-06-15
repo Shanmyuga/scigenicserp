@@ -145,7 +145,7 @@ public class SciIssueMaster implements java.io.Serializable {
 		this.updatedDate = updatedDate;
 	}
 
-	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, mappedBy = "sciIssueMaster")
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "sciIssueMaster")
 	public Set<SciIssueDetails> getSciIssueDetailses() {
 		return this.sciIssueDetailses;
 	}

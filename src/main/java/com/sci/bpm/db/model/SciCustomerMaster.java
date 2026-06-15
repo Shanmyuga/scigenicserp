@@ -203,7 +203,7 @@ public class SciCustomerMaster implements java.io.Serializable {
 		this.customerStatus = customerStatus;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SEQ_CLIENT_ORG_ID")
 	public SciClientOrgMaster getSciClientOrgMaster() {
 		return sciClientOrgMaster;

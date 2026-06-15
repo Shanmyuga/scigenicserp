@@ -95,10 +95,7 @@ public class UserMasterDAO implements IScigenicsUserMasterDAO {
 
 	public List selectUserList() {
 		// TODO Auto-generated method stub
-		List<ScigenicsUserMaster> users = em.createQuery("from ScigenicsUserMaster  um where um.userStatus = 'Y' ").getResultList();
-		for(ScigenicsUserMaster sm:users) {
-			sm.getScigenicsRoleMasters();
-		}
+		List<ScigenicsUserMaster> users = em.createQuery("from ScigenicsUserMaster um left join fetch um.scigenicsRoleMasters where um.userStatus = 'Y'").getResultList();
 		return users;
 	}
 

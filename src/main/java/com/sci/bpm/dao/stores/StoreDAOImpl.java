@@ -424,7 +424,7 @@ public class StoreDAOImpl implements StoresDAO {
 	
 
 	public List loadStoreissueList(StoresBean command) {
-		String query = "Select distinct m from SciStoreissueMaster m ,SciMattypeMaster mt where mt.matCode  = substr(m.matcode,1,2) ";
+		String query = "Select distinct m from SciStoreissueMaster m join fetch m.strequest sr join fetch sr.sciMiMaster mi join fetch mi.sciWorkorderMaster wm join fetch wm.sciCustomerMaster, SciMattypeMaster mt where mt.matCode  = substr(m.matcode,1,2) ";
 		// Query query = em.createQuery("Select * from SciMatindMaster m ");
 		Map parameters = new HashMap();
 		String whereClause = "";
@@ -691,7 +691,7 @@ public class StoreDAOImpl implements StoresDAO {
 	}
 
 	public List loadissueAcceptance(MatindCommand command) {
-		String query = "Select m from SciStoreissueMaster m ,SciMattypeMaster mt where mt.matCode  = substr(m.matcode,1,2) and m.issueAcceptance ='N'";
+		String query = "Select distinct m from SciStoreissueMaster m join fetch m.strequest sr join fetch sr.sciMiMaster mi join fetch mi.sciWorkorderMaster wm join fetch wm.sciCustomerMaster, SciMattypeMaster mt where mt.matCode  = substr(m.matcode,1,2) and m.issueAcceptance ='N'";
 		Map parameters = new HashMap();
 		String whereClause = "";
 

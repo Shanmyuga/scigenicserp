@@ -64,11 +64,11 @@ public class WorkOrderMasterDAO implements ISciWorkorderMasterDAO {
 	public List<SciWorkorderMaster> searchWork() {
 		
 		
-		return em.createQuery("from SciWorkorderMaster m where m.woStatus = 'Y' ").getResultList();
+		return em.createQuery("from SciWorkorderMaster m left join fetch m.sciCustomerMaster c left join fetch c.sciClientOrgMaster where m.woStatus = 'Y'").getResultList();
 	}
 
 	public List<SciWorkorderMaster> searchAllWork() {
-		return em.createQuery("from SciWorkorderMaster m").getResultList();
+		return em.createQuery("from SciWorkorderMaster m left join fetch m.sciCustomerMaster c left join fetch c.sciClientOrgMaster").getResultList();
 	}
 
 	public List<SciWorkorderMaster> findAll(int... rowStartIdxAndCount) {
