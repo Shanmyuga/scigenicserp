@@ -305,9 +305,13 @@ public class StoreDAOImpl implements StoresDAO {
 			"LEFT JOIN SCIGENICS.SCI_PURCHASE_MAST spm ON spm.SEQ_PURCH_ID = pwv.SEQ_PURCH_ID " +
 			"WHERE sam.SEQ_AVAIL_ID IN (:seqAvailIds)";
 
-		List<Object[]> enrichRows = em.createNativeQuery(enrichSql)
-				.setParameter("seqAvailIds", seqAvailIds)
-				.getResultList();
+		List<Object[]> enrichRows = new ArrayList<>();
+		for (List<Long> chunk : partition(seqAvailIds, 1000)) {
+			List<Object[]> chunkRows = em.createNativeQuery(enrichSql)
+					.setParameter("seqAvailIds", chunk)
+					.getResultList();
+			enrichRows.addAll(chunkRows);
+		}
 
 		Map<Long, Object[]> enrichMap = new HashMap<>();
 		for (Object[] row : enrichRows) {
@@ -809,9 +813,15 @@ public class StoreDAOImpl implements StoresDAO {
 
 	public void updateIssueMaster(SciStoreissueMaster issuemaster) {
 		em.merge(issuemaster);
-		
+
 	}
 
-	
+	private <T> List<List<T>> partition(List<T> list, int chunkSize) {
+		List<List<T>> chunks = new ArrayList<>();
+		for (int i = 0; i < list.size(); i += chunkSize) {
+			chunks.add(list.subList(i, Math.min(i + chunkSize, list.size())));
+		}
+		return chunks;
+	}
 
 }
