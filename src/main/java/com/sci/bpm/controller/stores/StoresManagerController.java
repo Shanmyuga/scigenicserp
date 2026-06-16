@@ -1,5 +1,6 @@
 package com.sci.bpm.controller.stores;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -588,6 +589,43 @@ public class StoresManagerController extends SciBaseController {
 
     }
 
+
+    public Event buildWorkorderNames(RequestContext context) throws Exception {
+        List<SciWorkorderMaster> workmastlist = (List<SciWorkorderMaster>) context.getFlowScope().get("workmastlist");
+        StringBuilder builder = new StringBuilder();
+        if (workmastlist != null) {
+            for (SciWorkorderMaster wm : workmastlist) {
+                if (wm.getJobDesc() != null) {
+                    builder.append(wm.getJobDesc()).append("|");
+                }
+            }
+        }
+        context.getFlowScope().put("workorderlistNames", builder.toString());
+        return success();
+    }
+
+    public Event filterReport(RequestContext context) throws Exception {
+        StoresBean bean = (StoresBean) getFormObject(context);
+        List<SciStoreissueMaster> fullList = service.loadStoreissueList(bean);
+        if (!org.apache.commons.lang.StringUtils.isEmpty(bean.getReportFilter())) {
+            List<SciStoreissueMaster> filteredList = new ArrayList<SciStoreissueMaster>();
+            String filter = bean.getReportFilter();
+            for (SciStoreissueMaster item : fullList) {
+                if (item.getStrequest() != null
+                        && item.getStrequest().getSciMiMaster() != null
+                        && item.getStrequest().getSciMiMaster().getSciWorkorderMaster() != null) {
+                    String jobDesc = item.getStrequest().getSciMiMaster().getSciWorkorderMaster().getJobDesc();
+                    if (jobDesc != null && jobDesc.matches(".*" + filter + ".*")) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            context.getFlowScope().put("storeissuelist", filteredList);
+        } else {
+            context.getFlowScope().put("storeissuelist", fullList);
+        }
+        return success();
+    }
 
     public Event loadAvailReturn(RequestContext context) throws Exception {
 
