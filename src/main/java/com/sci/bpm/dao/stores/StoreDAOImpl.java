@@ -277,52 +277,86 @@ public class StoreDAOImpl implements StoresDAO {
 		}
 		List<SciAvailableMaterials> milist = wquery.getResultList();
 
-		String stockquery = "select qty from VW_ASSIGNED_STOCK_MI_LIST wm where matcode=:matcode ";
-		Query stqry = em.createNativeQuery(stockquery);
-		String purchaseQuerystr = "select wm from PurchaseWorkOrderView wm where wm.seqMiId=:seqMiId  and wm.seqPurchId is not null";
-		Query purchaseQuery = em.createQuery(purchaseQuerystr);
+		if (milist.isEmpty()) {
+			return milist;
+		}
 
-		String customPurchaseQuerystr = "select wm from SciPurchaseMast wm where wm.seqPurchId=:seqPurchId ";
+		// Collect unique matcodes and all MI IDs in one pass
+		Set<String> matcodeSet = new LinkedHashSet<>();
+		List<Long> seqMiIds = new ArrayList<>();
+		for (SciAvailableMaterials m : milist) {
+			if (m.getMatcode() != null) matcodeSet.add(m.getMatcode());
+			seqMiIds.add(m.getSciMiMaster().getSeqMiId());
+		}
 
-		Query customPurchaseQuery = em.createQuery(customPurchaseQuerystr);
-		String totalStockquery = "select qty from VW_AVAIL_MATERIALS wm where matcode=:matcode ";
-		Query totalStockqry = em.createNativeQuery(totalStockquery);
-		String actualStockQuery = "select avail_qty from VW_ACTUAL_AVAIL_STOCK wm where matcode=:matcode ";
-		Query actualStockqry = em.createNativeQuery(actualStockQuery);
-		for(SciAvailableMaterials materials: milist) {
+		// Query each native view once per unique matcode and cache results
+		Map<String, BigDecimal> assignedStockCache = new HashMap<>();
+		Map<String, BigDecimal> totalStockCache = new HashMap<>();
+		Map<String, BigDecimal> actualStockCache = new HashMap<>();
+		Query stqry = em.createNativeQuery("select qty from VW_ASSIGNED_STOCK_MI_LIST wm where matcode=:matcode");
+		Query totalStockqry = em.createNativeQuery("select qty from VW_AVAIL_MATERIALS wm where matcode=:matcode");
+		Query actualStockqry = em.createNativeQuery("select avail_qty from VW_ACTUAL_AVAIL_STOCK wm where matcode=:matcode");
+		for (String mc : matcodeSet) {
+			stqry.setParameter("matcode", mc);
+			List<BigDecimal> d = stqry.getResultList();
+			if (d != null && !d.isEmpty()) assignedStockCache.put(mc, d.get(0));
 
-			stqry.setParameter("matcode",materials.getMatcode());
-			totalStockqry.setParameter("matcode",materials.getMatcode());
-			actualStockqry.setParameter("matcode",materials.getMatcode());
-			List<BigDecimal> datalist  = stqry.getResultList();
-			if(datalist != null && datalist.size()> 0) {
-				materials.setAssignedStock(datalist.get(0));
+			totalStockqry.setParameter("matcode", mc);
+			List<BigDecimal> td = totalStockqry.getResultList();
+			if (td != null && !td.isEmpty()) totalStockCache.put(mc, td.get(0));
+
+			actualStockqry.setParameter("matcode", mc);
+			List<BigDecimal> ad = actualStockqry.getResultList();
+			if (ad != null && !ad.isEmpty()) actualStockCache.put(mc, ad.get(0));
+		}
+
+		// Batch-fetch PurchaseWorkOrderView for all MI IDs in one query
+		Map<Long, PurchaseWorkOrderView> purchaseByMiId = new HashMap<>();
+		List<PurchaseWorkOrderView> allPWO = em.createQuery(
+				"select wm from PurchaseWorkOrderView wm where wm.seqMiId in :seqMiIds and wm.seqPurchId is not null",
+				PurchaseWorkOrderView.class)
+				.setParameter("seqMiIds", seqMiIds)
+				.getResultList();
+		for (PurchaseWorkOrderView pw : allPWO) {
+			purchaseByMiId.put(pw.getSeqMiId(), pw);
+		}
+
+		// Batch-fetch SciPurchaseMast for all PO IDs found above
+		Map<Long, SciPurchaseMast> purchaseMastById = new HashMap<>();
+		if (!purchaseByMiId.isEmpty()) {
+			List<Long> seqPurchIds = new ArrayList<>();
+			for (PurchaseWorkOrderView pw : purchaseByMiId.values()) {
+				seqPurchIds.add(pw.getSeqPurchId());
 			}
-			purchaseQuery.setParameter("seqMiId",materials.getSciMiMaster().getSeqMiId());
-			List<PurchaseWorkOrderView> results = purchaseQuery.getResultList();
-			if(results != null && results.size()>0) {
-				PurchaseWorkOrderView wmview = results.get(0);
-				materials.setSeqPurchId(wmview.getSeqPurchId());
-				customPurchaseQuery.setParameter("seqPurchId",wmview.getSeqPurchId());
-				List<SciPurchaseMast> qresults = customPurchaseQuery.getResultList();
-				if(qresults.size() > 0) {
-					SciPurchaseMast mast = qresults.get(0);
-					materials.setCustomPOId(mast.getCustomPOId());
-				}
-			}
-
-
-			List<BigDecimal> tdatalist  = totalStockqry.getResultList();
-			if(tdatalist != null && tdatalist.size()> 0) {
-				materials.setTotalStockByMatCode(tdatalist.get(0));
-			}
-
-			List<BigDecimal> actdatalist  = actualStockqry.getResultList();
-			if(actdatalist != null && actdatalist.size()> 0) {
-				materials.setActualStockMatCode(actdatalist.get(0));
+			List<SciPurchaseMast> allPM = em.createQuery(
+					"select wm from SciPurchaseMast wm where wm.seqPurchId in :seqPurchIds",
+					SciPurchaseMast.class)
+					.setParameter("seqPurchIds", seqPurchIds)
+					.getResultList();
+			for (SciPurchaseMast pm : allPM) {
+				purchaseMastById.put(pm.getSeqPurchId(), pm);
 			}
 		}
-		return wquery.getResultList();
+
+		// Populate each item from cached maps — no per-row queries
+		for (SciAvailableMaterials materials : milist) {
+			String mc = materials.getMatcode();
+			materials.setAssignedStock(assignedStockCache.get(mc));
+			materials.setTotalStockByMatCode(totalStockCache.get(mc));
+			materials.setActualStockMatCode(actualStockCache.get(mc));
+
+			Long miId = materials.getSciMiMaster().getSeqMiId();
+			PurchaseWorkOrderView pw = purchaseByMiId.get(miId);
+			if (pw != null) {
+				materials.setSeqPurchId(pw.getSeqPurchId());
+				SciPurchaseMast pm = purchaseMastById.get(pw.getSeqPurchId());
+				if (pm != null) {
+					materials.setCustomPOId(pm.getCustomPOId());
+				}
+			}
+		}
+
+		return milist;
 	}
 
 	public List getMatItems(SciPurchItemMaster master) {
