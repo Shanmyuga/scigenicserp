@@ -642,6 +642,28 @@ public class StoresManagerController extends SciBaseController {
 
         return configurationList;
     }
+    public Event filterStores(RequestContext context) throws Exception {
+        StoresBean bean = (StoresBean) getFormObject(context);
+        List<SciAvailableMaterials> fullList = service.viewStore(bean);
+        if (!StringUtils.isEmpty(bean.getReportFilter())) {
+            List<SciAvailableMaterials> filteredList = new ArrayList<SciAvailableMaterials>();
+            String filter = bean.getReportFilter();
+            for (SciAvailableMaterials item : fullList) {
+                if (item.getSciMiMaster() != null
+                        && item.getSciMiMaster().getSciWorkorderMaster() != null) {
+                    String jobDesc = item.getSciMiMaster().getSciWorkorderMaster().getJobDesc();
+                    if (jobDesc != null && jobDesc.matches(".*" + filter + ".*")) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            context.getFlowScope().put("stlist", filteredList);
+        } else {
+            context.getFlowScope().put("stlist", fullList);
+        }
+        return success();
+    }
+
     public Event loadAvailReturn(RequestContext context) throws Exception {
 
         StoresBean bean = (StoresBean) getFormObject(context);

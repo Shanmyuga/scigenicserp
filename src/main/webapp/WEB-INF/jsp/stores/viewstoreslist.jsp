@@ -78,6 +78,11 @@
 
  </tr>
 <tr>
+<td>Filter by Work Order</td>
+<td colspan="3"><form:input path="reportFilter" size="100" id="reportFilter"/>
+<input type="button" value="Filter report" onclick="eventdirect('filterReport')"/></td>
+</tr>
+<tr>
  <td colspan="4" align="right"><input type="button" value="Search Stores" onclick="eventdirect('searchStores')"/></td>
 
 </tr>
@@ -174,4 +179,9 @@ document.getElementById('_eventId').value = event;
 
 document.storesbean.submit();
 }
+</script>
+<script>
+var temp = "<c:out value='${workorderlistNames}'/>";
+var availableTags = temp.split('|');
+$("#reportFilter").autocomplete({ source: availableTags });
 </script>
