@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.sci.bpm.command.marketing.WorkOrderCommand;
 import com.sci.bpm.db.model.*;
+import com.sci.bpm.service.marketing.WorkOrderService;
 import com.sci.bpm.service.mi.MaterialIndentService;
 import com.sci.bpm.service.po.PurchaseOrderService;
 import org.apache.commons.beanutils.BeanUtils;
@@ -23,6 +25,10 @@ import com.sci.bpm.service.stores.StoreService;
 
 @Controller("storecont")
 public class StoresManagerController extends SciBaseController {
+
+    @Autowired
+    private WorkOrderService workOrderService;
+
 
     @Override
     public Event setupForm(RequestContext context) throws Exception {
@@ -605,28 +611,37 @@ public class StoresManagerController extends SciBaseController {
     }
 
     public Event filterReport(RequestContext context) throws Exception {
-        StoresBean bean = (StoresBean) getFormObject(context);
-        List<SciStoreissueMaster> fullList = service.loadStoreissueList(bean);
-        if (!org.apache.commons.lang.StringUtils.isEmpty(bean.getReportFilter())) {
-            List<SciStoreissueMaster> filteredList = new ArrayList<SciStoreissueMaster>();
-            String filter = bean.getReportFilter();
-            for (SciStoreissueMaster item : fullList) {
-                if (item.getStrequest() != null
-                        && item.getStrequest().getSciMiMaster() != null
-                        && item.getStrequest().getSciMiMaster().getSciWorkorderMaster() != null) {
-                    String jobDesc = item.getStrequest().getSciMiMaster().getSciWorkorderMaster().getJobDesc();
-                    if (jobDesc != null && jobDesc.matches(".*" + filter + ".*")) {
-                        filteredList.add(item);
-                    }
-                }
-            }
-            context.getFlowScope().put("storeissuelist", filteredList);
-        } else {
-            context.getFlowScope().put("storeissuelist", fullList);
+        WorkOrderCommand value = (WorkOrderCommand)getFormObject(context);
+        List<SciWorkorderMaster> workorderMasters = searchWorkOrderList(context);
+        List<SciWorkorderMaster> workorderMastersList = null;
+        if(!StringUtils.isEmpty(value.getReportFilter())) {
+            workorderMastersList = selectWorkOrderByJobDesc(workorderMasters, value.getReportFilter());
         }
+        else {
+            workorderMastersList = searchWorkOrderList(context);
+        }
+        context.getFlowScope().put("workmastlist", workorderMastersList);
+        value.setWindex("");
         return success();
     }
 
+    public List<SciWorkorderMaster> searchWorkOrderList(RequestContext context) {
+
+        List<SciWorkorderMaster> mylist = workOrderService.searchWorkOrder();
+
+        return mylist;
+    }
+    private List<SciWorkorderMaster> selectWorkOrderByJobDesc(List<SciWorkorderMaster> master,String filter) {
+        System.out.println("filter " + filter);
+        List<SciWorkorderMaster> configurationList = new ArrayList<SciWorkorderMaster>();
+        for(SciWorkorderMaster m : master) {
+            if(m.getJobDesc().matches(".*"+filter+".*")) {
+                configurationList.add(m);
+            }
+        }
+
+        return configurationList;
+    }
     public Event loadAvailReturn(RequestContext context) throws Exception {
 
         StoresBean bean = (StoresBean) getFormObject(context);
