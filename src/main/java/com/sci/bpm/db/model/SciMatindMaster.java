@@ -556,7 +556,7 @@ private String matcodeAddInfo;
 			this.isGroupMiId = isGroupMiId;
 		}
 
-	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, mappedBy = "seqMiId")
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "seqMiId")
 	public Set<SciAddMatInfoDocsEntity> getMatInfoDocsEntities() {
 		return this.matInfoDocsEntities;
 	}
@@ -564,7 +564,7 @@ private String matcodeAddInfo;
 	public void setMatInfoDocsEntities(Set<SciAddMatInfoDocsEntity> items) {
 		this.matInfoDocsEntities = items;
 	}
-	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, mappedBy = "seqMiId")
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "seqMiId")
 	public Set<SciMiMaterialAddinfoEntity> getMatInfos() {
 		return matInfos;
 	}
