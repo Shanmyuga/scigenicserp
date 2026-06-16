@@ -281,78 +281,47 @@ public class StoreDAOImpl implements StoresDAO {
 			return milist;
 		}
 
-		// Collect unique matcodes and all MI IDs in one pass
-		Set<String> matcodeSet = new LinkedHashSet<>();
-		List<Long> seqMiIds = new ArrayList<>();
+		List<Long> seqAvailIds = new ArrayList<>();
 		for (SciAvailableMaterials m : milist) {
-			if (m.getMatcode() != null) matcodeSet.add(m.getMatcode());
-			seqMiIds.add(m.getSciMiMaster().getSeqMiId());
+			seqAvailIds.add(m.getSeqAvailId());
 		}
 
-		// Query each native view once per unique matcode and cache results
-		Map<String, BigDecimal> assignedStockCache = new HashMap<>();
-		Map<String, BigDecimal> totalStockCache = new HashMap<>();
-		Map<String, BigDecimal> actualStockCache = new HashMap<>();
-		Query stqry = em.createNativeQuery("select qty from VW_ASSIGNED_STOCK_MI_LIST wm where matcode=:matcode");
-		Query totalStockqry = em.createNativeQuery("select qty from VW_AVAIL_MATERIALS wm where matcode=:matcode");
-		Query actualStockqry = em.createNativeQuery("select avail_qty from VW_ACTUAL_AVAIL_STOCK wm where matcode=:matcode");
-		for (String mc : matcodeSet) {
-			stqry.setParameter("matcode", mc);
-			List<BigDecimal> d = stqry.getResultList();
-			if (d != null && !d.isEmpty()) assignedStockCache.put(mc, d.get(0));
+		// Single native query: stock views (scalar subqueries per matcode) +
+		// purchase data (deduplicated inline view) — one DB round trip
+		String enrichSql =
+			"SELECT sam.SEQ_AVAIL_ID, " +
+			"  (SELECT MAX(asl.qty)      FROM VW_ASSIGNED_STOCK_MI_LIST asl WHERE asl.matcode = sam.MATCODE) AS assigned_stock, " +
+			"  (SELECT MAX(vam.qty)      FROM VW_AVAIL_MATERIALS        vam WHERE vam.matcode = sam.MATCODE) AS total_stock, " +
+			"  (SELECT MAX(vas.avail_qty) FROM VW_ACTUAL_AVAIL_STOCK    vas WHERE vas.matcode = sam.MATCODE) AS actual_stock, " +
+			"  pwv.SEQ_PURCH_ID, " +
+			"  spm.CUSTOM_PO_ID " +
+			"FROM SCIGENICS.SCI_AVAILABLE_MATERIALS sam " +
+			"LEFT JOIN ( " +
+			"  SELECT SEQ_MI_ID, MAX(SEQ_PURCH_ID) AS SEQ_PURCH_ID " +
+			"  FROM SCIGENICS.WORKORDER_MI_PURCHASE_VIEW " +
+			"  WHERE SEQ_PURCH_ID IS NOT NULL " +
+			"  GROUP BY SEQ_MI_ID " +
+			") pwv ON pwv.SEQ_MI_ID = sam.SEQ_MI_ID " +
+			"LEFT JOIN SCIGENICS.SCI_PURCHASE_MAST spm ON spm.SEQ_PURCH_ID = pwv.SEQ_PURCH_ID " +
+			"WHERE sam.SEQ_AVAIL_ID IN (:seqAvailIds)";
 
-			totalStockqry.setParameter("matcode", mc);
-			List<BigDecimal> td = totalStockqry.getResultList();
-			if (td != null && !td.isEmpty()) totalStockCache.put(mc, td.get(0));
-
-			actualStockqry.setParameter("matcode", mc);
-			List<BigDecimal> ad = actualStockqry.getResultList();
-			if (ad != null && !ad.isEmpty()) actualStockCache.put(mc, ad.get(0));
-		}
-
-		// Batch-fetch PurchaseWorkOrderView for all MI IDs in one query
-		Map<Long, PurchaseWorkOrderView> purchaseByMiId = new HashMap<>();
-		List<PurchaseWorkOrderView> allPWO = em.createQuery(
-				"select wm from PurchaseWorkOrderView wm where wm.seqMiId in :seqMiIds and wm.seqPurchId is not null",
-				PurchaseWorkOrderView.class)
-				.setParameter("seqMiIds", seqMiIds)
+		List<Object[]> enrichRows = em.createNativeQuery(enrichSql)
+				.setParameter("seqAvailIds", seqAvailIds)
 				.getResultList();
-		for (PurchaseWorkOrderView pw : allPWO) {
-			purchaseByMiId.put(pw.getSeqMiId(), pw);
+
+		Map<Long, Object[]> enrichMap = new HashMap<>();
+		for (Object[] row : enrichRows) {
+			enrichMap.put(((Number) row[0]).longValue(), row);
 		}
 
-		// Batch-fetch SciPurchaseMast for all PO IDs found above
-		Map<Long, SciPurchaseMast> purchaseMastById = new HashMap<>();
-		if (!purchaseByMiId.isEmpty()) {
-			List<Long> seqPurchIds = new ArrayList<>();
-			for (PurchaseWorkOrderView pw : purchaseByMiId.values()) {
-				seqPurchIds.add(pw.getSeqPurchId());
-			}
-			List<SciPurchaseMast> allPM = em.createQuery(
-					"select wm from SciPurchaseMast wm where wm.seqPurchId in :seqPurchIds",
-					SciPurchaseMast.class)
-					.setParameter("seqPurchIds", seqPurchIds)
-					.getResultList();
-			for (SciPurchaseMast pm : allPM) {
-				purchaseMastById.put(pm.getSeqPurchId(), pm);
-			}
-		}
-
-		// Populate each item from cached maps — no per-row queries
-		for (SciAvailableMaterials materials : milist) {
-			String mc = materials.getMatcode();
-			materials.setAssignedStock(assignedStockCache.get(mc));
-			materials.setTotalStockByMatCode(totalStockCache.get(mc));
-			materials.setActualStockMatCode(actualStockCache.get(mc));
-
-			Long miId = materials.getSciMiMaster().getSeqMiId();
-			PurchaseWorkOrderView pw = purchaseByMiId.get(miId);
-			if (pw != null) {
-				materials.setSeqPurchId(pw.getSeqPurchId());
-				SciPurchaseMast pm = purchaseMastById.get(pw.getSeqPurchId());
-				if (pm != null) {
-					materials.setCustomPOId(pm.getCustomPOId());
-				}
+		for (SciAvailableMaterials mat : milist) {
+			Object[] data = enrichMap.get(mat.getSeqAvailId());
+			if (data != null) {
+				if (data[1] != null) mat.setAssignedStock((BigDecimal) data[1]);
+				if (data[2] != null) mat.setTotalStockByMatCode((BigDecimal) data[2]);
+				if (data[3] != null) mat.setActualStockMatCode((BigDecimal) data[3]);
+				if (data[4] != null) mat.setSeqPurchId(((Number) data[4]).longValue());
+				if (data[5] != null) mat.setCustomPOId((String) data[5]);
 			}
 		}
 
