@@ -611,7 +611,7 @@ public class StoresManagerController extends SciBaseController {
     }
 
     public Event filterReport(RequestContext context) throws Exception {
-        WorkOrderCommand value = (WorkOrderCommand)getFormObject(context);
+        StoresBean value = (StoresBean)getFormObject(context);
         List<SciWorkorderMaster> workorderMasters = searchWorkOrderList(context);
         List<SciWorkorderMaster> workorderMastersList = null;
         if(!StringUtils.isEmpty(value.getReportFilter())) {
@@ -621,7 +621,7 @@ public class StoresManagerController extends SciBaseController {
             workorderMastersList = searchWorkOrderList(context);
         }
         context.getFlowScope().put("workmastlist", workorderMastersList);
-        value.setWindex("");
+      //  value.setWindex("");
         return success();
     }
 
