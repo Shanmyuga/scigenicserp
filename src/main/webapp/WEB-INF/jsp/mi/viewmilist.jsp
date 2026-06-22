@@ -135,6 +135,11 @@
 <td colspan="2"> <input  type="button" value="Search MI  Items" onclick="eventdirect('searchMI')"/> </td>
 
 </tr>
+<tr>
+<td>Filter by Work Order</td>
+<td colspan="3"><form:input path="reportFilter" size="100" id="reportFilter"/>
+<input type="button" value="Filter report" onclick="eventdirect('filterReport')"/></td>
+</tr>
  
 
 </table>
@@ -302,6 +307,11 @@
 </div>
 
 
+<script>
+var temp = "<c:out value='${workorderlistNames}'/>";
+var availableTags = temp.split('|');
+$("#reportFilter").autocomplete({ source: availableTags });
+</script>
 <script language="javascript">
 
 function eventdirect(event) {

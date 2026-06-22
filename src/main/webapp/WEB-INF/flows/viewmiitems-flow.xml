@@ -11,6 +11,7 @@
 <webflow:evaluate expression="lookupbean.getDropDownList('workorder_key')" result="flowScope.workmastlist"/>
     <webflow:evaluate expression="lookupbean.getDropDownList('workordershort_key')" result="flowScope.workordershortkey"/>
 <webflow:evaluate expression="lookupbean.getDropDownList('user_master_key')" result="flowScope.usermastlist"/>
+    <webflow:evaluate expression="micont.buildWorkorderNames"/>
     </webflow:on-start>
   
 <webflow:view-state id="entersearch" view="mi.viewmilist">
@@ -29,6 +30,10 @@
          <webflow:transition on="searchMI" to="entersearch">
             <webflow:evaluate expression="micont.bind"/>
             <webflow:evaluate expression="micont.searchMI"/>
+        </webflow:transition>
+        <webflow:transition on="filterReport" to="entersearch">
+            <webflow:evaluate expression="micont.bind"/>
+            <webflow:evaluate expression="micont.filterReport"/>
         </webflow:transition>
 </webflow:view-state>
 <webflow:exception-handler bean="exceptionresol"/>

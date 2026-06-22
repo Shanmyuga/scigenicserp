@@ -365,6 +365,37 @@ public class MaterialIndentController extends SciBaseController {
         return success();
     }
 
+    public Event buildWorkorderNames(RequestContext context) throws Exception {
+        List<SciWorkorderMaster> workmastlist = (List<SciWorkorderMaster>) context.getFlowScope().get("workmastlist");
+        StringBuilder builder = new StringBuilder();
+        if (workmastlist != null) {
+            for (SciWorkorderMaster wm : workmastlist) {
+                if (wm.getJobDesc() != null) {
+                    builder.append(wm.getJobDesc()).append("|");
+                }
+            }
+        }
+        context.getFlowScope().put("workorderlistNames", builder.toString());
+        return success();
+    }
+
+    public Event filterReport(RequestContext context) throws Exception {
+        MatindCommand command = (MatindCommand) getFormObject(context);
+        List<SciMatindMaster> fullList = (List<SciMatindMaster>) context.getFlowScope().get("milist");
+        if (!StringUtils.isEmpty(command.getReportFilter()) && fullList != null) {
+            String filter = command.getReportFilter();
+            List<SciMatindMaster> filteredList = new ArrayList<SciMatindMaster>();
+            for (SciMatindMaster mi : fullList) {
+                String desc = mi.getWorkorderDesc();
+                if (desc != null && desc.matches(".*" + filter + ".*")) {
+                    filteredList.add(mi);
+                }
+            }
+            context.getFlowScope().put("milist", filteredList);
+        }
+        return success();
+    }
+
     public Event searchStreqView(RequestContext context) throws Exception {
         MatindCommand command = (MatindCommand) getFormObject(context);
 
