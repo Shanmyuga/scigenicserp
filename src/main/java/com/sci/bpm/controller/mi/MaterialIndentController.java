@@ -9,9 +9,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.sci.bpm.command.mi.AdditionalInfoCommand;
+import com.sci.bpm.command.stores.StoresBean;
 import com.sci.bpm.db.model.*;
 import com.sci.bpm.service.item.PurchaseItemService;
 import com.sci.bpm.service.lookup.LookUpValueService;
+import com.sci.bpm.service.marketing.WorkOrderService;
 import com.sci.bpm.service.task.DiskWriterJob;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
@@ -37,7 +39,8 @@ import com.sci.bpm.service.task.TaskService;
 
 @Controller("micont")
 public class MaterialIndentController extends SciBaseController {
-
+    @Autowired
+    private WorkOrderService workOrderService;
     @Autowired
     private MaterialIndentService service;
     @Autowired
@@ -378,7 +381,38 @@ public class MaterialIndentController extends SciBaseController {
         context.getFlowScope().put("workorderlistNames", builder.toString());
         return success();
     }
+    public Event filterReportWorkOrder(RequestContext context) throws Exception {
+        MatindCommand value = (MatindCommand)getFormObject(context);
+        List<SciWorkorderMaster> workorderMasters = searchWorkOrderList(context);
+        List<SciWorkorderMaster> workorderMastersList = null;
+        if(!StringUtils.isEmpty(value.getReportFilter())) {
+            workorderMastersList = selectWorkOrderByJobDesc(workorderMasters, value.getReportFilter());
+        }
+        else {
+            workorderMastersList = searchWorkOrderList(context);
+        }
+        context.getFlowScope().put("workmastlist", workorderMastersList);
+        //  value.setWindex("");
+        return success();
+    }
 
+    public List<SciWorkorderMaster> searchWorkOrderList(RequestContext context) {
+
+        List<SciWorkorderMaster> mylist = workOrderService.searchWorkOrder();
+
+        return mylist;
+    }
+    private List<SciWorkorderMaster> selectWorkOrderByJobDesc(List<SciWorkorderMaster> master,String filter) {
+        System.out.println("filter " + filter);
+        List<SciWorkorderMaster> configurationList = new ArrayList<SciWorkorderMaster>();
+        for(SciWorkorderMaster m : master) {
+            if(m.getJobDesc().matches(".*"+filter+".*")) {
+                configurationList.add(m);
+            }
+        }
+
+        return configurationList;
+    }
     public Event filterReport(RequestContext context) throws Exception {
         MatindCommand command = (MatindCommand) getFormObject(context);
         List<SciMatindMaster> fullList = (List<SciMatindMaster>) context.getFlowScope().get("milist");

@@ -281,93 +281,83 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 			finalList.add(new SciMatindMaster(obj[0], obj[1], obj[2], obj[3], obj[4], obj[5], obj[6], obj[7], obj[8], obj[9], obj[10], obj[11], obj[12], obj[13], obj[14], obj[15],obj[16],obj[17],obj[18],obj[19],obj[20],obj[21],obj[22],obj[23],obj[24],obj[25],obj[26]));
 		}
 
-		Query totalAvailableqry = em.createNativeQuery("select nvl(sum(AVAIL_QTY),0) as availQty from sci_available_materials where matcode = :matcode");
-		Query assigendStoresqry = em.createNativeQuery("select nvl(sum(mat_qty_mod),0) as availQty from sci_matind_master mi where pur_status in (select seq_lov_id from sci_lookup_master lm where lm.lov_name in ('MI_IN_STOCK','MI_APP_STOCKS')) and  exists (select 1 from SCI_STORES_REQUEST st where st.seq_mi_id = mi.seq_mi_id and request_Status = 'N') and matcode = :matcode");
-		for(SciMatindMaster mi:finalList) {
-			System.out.println(mi.getMatcode());
-			totalAvailableqry.setParameter("matcode",mi.getMatcode());
-			BigDecimal  count = (BigDecimal )totalAvailableqry.getSingleResult();
-
-			assigendStoresqry.setParameter("matcode",mi.getMatcode());
-			BigDecimal  assignedCount = (BigDecimal )assigendStoresqry.getSingleResult();
-			mi.setAssignedStock(assignedCount.floatValue());
-			mi.setStockQty(count.floatValue());
-			mi.setActualStock(count.floatValue()-assignedCount.floatValue());
-			/*if(checkdept(mi.getMatcode(), command.getDept())){
-				deptList.add(mi);
-			}*/
+		// Batch stock queries — collect unique matcodes and all seqMiIds up front
+		Set<String> matcodeSet = new LinkedHashSet<>();
+		List<Long> seqMiIds = new ArrayList<>();
+		for (SciMatindMaster mi : finalList) {
+			matcodeSet.add(mi.getMatcode());
+			seqMiIds.add(mi.getSeqMiId());
 		}
-		int deptid = 0;
-		if(command.getDept() != null){
+		List<String> matcodeList = new ArrayList<>(matcodeSet);
 
-
-		for(SciMatindMaster mi:finalList) {
-
-
-			if(checkdept(mi.getMatcode(), command.getDept())){
-				deptList.add(mi);
+		Map<String, BigDecimal> totalStockMap = new HashMap<>();
+		Map<String, BigDecimal> assignedStockMap = new HashMap<>();
+		for (List<String> chunk : partition(matcodeList, 1000)) {
+			List<Object[]> totalRows = em.createNativeQuery(
+				"select matcode, nvl(sum(AVAIL_QTY),0) from sci_available_materials " +
+				"where matcode in (:matcodes) group by matcode")
+				.setParameter("matcodes", chunk).getResultList();
+			for (Object[] row : totalRows) {
+				totalStockMap.put((String) row[0], (BigDecimal) row[1]);
+			}
+			List<Object[]> assignedRows = em.createNativeQuery(
+				"select matcode, nvl(sum(mat_qty_mod),0) from sci_matind_master mi " +
+				"where pur_status in (select seq_lov_id from sci_lookup_master lm where lm.lov_name in ('MI_IN_STOCK','MI_APP_STOCKS')) " +
+				"and exists (select 1 from SCI_STORES_REQUEST st where st.seq_mi_id = mi.seq_mi_id and request_Status = 'N') " +
+				"and matcode in (:matcodes) group by matcode")
+				.setParameter("matcodes", chunk).getResultList();
+			for (Object[] row : assignedRows) {
+				assignedStockMap.put((String) row[0], (BigDecimal) row[1]);
 			}
 		}
+		for (SciMatindMaster mi : finalList) {
+			BigDecimal total = totalStockMap.getOrDefault(mi.getMatcode(), BigDecimal.ZERO);
+			BigDecimal assigned = assignedStockMap.getOrDefault(mi.getMatcode(), BigDecimal.ZERO);
+			mi.setStockQty(total.floatValue());
+			mi.setAssignedStock(assigned.floatValue());
+			mi.setActualStock(total.floatValue() - assigned.floatValue());
 		}
-		else {
+
+		if (command.getDept() != null) {
+			for (SciMatindMaster mi : finalList) {
+				if (checkdept(mi.getMatcode(), command.getDept())) {
+					deptList.add(mi);
+				}
+			}
+		} else {
 			deptList.addAll(finalList);
 		}
-		
-			
-		
-		System.out.println("myquery " +  finalList.size() );
-		  Query storeqry = em.createQuery("Select m from SciStoresRequest m Join m.sciMiMaster ms where ms.seqMiId =:seqmiid");
 
-	        Query issueqry = em.createQuery("Select m from SciStoreissueMaster m Join m.strequest ms where ms.sciMiMaster.seqMiId <>:seqMiId and m.sciMiMaster.seqMiId=:seqMiId2");
-	        StringBuffer buffer = new StringBuffer("");
-	        for(SciMatindMaster mi :finalList) {
-	        	issueqry.setParameter("seqMiId",mi.getSeqMiId());
-				issueqry.setParameter("seqMiId2",mi.getSeqMiId());
-	        	List<SciStoreissueMaster> sciStoreissueMasters =  issueqry.getResultList();
-	        	if(sciStoreissueMasters != null && sciStoreissueMasters.size() > 0) {
-	        		SciStoreissueMaster storeissueMaster = sciStoreissueMasters.get(0);
+		System.out.println("myquery " + finalList.size());
 
-					mi.setIssuedForWork(storeissueMaster.getStrequest().getSciMiMaster().getSciWorkorderMaster().getJobDesc());
-				}
+		// Batch issue query — find MIs issued under a different store request
+		Map<Long, SciStoreissueMaster> issueMap = new HashMap<>();
+		for (List<Long> chunk : partition(seqMiIds, 1000)) {
+			List<SciStoreissueMaster> issueRows = em.createQuery(
+				"Select m from SciStoreissueMaster m Join m.strequest ms " +
+				"where m.sciMiMaster.seqMiId IN (:seqMiIds) and ms.sciMiMaster.seqMiId <> m.sciMiMaster.seqMiId",
+				SciStoreissueMaster.class)
+				.setParameter("seqMiIds", chunk)
+				.getResultList();
+			for (SciStoreissueMaster issue : issueRows) {
+				issueMap.putIfAbsent(issue.getSciMiMaster().getSeqMiId(), issue);
 			}
-
-/*		for(SciMatindMaster mi:finalList) {
-			storeqry.setParameter("seqmiid", mi.getSeqMiId());
-			List stlist = storeqry.getResultList();
-			if(stlist.size() > 0) {
-				SciStoresRequest request = (SciStoresRequest) stlist.get(0);
-				String requestStatus = request.getRequestStatus();
-				issueqry.setParameter("seqStreqId", request.getSeqStreqId());
-				mi.setProdRequestStatus(request.getProdApproval());
-				mi.setPurchRequestStatus(request.getPurchApproval());
-				
-				List<SciStoreissueMaster> requestlist = issueqry.getResultList();
-				if(requestlist.size() > 0) {
-					
-					for(SciStoreissueMaster sm:requestlist) {
-						buffer.append(sm.getSciMiMaster().getSeqMiId() +" ");
-					}
-					if(request.getRequestStatus().equals("R")) {
-						mi.setRequestStatus("Returned");
-					}
-					else {
-						mi.setRequestStatus("Issued from " + buffer.toString());
-					}
-					buffer.delete(0, buffer.toString().length());
-					
-					
-				}
-				else {
-					mi.setRequestStatus("Pending");
-				}
-				mi.setStRequestStatus(request);
-				
+		}
+		for (SciMatindMaster mi : finalList) {
+			SciStoreissueMaster issue = issueMap.get(mi.getSeqMiId());
+			if (issue != null) {
+				mi.setIssuedForWork(issue.getStrequest().getSciMiMaster().getSciWorkorderMaster().getJobDesc());
 			}
-			else {
-				mi.setRequestStatus("NotRaised");
-			}
-		}*/
+		}
 		return deptList;
+	}
+
+	private <T> List<List<T>> partition(List<T> list, int chunkSize) {
+		List<List<T>> chunks = new ArrayList<>();
+		for (int i = 0; i < list.size(); i += chunkSize) {
+			chunks.add(list.subList(i, Math.min(i + chunkSize, list.size())));
+		}
+		return chunks;
 	}
 
 	@Override

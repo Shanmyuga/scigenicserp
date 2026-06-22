@@ -33,7 +33,7 @@
         </webflow:transition>
         <webflow:transition on="filterReport" to="entersearch">
             <webflow:evaluate expression="micont.bind"/>
-            <webflow:evaluate expression="micont.filterReport"/>
+            <webflow:evaluate expression="micont.filterReportWorkOrder"/>
         </webflow:transition>
 </webflow:view-state>
 <webflow:exception-handler bean="exceptionresol"/>

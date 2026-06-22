@@ -55,12 +55,12 @@
 			<property name="hibernate.connection.driver_class"
 					  value="oracle.jdbc.OracleDriver" />
 			<!--	<property name="hibernate.connection.url"
-                                      value="jdbc:oracle:thin:@//192.168.1.195:1521/orclpdb1.localdomain" />
+                                      value="jdbc:oracle:thin:@//192.168.1.195:1521/orclpdb1.localdomain" />-->
             <property name="hibernate.connection.url"
-                   value="jdbc:oracle:thin:@//localhost:1521/orclpdb1.localdomain" />-->
+                   value="jdbc:oracle:thin:@//localhost:1521/orclpdb1.localdomain" />
 
-				 <property name="hibernate.connection.url"
-                             value="jdbc:oracle:thin:@//122.165.141.17:8050/orclpdb1.localdomain" />
+			<!--	 <property name="hibernate.connection.url"
+                             value="jdbc:oracle:thin:@//122.165.141.17:8050/orclpdb1.localdomain" />-->
              <property name="hibernate.connection.username"
                     value="scigenics" />
              <property name="hibernate.connection.password"
