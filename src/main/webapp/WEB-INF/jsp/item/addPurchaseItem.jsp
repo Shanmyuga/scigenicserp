@@ -100,6 +100,10 @@
 <form:input path="micost" />
 </display:column>
 
+<display:column sortable="true"  title="Labor Cost"  >
+<form:input path="milaborcost" />
+</display:column>
+
 <display:column sortable="true"  title="Recommendation"  >
 <form:input path="miremarks" />
 </display:column>

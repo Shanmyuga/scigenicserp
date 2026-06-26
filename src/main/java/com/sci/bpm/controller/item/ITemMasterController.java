@@ -40,6 +40,7 @@ public class ITemMasterController extends SciBaseController {
 		
 		ItemCommand command = (ItemCommand) getFormObject(context);
 		String estcost[] =  command.getMicost();
+		String milaborcost[] = command.getMilaborcost();
 		String miremarks[] = command.getMiremarks();
 		String miquantity[] = command.getMiquantity();
 		SciPurchItemMaster  itemmaster = new SciPurchItemMaster();
@@ -105,6 +106,9 @@ public class ITemMasterController extends SciBaseController {
 			}
 
 			m.setUnitCost(new BigDecimal(estcost[idx]));
+			if(milaborcost != null && milaborcost.length > idx && milaborcost[idx] != null && !milaborcost[idx].isEmpty()) {
+				m.setLaborCost(new BigDecimal(milaborcost[idx]));
+			}
 			boolean result = service.checkEstCost(m);
 			if(!result) {
 				throw new Exception("Bigger than the estimated cost");

@@ -77,6 +77,7 @@ private String miForIssue;
 private Date vendorAgreeDate;
 private String poMatAssign;
 private String matcodeAddInfo;
+private BigDecimal laborCost;
 	// Constructors
 
 	private Set<SciAddMatInfoDocsEntity> matInfoDocsEntities = new HashSet<SciAddMatInfoDocsEntity>();
@@ -691,5 +692,14 @@ private String matcodeAddInfo;
 
 	public void setRefMake(String refMake) {
 		this.refMake = refMake;
+	}
+
+	@Column(name = "LABOR_COST", unique = false, nullable = true, insertable = true, updatable = true, precision = 22, scale = 4)
+	public BigDecimal getLaborCost() {
+		return laborCost;
+	}
+
+	public void setLaborCost(BigDecimal laborCost) {
+		this.laborCost = laborCost;
 	}
 }

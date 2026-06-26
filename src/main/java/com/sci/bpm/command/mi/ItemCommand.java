@@ -25,6 +25,8 @@ public class ItemCommand implements Serializable {
 	
 	private String[] micost;
 
+	private String[] milaborcost;
+
 	private String[] miremarks;
 	private String[] miquantity;
 
@@ -83,6 +85,12 @@ public class ItemCommand implements Serializable {
 	}
 	public void setMicost(String[] micost) {
 		this.micost = micost;
+	}
+	public String[] getMilaborcost() {
+		return milaborcost;
+	}
+	public void setMilaborcost(String[] milaborcost) {
+		this.milaborcost = milaborcost;
 	}
 	public String[] getItemlist() {
 		return itemlist;
