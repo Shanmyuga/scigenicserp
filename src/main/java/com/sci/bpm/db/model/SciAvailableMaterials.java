@@ -36,6 +36,8 @@ public class SciAvailableMaterials  implements java.io.Serializable {
 
      private String customPOId;
      private Long seqPurchId;
+     private String vendorName;
+     private Date purchaseCreatedDate;
 
      @Transient
     public String getCustomPOId() {
@@ -52,6 +54,22 @@ public class SciAvailableMaterials  implements java.io.Serializable {
 
     public void setSeqPurchId(Long seqPurchId) {
         this.seqPurchId = seqPurchId;
+    }
+    @Transient
+    public String getVendorName() {
+        return vendorName;
+    }
+
+    public void setVendorName(String vendorName) {
+        this.vendorName = vendorName;
+    }
+    @Transient
+    public Date getPurchaseCreatedDate() {
+        return purchaseCreatedDate;
+    }
+
+    public void setPurchaseCreatedDate(Date purchaseCreatedDate) {
+        this.purchaseCreatedDate = purchaseCreatedDate;
     }
     // Constructors
 

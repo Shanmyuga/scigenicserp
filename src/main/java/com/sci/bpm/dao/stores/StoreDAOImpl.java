@@ -294,7 +294,9 @@ public class StoreDAOImpl implements StoresDAO {
 			"  (SELECT MAX(vam.qty)      FROM VW_AVAIL_MATERIALS        vam WHERE vam.matcode = sam.MATCODE) AS total_stock, " +
 			"  (SELECT MAX(vas.avail_qty) FROM VW_ACTUAL_AVAIL_STOCK    vas WHERE vas.matcode = sam.MATCODE) AS actual_stock, " +
 			"  pwv.SEQ_PURCH_ID, " +
-			"  spm.CUSTOM_PO_ID " +
+			"  spm.CUSTOM_PO_ID, " +
+			"  spm.PURCHASE_CREATED_DT, " +
+			"  svm.VENDOR_NAME " +
 			"FROM SCIGENICS.SCI_AVAILABLE_MATERIALS sam " +
 			"LEFT JOIN ( " +
 			"  SELECT SEQ_MI_ID, MAX(SEQ_PURCH_ID) AS SEQ_PURCH_ID " +
@@ -303,6 +305,7 @@ public class StoreDAOImpl implements StoresDAO {
 			"  GROUP BY SEQ_MI_ID " +
 			") pwv ON pwv.SEQ_MI_ID = sam.SEQ_MI_ID " +
 			"LEFT JOIN SCIGENICS.SCI_PURCHASE_MAST spm ON spm.SEQ_PURCH_ID = pwv.SEQ_PURCH_ID " +
+			"LEFT JOIN SCIGENICS.SCI_VENDOR_MASTER svm ON svm.SEQ_VENDOR_ID = spm.SEQ_VENDOR_ID " +
 			"WHERE sam.SEQ_AVAIL_ID IN (:seqAvailIds)";
 
 		List<Object[]> enrichRows = new ArrayList<>();
@@ -326,6 +329,8 @@ public class StoreDAOImpl implements StoresDAO {
 				if (data[3] != null) mat.setActualStockMatCode((BigDecimal) data[3]);
 				if (data[4] != null) mat.setSeqPurchId(((Number) data[4]).longValue());
 				if (data[5] != null) mat.setCustomPOId((String) data[5]);
+				if (data[6] != null) mat.setPurchaseCreatedDate((java.util.Date) data[6]);
+				if (data[7] != null) mat.setVendorName((String) data[7]);
 			}
 		}
 

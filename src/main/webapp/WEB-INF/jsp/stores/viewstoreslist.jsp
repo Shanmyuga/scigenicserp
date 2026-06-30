@@ -144,6 +144,10 @@
  </display:column>
  <display:column sortable="true"   title="Custom PO Id" property="customPOId"  >
  </display:column>
+ <display:column sortable="true"   title="PO Created Date" property="purchaseCreatedDate"  >
+ </display:column>
+ <display:column sortable="true"   title="Vendor Name" property="vendorName"  >
+ </display:column>
 <display:column sortable="true"  title="WO DESC"  >
 <c:out value='${row.sciMiMaster.sciWorkorderMaster.jobDesc}'/>
 </display:column>
