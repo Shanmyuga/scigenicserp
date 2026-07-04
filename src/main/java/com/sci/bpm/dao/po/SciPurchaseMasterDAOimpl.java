@@ -39,6 +39,20 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 		return pm;
 	}
 
+	public SciPurchaseMast findBySeqOrCustomId(String seqOrCustomPOId) {
+		Query q;
+		if (org.apache.commons.lang.math.NumberUtils.isNumber(seqOrCustomPOId)) {
+			q = em.createQuery("select m from SciPurchaseMast m where m.seqPurchId = :seqPurchId or m.customPOId = :customPOId");
+			q.setParameter("seqPurchId", Long.valueOf(seqOrCustomPOId));
+			q.setParameter("customPOId", seqOrCustomPOId);
+		} else {
+			q = em.createQuery("select m from SciPurchaseMast m where m.customPOId = :customPOId");
+			q.setParameter("customPOId", seqOrCustomPOId);
+		}
+		List<SciPurchaseMast> matches = q.getResultList();
+		return matches.isEmpty() ? null : matches.get(0);
+	}
+
 	public List<SciPurchaseMast> findByProperty(String propertyName,
 			Object value) {
 		// TODO Auto-generated method stub

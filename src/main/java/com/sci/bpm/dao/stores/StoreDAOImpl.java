@@ -424,7 +424,7 @@ public class StoreDAOImpl implements StoresDAO {
 	public List getRecdMIs(Long seqMiid) {
 
 		Query qsmi = em
-				.createQuery("Select d from SciRecdMaterials d Join  d.sciMiMaster m where m.seqMiId =:seqmiid");
+				.createQuery("Select d from SciRecdMaterials d Join  d.sciMiMaster m where m.seqMiId =:seqmiid order by d.seqRecdId desc");
 
 		qsmi.setParameter("seqmiid", seqMiid);
 		return qsmi.getResultList();

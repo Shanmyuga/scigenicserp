@@ -54,6 +54,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		return dao.findById(seqPurchId);
 	}
 
+	@Override
+	public SciPurchaseMast loadPOBySeqOrCustomId(String seqOrCustomPOId) {
+		return dao.findBySeqOrCustomId(seqOrCustomPOId);
+	}
+
 	public void addPurchOrder(SciPurchaseMast master,
 							  List<SciPurchItemMaster> itemlist) {
 		// TODO Auto-generated method stub

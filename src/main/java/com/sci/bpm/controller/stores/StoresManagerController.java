@@ -52,8 +52,12 @@ public class StoresManagerController extends SciBaseController {
                 String.valueOf(getLookupservice().loadIDData("PO_CREATED")), String.valueOf(getLookupservice().loadIDData("PO_APPROVAL_PENDING")),
                 String.valueOf(getLookupservice().loadIDData("PO_APPROVED_DIRECTOR"))};
         StoresBean bean = (StoresBean) getFormObject(context);
-        List<SciPurchItemMaster> mylist = service.loadPOItems(bean
-                .getSeqPurchId(), status);
+        SciPurchaseMast master = purchaseOrderService.loadPOBySeqOrCustomId(bean.getPoSearchKey());
+        if (master == null) {
+            throw new Exception("No Purchase Order found for '" + bean.getPoSearchKey() + "'");
+        }
+        bean.setSeqPurchId(master.getSeqPurchId());
+        List<SciPurchItemMaster> mylist = service.loadPOItems(master.getSeqPurchId(), status);
         context.getFlowScope().put("poitemslist", mylist);
         context.getFlowScope().remove("matitemlist");
         bean.reset();
@@ -177,6 +181,17 @@ public class StoresManagerController extends SciBaseController {
         recdmat.setMatcode(mast.getMatcode());
         recdmat.setInsertedBy(getUserPreferences().getUserID());
         recdmat.setInsertedDate(new java.util.Date());
+        recdmat.setInvoiceDate(bean.getInvoiceDate());
+        recdmat.setInvoiceNo(bean.getInvoiceNo());
+        if (StringUtils.isNotBlank(bean.getInvoiceValue())) {
+            if (!NumberUtils.isNumber(bean.getInvoiceValue())) {
+                throw new Exception("the invoice value is not a number");
+            }
+            recdmat.setInvoiceValue(new java.math.BigDecimal(bean.getInvoiceValue()));
+        }
+        qcmi.setInvoiceDate(recdmat.getInvoiceDate());
+        qcmi.setInvoiceNo(recdmat.getInvoiceNo());
+        qcmi.setInvoiceValue(recdmat.getInvoiceValue());
         service.addNewtoStores(storems, qcmi, getLookupservice().loadIDData(
                 "MI_INQC").toString(), recdmat);
         SciPurchaseMast purchaseMast = purchaseOrderService.loadPOById(recdmat.getPoId());
@@ -283,6 +298,9 @@ public class StoresManagerController extends SciBaseController {
             availmaters.setMatcode(storemi.getMatCode());
             availmaters.setMatSpec(storemi.getMatSpec());
             availmaters.setMatSpec(storemi.getMatType());
+            availmaters.setInvoiceDate(qcdata.getInvoiceDate());
+            availmaters.setInvoiceNo(qcdata.getInvoiceNo());
+            availmaters.setInvoiceValue(qcdata.getInvoiceValue());
             availmaters.setUpdatedBy(getUserPreferences().getUserID());
             availmaters.setUpdatedDate(new Date());
             availmaters.setRemarks(bean.getRemarks());

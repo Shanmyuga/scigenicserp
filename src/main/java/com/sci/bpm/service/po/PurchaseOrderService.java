@@ -13,6 +13,7 @@ import com.sci.bpm.db.model.*;
 public interface PurchaseOrderService {
 
 	public SciPurchaseMast loadPOById(Long seqPurchId);
+	public SciPurchaseMast loadPOBySeqOrCustomId(String seqOrCustomPOId);
 	public  void addPurchOrder(SciPurchaseMast master,List<SciPurchItemMaster> itemlist) ;
 
 	public void updateDCNO(SciRawMIDetails details);

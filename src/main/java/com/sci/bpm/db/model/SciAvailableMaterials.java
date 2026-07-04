@@ -285,4 +285,36 @@ private SciMatindMaster sciMiMaster;
     public void setActualStockMatCode(BigDecimal actualStockMatCode) {
         this.actualStockMatCode = actualStockMatCode;
     }
+
+    private Date invoiceDate;
+    private String invoiceNo;
+    private BigDecimal invoiceValue;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "INVOICE_DATE", length = 7)
+    public Date getInvoiceDate() {
+        return invoiceDate;
+    }
+
+    public void setInvoiceDate(Date invoiceDate) {
+        this.invoiceDate = invoiceDate;
+    }
+
+    @Column(name = "INVOICE_NO", length = 20)
+    public String getInvoiceNo() {
+        return invoiceNo;
+    }
+
+    public void setInvoiceNo(String invoiceNo) {
+        this.invoiceNo = invoiceNo;
+    }
+
+    @Column(name = "INVOICE_VALUE", precision = 22, scale = 4)
+    public BigDecimal getInvoiceValue() {
+        return invoiceValue;
+    }
+
+    public void setInvoiceValue(BigDecimal invoiceValue) {
+        this.invoiceValue = invoiceValue;
+    }
 }

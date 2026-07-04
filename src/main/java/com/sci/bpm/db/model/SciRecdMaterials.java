@@ -1,5 +1,6 @@
 package com.sci.bpm.db.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -226,6 +227,38 @@ private SciMatindMaster sciMiMaster;
 
 	public void setSeqPurchItemID(Long seqPurchItemID) {
 		this.seqPurchItemID = seqPurchItemID;
+	}
+
+	private Date invoiceDate;
+	private String invoiceNo;
+	private BigDecimal invoiceValue;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "INVOICE_DATE", length = 7)
+	public Date getInvoiceDate() {
+		return invoiceDate;
+	}
+
+	public void setInvoiceDate(Date invoiceDate) {
+		this.invoiceDate = invoiceDate;
+	}
+
+	@Column(name = "INVOICE_NO", length = 20)
+	public String getInvoiceNo() {
+		return invoiceNo;
+	}
+
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
+	}
+
+	@Column(name = "INVOICE_VALUE", precision = 22, scale = 4)
+	public BigDecimal getInvoiceValue() {
+		return invoiceValue;
+	}
+
+	public void setInvoiceValue(BigDecimal invoiceValue) {
+		this.invoiceValue = invoiceValue;
 	}
 
 }

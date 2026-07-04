@@ -15,6 +15,7 @@ public class StoresBean implements Serializable {
 	private Long numberPassed;
 	private Date qcApprDate;
 	private Long seqPurchId;
+	private String poSearchKey;
 	private Long seqAvailId;
 	private String itemName;
 	private Long currentCnt;
@@ -68,6 +69,9 @@ public class StoresBean implements Serializable {
 	private String availableDimension;
 	private String workOrderKey;
 	private String reportFilter;
+	private Date invoiceDate;
+	private String invoiceNo;
+	private String invoiceValue;
 
 
 	public String getReportFilter() {
@@ -76,6 +80,30 @@ public class StoresBean implements Serializable {
 
 	public void setReportFilter(String reportFilter) {
 		this.reportFilter = reportFilter;
+	}
+
+	public Date getInvoiceDate() {
+		return invoiceDate;
+	}
+
+	public void setInvoiceDate(Date invoiceDate) {
+		this.invoiceDate = invoiceDate;
+	}
+
+	public String getInvoiceNo() {
+		return invoiceNo;
+	}
+
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
+	}
+
+	public String getInvoiceValue() {
+		return invoiceValue;
+	}
+
+	public void setInvoiceValue(String invoiceValue) {
+		this.invoiceValue = invoiceValue;
 	}
 
 	public String getWorkOrderKey() {
@@ -156,6 +184,14 @@ public class StoresBean implements Serializable {
 
 	public void setSeqPurchId(Long seqPurchId) {
 		this.seqPurchId = seqPurchId;
+	}
+
+	public String getPoSearchKey() {
+		return poSearchKey;
+	}
+
+	public void setPoSearchKey(String poSearchKey) {
+		this.poSearchKey = poSearchKey;
 	}
 
 	public String getItemName() {
@@ -339,6 +375,9 @@ public class StoresBean implements Serializable {
 		this.receivedDimen = null;
 		this.seqSelectMIID = null;
 		this.seqItemId = null;
+		this.invoiceDate = null;
+		this.invoiceNo = null;
+		this.invoiceValue = null;
 	}
 
 	public String getHasReturnQty() {

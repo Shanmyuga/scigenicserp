@@ -84,6 +84,8 @@ public interface ISciPurchaseMastDAO {
 
 	public SciPurchaseMast findById(Long id);
 
+	public SciPurchaseMast findBySeqOrCustomId(String seqOrCustomPOId);
+
 	/**
 	 * Find all SciPurchaseMast entities with a specific property value.
 	 * 

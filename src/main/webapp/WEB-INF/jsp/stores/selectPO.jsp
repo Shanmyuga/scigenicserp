@@ -16,7 +16,7 @@
 
  
 <td>Purchase Order ID</td>
-<td  align="left"><form:input path="seqPurchId"/>
+<td  align="left"><form:input path="poSearchKey"/>
 </td>
  <td colspan="2" align="right"><input type="submit" value="Search PO"/></td>
 </tr>
@@ -95,6 +95,14 @@
    <td>Received Dimension</td><td><form:input path="receivedDimen"/></td>
    <td>Received Quantity</td><td><form:input path="receivedCnt"/></td>
    <td>Remarks</td><td><form:textarea path="remarks"/></td>
+  </tr>
+  <tr>
+   <td>Invoice No</td><td><form:input path="invoiceNo"/></td>
+   <td>Invoice Value</td><td><form:input path="invoiceValue"/></td>
+   <td>Invoice Date</td>
+   <td><form:input path="invoiceDate"/>
+    <a href="javascript:show_calendar('document.storesbean.invoiceDate', document.storesbean.invoiceDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
+   </td>
   </tr>
 
  </table>

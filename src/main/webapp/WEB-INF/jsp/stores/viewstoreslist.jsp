@@ -148,6 +148,12 @@
  </display:column>
  <display:column sortable="true"   title="Vendor Name" property="vendorName"  >
  </display:column>
+ <display:column sortable="true"   title="Invoice No" property="invoiceNo"  >
+ </display:column>
+ <display:column sortable="true"   title="Invoice Date" property="invoiceDate"  >
+ </display:column>
+ <display:column sortable="true"   title="Invoice Value" property="invoiceValue"  >
+ </display:column>
 <display:column sortable="true"  title="WO DESC"  >
 <c:out value='${row.sciMiMaster.sciWorkorderMaster.jobDesc}'/>
 </display:column>
