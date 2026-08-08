@@ -65,7 +65,8 @@ public class POCommand implements Serializable {
 	private Long seqMaterialId;
 	private Double matCost;
     private String poCompany;
-	
+	private String gstnSupplier;
+
 	private String specDetails;
 	
 	private Float exciseDuty;
@@ -663,6 +664,14 @@ public class POCommand implements Serializable {
 
     public void setPoCompany(String poCompany) {
         this.poCompany = poCompany;
+    }
+
+    public String getGstnSupplier() {
+        return gstnSupplier;
+    }
+
+    public void setGstnSupplier(String gstnSupplier) {
+        this.gstnSupplier = gstnSupplier;
     }
 
 	public String getCustomPOId() {

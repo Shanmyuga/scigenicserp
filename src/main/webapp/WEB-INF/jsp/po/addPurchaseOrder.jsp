@@ -180,6 +180,10 @@
         </form:select><span style="color:red;">*</span></td>
     </tr>
     <tr>
+    <td align="left" class="datatext">GSTN Supplier</td>
+    <td ><form:input path="gstnSupplier" maxlength="20" /></td>
+    </tr>
+    <tr>
     <td align="left" class="datatext">PO company</td>
     <td ><form:select path="poCompany"  id="poCompany">
     <form:option value="SIPL">Scigenics India Private Limited</form:option>

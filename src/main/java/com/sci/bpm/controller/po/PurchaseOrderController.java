@@ -343,10 +343,12 @@ public class PurchaseOrderController extends SciBaseController {
 		ptype.setRefDate(selected.getRefDate()!=null?selected.getRefDate().toString():"");
 		ptype.setQutrefno(selected.getQutRefNo());
 		ptype.setPoCompany(selected.getPoCompany());
+		ptype.setGstnSupplier(selected.getGstnSupplier());
 		System.out.println(selected.getVendorAddress());
 		System.out.println(selected.getVendorOrder());
 		
 		ptype.setVendorDetails(selected.getVendorOrder()+" | "+ selected.getVendorAddress());
+
 		ptype.setDeliveryDate(selected.getDeliverySchedule() + " - " +  dateformat.format(selected.getPurchaseDueDate()));
 
 		headerkeymap.put("PO.DATE",

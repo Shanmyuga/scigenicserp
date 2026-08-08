@@ -87,6 +87,7 @@ import javax.xml.bind.annotation.XmlType;
     "qutrefno",
     "refDate",
     "poCompany",
+    "gstnSupplier",
     "items"
 })
 public class PurchaseOrderType {
@@ -171,6 +172,8 @@ public class PurchaseOrderType {
     protected List<Items> items;
     @XmlElement(required = true)
     protected String poCompany;
+    @XmlElement(required = true)
+    protected String gstnSupplier;
 
     public String getPoCompany() {
         return poCompany;
@@ -178,6 +181,14 @@ public class PurchaseOrderType {
 
     public void setPoCompany(String value) {
         this.poCompany = value;
+    }
+
+    public String getGstnSupplier() {
+        return gstnSupplier;
+    }
+
+    public void setGstnSupplier(String value) {
+        this.gstnSupplier = value;
     }
     /**
      * Gets the value of the vendorDetails property.

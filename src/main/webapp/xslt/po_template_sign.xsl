@@ -198,10 +198,10 @@
     <xsl:variable name="MyVar">
       <xsl:choose>
         <xsl:when test="contains(//vendorDetails,'|')">
-          <xsl:value-of select="concat(substring-before(//vendorDetails,'|'),$newline,substring-after(//vendorDetails,'|'))"/>
+          <xsl:value-of select="concat(substring-before(//vendorDetails,'|'),$newline,substring-after(//vendorDetails,'|'),$newline,'GSTN-Supplier: ',//gstnSupplier)"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="vendorDetails"/>
+          <xsl:value-of select="concat(vendorDetails,$newline,'GSTN-Supplier: ',//gstnSupplier)"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>

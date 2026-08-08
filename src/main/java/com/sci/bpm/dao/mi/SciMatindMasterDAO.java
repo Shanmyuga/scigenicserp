@@ -762,6 +762,8 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 	public SciMatindMaster loadMI(Long seqmiID) {
 		SciMatindMaster master =  em.getReference(SciMatindMaster.class,seqmiID);
 		master.getSciWorkorderMaster();
+		master.getMatInfos().size();
+		master.getMatInfoDocsEntities().size();
 		return master;
 	}
 
