@@ -104,6 +104,11 @@
     <a href="javascript:show_calendar('document.storesbean.invoiceDate', document.storesbean.invoiceDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
    </td>
   </tr>
+  <tr>
+   <td>Invoice CGST</td><td><form:input path="invoiceCgst"/></td>
+   <td>Invoice IGST</td><td><form:input path="invoiceIgst"/></td>
+   <td>Invoice SGST</td><td><form:input path="invoiceSgst"/></td>
+  </tr>
 
  </table>
 

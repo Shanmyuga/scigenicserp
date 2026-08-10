@@ -261,4 +261,35 @@ private SciMatindMaster sciMiMaster;
 		this.invoiceValue = invoiceValue;
 	}
 
+	private BigDecimal invoiceCgst;
+	private BigDecimal invoiceIgst;
+	private BigDecimal invoiceSgst;
+
+	@Column(name = "INVOICE_CGST", precision = 22, scale = 2)
+	public BigDecimal getInvoiceCgst() {
+		return invoiceCgst;
+	}
+
+	public void setInvoiceCgst(BigDecimal invoiceCgst) {
+		this.invoiceCgst = invoiceCgst;
+	}
+
+	@Column(name = "INVOICE_IGST", precision = 22, scale = 2)
+	public BigDecimal getInvoiceIgst() {
+		return invoiceIgst;
+	}
+
+	public void setInvoiceIgst(BigDecimal invoiceIgst) {
+		this.invoiceIgst = invoiceIgst;
+	}
+
+	@Column(name = "INVOICE_SGST", precision = 22, scale = 2)
+	public BigDecimal getInvoiceSgst() {
+		return invoiceSgst;
+	}
+
+	public void setInvoiceSgst(BigDecimal invoiceSgst) {
+		this.invoiceSgst = invoiceSgst;
+	}
+
 }

@@ -72,6 +72,9 @@ public class StoresBean implements Serializable {
 	private Date invoiceDate;
 	private String invoiceNo;
 	private String invoiceValue;
+	private String invoiceCgst;
+	private String invoiceIgst;
+	private String invoiceSgst;
 
 
 	public String getReportFilter() {
@@ -104,6 +107,30 @@ public class StoresBean implements Serializable {
 
 	public void setInvoiceValue(String invoiceValue) {
 		this.invoiceValue = invoiceValue;
+	}
+
+	public String getInvoiceCgst() {
+		return invoiceCgst;
+	}
+
+	public void setInvoiceCgst(String invoiceCgst) {
+		this.invoiceCgst = invoiceCgst;
+	}
+
+	public String getInvoiceIgst() {
+		return invoiceIgst;
+	}
+
+	public void setInvoiceIgst(String invoiceIgst) {
+		this.invoiceIgst = invoiceIgst;
+	}
+
+	public String getInvoiceSgst() {
+		return invoiceSgst;
+	}
+
+	public void setInvoiceSgst(String invoiceSgst) {
+		this.invoiceSgst = invoiceSgst;
 	}
 
 	public String getWorkOrderKey() {
@@ -378,6 +405,9 @@ public class StoresBean implements Serializable {
 		this.invoiceDate = null;
 		this.invoiceNo = null;
 		this.invoiceValue = null;
+		this.invoiceCgst = null;
+		this.invoiceIgst = null;
+		this.invoiceSgst = null;
 	}
 
 	public String getHasReturnQty() {

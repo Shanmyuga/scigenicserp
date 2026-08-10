@@ -189,6 +189,24 @@ public class StoresManagerController extends SciBaseController {
             }
             recdmat.setInvoiceValue(new java.math.BigDecimal(bean.getInvoiceValue()));
         }
+        if (StringUtils.isNotBlank(bean.getInvoiceCgst())) {
+            if (!NumberUtils.isNumber(bean.getInvoiceCgst())) {
+                throw new Exception("the invoice CGST is not a number");
+            }
+            recdmat.setInvoiceCgst(new java.math.BigDecimal(bean.getInvoiceCgst()));
+        }
+        if (StringUtils.isNotBlank(bean.getInvoiceIgst())) {
+            if (!NumberUtils.isNumber(bean.getInvoiceIgst())) {
+                throw new Exception("the invoice IGST is not a number");
+            }
+            recdmat.setInvoiceIgst(new java.math.BigDecimal(bean.getInvoiceIgst()));
+        }
+        if (StringUtils.isNotBlank(bean.getInvoiceSgst())) {
+            if (!NumberUtils.isNumber(bean.getInvoiceSgst())) {
+                throw new Exception("the invoice SGST is not a number");
+            }
+            recdmat.setInvoiceSgst(new java.math.BigDecimal(bean.getInvoiceSgst()));
+        }
         qcmi.setInvoiceDate(recdmat.getInvoiceDate());
         qcmi.setInvoiceNo(recdmat.getInvoiceNo());
         qcmi.setInvoiceValue(recdmat.getInvoiceValue());
