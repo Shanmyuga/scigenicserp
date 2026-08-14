@@ -564,10 +564,12 @@ public class PurchaseOrderController extends SciBaseController {
 
 	private SciRawMIDetails selectRawMI(List<SciRawMIDetails> details ,Long seqRawMiId) {
 		SciRawMIDetails selected = null;
-		for (SciRawMIDetails m : details) {
-			if (m.getSeqRawMIid().intValue() == seqRawMiId.intValue()) {
-				selected = m;
-				break;
+		if (details != null && seqRawMiId != null) {
+			for (SciRawMIDetails m : details) {
+				if (m.getSeqRawMIid().intValue() == seqRawMiId.intValue()) {
+					selected = m;
+					break;
+				}
 			}
 		}
 		return selected;
@@ -584,9 +586,20 @@ public class PurchaseOrderController extends SciBaseController {
 		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
 
 		Long subContractMiId = command.getSubContMI();
+		if (subContractMiId == null) {
+			throw new Exception("Please select a Subcontract MI from the list before generating the Delivery Challan.");
+		}
 		SciRawMIDetails selectedRaw = selectRawMI(rawMIDetails,subContractMiId);
+		if (selectedRaw == null) {
+			throw new Exception("The selected Subcontract MI could not be found for this Purchase Order. Please select a Purchase Order that has Subcontract MI details.");
+		}
+		if (selectedRaw.getSubcontractMIMaster() == null || selectedRaw.getSciVendorMaster() == null) {
+			throw new Exception("The selected Subcontract MI record is missing its Subcontract MI or Vendor reference and cannot be used to generate a Delivery Challan.");
+		}
 		List<SciRawMIDetails> details = service.loadSubContractMI(selectedRaw.getSubcontractMIMaster().getSeqMiId(),selectedRaw.getSciVendorMaster().getSeqVendorId(),selectedRaw.getStageDesc());
-
+		if (details == null || details.isEmpty()) {
+			throw new Exception("No Subcontract MI raw material details were found for the selected Purchase Order and stage.");
+		}
 		SciRawMIDetails rawMIDetail = details.get(0);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 		PurchaseOrder order = new PurchaseOrder();

@@ -15,6 +15,7 @@ import com.sci.bpm.dao.mi.ISciMatindMasterDAO;
 import com.sci.bpm.dao.mi.SciMatindMasterDAO;
 import com.sci.bpm.db.model.SciMatindMaster;
 import com.sci.bpm.db.model.SciPurchItemMaster;
+import com.sci.bpm.db.model.SciPurchaseMast;
 import com.sci.bpm.db.model.SciRawMIDetails;
 
 @Service
@@ -95,5 +96,9 @@ for(SciMatindMaster m: splitmilist) {
 		return rawMIDetails;
 	}
 
+	@Override
+	public SciPurchaseMast loadPurchaseOrderForMi(Long seqMiId) {
+		return dao.loadPurchaseOrderForMi(seqMiId);
+	}
 
 }

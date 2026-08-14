@@ -18,6 +18,7 @@ import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 
 import com.sci.bpm.command.mi.MatindCommand;
+import com.sci.bpm.command.stores.RecdItemCommand;
 import com.sci.bpm.command.stores.StoresBean;
 import com.sci.bpm.controller.base.SciBaseController;
 import com.sci.bpm.service.product.ProductMasterService;
@@ -119,106 +120,123 @@ public class StoresManagerController extends SciBaseController {
     }
 
     public Event addStoreMIItems(RequestContext context) throws Exception {
-        System.out.println("shanmuga");
         StoresBean bean = (StoresBean) getFormObject(context);
         List<SciMatindMaster> master = (List<SciMatindMaster>) context
                 .getFlowScope().get("matitemlist");
-        SciMatindMaster mast = selectMI(master, bean.getSeqSelectMIID());
-        SciStoreMiMaster storems = service.getStoreData(mast.getSeqMiId());
-        if (!NumberUtils.isNumber(bean.getReceivedCnt())) {
-                throw new Exception("the received quantity is not a number");
+
+        List<RecdItemCommand> selectedRows = new ArrayList<RecdItemCommand>();
+        for (RecdItemCommand row : bean.getRecdList()) {
+            if (StringUtils.isNotBlank(row.getMatindex())) {
+                selectedRows.add(row);
+            }
         }
-        else {
-        	bean.setReceivedCnt(StringUtils.strip(bean.getReceivedCnt()));
-        }
-        if (storems == null) {
-            storems = new SciStoreMiMaster();
+        if (selectedRows.isEmpty()) {
+            throw new Exception("Please select at least one MI item to receive.");
         }
 
-        storems.setSciMiMaster(mast);
+        Long poId = bean.getSeqPurchId();
 
-        storems.setPoId(new Long(bean.getSeqPurchId()));
-        storems.setOrdDim(mast.getMatDimesion());
-        storems.setOrdQty(mast.getMatQty().toString());
-        storems.setRecdDate(new Date());
-        storems.setRecdMatQty(bean.getReceivedCnt());
-        storems.setRecdMatDime(bean.getReceivedDimen());
-        storems.setRecdStatus(bean.getItemRecdFull());
-        storems.setIssuedStatus("N");
-        storems.setMatCode(mast.getMatcode());
-        storems.setUpdatedDt(new Date());
-        storems.setMatSpec(mast.getMatSpec());
-        storems.setMatType(mast.getMatType());
-        storems.setUpdatedBy(getUserPreferences().getUserID());
-        storems.setInsertedBy(getUserPreferences().getUserID());
-        storems.setInsertedDate(new java.util.Date());
-        SciQcMiMaster qcmi = new SciQcMiMaster();
-        qcmi.setSciMiMaster(mast);
-        qcmi.setMatCode(mast.getMatcode());
-        qcmi.setQcRecCnt(bean.getReceivedCnt());
-        qcmi.setQcRecDime(bean.getReceivedDimen());
-        qcmi.setMatSpec(mast.getMatSpec());
-        qcmi.setMatType(mast.getMatType());
-        qcmi.setUpdatedDt(new Date());
-        qcmi.setOcStatus("N");
-        qcmi.setQcTestsApproval("N");
-        qcmi.setUpdatedBy(getUserPreferences().getUserID());
-        qcmi.setInsertedBy(getUserPreferences().getUserID());
-        qcmi.setInsertedDate(new java.util.Date());
-        qcmi.setPoId(new Long(bean.getSeqPurchId()));
-        SciRecdMaterials recdmat = new SciRecdMaterials();
-        recdmat.setSciMiMaster(mast);
-        recdmat.setMatSpec(mast.getMatSpec());
-        recdmat.setMatType(mast.getMatType());
+        for (RecdItemCommand row : selectedRows) {
+            int position = Integer.parseInt(row.getMatindex()) - 1;
+            SciMatindMaster mast = master.get(position);
 
-        recdmat.setRecdQuantity(bean.getReceivedCnt());
-        recdmat.setRecdDimension(bean.getReceivedDimen());
-        recdmat.setRecdDate(new Date());
-        recdmat.setPoId(new Long(bean.getSeqPurchId()));
-        recdmat.setUpdatedDate(new Date());
-        recdmat.setUpdatedBy(getUserPreferences().getUserID());
-        recdmat.setRemarks(bean.getRemarks());
-        recdmat.setMatcode(mast.getMatcode());
-        recdmat.setInsertedBy(getUserPreferences().getUserID());
-        recdmat.setInsertedDate(new java.util.Date());
-        recdmat.setInvoiceDate(bean.getInvoiceDate());
-        recdmat.setInvoiceNo(bean.getInvoiceNo());
-        if (StringUtils.isNotBlank(bean.getInvoiceValue())) {
-            if (!NumberUtils.isNumber(bean.getInvoiceValue())) {
-                throw new Exception("the invoice value is not a number");
+            if (!NumberUtils.isNumber(row.getRecdCount())) {
+                throw new Exception("the received quantity is not a number for MI " + mast.getSeqMiId());
             }
-            recdmat.setInvoiceValue(new java.math.BigDecimal(bean.getInvoiceValue()));
-        }
-        if (StringUtils.isNotBlank(bean.getInvoiceCgst())) {
-            if (!NumberUtils.isNumber(bean.getInvoiceCgst())) {
-                throw new Exception("the invoice CGST is not a number");
+            row.setRecdCount(StringUtils.strip(row.getRecdCount()));
+
+            SciStoreMiMaster storems = service.getStoreData(mast.getSeqMiId());
+            if (storems == null) {
+                storems = new SciStoreMiMaster();
             }
-            recdmat.setInvoiceCgst(new java.math.BigDecimal(bean.getInvoiceCgst()));
-        }
-        if (StringUtils.isNotBlank(bean.getInvoiceIgst())) {
-            if (!NumberUtils.isNumber(bean.getInvoiceIgst())) {
-                throw new Exception("the invoice IGST is not a number");
+
+            storems.setSciMiMaster(mast);
+            storems.setPoId(poId);
+            storems.setOrdDim(mast.getMatDimesion());
+            storems.setOrdQty(mast.getMatQty().toString());
+            storems.setRecdDate(new Date());
+            storems.setRecdMatQty(row.getRecdCount());
+            storems.setRecdMatDime(row.getRecdDimension());
+            storems.setRecdStatus(bean.getItemRecdFull());
+            storems.setIssuedStatus("N");
+            storems.setMatCode(mast.getMatcode());
+            storems.setUpdatedDt(new Date());
+            storems.setMatSpec(mast.getMatSpec());
+            storems.setMatType(mast.getMatType());
+            storems.setUpdatedBy(getUserPreferences().getUserID());
+            storems.setInsertedBy(getUserPreferences().getUserID());
+            storems.setInsertedDate(new java.util.Date());
+
+            SciQcMiMaster qcmi = new SciQcMiMaster();
+            qcmi.setSciMiMaster(mast);
+            qcmi.setMatCode(mast.getMatcode());
+            qcmi.setQcRecCnt(row.getRecdCount());
+            qcmi.setQcRecDime(row.getRecdDimension());
+            qcmi.setMatSpec(mast.getMatSpec());
+            qcmi.setMatType(mast.getMatType());
+            qcmi.setUpdatedDt(new Date());
+            qcmi.setOcStatus("N");
+            qcmi.setQcTestsApproval("N");
+            qcmi.setUpdatedBy(getUserPreferences().getUserID());
+            qcmi.setInsertedBy(getUserPreferences().getUserID());
+            qcmi.setInsertedDate(new java.util.Date());
+            qcmi.setPoId(poId);
+
+            SciRecdMaterials recdmat = new SciRecdMaterials();
+            recdmat.setSciMiMaster(mast);
+            recdmat.setMatSpec(mast.getMatSpec());
+            recdmat.setMatType(mast.getMatType());
+
+            recdmat.setRecdQuantity(row.getRecdCount());
+            recdmat.setRecdDimension(row.getRecdDimension());
+            recdmat.setRecdDate(new Date());
+            recdmat.setPoId(poId);
+            recdmat.setUpdatedDate(new Date());
+            recdmat.setUpdatedBy(getUserPreferences().getUserID());
+            recdmat.setRemarks(row.getRemarks());
+            recdmat.setMatcode(mast.getMatcode());
+            recdmat.setInsertedBy(getUserPreferences().getUserID());
+            recdmat.setInsertedDate(new java.util.Date());
+            recdmat.setInvoiceDate(bean.getInvoiceDate());
+            recdmat.setInvoiceNo(bean.getInvoiceNo());
+            if (StringUtils.isNotBlank(row.getInvoiceValue())) {
+                if (!NumberUtils.isNumber(row.getInvoiceValue())) {
+                    throw new Exception("the invoice value is not a number for MI " + mast.getSeqMiId());
+                }
+                recdmat.setInvoiceValue(new java.math.BigDecimal(row.getInvoiceValue()));
             }
-            recdmat.setInvoiceIgst(new java.math.BigDecimal(bean.getInvoiceIgst()));
-        }
-        if (StringUtils.isNotBlank(bean.getInvoiceSgst())) {
-            if (!NumberUtils.isNumber(bean.getInvoiceSgst())) {
-                throw new Exception("the invoice SGST is not a number");
+            if (StringUtils.isNotBlank(bean.getInvoiceCgst())) {
+                if (!NumberUtils.isNumber(bean.getInvoiceCgst())) {
+                    throw new Exception("the invoice CGST is not a number");
+                }
+                recdmat.setInvoiceCgst(new java.math.BigDecimal(bean.getInvoiceCgst()));
             }
-            recdmat.setInvoiceSgst(new java.math.BigDecimal(bean.getInvoiceSgst()));
+            if (StringUtils.isNotBlank(bean.getInvoiceIgst())) {
+                if (!NumberUtils.isNumber(bean.getInvoiceIgst())) {
+                    throw new Exception("the invoice IGST is not a number");
+                }
+                recdmat.setInvoiceIgst(new java.math.BigDecimal(bean.getInvoiceIgst()));
+            }
+            if (StringUtils.isNotBlank(bean.getInvoiceSgst())) {
+                if (!NumberUtils.isNumber(bean.getInvoiceSgst())) {
+                    throw new Exception("the invoice SGST is not a number");
+                }
+                recdmat.setInvoiceSgst(new java.math.BigDecimal(bean.getInvoiceSgst()));
+            }
+            qcmi.setInvoiceDate(recdmat.getInvoiceDate());
+            qcmi.setInvoiceNo(recdmat.getInvoiceNo());
+            qcmi.setInvoiceValue(recdmat.getInvoiceValue());
+
+            service.addNewtoStores(storems, qcmi, getLookupservice().loadIDData(
+                    "MI_INQC").toString(), recdmat);
         }
-        qcmi.setInvoiceDate(recdmat.getInvoiceDate());
-        qcmi.setInvoiceNo(recdmat.getInvoiceNo());
-        qcmi.setInvoiceValue(recdmat.getInvoiceValue());
-        service.addNewtoStores(storems, qcmi, getLookupservice().loadIDData(
-                "MI_INQC").toString(), recdmat);
-        SciPurchaseMast purchaseMast = purchaseOrderService.loadPOById(recdmat.getPoId());
+
+        SciPurchaseMast purchaseMast = purchaseOrderService.loadPOById(poId);
         purchaseMast.setPurchaseStatus(getLookupservice().loadIDData("PO_RECEIVED"));
         purchaseMast.setUpdatedBy(getUserPreferences().getUserID());
         purchaseMast.setUpdatedDate(new Date());
         purchaseOrderService.updatePOStatus(purchaseMast);
 
-        // storems.set
         return success();
     }
 

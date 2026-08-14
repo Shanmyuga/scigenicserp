@@ -175,15 +175,25 @@ public class ITemMasterController extends SciBaseController {
 				
 				String[] rawmisarr = StringUtils.split(rawmis,",");
 				for(SciMatindMaster m: datalist) {
-					
+
 					if(rawmisarr != null) {
 						for(String rawmi:rawmisarr) {
 							SciRawMIDetails rmidetails = new SciRawMIDetails();
+							SciMatindMaster rawMiMaster = miservice.loadMI(Long.parseLong(rawmi));
 
-							rmidetails.setRawMIMaster(miservice.loadMI(Long.parseLong(rawmi)));
+							rmidetails.setRawMIMaster(rawMiMaster);
 							rmidetails.setSubcontractMIMaster(m);
+							SciPurchaseMast rawMiPO = service.loadPurchaseOrderForMi(rawMiMaster.getSeqMiId());
+							if(rawMiPO != null) {
+								rmidetails.setSciVendorMaster(rawMiPO.getSciVendorMaster());
+							}
+							rmidetails.setMatDimension(rawMiMaster.getMatDimesion());
+							rmidetails.setRawMaterialDesc(rawMiMaster.getMatDesc());
+							if(rawMiMaster.getMatQty() != null) {
+								rmidetails.setMatQty(rawMiMaster.getMatQty().floatValue());
+							}
 							service.addRawMI(rmidetails);
-							 
+
 						}
 						}
 				}

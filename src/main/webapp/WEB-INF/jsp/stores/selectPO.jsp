@@ -57,10 +57,12 @@
    <br/>
    <display:table  sort="list"   pagesize="10" name="matitemlist" id="row2"   requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" htmlId="2">
 
-    <display:column sortable="true"  title="Select" media="html" >
+    <display:column title="Select" media="html" >
+     <form:checkbox path="recdList[${row2_rowNum%10}].matindex" value="${row2_rowNum}" />
+    </display:column>
+
+    <display:column title="View Earlier Recd Items" media="html" >
      <form:radiobutton path="seqSelectMIID" value="${row2.seqMiId}" onclick="selectItem('loadrecdmi')" />
-
-
     </display:column>
 
     <display:column sortable="true"   title="MI ID"  property="seqMiId">
@@ -83,7 +85,18 @@
 
     </display:column>
 
-
+    <display:column title="Received Quantity" media="html" >
+     <form:input path="recdList[${row2_rowNum%10}].recdCount" size="8"/>
+    </display:column>
+    <display:column title="Received Dimension" media="html" >
+     <form:input path="recdList[${row2_rowNum%10}].recdDimension" size="8"/>
+    </display:column>
+    <display:column title="Remarks" media="html" >
+     <form:input path="recdList[${row2_rowNum%10}].remarks" size="12"/>
+    </display:column>
+    <display:column title="Invoice Value" media="html" >
+     <form:input path="recdList[${row2_rowNum%10}].invoiceValue" size="8"/>
+    </display:column>
 
    </display:table>
   </div>
@@ -92,13 +105,7 @@
  <table >
 
   <tr>
-   <td>Received Dimension</td><td><form:input path="receivedDimen"/></td>
-   <td>Received Quantity</td><td><form:input path="receivedCnt"/></td>
-   <td>Remarks</td><td><form:textarea path="remarks"/></td>
-  </tr>
-  <tr>
    <td>Invoice No</td><td><form:input path="invoiceNo"/></td>
-   <td>Invoice Value</td><td><form:input path="invoiceValue"/></td>
    <td>Invoice Date</td>
    <td><form:input path="invoiceDate"/>
     <a href="javascript:show_calendar('document.storesbean.invoiceDate', document.storesbean.invoiceDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>

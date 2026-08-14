@@ -130,4 +130,6 @@ public interface ISciPurchItemMasterDAO {
 	public void addRawMI(SciRawMIDetails midetails);
 
 	public void deleteRawMI(Long seqMiId,Long seqVendorId,Long rawMiId,String stageDesc);
+
+	public SciPurchaseMast loadPurchaseOrderForMi(Long seqMiId);
 }

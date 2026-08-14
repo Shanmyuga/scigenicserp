@@ -2,11 +2,30 @@ package com.sci.bpm.command.stores;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.sci.bpm.db.model.SciWorkorderMaster;
 
 public class StoresBean implements Serializable {
+
+	private List<RecdItemCommand> recdList = new ArrayList<RecdItemCommand>();
+
+	public StoresBean() {
+		super();
+		for (int idx = 0; idx < 11; idx++) {
+			this.recdList.add(new RecdItemCommand());
+		}
+	}
+
+	public List<RecdItemCommand> getRecdList() {
+		return recdList;
+	}
+
+	public void setRecdList(List<RecdItemCommand> recdList) {
+		this.recdList = recdList;
+	}
 
 	private Long seqItemId;
 
@@ -408,6 +427,10 @@ public class StoresBean implements Serializable {
 		this.invoiceCgst = null;
 		this.invoiceIgst = null;
 		this.invoiceSgst = null;
+		this.recdList = new ArrayList<RecdItemCommand>();
+		for (int idx = 0; idx < 11; idx++) {
+			this.recdList.add(new RecdItemCommand());
+		}
 	}
 
 	public String getHasReturnQty() {

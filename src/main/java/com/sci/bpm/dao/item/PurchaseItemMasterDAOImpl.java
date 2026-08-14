@@ -202,5 +202,21 @@ return query.getResultList();
 		qry.executeUpdate();
 	}
 
+	@Override
+	public SciPurchaseMast loadPurchaseOrderForMi(Long seqMiId) {
+		if (seqMiId == null) {
+			return null;
+		}
+		Query viewQuery = em.createQuery("Select m from PurchaseWorkOrderView m where m.seqMiId=:seqMIId and m.seqPurchId is not null");
+		viewQuery.setParameter("seqMIId", seqMiId);
+		List<PurchaseWorkOrderView> views = viewQuery.getResultList();
+		if (views == null || views.isEmpty()) {
+			return null;
+		}
+		Query poQuery = em.createQuery("Select m from SciPurchaseMast m where m.seqPurchId=:seqPurchId");
+		poQuery.setParameter("seqPurchId", views.get(0).getSeqPurchId());
+		List<SciPurchaseMast> poList = poQuery.getResultList();
+		return poList.isEmpty() ? null : poList.get(0);
+	}
 
 }
