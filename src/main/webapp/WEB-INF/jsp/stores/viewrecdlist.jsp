@@ -125,6 +125,12 @@
 <display:column sortable="true"  title="Invoice SGST" property="invoiceSgst" >
 
 </display:column>
+<display:column sortable="true"  title="Total Invoice" property="totalInvoice" >
+
+</display:column>
+<display:column sortable="true"  title="Other Charges" property="otherCharges" >
+
+</display:column>
 <display:column sortable="true"  title="MI WO DESC"  >
 <c:out value='${row.sciMiMaster.sciWorkorderMaster.jobDesc}'/>
 </display:column>

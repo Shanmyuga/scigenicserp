@@ -94,6 +94,8 @@ public class StoresBean implements Serializable {
 	private String invoiceCgst;
 	private String invoiceIgst;
 	private String invoiceSgst;
+	private String totalInvoice;
+	private String otherCharges;
 
 
 	public String getReportFilter() {
@@ -150,6 +152,22 @@ public class StoresBean implements Serializable {
 
 	public void setInvoiceSgst(String invoiceSgst) {
 		this.invoiceSgst = invoiceSgst;
+	}
+
+	public String getTotalInvoice() {
+		return totalInvoice;
+	}
+
+	public void setTotalInvoice(String totalInvoice) {
+		this.totalInvoice = totalInvoice;
+	}
+
+	public String getOtherCharges() {
+		return otherCharges;
+	}
+
+	public void setOtherCharges(String otherCharges) {
+		this.otherCharges = otherCharges;
 	}
 
 	public String getWorkOrderKey() {
@@ -427,6 +445,8 @@ public class StoresBean implements Serializable {
 		this.invoiceCgst = null;
 		this.invoiceIgst = null;
 		this.invoiceSgst = null;
+		this.totalInvoice = null;
+		this.otherCharges = null;
 		this.recdList = new ArrayList<RecdItemCommand>();
 		for (int idx = 0; idx < 11; idx++) {
 			this.recdList.add(new RecdItemCommand());

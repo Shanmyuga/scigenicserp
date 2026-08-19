@@ -116,6 +116,10 @@
    <td>Invoice IGST</td><td><form:input path="invoiceIgst"/></td>
    <td>Invoice SGST</td><td><form:input path="invoiceSgst"/></td>
   </tr>
+  <tr>
+   <td>Total Invoice</td><td><form:input path="totalInvoice"/></td>
+   <td>Other Charges</td><td><form:input path="otherCharges"/></td>
+  </tr>
 
  </table>
 

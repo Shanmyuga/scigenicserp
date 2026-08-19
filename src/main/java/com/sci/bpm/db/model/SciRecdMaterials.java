@@ -292,4 +292,25 @@ private SciMatindMaster sciMiMaster;
 		this.invoiceSgst = invoiceSgst;
 	}
 
+	private BigDecimal totalInvoice;
+	private BigDecimal otherCharges;
+
+	@Column(name = "TOTAL_INVOICE", precision = 22, scale = 4)
+	public BigDecimal getTotalInvoice() {
+		return totalInvoice;
+	}
+
+	public void setTotalInvoice(BigDecimal totalInvoice) {
+		this.totalInvoice = totalInvoice;
+	}
+
+	@Column(name = "OTHER_CHARGES", precision = 22, scale = 4)
+	public BigDecimal getOtherCharges() {
+		return otherCharges;
+	}
+
+	public void setOtherCharges(BigDecimal otherCharges) {
+		this.otherCharges = otherCharges;
+	}
+
 }
