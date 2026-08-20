@@ -10,11 +10,15 @@ import com.sci.bpm.db.model.SciWorkorderMaster;
 
 public class StoresBean implements Serializable {
 
+	// Upper bound on how many MI rows (across all selected PO items) can be
+	// received together in a single "Add New Item" submission.
+	private static final int MAX_RECD_ROWS = 200;
+
 	private List<RecdItemCommand> recdList = new ArrayList<RecdItemCommand>();
 
 	public StoresBean() {
 		super();
-		for (int idx = 0; idx < 11; idx++) {
+		for (int idx = 0; idx < MAX_RECD_ROWS; idx++) {
 			this.recdList.add(new RecdItemCommand());
 		}
 	}
@@ -25,6 +29,19 @@ public class StoresBean implements Serializable {
 
 	public void setRecdList(List<RecdItemCommand> recdList) {
 		this.recdList = recdList;
+	}
+
+	// Purchase order item(s) selected (via checkbox) on the "Select PO" screen.
+	// Multiple items can be selected together so their MI's are all loaded
+	// into matitemlist and received in one go.
+	private List<Long> selectedItemIds = new ArrayList<Long>();
+
+	public List<Long> getSelectedItemIds() {
+		return selectedItemIds;
+	}
+
+	public void setSelectedItemIds(List<Long> selectedItemIds) {
+		this.selectedItemIds = selectedItemIds;
 	}
 
 	private Long seqItemId;
@@ -447,8 +464,9 @@ public class StoresBean implements Serializable {
 		this.invoiceSgst = null;
 		this.totalInvoice = null;
 		this.otherCharges = null;
+		this.selectedItemIds = new ArrayList<Long>();
 		this.recdList = new ArrayList<RecdItemCommand>();
-		for (int idx = 0; idx < 11; idx++) {
+		for (int idx = 0; idx < MAX_RECD_ROWS; idx++) {
 			this.recdList.add(new RecdItemCommand());
 		}
 	}

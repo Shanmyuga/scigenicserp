@@ -32,7 +32,7 @@
 <display:table sort="list"   pagesize="10" name="poitemslist"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px"  htmlId="3">
 
 <display:column sortable="true"   title="Select" media="html"   >
-<form:radiobutton path="seqItemId" value="${row.seaPuritemId}"  onclick="selectItem('getmatitems')"/>
+<form:checkbox path="selectedItemIds" value="${row.seaPuritemId}"  onclick="selectItem('getmatitems')"/>
 </display:column>
 <display:column sortable="true"   title="Item Description" property="itemDescription"  >
 </display:column>
@@ -52,13 +52,13 @@
 
  <c:if test="${fn:length(matitemlist) > 0 }" >
   <div  style="float:left;width:750px;padding:10px;margin-top:50px">
-   <p align="left">MI's under the Selected Item </p>
+   <p align="left">MI's under the Selected Item(s) </p>
    <br/>
    <br/>
-   <display:table  sort="list"   pagesize="10" name="matitemlist" id="row2"   requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" htmlId="2">
+   <display:table  sort="list"   pagesize="200" name="matitemlist" id="row2"   requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" htmlId="2">
 
     <display:column title="Select" media="html" >
-     <form:checkbox path="recdList[${row2_rowNum%10}].matindex" value="${row2_rowNum}" />
+     <form:checkbox path="recdList[${row2_rowNum-1}].matindex" value="${row2_rowNum}" />
     </display:column>
 
     <display:column title="View Earlier Recd Items" media="html" >
@@ -86,16 +86,16 @@
     </display:column>
 
     <display:column title="Received Quantity" media="html" >
-     <form:input path="recdList[${row2_rowNum%10}].recdCount" size="8"/>
+     <form:input path="recdList[${row2_rowNum-1}].recdCount" size="8"/>
     </display:column>
     <display:column title="Received Dimension" media="html" >
-     <form:input path="recdList[${row2_rowNum%10}].recdDimension" size="8"/>
+     <form:input path="recdList[${row2_rowNum-1}].recdDimension" size="8"/>
     </display:column>
     <display:column title="Remarks" media="html" >
-     <form:input path="recdList[${row2_rowNum%10}].remarks" size="12"/>
+     <form:input path="recdList[${row2_rowNum-1}].remarks" size="12"/>
     </display:column>
     <display:column title="Invoice Value" media="html" >
-     <form:input path="recdList[${row2_rowNum%10}].invoiceValue" size="8"/>
+     <form:input path="recdList[${row2_rowNum-1}].invoiceValue" size="8"/>
     </display:column>
 
    </display:table>

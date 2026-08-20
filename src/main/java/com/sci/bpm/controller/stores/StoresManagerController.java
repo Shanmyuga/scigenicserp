@@ -299,16 +299,19 @@ public class StoresManagerController extends SciBaseController {
         StoresBean bean = (StoresBean) getFormObject(context);
         List<SciPurchItemMaster> master = (List<SciPurchItemMaster>) context
                 .getFlowScope().get("poitemslist");
-        SciPurchItemMaster mast = selectPI(master, bean.getSeqItemId());
 
-        List<SciMatindMaster> matitemlist = service.getMatItems(mast);
-        if(matitemlist.size() ==1) {
-            SciMatindMaster groupMi = matitemlist.get(0);
-            if("Y".equals(groupMi.getIsGroupMiId())) {
-               List<SciMatindMaster> matlist =  miservice.loadChildMi(groupMi.getSeqMiId());
-                context.getFlowScope().put("matitemlist", matlist);
-                return success();
+        List<SciMatindMaster> matitemlist = new ArrayList<SciMatindMaster>();
+        for (Long seqItemId : bean.getSelectedItemIds()) {
+            SciPurchItemMaster mast = selectPI(master, seqItemId);
+
+            List<SciMatindMaster> itemMis = service.getMatItems(mast);
+            if (itemMis.size() == 1) {
+                SciMatindMaster groupMi = itemMis.get(0);
+                if ("Y".equals(groupMi.getIsGroupMiId())) {
+                    itemMis = miservice.loadChildMi(groupMi.getSeqMiId());
+                }
             }
+            matitemlist.addAll(itemMis);
         }
         context.getFlowScope().put("matitemlist", matitemlist);
         return success();
