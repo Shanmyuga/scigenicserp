@@ -210,15 +210,29 @@ public class ITemMasterController extends SciBaseController {
 		else {
 			poitemlist = (List)context.getFlowScope().get("poItemlist");
 		}
-		
-		
+
+
 		String[] itemlist = command.getItemlist();
 		List fullitemlist = (List) context.getFlowScope().get("itemlist");
 		for(int idx=0;idx < itemlist.length;idx++) {
-			poitemlist.add(fullitemlist.get(Integer.parseInt(itemlist[idx])-1));
+			SciPurchItemMaster selected = (SciPurchItemMaster) fullitemlist.get(Integer.parseInt(itemlist[idx])-1);
+			if (!containsItem(poitemlist, selected)) {
+				poitemlist.add(selected);
+			}
 		}
 		context.getFlowScope().put("poItemlist", poitemlist);
 		return success();
+	}
+
+	private boolean containsItem(List poitemlist, SciPurchItemMaster candidate) {
+		for (Object obj : poitemlist) {
+			SciPurchItemMaster existing = (SciPurchItemMaster) obj;
+			if (existing.getSeaPuritemId() != null
+					&& existing.getSeaPuritemId().equals(candidate.getSeaPuritemId())) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	
@@ -248,15 +262,18 @@ public class ITemMasterController extends SciBaseController {
 		}
 		
 		List fullitemlist = (List) context.getFlowScope().get("itemlist");
-		
+
 		for(int idx=0;idx<itemlist.length;idx++) {
-			poitemlist.add(fullitemlist.get(Integer.parseInt(itemlist[idx])-1));
+			SciPurchItemMaster selected = (SciPurchItemMaster) fullitemlist.get(Integer.parseInt(itemlist[idx])-1);
+			if (!containsItem(poitemlist, selected)) {
+				poitemlist.add(selected);
+			}
 		}
 		context.getFlowScope().put("poItemlist", poitemlist);
 		return success();
 	}
-	
-	
+
+
 	public boolean checkRawMI(String rawMiid) {
 		boolean check = true;
 		String[] rawmis = StringUtils.split(rawMiid,",");

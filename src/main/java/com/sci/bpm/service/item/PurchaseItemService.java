@@ -24,4 +24,6 @@ public interface PurchaseItemService {
 	public List<SciRawMIDetails> loadRawMI(Long subContractMI);
 
 	public SciPurchaseMast loadPurchaseOrderForMi(Long seqMiId);
+
+	public SciPurchItemMaster findById(Long seqPuritemId);
 }

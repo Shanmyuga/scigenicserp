@@ -101,4 +101,9 @@ for(SciMatindMaster m: splitmilist) {
 		return dao.loadPurchaseOrderForMi(seqMiId);
 	}
 
+	@Override
+	public SciPurchItemMaster findById(Long seqPuritemId) {
+		return dao.findById(seqPuritemId);
+	}
+
 }

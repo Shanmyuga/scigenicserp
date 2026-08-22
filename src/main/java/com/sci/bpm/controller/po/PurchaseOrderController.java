@@ -52,6 +52,7 @@ import com.sci.bpm.command.mi.MatindCommand;
 import com.sci.bpm.command.po.POCollectionCommand;
 import com.sci.bpm.command.po.POCommand;
 import com.sci.bpm.controller.base.SciBaseController;
+import com.sci.bpm.service.item.PurchaseItemService;
 import com.sci.bpm.service.po.PurchaseOrderService;
 import com.sci.bpm.service.product.ProductMasterService;
 
@@ -70,6 +71,9 @@ public class PurchaseOrderController extends SciBaseController {
 
 	@Autowired
 	private MaterialIndentService materialIndentService;
+
+	@Autowired
+	private PurchaseItemService itemService;
 
 	@Override
 	public Event setupForm(RequestContext context) throws Exception {
@@ -102,9 +106,25 @@ public class PurchaseOrderController extends SciBaseController {
 		}
 		purchmaster.setVendorAddress(vendorDetail.getVendorAddress()+ "   " + vendorcity);
 		
-		float totalcost = 0;
+		Long inPurchaseStatus = getLookupservice().loadIDData("PITEM_INPURCHASE");
+		List<SciPurchItemMaster> itemsToAdd = new ArrayList<SciPurchItemMaster>();
 		for (SciPurchItemMaster im : itemlist) {
-			im.setItemStatus(getLookupservice().loadIDData("PITEM_INPURCHASE"));
+			// re-check the item's current status in the database in case it was
+			// already added to a purchase order by an earlier, duplicate submit
+			// (e.g. the "Create PO" button clicked twice) - skip it if so.
+			SciPurchItemMaster current = itemService.findById(im.getSeaPuritemId());
+			if (current != null && inPurchaseStatus.equals(current.getItemStatus())) {
+				continue;
+			}
+			itemsToAdd.add(im);
+		}
+		if (itemsToAdd.isEmpty()) {
+			throw new Exception("The selected item(s) have already been added to a purchase order.");
+		}
+
+		float totalcost = 0;
+		for (SciPurchItemMaster im : itemsToAdd) {
+			im.setItemStatus(inPurchaseStatus);
 			im.setUpdatedBy(getUserPreferences().getUserID());
 			im.setUpdatedDate(new java.util.Date());
 			totalcost = totalcost + im.getItemEstimatedCost().floatValue();
@@ -143,7 +163,7 @@ public class PurchaseOrderController extends SciBaseController {
 		purchmaster.setInsertedBy(getUserPreferences().getUserID());
 		purchmaster.setInsertedDate(new java.util.Date());
 		purchmaster.setPurchaseCreatedDt(new java.util.Date());
-		service.addPurchOrder(purchmaster, itemlist, getLookupservice()
+		service.addPurchOrder(purchmaster, itemsToAdd, getLookupservice()
 				.loadIDData("MI_PURCHASE_CREATED"));
 		return success();
 	}
