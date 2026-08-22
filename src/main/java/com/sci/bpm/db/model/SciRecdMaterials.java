@@ -15,6 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 
 /**
@@ -311,6 +312,39 @@ private SciMatindMaster sciMiMaster;
 
 	public void setOtherCharges(BigDecimal otherCharges) {
 		this.otherCharges = otherCharges;
+	}
+
+	// resolved (not persisted) from the vendor tied to this row's poId, for
+	// display on the "view recd items" screen.
+	private String vendorName;
+	private String vendorPan;
+	private String vendorGstn;
+
+	@Transient
+	public String getVendorName() {
+		return vendorName;
+	}
+
+	public void setVendorName(String vendorName) {
+		this.vendorName = vendorName;
+	}
+
+	@Transient
+	public String getVendorPan() {
+		return vendorPan;
+	}
+
+	public void setVendorPan(String vendorPan) {
+		this.vendorPan = vendorPan;
+	}
+
+	@Transient
+	public String getVendorGstn() {
+		return vendorGstn;
+	}
+
+	public void setVendorGstn(String vendorGstn) {
+		this.vendorGstn = vendorGstn;
 	}
 
 }

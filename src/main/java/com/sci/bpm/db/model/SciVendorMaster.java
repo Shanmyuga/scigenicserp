@@ -132,7 +132,28 @@ public class SciVendorMaster implements java.io.Serializable {
 	public void setVendorAddress(String vendorAddress) {
 		this.vendorAddress = vendorAddress;
 	}
-	
+
+	private String vendorPan;
+	private String vendorGstn;
+
+	@Column(name = "VENDOR_PAN", length = 20)
+	public String getVendorPan() {
+		return this.vendorPan;
+	}
+
+	public void setVendorPan(String vendorPan) {
+		this.vendorPan = vendorPan;
+	}
+
+	@Column(name = "VENDOR_GSTN", length = 20)
+	public String getVendorGstn() {
+		return this.vendorGstn;
+	}
+
+	public void setVendorGstn(String vendorGstn) {
+		this.vendorGstn = vendorGstn;
+	}
+
 	private String updatedBy;
 	private Date updatedDate;
 	

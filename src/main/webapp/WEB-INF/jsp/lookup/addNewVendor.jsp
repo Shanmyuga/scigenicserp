@@ -41,6 +41,13 @@ Data</font></p>
 <td align="right" class="datatext">Vendor Contact</td>
 <td><form:input path="vendorContact" maxlength="100" size="50"/></td>
 
+<td align="right" class="datatext">Vendor PAN</td>
+<td><form:input path="vendorPan" maxlength="20" size="20"/></td>
+</tr>
+<tr>
+<td align="right" class="datatext">Vendor GSTN</td>
+<td><form:input path="vendorGstn" maxlength="20" size="20"/></td>
+
 <td align="right" >&nbsp;</td>
 <td><input type="button" value="Add New Vendor"  onclick="eventdirect('addlookup')" /></td>
 </tr>
@@ -87,6 +94,12 @@ Data</font></p>
 
             </display:column>
             <display:column sortable="true"    property="vendorCity" >
+
+            </display:column>
+            <display:column sortable="true"  title="Vendor PAN"  property="vendorPan" >
+
+            </display:column>
+            <display:column sortable="true"  title="Vendor GSTN"  property="vendorGstn" >
 
             </display:column>
         </display:table>

@@ -104,6 +104,15 @@
 <display:column sortable="true"  title="Puchase Order ID" property="poId" >
 
 </display:column>
+<display:column sortable="true"  title="Vendor Name" property="vendorName" >
+
+</display:column>
+<display:column sortable="true"  title="Vendor PAN" property="vendorPan" >
+
+</display:column>
+<display:column sortable="true"  title="Vendor GSTN" property="vendorGstn" >
+
+</display:column>
 <display:column sortable="true"  title="Puchase Item ID" property="seqPurchItemID" >
 
 </display:column>

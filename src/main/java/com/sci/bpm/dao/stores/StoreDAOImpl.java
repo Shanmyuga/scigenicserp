@@ -681,7 +681,33 @@ public class StoreDAOImpl implements StoresDAO {
 			wquery.setParameter(key, parameters.get(key));
 		}
 		List<SciRecdMaterials> milist = wquery.getResultList();
-		return wquery.getResultList();
+
+		Set<Long> poIds = new HashSet<Long>();
+		for (SciRecdMaterials m : milist) {
+			if (m.getPoId() != null) {
+				poIds.add(m.getPoId());
+			}
+		}
+		if (!poIds.isEmpty()) {
+			List<SciPurchaseMast> poList = em
+					.createQuery("select pm from SciPurchaseMast pm where pm.seqPurchId in (:poIds)")
+					.setParameter("poIds", poIds)
+					.getResultList();
+			Map<Long, SciVendorMaster> vendorByPoId = new HashMap<Long, SciVendorMaster>();
+			for (SciPurchaseMast pm : poList) {
+				vendorByPoId.put(pm.getSeqPurchId(), pm.getSciVendorMaster());
+			}
+			for (SciRecdMaterials m : milist) {
+				SciVendorMaster vendor = vendorByPoId.get(m.getPoId());
+				if (vendor != null) {
+					m.setVendorName(vendor.getVendorName());
+					m.setVendorPan(vendor.getVendorPan());
+					m.setVendorGstn(vendor.getVendorGstn());
+				}
+			}
+		}
+
+		return milist;
 	}
 
 	public List loadReturnRequest(StoresBean command) {

@@ -38,6 +38,8 @@ public class LookupValueBean implements Serializable{
 	private String vendorContact;
 	private String vendorCity;
 	private String vendorAddress;
+	private String vendorPan;
+	private String vendorGstn;
 	private String customerStatus;
 
 	private String shortKey;
@@ -170,6 +172,18 @@ public class LookupValueBean implements Serializable{
 	}
 	public void setVendorAddress(String vendorAddress) {
 		this.vendorAddress = vendorAddress;
+	}
+	public String getVendorPan() {
+		return vendorPan;
+	}
+	public void setVendorPan(String vendorPan) {
+		this.vendorPan = vendorPan;
+	}
+	public String getVendorGstn() {
+		return vendorGstn;
+	}
+	public void setVendorGstn(String vendorGstn) {
+		this.vendorGstn = vendorGstn;
 	}
 	public String getMatcatCode() {
 		return matcatCode;
