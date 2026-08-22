@@ -29,7 +29,7 @@
 <p align="left">Items under this Purchase Order</p> 
  <br/>
  <br/>
-<display:table sort="list"   pagesize="10" name="poitemslist"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px"  htmlId="3">
+<display:table sort="list"   pagesize="30" name="poitemslist"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px"  htmlId="3">
 
 <display:column sortable="true"   title="Select" media="html"   >
 <form:checkbox path="selectedItemIds" value="${row.seaPuritemId}"  onclick="selectItem('getmatitems')"/>

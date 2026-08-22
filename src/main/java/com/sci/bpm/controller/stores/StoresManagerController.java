@@ -2,9 +2,7 @@ package com.sci.bpm.controller.stores;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.sci.bpm.command.marketing.WorkOrderCommand;
 import com.sci.bpm.db.model.*;
@@ -61,16 +59,6 @@ public class StoresManagerController extends SciBaseController {
         }
         bean.setSeqPurchId(master.getSeqPurchId());
         List<SciPurchItemMaster> mylist = service.loadPOItems(master.getSeqPurchId(), status);
-        // the underlying query can return the same purchase item more than once
-        // (one row per SciPurchaseItemdetails match); collapse to distinct items
-        // so a single checkbox represents each item on screen.
-        if (mylist != null) {
-            Map<Long, SciPurchItemMaster> distinctItems = new LinkedHashMap<Long, SciPurchItemMaster>();
-            for (SciPurchItemMaster item : mylist) {
-                distinctItems.put(item.getSeaPuritemId(), item);
-            }
-            mylist = new ArrayList<SciPurchItemMaster>(distinctItems.values());
-        }
         context.getFlowScope().put("poitemslist", mylist);
         context.getFlowScope().remove("matitemlist");
         bean.reset();
