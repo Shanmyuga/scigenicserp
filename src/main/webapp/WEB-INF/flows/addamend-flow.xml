@@ -15,6 +15,10 @@
         <webflow:evaluate expression="searchworkcont.filterReport"/>
 
     </webflow:transition>
+    <webflow:transition on="viewwodetails" to="entersearch">
+        <webflow:evaluate expression="searchworkcont.bind"/>
+        <webflow:evaluate expression="searchworkcont.selectWorder"/>
+    </webflow:transition>
     </webflow:view-state>
 <webflow:view-state id="addamend" view="workorder.addamend">
         <webflow:on-entry>

@@ -91,10 +91,13 @@
                <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addVendorPurch-flow">Add  Vendor Quotations Cost</a></td>
               </tr>
-               <tr> 
+               <tr>
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewworkorder-flow">View Work Order Docs</a></td>
               </tr>
-                <tr> 
+              <tr>
+                <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addamend-flow">Search Work Order</a></td>
+              </tr>
+                <tr>
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewrejected-flow">View QC/Production Rejected Items</a></td>
               </tr>
                  <tr> 

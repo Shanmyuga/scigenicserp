@@ -45,10 +45,13 @@
               <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewstoreissues-flow">View Issue List</a></td>
               </tr>
-                 <tr> 
+                 <tr>
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewworkorder-flow">View Work Order Docs</a></td>
               </tr>
-                 <tr> 
+              <tr>
+                <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addamend-flow">Search Work Order</a></td>
+              </tr>
+                 <tr>
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addMatspec-flow">Add  Material Code</a></td>
               </tr>
                 <tr> 
