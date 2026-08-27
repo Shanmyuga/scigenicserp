@@ -113,8 +113,8 @@
   </tr>
   <tr>
    <td>Invoice CGST</td><td><form:input path="invoiceCgst"/></td>
-   <td>Invoice IGST</td><td><form:input path="invoiceIgst"/></td>
    <td>Invoice SGST</td><td><form:input path="invoiceSgst"/></td>
+   <td>Invoice IGST</td><td><form:input path="invoiceIgst"/></td>
   </tr>
   <tr>
    <td>Total Invoice</td><td><form:input path="totalInvoice"/></td>

@@ -363,7 +363,8 @@ public class PurchaseOrderController extends SciBaseController {
 		ptype.setRefDate(selected.getRefDate()!=null?selected.getRefDate().toString():"");
 		ptype.setQutrefno(selected.getQutRefNo());
 		ptype.setPoCompany(selected.getPoCompany());
-		ptype.setGstnSupplier(selected.getGstnSupplier());
+		ptype.setGstnSupplier(selected.getSciVendorMaster() != null
+				? selected.getSciVendorMaster().getVendorGstn() : null);
 		System.out.println(selected.getVendorAddress());
 		System.out.println(selected.getVendorOrder());
 		
