@@ -216,8 +216,8 @@
         <display:column sortable="true"  title="Work Order Details"  property="workorderDesc"  >
 
         </display:column>
-        <display:column sortable="true"  title="Add Info"  property="matcodeAddInfo" >
-
+        <display:column sortable="true"  title="Add Info"  escapeXml="false" >
+            <c:out value="${fn:replace(row.matcodeAddInfo, ',', '<br/>')}" escapeXml="false" />
         </display:column>
         <display:column sortable="true"   title="Mat Estimated Cost"   >
             <fmt:parseNumber var="ut" type="NUMBER" value="${row.estUnintCost}"></fmt:parseNumber>
@@ -272,8 +272,8 @@
             <display:column sortable="true"  title="Label"  property="addInfoLabel" >
 
             </display:column>
-            <display:column sortable="true"  title="Value"  >
-                <c:out value="${fn:replace(row.addInfoValue, ',', '<br/>')}" escapeXml="false" />
+            <display:column sortable="true"  title="Value"  property="addInfoValue" >
+
             </display:column>
         </display:table>
     </c:if>
