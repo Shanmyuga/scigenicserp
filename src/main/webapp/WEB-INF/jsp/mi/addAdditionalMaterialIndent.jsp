@@ -57,7 +57,7 @@
  <c:if test="${addtionalInfoMessage.datatype == 'File'}">
   <input type="file" name="additionalInfoCommandList[<c:out value='${rowcnt.index}'/>].additionalFile"/>
  </c:if>
- <c:if test="${addtionalInfoMessage.mandatory == 'Yes'}">
+ <c:if test="${addtionalInfoMessage.mandatory == 'Yes' && addtionalInfoMessage.datatype != 'File'}">
 
  <span style="color:red;">*</span></td>
  </c:if>

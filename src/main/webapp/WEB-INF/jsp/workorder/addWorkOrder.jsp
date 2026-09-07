@@ -35,6 +35,8 @@
 <form:option value="Agriculture_Economical_media_animal_probiotic">Agriculture_Economical_media_animal_probiotic</form:option>
 <form:option value="SemiAuto_Enzymes_Therapeuti">SemiAuto_Enzymes_Therapeuti</form:option>
 <form:option value="FullyAutoPharma_Vaccine">Down Stream Equipments</form:option>
+<form:option value="FullyAutomatedFermBio">Fully Automated Fermenter and Bio Reactors</form:option>
+<form:option value="MultipleSystems">Multiple Systems</form:option>
 
 </form:select><span style="color:red;">*</span></td>
 </tr>
@@ -64,6 +66,7 @@
             <form:option value="Down Stream Equipments">Down Stream Equipments</form:option>
             <form:option value="Glass">Glass Vessel</form:option>
             <form:option value="Service">Service</form:option>
+             <form:option value="Process Vessels">Process Vessels</form:option>
             <form:option value="Stock">Stock WorkOrder</form:option>
             <form:option value="Proposal">Proposal WorkOrder</form:option>
             <form:option value="ShopFloor Work">ShopFloor WorkOrder</form:option>

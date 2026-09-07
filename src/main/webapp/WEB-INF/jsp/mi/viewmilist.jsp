@@ -272,8 +272,8 @@
             <display:column sortable="true"  title="Label"  property="addInfoLabel" >
 
             </display:column>
-            <display:column sortable="true"  title="Value"  property="addInfoValue" >
-
+            <display:column sortable="true"  title="Value"  >
+                <c:out value="${fn:replace(row.addInfoValue, ',', '<br/>')}" escapeXml="false" />
             </display:column>
         </display:table>
     </c:if>
