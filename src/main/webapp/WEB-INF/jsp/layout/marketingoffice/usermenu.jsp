@@ -42,6 +42,10 @@
                   <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=priceProposals-flow">Price for Project Proposals</a></td>
               </tr>
               <tr>
+                  <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewmiitems-flow">View MI</a></td>
+
+              </tr>
+              <tr>
                   <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewstreqitems-flow">View Stores Request List</a></td>
 
               </tr>

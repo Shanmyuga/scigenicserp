@@ -32,6 +32,9 @@
 
 
     <tr>
+        <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewmiitems-flow">View MI</a></td>
+    </tr>
+    <tr>
         <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewweeklystatus-flow">View Weekly Status Report</a></td>
     </tr>
 
