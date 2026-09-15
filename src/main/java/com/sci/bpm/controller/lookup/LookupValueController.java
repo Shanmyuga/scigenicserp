@@ -60,6 +60,13 @@ public class LookupValueController extends SciBaseController {
 		return success();
 	}
 
+	public Event searchLookupValues(RequestContext context) throws Exception {
+		LookupValueBean value = (LookupValueBean)getFormObject(context);
+		List<SciLookupMaster> lookupvalueslist = service.searchLookupValues(value.getReportFilter());
+		context.getFlowScope().put("lookupvalueslist", lookupvalueslist);
+		return success();
+	}
+
 	public Event addNewItemValue(RequestContext context) throws Exception {
 		LookupValueBean value = (LookupValueBean)getFormObject(context);
 		SciMasterItem master = new SciMasterItem();

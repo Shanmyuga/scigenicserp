@@ -35,4 +35,5 @@ public interface LookUpValueService {
 	public SciCustomerMaster findCustomer(Long seqClientId);
 	public String selectOrgCode();
 	public String selectCustomerCode(String seq_client_org_id);
+	public List<SciLookupMaster> searchLookupValues(String filter);
 }

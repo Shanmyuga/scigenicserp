@@ -75,6 +75,36 @@
 
 </display:column>
 
+<display:column sortable="true"  title="MI ID" escapeXml="false" >
+<c:forEach items="${row.sciItemmiDetailses}" var="midetail" varStatus="miStatus">
+<c:out value="${midetail.seqMiId}"/><c:if test="${!miStatus.last}"><br/></c:if>
+</c:forEach>
+</display:column>
+
+<display:column sortable="true"  title="MI Qty" escapeXml="false" >
+<c:forEach items="${row.sciItemmiDetailses}" var="midetail" varStatus="miStatus">
+<c:out value="${miDetailsMap[midetail.seqMiId].matQty}"/><c:if test="${!miStatus.last}"><br/></c:if>
+</c:forEach>
+</display:column>
+
+<display:column sortable="true"  title="MI Due Date" escapeXml="false" >
+<c:forEach items="${row.sciItemmiDetailses}" var="midetail" varStatus="miStatus">
+<fmt:formatDate value="${miDetailsMap[midetail.seqMiId].matDuedate}" pattern="dd-MM-yyyy" /><c:if test="${!miStatus.last}"><br/></c:if>
+</c:forEach>
+</display:column>
+
+<display:column sortable="true"  title="MI Status" escapeXml="false" >
+<c:forEach items="${row.sciItemmiDetailses}" var="midetail" varStatus="miStatus">
+<c:out value="${lovmap[miDetailsMap[midetail.seqMiId].purStatus]}"/><c:if test="${!miStatus.last}"><br/></c:if>
+</c:forEach>
+</display:column>
+
+<display:column sortable="true"  title="MI Remarks" escapeXml="false" >
+<c:forEach items="${row.sciItemmiDetailses}" var="midetail" varStatus="miStatus">
+<c:out value="${miDetailsMap[midetail.seqMiId].recommend}"/><c:if test="${!miStatus.last}"><br/></c:if>
+</c:forEach>
+</display:column>
+
 <display:column sortable="true"  title="New Item Description"   >
 
 <form:input path="poitemList[${row_rowNum}].itemDesc"  />

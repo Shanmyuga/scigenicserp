@@ -143,5 +143,9 @@ public class LookupValueServiceImpl implements LookUpValueService {
 		return daoimpl.selectCustomerCode(seq_client_org_id);
 	}
 
+	public List<SciLookupMaster> searchLookupValues(String filter) {
+		return daoimpl.searchLookupValues(filter);
+	}
+
 
 }

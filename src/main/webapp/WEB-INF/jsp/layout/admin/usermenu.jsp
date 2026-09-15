@@ -35,8 +35,11 @@
                  <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addrole-flow">PO Reports with QC Rejection</a></td>
               </tr>
-               <tr> 
+               <tr>
                 <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=lookup-flow">Add New Lookup Values</a> </td>
+              </tr>
+               <tr>
+                <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=searchlookup-flow">Search Lookup Values</a> </td>
               </tr>
                <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"> <a href="springtest.htm?_flowId=addProjEstimate-flow">Project Estimate</a> </td>

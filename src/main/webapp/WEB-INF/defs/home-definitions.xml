@@ -27,8 +27,13 @@
   </definition>
    <definition name="lookup.add" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
   <put-attribute name="menu" value="usermenu.jsp" />
-     
+
       <put-attribute name="body" value="/WEB-INF/jsp/lookup/addLookupValue.jsp" />
+  </definition>
+   <definition name="lookup.search" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+
+      <put-attribute name="body" value="/WEB-INF/jsp/lookup/searchLookupValue.jsp" />
   </definition>
    <definition name="customer.add" extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
   <put-attribute name="menu" value="usermenu.jsp" />

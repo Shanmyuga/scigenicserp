@@ -215,7 +215,17 @@ public class PurchaseOrderController extends SciBaseController {
 		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
 		List<SciPurchItemMaster> podetails = service.loadPODetails(selected);
 
+		Map<Long, SciMatindMaster> miDetailsMap = new HashMap<Long, SciMatindMaster>();
+		for (SciPurchItemMaster item : podetails) {
+			for (SciItemmiDetails midetail : item.getSciItemmiDetailses()) {
+				if (!miDetailsMap.containsKey(midetail.getSeqMiId())) {
+					miDetailsMap.put(midetail.getSeqMiId(), materialIndentService.loadMI(midetail.getSeqMiId()));
+				}
+			}
+		}
+
 		context.getFlowScope().put("podetails", podetails);
+		context.getFlowScope().put("miDetailsMap", miDetailsMap);
 
 		context.getFlowScope().put("selectedPO", selected);
 		return success();

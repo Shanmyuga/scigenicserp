@@ -102,6 +102,19 @@ public class LookupValueDAOImpl implements LookupValueDAO {
 		return true;
 	}
 
+	public List<SciLookupMaster> searchLookupValues(String filter) {
+		String query = "from SciLookupMaster lm";
+		Query qry;
+		if (filter != null && !filter.trim().isEmpty()) {
+			qry = em.createQuery(query
+					+ " where lower(lm.lovType) like :filter or lower(lm.lovName) like :filter or lower(lm.lovDescription) like :filter order by lm.lovType, lm.lovName");
+			qry.setParameter("filter", "%" + filter.trim().toLowerCase() + "%");
+		} else {
+			qry = em.createQuery(query + " order by lm.lovType, lm.lovName");
+		}
+		return qry.getResultList();
+	}
+
 	public List<SciClientOrgMaster> loadOrgNames() {
 		return em.createQuery("from SciClientOrgMaster em").getResultList();
 	}

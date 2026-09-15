@@ -34,6 +34,7 @@ public interface LookupValueDAO {
 	public String selectCustomerCode(String seq_client_org_id);
 	public String findOrgByOrgCode(String orgCode);
 	public SciCustomerMaster findCustomer(Long seqClientId);
+	public List<SciLookupMaster> searchLookupValues(String filter);
 
 
 
