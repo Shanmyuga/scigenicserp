@@ -336,7 +336,7 @@ public class MaterialIndentController extends SciBaseController {
         if ("Y".equals(command.getCancelStatus())) {
             command.setCancelStatusLov(getLookupservice().loadIDData("MI_CANCEL"));
         }
-        List milist = service.searchMI(command);
+        List<SciMatindMaster> milist = service.searchMI(command);
         /*
          * Map[] mymaps = prservice.loadDesc(milist);
          * context.getFlowScope().put("pcatmap", mymaps[0]);
@@ -344,6 +344,26 @@ public class MaterialIndentController extends SciBaseController {
          */
 
         //Collections.sort(milist,new SortComparator());
+        List<Long> miIds = new ArrayList<Long>();
+        for (SciMatindMaster mi : milist) {
+            miIds.add(mi.getSeqMiId());
+        }
+        List<SciMiMaterialAddinfoEntity> addInfoEntities = service.loadAddInfoForMIs(miIds);
+        Set<String> addInfoLabels = new TreeSet<String>();
+        Map<Long, Map<String, String>> addInfoByMi = new HashMap<Long, Map<String, String>>();
+        for (SciMiMaterialAddinfoEntity entity : addInfoEntities) {
+            Long miId = entity.getSeqMiId().getSeqMiId();
+            addInfoLabels.add(entity.getAddInfoLabel());
+            Map<String, String> valuesForMi = addInfoByMi.get(miId);
+            if (valuesForMi == null) {
+                valuesForMi = new HashMap<String, String>();
+                addInfoByMi.put(miId, valuesForMi);
+            }
+            valuesForMi.put(entity.getAddInfoLabel(), entity.getAddInfoValue());
+        }
+        context.getFlowScope().put("addInfoLabels", new ArrayList<String>(addInfoLabels));
+        context.getFlowScope().put("addInfoByMi", addInfoByMi);
+
         context.getFlowScope().put("milist", milist);
         context.getFlowScope().put("approveMI",
                 getLookupservice().loadIDData("MI_APPROVED"));

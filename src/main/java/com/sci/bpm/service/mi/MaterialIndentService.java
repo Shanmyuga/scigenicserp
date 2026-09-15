@@ -6,6 +6,7 @@ import java.util.List;
 import com.sci.bpm.command.mi.MatindCommand;
 import com.sci.bpm.db.model.SciMIAdditionalInfoDTO;
 import com.sci.bpm.db.model.SciMatindMaster;
+import com.sci.bpm.db.model.SciMiMaterialAddinfoEntity;
 import com.sci.bpm.db.model.SciStoresRequest;
 import com.sci.bpm.db.model.SciSubcontJobstatus;
 
@@ -41,6 +42,7 @@ public interface MaterialIndentService {
 	public void updateFullMi(SciMatindMaster request);
 	public List<SciSubcontJobstatus> getRecentSubcontJobStatus(Long seqWorkID);
 	public List<SciSubcontJobstatus> getLoadDetails(Long jobCode,String jobType,Long seqWorkId);
-	
-	
+	public List<SciMiMaterialAddinfoEntity> loadAddInfoForMIs(List<Long> miIds);
+
+
 }

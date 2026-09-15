@@ -1037,5 +1037,14 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		return view.getAddInfo();
 	}
 
+	public List<SciMiMaterialAddinfoEntity> loadAddInfoForMIs(List<Long> miIds) {
+		if (miIds == null || miIds.isEmpty()) {
+			return new ArrayList<SciMiMaterialAddinfoEntity>();
+		}
+		Query qry = em.createQuery("from SciMiMaterialAddinfoEntity where seqMiId.seqMiId in :miIds");
+		qry.setParameter("miIds", miIds);
+		return qry.getResultList();
+	}
+
 
 }

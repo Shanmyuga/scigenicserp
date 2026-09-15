@@ -216,9 +216,11 @@
         <display:column sortable="true"  title="Work Order Details"  property="workorderDesc"  >
 
         </display:column>
-        <display:column sortable="true"  title="Add Info"  escapeXml="false" >
-            <c:out value="${fn:replace(row.matcodeAddInfo, ',', '<br/>')}" escapeXml="false" />
+        <c:forEach items="${addInfoLabels}" var="addInfoLabel">
+        <display:column sortable="false"  title="${addInfoLabel}"  >
+            <c:out value="${addInfoByMi[row.seqMiId][addInfoLabel]}" />
         </display:column>
+        </c:forEach>
         <display:column sortable="true"   title="Mat Estimated Cost"   >
             <fmt:parseNumber var="ut" type="NUMBER" value="${row.estUnintCost}"></fmt:parseNumber>
             <fmt:parseNumber var="issquantity" type="NUMBER" value="${row.matQty}"></fmt:parseNumber>

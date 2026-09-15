@@ -153,6 +153,7 @@ public interface ISciMatindMasterDAO {
 	public List loadMisWithoutStoresRequest(MatindCommand command);
 
 	public String addInfo(Long seqMiId);
+	public List<com.sci.bpm.db.model.SciMiMaterialAddinfoEntity> loadAddInfoForMIs(List<Long> miIds);
 
 
 }

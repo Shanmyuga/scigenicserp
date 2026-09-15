@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sci.bpm.command.mi.MatindCommand;
 import com.sci.bpm.dao.mi.ISciMatindMasterDAO;
 import com.sci.bpm.db.model.SciMatindMaster;
+import com.sci.bpm.db.model.SciMiMaterialAddinfoEntity;
 import com.sci.bpm.db.model.SciStoresRequest;
 import com.sci.bpm.db.model.SciSubcontJobstatus;
 
@@ -193,7 +194,11 @@ public class MaterialIndentServiceImpl implements MaterialIndentService {
 		return daoimpl.getLoadDetails(jobCode, jobType, seqWorkId);
 	}
 
+	public List<SciMiMaterialAddinfoEntity> loadAddInfoForMIs(List<Long> miIds) {
+		return daoimpl.loadAddInfoForMIs(miIds);
+	}
 
-	
+
+
 
 }
