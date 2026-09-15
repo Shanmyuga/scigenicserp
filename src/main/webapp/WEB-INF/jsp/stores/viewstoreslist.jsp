@@ -162,9 +162,11 @@
 </display:column>
 
 
- <display:column sortable="true"   title="Additional Mat Spec"   >
-  <c:out value="${row.sciMiMaster.matcodeAddInfo}"/>
+ <c:forEach items="${addInfoLabels}" var="addInfoLabel">
+ <display:column sortable="false"  title="${addInfoLabel}"  >
+  <c:out value="${addInfoByMi[row.sciMiMaster.seqMiId][addInfoLabel]}" />
  </display:column>
+ </c:forEach>
 </display:table>
 
 

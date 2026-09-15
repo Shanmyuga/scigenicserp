@@ -2,7 +2,11 @@ package com.sci.bpm.controller.stores;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import com.sci.bpm.command.marketing.WorkOrderCommand;
 import com.sci.bpm.db.model.*;
@@ -270,6 +274,27 @@ public class StoresManagerController extends SciBaseController {
 
         List<SciAvailableMaterials> stlist = service.viewStore(bean);
 
+        List<Long> miIds = new ArrayList<Long>();
+        for (SciAvailableMaterials item : stlist) {
+            if (item.getSciMiMaster() != null) {
+                miIds.add(item.getSciMiMaster().getSeqMiId());
+            }
+        }
+        List<SciMiMaterialAddinfoEntity> addInfoEntities = miservice.loadAddInfoForMIs(miIds);
+        Set<String> addInfoLabels = new TreeSet<String>();
+        Map<Long, Map<String, String>> addInfoByMi = new HashMap<Long, Map<String, String>>();
+        for (SciMiMaterialAddinfoEntity entity : addInfoEntities) {
+            Long miId = entity.getSeqMiId().getSeqMiId();
+            addInfoLabels.add(entity.getAddInfoLabel());
+            Map<String, String> valuesForMi = addInfoByMi.get(miId);
+            if (valuesForMi == null) {
+                valuesForMi = new HashMap<String, String>();
+                addInfoByMi.put(miId, valuesForMi);
+            }
+            valuesForMi.put(entity.getAddInfoLabel(), entity.getAddInfoValue());
+        }
+        context.getFlowScope().put("addInfoLabels", new ArrayList<String>(addInfoLabels));
+        context.getFlowScope().put("addInfoByMi", addInfoByMi);
 
         context.getFlowScope().put("stlist", stlist);
         return success();
@@ -280,6 +305,27 @@ public class StoresManagerController extends SciBaseController {
 
         List<SciRecdMaterials> stlist = service.viewrecd(bean);
 
+        List<Long> miIds = new ArrayList<Long>();
+        for (SciRecdMaterials item : stlist) {
+            if (item.getSciMiMaster() != null) {
+                miIds.add(item.getSciMiMaster().getSeqMiId());
+            }
+        }
+        List<SciMiMaterialAddinfoEntity> addInfoEntities = miservice.loadAddInfoForMIs(miIds);
+        Set<String> addInfoLabels = new TreeSet<String>();
+        Map<Long, Map<String, String>> addInfoByMi = new HashMap<Long, Map<String, String>>();
+        for (SciMiMaterialAddinfoEntity entity : addInfoEntities) {
+            Long miId = entity.getSeqMiId().getSeqMiId();
+            addInfoLabels.add(entity.getAddInfoLabel());
+            Map<String, String> valuesForMi = addInfoByMi.get(miId);
+            if (valuesForMi == null) {
+                valuesForMi = new HashMap<String, String>();
+                addInfoByMi.put(miId, valuesForMi);
+            }
+            valuesForMi.put(entity.getAddInfoLabel(), entity.getAddInfoValue());
+        }
+        context.getFlowScope().put("addInfoLabels", new ArrayList<String>(addInfoLabels));
+        context.getFlowScope().put("addInfoByMi", addInfoByMi);
 
         context.getFlowScope().put("recdlist", stlist);
         return success();

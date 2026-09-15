@@ -158,6 +158,12 @@
 <fmt:parseNumber var="recdQuantity" type="NUMBER" value="${row.recdQuantity}"></fmt:parseNumber>
 <c:out value="${ut*recdQuantity}"/>
 </display:column>
+
+<c:forEach items="${addInfoLabels}" var="addInfoLabel">
+<display:column sortable="false"  title="${addInfoLabel}"  >
+<c:out value="${addInfoByMi[row.sciMiMaster.seqMiId][addInfoLabel]}" />
+</display:column>
+</c:forEach>
 </display:table>
 
 
