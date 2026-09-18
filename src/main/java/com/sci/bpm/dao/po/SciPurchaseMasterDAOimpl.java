@@ -235,7 +235,7 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 	public List closePO(POCommand command) {
 
 		String myquery = "select  mi.MATCODE, mi.MAT_Spec, mi.MAT_TYPE,  to_char(mi.MAT_QTY_MOD,'999999.99') as orderQuantity, qcmi.QC_APP_CNT as qccnt, qcmi.QC_REC_CNT  as recdcnt, mi.MAT_DIMESION as orderDimension, qcmi.QC_APP_DIME as qcdim,qcmi.QC_REC_DIME as recddim  "
-				+ " , wm.JOB_DESC from  SCI_WORKORDER_MASTER wm , SCI_PURCHASE_MAST pm, SCI_PURCHASE_ITEMDETAILS_ pi, SCI_PURCH_ITEM_MASTER im, SCI_ITEMMI_DETAILS itmi, SCI_MATIND_MASTER mi, SCI_QC_MI_MASTER qcmi  where mi.SEQ_MI_ID = itmi.SEQ_MI_ID and "
+				+ " , wm.JOB_DESC, mi.SEQ_MI_ID from  SCI_WORKORDER_MASTER wm , SCI_PURCHASE_MAST pm, SCI_PURCHASE_ITEMDETAILS_ pi, SCI_PURCH_ITEM_MASTER im, SCI_ITEMMI_DETAILS itmi, SCI_MATIND_MASTER mi, SCI_QC_MI_MASTER qcmi  where mi.SEQ_MI_ID = itmi.SEQ_MI_ID and "
 				+ " itmi.SEQ_PURITEM_ID = im.SEA_PURITEM_ID and im.SEA_PURITEM_ID = pi.SEQ_ITEM_ID and pi.SEQ_PURCH_ID = pm.SEQ_PURCH_ID and  qcmi.SEQ_MI_ID = mi.seq_mi_id and qcmi.po_id = pm.seq_purch_id and mi.SEQ_WORK_ID = wm.SEQ_WORK_ID and pm.seq_purch_id =:purchaseid ";
 		Query q = em.createNativeQuery(myquery);
 		q.setParameter("purchaseid", command.getScipurchID());
@@ -249,6 +249,7 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 					(String) arr[3], (String) arr[4], (String) arr[5],
 					(String) arr[6], (String) arr[7], (String) arr[8], null,
 					(String) arr[9]);
+			comma.setSeqMiId(arr[10] == null ? null : arr[10].toString());
 			polist.add(comma);
 		}
 		return polist;

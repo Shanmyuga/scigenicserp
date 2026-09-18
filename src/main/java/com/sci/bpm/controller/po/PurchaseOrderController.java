@@ -202,6 +202,11 @@ public class PurchaseOrderController extends SciBaseController {
 			context.getFlashScope().put("APPROVAL_PENDING", "Y");
 
 		}
+
+		if (selected.getTotalCost() != null && selected.getTotalCost().floatValue() < 100000f) {
+			context.getFlashScope().put("PO_COST_UNDER_LAKH", "Y");
+		}
+
 		loadPOStoresStatus(context);
 
 		return success();

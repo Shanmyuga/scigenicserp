@@ -228,7 +228,7 @@
                     <input type="button"  value="Paid Fully " onclick="eventdirect('paidFully')"/>
                     <input type="button"  value="Cancel PO " onclick="eventdirect('cancelPO')"/>
                     <input type="button"  value="Certificates Received fully " onclick="eventdirect('updateCertStatus')"/>
-                    <c:if test="${userPreferences.roleName == 'admin' ||  userPreferences.roleName == 'purchasemanager' }">
+                    <c:if test="${userPreferences.roleName == 'admin' ||  (userPreferences.roleName == 'purchasemanager' &&  PO_COST_UNDER_LAKH != null) }">
                     <input type="button"  value="Approve PO " onclick="eventdirect('approvePO')"/>
                     </c:if>
             <c:if test="${userPreferences.roleName == 'purchasemanager' ||  userPreferences.roleName == 'subcontract' || userPreferences.roleName == 'admin' }">
@@ -288,6 +288,9 @@
 
             <display:column sortable="true"  property="poid" >
 
+
+            </display:column>
+            <display:column sortable="true"   title="MI ID" property="seqMiId"  >
 
             </display:column>
             <display:column sortable="true"   title="Matcode" property="matCode"  >

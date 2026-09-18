@@ -16,6 +16,7 @@ public class PurchaseStatusCommand implements Serializable {
 	private String workorder = null;
 	private String clientJob = null;
 	private String poid;
+	private String seqMiId;
 
 	public String getMatCode() {
 		return matCode;
@@ -105,6 +106,12 @@ public class PurchaseStatusCommand implements Serializable {
 	public void setPoid(String poid) {
 		this.poid = poid;
 	}
-	
-	
+	public String getSeqMiId() {
+		return seqMiId;
+	}
+	public void setSeqMiId(String seqMiId) {
+		this.seqMiId = seqMiId;
+	}
+
+
 }
