@@ -217,7 +217,7 @@
 
         </display:column>
         <c:forEach items="${addInfoLabels}" var="addInfoLabel">
-        <display:column sortable="false"  title="${addInfoLabel}"  >
+        <display:column sortable="true"  title="${addInfoLabel}"  >
             <c:out value="${addInfoByMi[row.seqMiId][addInfoLabel]}" />
         </display:column>
         </c:forEach>

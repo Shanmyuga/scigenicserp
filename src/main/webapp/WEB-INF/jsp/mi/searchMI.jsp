@@ -148,6 +148,11 @@ Cannot select different material code to create items
  <display:column sortable="true"  title="Add Info"  property="matcodeAddInfo" >
 
  </display:column>
+<c:forEach items="${addInfoLabels}" var="addInfoLabel">
+ <display:column sortable="true"  title="${addInfoLabel}"  >
+  <c:out value="${addInfoByMi[row.seqMiId][addInfoLabel]}" />
+ </display:column>
+</c:forEach>
 <display:column sortable="true"  title="Work Order Details"  property="workorderDesc"  >
 
 </display:column>

@@ -562,6 +562,30 @@ public class MaterialIndentController extends SciBaseController {
         return success();
     }
 
+    public Event sortMIByMatcodeSizeMake(RequestContext context) throws Exception {
+        List<SciMatindMaster> milist = (List<SciMatindMaster>) context.getFlowScope().get("milist");
+        if (milist == null) {
+            return success();
+        }
+        Comparator<SciMatindMaster> comparator = Comparator
+                .comparing(SciMatindMaster::getMatcode, Comparator.nullsLast(String.CASE_INSENSITIVE_ORDER))
+                .thenComparing(SciMatindMaster::getRefSize, Comparator.nullsLast(this::compareSizeValues))
+                .thenComparing(SciMatindMaster::getRefMake, Comparator.nullsLast(String.CASE_INSENSITIVE_ORDER));
+        List<SciMatindMaster> sorted = new ArrayList<SciMatindMaster>(milist);
+        sorted.sort(comparator);
+        context.getFlowScope().put("milist", sorted);
+        return success();
+    }
+
+    // REF_SIZE values are usually numeric; compare numerically when both parse, else as text
+    private int compareSizeValues(String size1, String size2) {
+        try {
+            return new BigDecimal(size1.trim()).compareTo(new BigDecimal(size2.trim()));
+        } catch (NumberFormatException e) {
+            return size1.compareToIgnoreCase(size2);
+        }
+    }
+
     public Event selectItemMI(RequestContext context) throws Exception {
         MatindCommand command = (MatindCommand) getFormObject(context);
         List itemmilist = new ArrayList();
@@ -604,6 +628,17 @@ public class MaterialIndentController extends SciBaseController {
             }
         }
 
+        Map<Long, Map<String, String>> addInfoByMi = (Map<Long, Map<String, String>>) context.getFlowScope().get("addInfoByMi");
+        Set<String> itemAddInfoLabels = new TreeSet<String>();
+        if (addInfoByMi != null) {
+            for (Object selected : itemmilist) {
+                Map<String, String> values = addInfoByMi.get(((SciMatindMaster) selected).getSeqMiId());
+                if (values != null) {
+                    itemAddInfoLabels.addAll(values.keySet());
+                }
+            }
+        }
+        context.getFlowScope().put("itemAddInfoLabels", new ArrayList<String>(itemAddInfoLabels));
         context.getFlowScope().put("itemdesc", matSpec);
         context.getFlowScope().put("itemmilist", itemmilist);
         return success();

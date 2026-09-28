@@ -16,6 +16,7 @@
         <webflow:transition on="searchMI" to="entersearch">
             <webflow:evaluate expression="micont.bind"/>
             <webflow:evaluate expression="micont.searchMI"/>
+            <webflow:evaluate expression="micont.sortMIByMatcodeSizeMake"/>
         </webflow:transition>
     <webflow:transition on="additionalInfo" to="entersearch">
         <webflow:evaluate expression="micont.bind"/>

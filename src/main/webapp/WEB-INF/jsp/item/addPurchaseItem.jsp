@@ -90,6 +90,12 @@
 
 </display:column>
 
+<c:forEach items="${itemAddInfoLabels}" var="addInfoLabel">
+<display:column sortable="false"  title="${addInfoLabel}"  >
+<c:out value="${addInfoByMi[row.seqMiId][addInfoLabel]}" />
+</display:column>
+</c:forEach>
+
 <display:column sortable="true"  title="Previous Estimated  Unit Cost" property="tempunitCost" >
 
 </display:column>
