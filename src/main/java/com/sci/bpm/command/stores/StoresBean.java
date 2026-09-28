@@ -105,6 +105,8 @@ public class StoresBean implements Serializable {
 	private String availableDimension;
 	private String workOrderKey;
 	private String reportFilter;
+	private String addInfoLabel;
+	private String addInfoValue;
 	private Date invoiceDate;
 	private String invoiceNo;
 	private String invoiceValue;
@@ -669,5 +671,21 @@ public class StoresBean implements Serializable {
 
 	public void setMatCode(String matCode) {
 		this.matCode = matCode;
+	}
+
+	public String getAddInfoLabel() {
+		return addInfoLabel;
+	}
+
+	public void setAddInfoLabel(String addInfoLabel) {
+		this.addInfoLabel = addInfoLabel;
+	}
+
+	public String getAddInfoValue() {
+		return addInfoValue;
+	}
+
+	public void setAddInfoValue(String addInfoValue) {
+		this.addInfoValue = addInfoValue;
 	}
 }

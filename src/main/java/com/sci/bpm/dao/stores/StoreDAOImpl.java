@@ -262,6 +262,21 @@ public class StoreDAOImpl implements StoresDAO {
 			whereClause = whereClause + " and m.sciMiMaster.sciWorkorderMaster.seqWorkId in (Select seqWorkId from SciActiveWorkordersReportEntity b where b.shortKey=:shortKey) ";
 			parameters.put("shortKey", command.getWorkOrderKey());
 		}
+
+		boolean hasAddInfoLabel = command.getAddInfoLabel() != null && !"".equals(command.getAddInfoLabel().trim());
+		boolean hasAddInfoValue = command.getAddInfoValue() != null && !"".equals(command.getAddInfoValue().trim());
+		if (hasAddInfoLabel || hasAddInfoValue) {
+			whereClause = whereClause + " and exists (select 1 from SciMiMaterialAddinfoEntity ai where ai.seqMiId.seqMiId = m.sciMiMaster.seqMiId ";
+			if (hasAddInfoLabel) {
+				whereClause = whereClause + " and UPPER(ai.addInfoLabel) like UPPER(:addInfoLabel) ";
+				parameters.put("addInfoLabel", "%" + command.getAddInfoLabel().trim() + "%");
+			}
+			if (hasAddInfoValue) {
+				whereClause = whereClause + " and UPPER(ai.addInfoValue) like UPPER(:addInfoValue) ";
+				parameters.put("addInfoValue", "%" + command.getAddInfoValue().trim() + "%");
+			}
+			whereClause = whereClause + ") ";
+		}
 		Query wquery = null;
 		if (parameters.size() > 0) {
 			wquery = em.createQuery(query

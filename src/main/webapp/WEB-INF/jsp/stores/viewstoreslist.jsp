@@ -77,6 +77,12 @@
 
 
  </tr>
+ <tr>
+  <td>Additional Info Label</td>
+  <td><form:input path="addInfoLabel" id="addInfoLabel"/></td>
+  <td>Additional Info Value</td>
+  <td><form:input path="addInfoValue" id="addInfoValue"/></td>
+ </tr>
 <tr>
 <td>Filter by Work Order</td>
 <td colspan="3"><form:input path="reportFilter" size="100" id="reportFilter"/>
@@ -163,7 +169,7 @@
 
 
  <c:forEach items="${addInfoLabels}" var="addInfoLabel">
- <display:column sortable="false"  title="${addInfoLabel}"  >
+ <display:column sortable="true"  title="${addInfoLabel}"  >
   <c:out value="${addInfoByMi[row.sciMiMaster.seqMiId][addInfoLabel]}" />
  </display:column>
  </c:forEach>
