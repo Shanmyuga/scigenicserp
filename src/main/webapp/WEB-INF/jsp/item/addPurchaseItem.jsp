@@ -90,6 +90,9 @@
 
 </display:column>
 
+<display:column sortable="true"  title="Additional Info"  >
+<c:out value="${addInfoTextByMi[row.seqMiId]}" />
+</display:column>
 <c:forEach items="${itemAddInfoLabels}" var="addInfoLabel">
 <display:column sortable="false"  title="${addInfoLabel}"  >
 <c:out value="${addInfoByMi[row.seqMiId][addInfoLabel]}" />

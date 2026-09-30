@@ -363,6 +363,7 @@ public class MaterialIndentController extends SciBaseController {
         }
         context.getFlowScope().put("addInfoLabels", new ArrayList<String>(addInfoLabels));
         context.getFlowScope().put("addInfoByMi", addInfoByMi);
+        context.getFlowScope().put("addInfoTextByMi", buildAddInfoText(addInfoByMi));
 
         context.getFlowScope().put("milist", milist);
         context.getFlowScope().put("approveMI",
@@ -575,6 +576,32 @@ public class MaterialIndentController extends SciBaseController {
         sorted.sort(comparator);
         context.getFlowScope().put("milist", sorted);
         return success();
+    }
+
+    // Builds "REF_SIZE=0.4,REF_MAKE=METLER,..." per MI: REF_SIZE and REF_MAKE first, then other labels alphabetically
+    private Map<Long, String> buildAddInfoText(Map<Long, Map<String, String>> addInfoByMi) {
+        List<String> leadingLabels = Arrays.asList("REF_SIZE", "REF_MAKE");
+        Map<Long, String> addInfoTextByMi = new HashMap<Long, String>();
+        for (Map.Entry<Long, Map<String, String>> entry : addInfoByMi.entrySet()) {
+            Map<String, String> values = entry.getValue();
+            List<String> labels = new ArrayList<String>();
+            for (String label : leadingLabels) {
+                if (values.containsKey(label)) {
+                    labels.add(label);
+                }
+            }
+            for (String label : new TreeSet<String>(values.keySet())) {
+                if (!leadingLabels.contains(label)) {
+                    labels.add(label);
+                }
+            }
+            StringJoiner joiner = new StringJoiner(",");
+            for (String label : labels) {
+                joiner.add(label + "=" + (values.get(label) == null ? "" : values.get(label)));
+            }
+            addInfoTextByMi.put(entry.getKey(), joiner.toString());
+        }
+        return addInfoTextByMi;
     }
 
     // REF_SIZE values are usually numeric; compare numerically when both parse, else as text
