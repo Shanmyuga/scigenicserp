@@ -282,6 +282,57 @@ public  void writejdr() throws SQLException  {
 		}
 	}
 
+	public  void writePurchaseDocs() throws SQLException  {
+		Connection conn  = null;
+		try {
+			conn = getConnection();
+			if(conn == null) {
+				return;
+			}
+			String query = "Select * from scigenics.SCI_PURCHASE_DOCS where PURCH_DOC is not null";
+			ResultSet rst = conn.createStatement().executeQuery(query);
+			while(rst.next()) {
+				String key  =rst.getString("SEQ_PURCH_DOC_ID");
+				String filename = rst.getString("ORIGINAL_DOC");
+				Blob blob = rst.getBlob("PURCH_DOC");
+				if(blob != null) {
+					BufferedInputStream bis =
+							new BufferedInputStream(blob.getBinaryStream());
+					BufferedOutputStream bo = new BufferedOutputStream(new FileOutputStream(new File(diskfileloc+"PODOC_"+key+"_"+filename)));
+
+					byte[] buf = new byte[4096];
+					int n = 0;
+
+					while ((n = bis.read(buf, 0, 4096)) != -1) {
+						bo.write(buf, 0, n);
+					}
+
+					bo.flush();
+					bo.close();
+					bis.close();
+				}
+			}
+			conn.createStatement().executeUpdate("UPDATE scigenics.SCI_PURCHASE_DOCS d set PURCH_DOC = null where PURCH_DOC is not null");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			if(conn != null) {
+				conn.close();
+			}
+		}
+	}
+
 	public  void writeMIAdditionalDocs() throws SQLException  {
 		Connection conn  = null;
 		try {

@@ -263,5 +263,20 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		return dao.searchInvoicePaymentDetails(command);
 	}
 
+	@Override
+	public List<SciPurchaseMast> searchPOByStatus(Long purchaseStatus) {
+		return dao.searchPOByStatus(purchaseStatus);
+	}
+
+	@Override
+	public List<SciPurchaseDocs> getPurchaseDocs(Long seqPurchId) {
+		return dao.getPurchaseDocs(seqPurchId);
+	}
+
+	@Override
+	public void addPurchaseDocs(SciPurchaseDocs docmaster) {
+		dao.addPurchaseDocs(docmaster);
+	}
+
 
 }

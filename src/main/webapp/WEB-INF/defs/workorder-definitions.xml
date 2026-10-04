@@ -354,6 +354,16 @@
      
       <put-attribute name="body" value="/WEB-INF/jsp/workorder/addJdrWork.jsp" />
   </definition>
+  <definition name="purchdoc.search"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+
+      <put-attribute name="body" value="/WEB-INF/jsp/po/searchPOPurchDoc.jsp" />
+  </definition>
+  <definition name="purchdoc.add"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
+  <put-attribute name="menu" value="usermenu.jsp" />
+
+      <put-attribute name="body" value="/WEB-INF/jsp/po/addPurchaseDocs.jsp" />
+  </definition>
    <definition name="design.add"  extends="mainlayout" preparer="com.sci.bpm.view.TilesViewPreparer" >
   <put-attribute name="menu" value="usermenu.jsp" />
      

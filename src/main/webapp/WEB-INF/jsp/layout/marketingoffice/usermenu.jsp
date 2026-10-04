@@ -23,6 +23,9 @@
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addjdr-flow">Add Workorder Docs</a></td>
               </tr>
               <tr>
+                <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addpurchdoc-flow">Add Purchase Order Docs</a></td>
+              </tr>
+              <tr>
                   <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=viewworkstats-flow">View  WorkOrder Stats at a Glance</a></td>
               </tr>
               <tr>

@@ -70,6 +70,7 @@
         <webflow:transition on="checkstatus" to="entersearch">
             <webflow:evaluate expression="pocont.bind"/>
             <webflow:evaluate expression="pocont.checkStatus"/>
+            <webflow:evaluate expression="purchdoccont.loadPurchaseDocList"/>
         </webflow:transition>
     </webflow:view-state>
 <webflow:view-state id="createPOview" view="po.view">

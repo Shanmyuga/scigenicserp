@@ -326,7 +326,36 @@
             </display:column>
         </display:table>
     </div>
+    <c:if test="${purchasedoclist != null}">
+    <div style="float:left;width:750px;padding:10px;margin-top:50px">
+        <p>Purchase Order Documents</p>
+        <display:table export="false" sort="list"   pagesize="10" name="purchasedoclist"  id="docrow"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+
+            <display:column sortable="true"   title="Document Name" property="purchDocName" >
+            </display:column>
+            <display:column sortable="true"  title="Document Desc" property="purchDocDesc" >
+            </display:column>
+            <display:column sortable="true"  title="Document Version" property="docVersion"  >
+            </display:column>
+            <display:column sortable="true"  title="Document Type"  >
+                <c:out value='${lovmap[docrow.docType]}'/>
+            </display:column>
+            <display:column sortable="true"  title="Uploaded File"   >
+                <a href="javascript:openpurchdoc('<c:out value="${docrow.seqPurchDocId}"/>')"><c:out value="${docrow.originalDoc}" /></a>
+            </display:column>
+            <display:column sortable="true"  title="Date uploaded"   >
+                <c:out value="${docrow.updatedDate}" />
+            </display:column>
+            <display:column sortable="true"  title="Uploaded By" property="updatedBy" >
+            </display:column>
+        </display:table>
+    </div>
+    </c:if>
 </div>
+<form name="purchdocform" action="streamer.purchdocservlet" method="post">
+    <input type="hidden" name="key" value="purchasedocs"/>
+    <input type="hidden" name="idkey" value=""/>
+</form>
 
 <script language="javascript">
 
@@ -335,5 +364,10 @@
         document.getElementById('_eventId').value = event;
 
         document.pocommand.submit();
+    }
+
+    function openpurchdoc(idkeyval) {
+        document.purchdocform.idkey.value = idkeyval;
+        document.purchdocform.submit();
     }
 </script>
