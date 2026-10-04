@@ -206,6 +206,9 @@ public class PurchaseOrderController extends SciBaseController {
 		if (selected.getTotalCost() != null && selected.getTotalCost().floatValue() < 100000f) {
 			context.getFlashScope().put("PO_COST_UNDER_LAKH", "Y");
 		}
+		if (isAboveLakh(selected)) {
+			context.getFlashScope().put("PO_DOCS_REVIEW_REQUIRED", "Y");
+		}
 
 		loadPOStoresStatus(context);
 
@@ -234,6 +237,25 @@ public class PurchaseOrderController extends SciBaseController {
 
 		context.getFlowScope().put("selectedPO", selected);
 		return success();
+	}
+
+	private boolean isAboveLakh(SciPurchaseMast po) {
+		return po.getTotalCost() == null || po.getTotalCost().floatValue() >= 100000f;
+	}
+
+	/**
+	 * Attached PO documents that the current user has not opened in this session.
+	 */
+	private List<SciPurchaseDocs> getUnopenedDocs(RequestContext context, Long seqPurchId) {
+		Map<Long, Date> opened = (Map<Long, Date>) context.getExternalContext()
+				.getSessionMap().get(PurchaseDocStreamerServlet.OPENED_DOCS_KEY);
+		List<SciPurchaseDocs> unopened = new ArrayList<SciPurchaseDocs>();
+		for (SciPurchaseDocs doc : service.getPurchaseDocs(seqPurchId)) {
+			if (opened == null || !opened.containsKey(doc.getSeqPurchDocId())) {
+				unopened.add(doc);
+			}
+		}
+		return unopened;
 	}
 
 	private SciPurchaseMast selectedPO(List<SciPurchaseMast> polist,
@@ -846,6 +868,24 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
 				.getFlowScope().get("pomastlist");
 		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
+
+		// POs of 1 lakh and above: approver must open every attached PO document first
+		if (isAboveLakh(selected)) {
+			List<SciPurchaseDocs> unopened = getUnopenedDocs(context, selected.getSeqPurchId());
+			if (!unopened.isEmpty()) {
+				StringBuilder names = new StringBuilder();
+				for (SciPurchaseDocs doc : unopened) {
+					if (names.length() > 0) {
+						names.append(", ");
+					}
+					names.append(doc.getOriginalDoc());
+				}
+				context.getFlashScope().put("mailMessage", "PO " + selected.getSeqPurchId()
+						+ " is 1 lakh or above. Open all the attached Purchase Order Documents before approving. Not yet opened: "
+						+ names);
+				return success();
+			}
+		}
 
 		selected.setPurchaseStatus(getLookupservice()
 				.loadIDData("PO_APPROVED_DIRECTOR"));

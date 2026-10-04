@@ -229,7 +229,7 @@
                     <input type="button"  value="Cancel PO " onclick="eventdirect('cancelPO')"/>
                     <input type="button"  value="Certificates Received fully " onclick="eventdirect('updateCertStatus')"/>
                     <c:if test="${userPreferences.roleName == 'admin' ||  (userPreferences.roleName == 'purchasemanager' &&  PO_COST_UNDER_LAKH != null) }">
-                    <input type="button"  value="Approve PO " onclick="eventdirect('approvePO')"/>
+                    <input type="button"  value="Approve PO " onclick="approvePO()"/>
                     </c:if>
             <c:if test="${userPreferences.roleName == 'purchasemanager' ||  userPreferences.roleName == 'subcontract' || userPreferences.roleName == 'admin' }">
                     <c:if test="${OPENSTATUS != null}">
@@ -329,6 +329,9 @@
     <c:if test="${purchasedoclist != null}">
     <div style="float:left;width:750px;padding:10px;margin-top:50px">
         <p>Purchase Order Documents</p>
+        <c:if test="${PO_DOCS_REVIEW_REQUIRED != null}">
+            <p style="color:red;">This purchase order is 1 lakh or above. The approver must open all the attached documents before approving.</p>
+        </c:if>
         <display:table export="false" sort="list"   pagesize="10" name="purchasedoclist"  id="docrow"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
 
             <display:column sortable="true"   title="Document Name" property="purchDocName" >
@@ -348,9 +351,20 @@
             </display:column>
             <display:column sortable="true"  title="Uploaded By" property="updatedBy" >
             </display:column>
+            <display:column title="Opened"  media="html" >
+                <c:choose>
+                    <c:when test="${sessionScope.openedpurchasedocs[docrow.seqPurchDocId] != null}">
+                        <span class="docopenstatus" id="docopen_<c:out value='${docrow.seqPurchDocId}'/>" data-opened="Y">Yes</span>
+                    </c:when>
+                    <c:otherwise>
+                        <span class="docopenstatus" id="docopen_<c:out value='${docrow.seqPurchDocId}'/>" data-opened="N" style="color:red;">No</span>
+                    </c:otherwise>
+                </c:choose>
+            </display:column>
         </display:table>
     </div>
     </c:if>
+    <input type="hidden" id="poDocsReviewRequired" value="<c:out value='${PO_DOCS_REVIEW_REQUIRED}'/>"/>
 </div>
 <form name="purchdocform" action="streamer.purchdocservlet" method="post">
     <input type="hidden" name="key" value="purchasedocs"/>
@@ -369,5 +383,27 @@
     function openpurchdoc(idkeyval) {
         document.purchdocform.idkey.value = idkeyval;
         document.purchdocform.submit();
+        var status = document.getElementById('docopen_' + idkeyval);
+        if (status != null) {
+            status.setAttribute('data-opened', 'Y');
+            status.style.color = '';
+            status.innerHTML = 'Yes';
+        }
+    }
+
+    // POs of 1 lakh and above cannot be approved until every attached document is opened
+    // (also enforced on the server in pocont.approvedDirector)
+    function approvePO() {
+        var reviewRequired = document.getElementById('poDocsReviewRequired');
+        if (reviewRequired != null && reviewRequired.value == 'Y') {
+            var spans = document.getElementsByTagName('span');
+            for (var i = 0; i < spans.length; i++) {
+                if (spans[i].className == 'docopenstatus' && spans[i].getAttribute('data-opened') != 'Y') {
+                    alert('This purchase order is 1 lakh or above. Please open all the attached Purchase Order Documents before approving.');
+                    return;
+                }
+            }
+        }
+        eventdirect('approvePO');
     }
 </script>

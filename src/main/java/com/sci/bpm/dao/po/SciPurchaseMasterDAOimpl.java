@@ -524,9 +524,9 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 	}
 
 	@Override
-	public List<SciPurchaseMast> searchPOByStatus(Long purchaseStatus) {
-		Query qry = em.createQuery("from SciPurchaseMast m where m.purchaseStatus = :purstatus order by m.seqPurchId desc");
-		qry.setParameter("purstatus", purchaseStatus);
+	public List<SciPurchaseMast> searchPOByStatus(List<Long> purchaseStatuses) {
+		Query qry = em.createQuery("from SciPurchaseMast m where m.purchaseStatus in (:purstatus) order by m.seqPurchId desc");
+		qry.setParameter("purstatus", purchaseStatuses);
 		return qry.getResultList();
 	}
 

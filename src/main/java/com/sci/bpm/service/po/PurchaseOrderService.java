@@ -44,7 +44,7 @@ public interface PurchaseOrderService {
 	public List<SciRawMIDetails> loadMis(Long seqPurchId);
 	public List<VendorPurchasePaymentInvoice> searchInvoicePaymentDetails(POCommand command);
 	public void addPurchaseVendorCost(SciVendorPurchaseCost purchaseCost);
-	public List<SciPurchaseMast> searchPOByStatus(Long purchaseStatus);
+	public List<SciPurchaseMast> searchPOByStatus(List<Long> purchaseStatuses);
 	public List<SciPurchaseDocs> getPurchaseDocs(Long seqPurchId);
 	public void addPurchaseDocs(SciPurchaseDocs docmaster);
 }

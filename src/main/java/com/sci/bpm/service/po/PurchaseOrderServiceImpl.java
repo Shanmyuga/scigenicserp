@@ -264,8 +264,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	}
 
 	@Override
-	public List<SciPurchaseMast> searchPOByStatus(Long purchaseStatus) {
-		return dao.searchPOByStatus(purchaseStatus);
+	public List<SciPurchaseMast> searchPOByStatus(List<Long> purchaseStatuses) {
+		return dao.searchPOByStatus(purchaseStatuses);
 	}
 
 	@Override
