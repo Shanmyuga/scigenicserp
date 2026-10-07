@@ -3,6 +3,7 @@ package com.sci.bpm.service.po;
 import java.util.List;
 
 import com.sci.bpm.command.po.POCommand;
+import com.sci.bpm.command.po.POPendingItemCommand;
 import com.sci.bpm.db.model.*;
 
 /**
@@ -25,6 +26,7 @@ public interface PurchaseOrderService {
 	public void updatePOStatus(SciPurchaseMast master);
 	public void updatePOStatusBy(SciPurchaseMast master);
 	public List closePO(POCommand command);
+	public List<POPendingItemCommand> loadPendingMIs(Long seqPurchId);
 	public void updateReject(SciRejectedMaterials mater,SciRejectMaterialAudit audit);
 	public List viewRejected(POCommand command);
 	public void despatchPO(SciPurchaseMast master);

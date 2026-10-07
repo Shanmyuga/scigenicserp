@@ -326,6 +326,34 @@
             </display:column>
         </display:table>
     </div>
+    <c:if test="${popendinglist != null}">
+    <div style="float:left;width:750px;padding:10px;margin-top:50px">
+        <p>MI Items Not Received / Partially Received for the Purchase Order</p>
+        <display:table export="true" sort="list"   pagesize="10" name="popendinglist"  id="pendrow"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+
+            <display:column sortable="true"   title="MI ID" property="seqMiId"  >
+            </display:column>
+            <display:column sortable="true"   title="Matcode" property="matCode"  >
+            </display:column>
+            <display:column sortable="true"   title="Material type" property="matType"  >
+            </display:column>
+            <display:column sortable="true"  title="Material Spec" property="matSpec" >
+            </display:column>
+            <display:column sortable="true"  title="MI Qnt"  property="ordQtyDisplay">
+            </display:column>
+            <display:column sortable="true"  title="Received Qnt"  property="recdQtyDisplay">
+            </display:column>
+            <display:column sortable="true"  title="Pending Qnt (MI Qnt - Recd Qnt)"  property="pendingQty">
+            </display:column>
+            <display:column sortable="true"  title="Order Dim"  property="ordDim" >
+            </display:column>
+            <display:column sortable="true"  title="Status"  property="status" >
+            </display:column>
+            <display:column sortable="true"  title="Work Order"  property="workorder" >
+            </display:column>
+        </display:table>
+    </div>
+    </c:if>
     <c:if test="${purchasedoclist != null}">
     <div style="float:left;width:750px;padding:10px;margin-top:50px">
         <p>Purchase Order Documents</p>

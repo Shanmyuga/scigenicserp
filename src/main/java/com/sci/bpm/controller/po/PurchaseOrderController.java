@@ -966,6 +966,7 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 		List<SciRawMIDetails> rawMIDetails = service.loadMis(selected.getSeqPurchId());
 		context.getFlowScope().put("rawMiList",rawMIDetails);
 		context.getFlowScope().put("postorelist", postorelist);
+		context.getFlowScope().put("popendinglist", service.loadPendingMIs(selected.getSeqPurchId()));
 		return success();
 	}
 

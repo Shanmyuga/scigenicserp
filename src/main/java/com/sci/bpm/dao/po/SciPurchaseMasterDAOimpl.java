@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.sci.bpm.command.po.POCommand;
+import com.sci.bpm.command.po.POPendingItemCommand;
 import com.sci.bpm.command.po.PurchaseStatusCommand;
 
 @Repository
@@ -253,6 +254,39 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 			polist.add(comma);
 		}
 		return polist;
+	}
+
+	public List<POPendingItemCommand> loadPendingMIs(Long seqPurchId) {
+
+		// received count per MI for this PO (QC_REC_CNT is varchar, a MI can be received in parts)
+		String myquery = "select mi.SEQ_MI_ID, mi.MATCODE, mi.MAT_SPEC, mi.MAT_TYPE, mi.MAT_QTY_MOD, nvl(rc.recdcnt,0) as recdcnt, "
+				+ " nvl(mi.MAT_QTY_MOD,0) - nvl(rc.recdcnt,0) as pendingcnt, mi.MAT_DIMESION, wm.JOB_DESC "
+				+ " from SCI_MATIND_MASTER mi left join SCI_WORKORDER_MASTER wm on wm.SEQ_WORK_ID = mi.SEQ_WORK_ID "
+				+ " left join (select qc.SEQ_MI_ID, sum(case when regexp_like(trim(qc.QC_REC_CNT), '^[0-9]+(\\.[0-9]+){0,1}$') then to_number(trim(qc.QC_REC_CNT)) else 0 end) as recdcnt "
+				+ "   from SCI_QC_MI_MASTER qc where qc.PO_ID = :purchaseid group by qc.SEQ_MI_ID) rc on rc.SEQ_MI_ID = mi.SEQ_MI_ID "
+				+ " where mi.SEQ_MI_ID in (select itmi.SEQ_MI_ID from SCI_PURCHASE_ITEMDETAILS_ pi, SCI_ITEMMI_DETAILS itmi "
+				+ "   where itmi.SEQ_PURITEM_ID = pi.SEQ_ITEM_ID and pi.SEQ_PURCH_ID = :purchaseid) "
+				+ " and nvl(rc.recdcnt,0) < nvl(mi.MAT_QTY_MOD,0) "
+				+ " order by mi.SEQ_MI_ID ";
+		Query q = em.createNativeQuery(myquery);
+		q.setParameter("purchaseid", seqPurchId);
+		List arrayList = q.getResultList();
+		List<POPendingItemCommand> pendinglist = new ArrayList<POPendingItemCommand>();
+		for (int idx = 0; idx < arrayList.size(); idx++) {
+			Object[] arr = (Object[]) arrayList.get(idx);
+			POPendingItemCommand item = new POPendingItemCommand();
+			item.setSeqMiId(arr[0] == null ? null : arr[0].toString());
+			item.setMatCode((String) arr[1]);
+			item.setMatSpec((String) arr[2]);
+			item.setMatType((String) arr[3]);
+			item.setOrdQty((BigDecimal) arr[4]);
+			item.setRecdQty((BigDecimal) arr[5]);
+			item.setPendingQty((BigDecimal) arr[6]);
+			item.setOrdDim((String) arr[7]);
+			item.setWorkorder((String) arr[8]);
+			pendinglist.add(item);
+		}
+		return pendinglist;
 	}
 
 	public List viewRejected(POCommand command) {

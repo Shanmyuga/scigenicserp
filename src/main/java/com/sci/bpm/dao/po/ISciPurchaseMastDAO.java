@@ -3,6 +3,7 @@ package com.sci.bpm.dao.po;
 import java.util.List;
 
 import com.sci.bpm.command.po.POCommand;
+import com.sci.bpm.command.po.POPendingItemCommand;
 import com.sci.bpm.db.model.*;
 
 /**
@@ -116,6 +117,7 @@ public interface ISciPurchaseMastDAO {
 	public List searchPO(POCommand command);
 	public List searchMatCodePO(POCommand command);
 	public List closePO(POCommand command);
+	public List<POPendingItemCommand> loadPendingMIs(Long seqPurchId);
 	public List viewRejected(POCommand command);
 	public void updateReject(SciRejectedMaterials mater,SciRejectMaterialAudit audit);
 	

@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sci.bpm.command.po.POCommand;
+import com.sci.bpm.command.po.POPendingItemCommand;
 import com.sci.bpm.dao.item.ISciPurchItemMasterDAO;
 import com.sci.bpm.dao.mi.ISciMatindMasterDAO;
 import com.sci.bpm.dao.po.ISciPurchaseMastDAO;
@@ -111,6 +112,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	public List closePO(POCommand command) {
 		// TODO Auto-generated method stub
 		return dao.closePO(command);
+	}
+
+	public List<POPendingItemCommand> loadPendingMIs(Long seqPurchId) {
+		return dao.loadPendingMIs(seqPurchId);
 	}
 
 	public List viewRejected(POCommand command) {
