@@ -206,6 +206,9 @@
                     <display:column sortable="true"    property="gstCharges">
 
                     </display:column>
+                    <display:column sortable="true"  title="Approval Remarks"  property="approvalRemarks">
+
+                    </display:column>
                 </display:table>
 
 
@@ -215,6 +218,22 @@
             <input type="hidden" name="_eventId"  id="_eventId" value="seachPO" >
 
             <c:if test="${fn:length(pomastlist) > 0 }" >
+                <c:if test="${OPENSTATUS != null && (userPreferences.roleName == 'purchasemanager' ||  userPreferences.roleName == 'subcontract' || userPreferences.roleName == 'admin')}">
+                <div style="padding-left:10px;width:787px;float:left">
+                    <p>Approval Remarks for Director (max 200 characters)</p>
+                    <form:textarea path="approvalRemarks" rows="3" cols="80" maxlength="200" />
+                </div>
+                </c:if>
+                <c:if test="${APPROVAL_PENDING != null}">
+                <div style="padding-left:10px;width:787px;float:left">
+                    <p><b>Approval Remarks :</b>
+                    <c:choose>
+                        <c:when test="${not empty pocommand.approvalRemarks}"><c:out value="${pocommand.approvalRemarks}"/></c:when>
+                        <c:otherwise>No remarks entered</c:otherwise>
+                    </c:choose>
+                    </p>
+                </div>
+                </c:if>
                 <div style="padding-left:10px;width:787px;float:left">
                     <input type="button"  value="View Purchase Order " onclick="eventdirect('openPurchaseOrder')"/>
                     <input type="button"  value="Generate Purchase Order PDF" onclick="eventdirect('generatePDF')"/>

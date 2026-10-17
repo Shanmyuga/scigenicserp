@@ -188,6 +188,8 @@ public class PurchaseOrderController extends SciBaseController {
 		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
 				.getFlowScope().get("pomastlist");
 		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
+		// show the selected PO's own approval remarks (not ones typed for a previously selected PO)
+		command.setApprovalRemarks(selected.getApprovalRemarks());
 		if (selected.getPurchaseStatus().intValue() == getLookupservice()
 				.loadIDData("PO_CREATED").intValue()) {
 			context.getFlashScope().put("OPENSTATUS", "Y");
@@ -832,6 +834,11 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 				.getFlowScope().get("pomastlist");
 		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
 
+		String remarks = StringUtils.trimToNull(command.getApprovalRemarks());
+		if (remarks != null && remarks.length() > 200) {
+			throw new Exception("Approval remarks cannot be more than 200 characters.");
+		}
+		selected.setApprovalRemarks(remarks);
 		selected.setPurchaseStatus(getLookupservice()
 				.loadIDData("PO_APPROVAL_PENDING"));
 		selected.setUpdatedBy(getUserPreferences().getUserID());

@@ -177,6 +177,25 @@
         <display:column sortable="true"  title="Qty"  property="matQty">
 
         </display:column>
+        <display:column sortable="true"   title="Mat Estimated Cost"   >
+            <fmt:parseNumber var="ut" type="NUMBER" value="${row.estUnintCost}"></fmt:parseNumber>
+            <fmt:parseNumber var="issquantity" type="NUMBER" value="${row.matQty}"></fmt:parseNumber>
+
+
+            <c:set var="utcost" value="${issquantity * ut}" />
+            <fmt:formatNumber type="number"
+                              maxFractionDigits="2" value="${utcost}" />
+        </display:column>
+
+        <display:column sortable="true"   title="Material Status"  >
+            <c:out value='${lovmap[row.purStatus]}'/>
+        </display:column>
+        <display:column sortable="true"  title="Different Workorder"  property="issuedForWork" >
+
+        </display:column>
+        <display:column sortable="true"  title="Request Status"  property="requestStatus" >
+
+        </display:column>
         <display:column sortable="true"  title="PO ID"  property="poID" >
 
         </display:column>
@@ -221,25 +240,6 @@
             <c:out value="${addInfoByMi[row.seqMiId][addInfoLabel]}" />
         </display:column>
         </c:forEach>
-        <display:column sortable="true"   title="Mat Estimated Cost"   >
-            <fmt:parseNumber var="ut" type="NUMBER" value="${row.estUnintCost}"></fmt:parseNumber>
-            <fmt:parseNumber var="issquantity" type="NUMBER" value="${row.matQty}"></fmt:parseNumber>
-
-
-            <c:set var="utcost" value="${issquantity * ut}" />
-            <fmt:formatNumber type="number"
-                              maxFractionDigits="2" value="${utcost}" />
-        </display:column>
-
-        <display:column sortable="true"   title="Material Status"  >
-            <c:out value='${lovmap[row.purStatus]}'/>
-        </display:column>
-        <display:column sortable="true"  title="Different Workorder"  property="issuedForWork" >
-
-        </display:column>
-        <display:column sortable="true"  title="Request Status"  property="requestStatus" >
-
-        </display:column>
         <display:column sortable="true"  title="PO Assign Remarks"  property="poMatAssign" >
 
         </display:column>

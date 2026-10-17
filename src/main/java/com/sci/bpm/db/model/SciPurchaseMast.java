@@ -69,6 +69,7 @@ public class SciPurchaseMast implements java.io.Serializable {
 	private Long dcVendorId;
     private String poCompany; // new field
 	private String customPOId;
+	private String approvalRemarks;
 	//
 	// Constructors
 
@@ -557,5 +558,14 @@ private String insertedBy;
 
 	public void setCustomPOId(String customPOId) {
 		this.customPOId = customPOId;
+	}
+
+	@Column(name = "APPROVAL_REMARKS", length = 200)
+	public String getApprovalRemarks() {
+		return approvalRemarks;
+	}
+
+	public void setApprovalRemarks(String approvalRemarks) {
+		this.approvalRemarks = approvalRemarks;
 	}
 }

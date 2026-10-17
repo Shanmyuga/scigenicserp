@@ -22,6 +22,7 @@ import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 
 import com.sci.bpm.command.mi.MatindCommand;
+import com.sci.bpm.command.stores.AddInfoFilter;
 import com.sci.bpm.command.stores.RecdItemCommand;
 import com.sci.bpm.command.stores.StoresBean;
 import com.sci.bpm.controller.base.SciBaseController;
@@ -269,8 +270,81 @@ public class StoresManagerController extends SciBaseController {
      context.getFlowScope().put("storeavailmi", storelist); return success();
       }*/
 
+    /**
+     * "Load Additional Info" on the view stores page: builds one drop down search filter for every
+     * additional info attribute that has drop values in SCI_MATERIAL_ADDINFO_MASTER for the material
+     * code's category and dept. REF_SIZE is not a drop down - it is searched from its own text box.
+     * Material code: chars 1-2 = material type (gives the dept), chars 3-4 = material category.
+     */
+    public Event loadAddInfoFilters(RequestContext context) throws Exception {
+        StoresBean bean = (StoresBean) getFormObject(context);
+
+        // remember earlier selections so reloading for the same material keeps them
+        Map<String, String> previous = new HashMap<String, String>();
+        for (AddInfoFilter filter : bean.getAddInfoFilters()) {
+            if (filter.getLabel() != null && StringUtils.isNotBlank(filter.getValue())) {
+                previous.put(filter.getLabel(), filter.getValue());
+            }
+        }
+
+        List<AddInfoFilter> filters = new ArrayList<AddInfoFilter>();
+        String matcode = StringUtils.trimToEmpty(bean.getMatcode()).toUpperCase();
+        if (matcode.length() < 4) {
+            context.getFlashScope().put("addInfoFilterMessage", "Enter a valid Material Code to load the additional info details.");
+        } else {
+            List<SciMattypeMaster> matTypes = prservice.getMatType(matcode.substring(0, 2));
+            List<SciMIAdditionalInfoDTO> addInfos = null;
+            if (matTypes != null && !matTypes.isEmpty()) {
+                addInfos = miservice.loadAdditionalInfoMaster(matcode.substring(2, 4), matTypes.get(0).getMatDept());
+            }
+            if (addInfos != null) {
+                for (SciMIAdditionalInfoDTO dto : addInfos) {
+                    String label = StringUtils.trim(dto.getLabel());
+                    if (label == null || "REF_SIZE".equalsIgnoreCase(label)) {
+                        continue;
+                    }
+                    List<String> values = new ArrayList<String>();
+                    addDropValues(values, dto.getDropValues());
+                    if (values.isEmpty()) {
+                        continue;
+                    }
+                    AddInfoFilter filter = new AddInfoFilter(label, values);
+                    if (values.contains(previous.get(label))) {
+                        filter.setValue(previous.get(label));
+                    }
+                    filters.add(filter);
+                }
+            }
+            if (filters.isEmpty()) {
+                context.getFlashScope().put("addInfoFilterMessage", "No additional info with drop down values is configured for material code " + matcode + ".");
+            }
+        }
+        bean.setAddInfoFilters(filters);
+        bean.setAddInfoFiltersMatcode(matcode);
+        return success();
+    }
+
+    private void addDropValues(List<String> target, String[] dropValues) {
+        if (dropValues == null) {
+            return;
+        }
+        for (String value : dropValues) {
+            if (StringUtils.isNotBlank(value) && !target.contains(value.trim())) {
+                target.add(value.trim());
+            }
+        }
+    }
+
     public Event viewstores(RequestContext context) throws Exception {
         StoresBean bean = (StoresBean) getFormObject(context);
+
+        // drop the additional info filters if the material code was changed after loading them
+        String matcode = StringUtils.trimToEmpty(bean.getMatcode()).toUpperCase();
+        if (!bean.getAddInfoFilters().isEmpty() && !matcode.equals(bean.getAddInfoFiltersMatcode())) {
+            bean.setAddInfoFilters(new ArrayList<AddInfoFilter>());
+            bean.setAddInfoFiltersMatcode(null);
+            context.getFlashScope().put("addInfoFilterMessage", "Material Code changed - additional info filters were cleared. Click Load Additional Info again.");
+        }
 
         List<SciAvailableMaterials> stlist = service.viewStore(bean);
 

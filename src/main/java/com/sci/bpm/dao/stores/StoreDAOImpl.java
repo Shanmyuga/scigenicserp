@@ -11,6 +11,7 @@ import com.sci.bpm.command.mi.MatindCommand;
 import com.sci.bpm.db.model.*;
 import org.springframework.stereotype.Repository;
 
+import com.sci.bpm.command.stores.AddInfoFilter;
 import com.sci.bpm.command.stores.StoresBean;
 
 
@@ -276,6 +277,29 @@ public class StoreDAOImpl implements StoresDAO {
 				parameters.put("addInfoValue", "%" + command.getAddInfoValue().trim() + "%");
 			}
 			whereClause = whereClause + ") ";
+		}
+
+		// REF_SIZE text box: label is fixed, the user types the value (exact match, case insensitive)
+		if (command.getRefSize() != null && !"".equals(command.getRefSize().trim())) {
+			whereClause = whereClause + " and exists (select 1 from SciMiMaterialAddinfoEntity rs where rs.seqMiId.seqMiId = m.sciMiMaster.seqMiId "
+					+ " and UPPER(rs.addInfoLabel) = 'REF_SIZE' and UPPER(trim(rs.addInfoValue)) = UPPER(:refSizeValue)) ";
+			parameters.put("refSizeValue", command.getRefSize().trim());
+		}
+		// drop down filters loaded from SCI_MATERIAL_ADDINFO_MASTER (label comes from a hidden field).
+		// Exact match on the value, also within comma separated values saved for multi select (Check) infos.
+		if (command.getAddInfoFilters() != null) {
+			int fidx = 0;
+			for (AddInfoFilter filter : command.getAddInfoFilters()) {
+				if (filter.getLabel() == null || filter.getValue() == null || "".equals(filter.getValue().trim())) {
+					continue;
+				}
+				String alias = "af" + fidx;
+				whereClause = whereClause + " and exists (select 1 from SciMiMaterialAddinfoEntity " + alias + " where " + alias + ".seqMiId.seqMiId = m.sciMiMaster.seqMiId "
+						+ " and UPPER(" + alias + ".addInfoLabel) = UPPER(:afLabel" + fidx + ") and UPPER(concat(concat(',', trim(" + alias + ".addInfoValue)), ',')) like UPPER(:afValue" + fidx + ")) ";
+				parameters.put("afLabel" + fidx, filter.getLabel().trim());
+				parameters.put("afValue" + fidx, "%," + filter.getValue().trim() + ",%");
+				fidx++;
+			}
 		}
 		Query wquery = null;
 		if (parameters.size() > 0) {
@@ -704,10 +728,17 @@ public class StoreDAOImpl implements StoresDAO {
 			}
 		}
 		if (!poIds.isEmpty()) {
-			List<SciPurchaseMast> poList = em
-					.createQuery("select pm from SciPurchaseMast pm where pm.seqPurchId in (:poIds)")
-					.setParameter("poIds", poIds)
-					.getResultList();
+			// Oracle allows at most 1000 expressions in an IN list (ORA-01795), so query in batches of 1000
+			final int batchSize = 1000;
+			List<Long> poIdList = new ArrayList<Long>(poIds);
+			List<SciPurchaseMast> poList = new ArrayList<SciPurchaseMast>();
+			for (int start = 0; start < poIdList.size(); start += batchSize) {
+				List<Long> batch = poIdList.subList(start, Math.min(start + batchSize, poIdList.size()));
+				poList.addAll(em
+						.createQuery("select pm from SciPurchaseMast pm where pm.seqPurchId in (:poIds)")
+						.setParameter("poIds", new ArrayList<Long>(batch))
+						.getResultList());
+			}
 			Map<Long, SciVendorMaster> vendorByPoId = new HashMap<Long, SciVendorMaster>();
 			for (SciPurchaseMast pm : poList) {
 				vendorByPoId.put(pm.getSeqPurchId(), pm.getSciVendorMaster());

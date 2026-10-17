@@ -17,6 +17,10 @@
             <webflow:evaluate expression="storecont.bind"/>
             <webflow:evaluate expression="storecont.loadMatCatItems"/>
         </webflow:transition>
+        <webflow:transition on="loadAddInfoFilters" to="entersearch">
+            <webflow:evaluate expression="storecont.bind"/>
+            <webflow:evaluate expression="storecont.loadAddInfoFilters"/>
+        </webflow:transition>
          <webflow:transition on="searchStores" to="entersearch">
             <webflow:evaluate expression="storecont.bind"/>
             <webflow:evaluate expression="storecont.viewstores"/>

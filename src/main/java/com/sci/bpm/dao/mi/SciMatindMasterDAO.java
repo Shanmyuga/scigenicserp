@@ -1041,9 +1041,16 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 		if (miIds == null || miIds.isEmpty()) {
 			return new ArrayList<SciMiMaterialAddinfoEntity>();
 		}
-		Query qry = em.createQuery("from SciMiMaterialAddinfoEntity where seqMiId.seqMiId in :miIds");
-		qry.setParameter("miIds", miIds);
-		return qry.getResultList();
+		// Oracle allows at most 1000 expressions in an IN list (ORA-01795), so query in batches of 1000
+		final int batchSize = 1000;
+		List<SciMiMaterialAddinfoEntity> result = new ArrayList<SciMiMaterialAddinfoEntity>();
+		for (int start = 0; start < miIds.size(); start += batchSize) {
+			List<Long> batch = miIds.subList(start, Math.min(start + batchSize, miIds.size()));
+			Query qry = em.createQuery("from SciMiMaterialAddinfoEntity where seqMiId.seqMiId in :miIds");
+			qry.setParameter("miIds", new ArrayList<Long>(batch));
+			result.addAll(qry.getResultList());
+		}
+		return result;
 	}
 
 

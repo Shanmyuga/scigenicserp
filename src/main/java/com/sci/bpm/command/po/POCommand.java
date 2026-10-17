@@ -47,6 +47,7 @@ public class POCommand implements Serializable {
 	private Double packingFrwdCharges= new Double("0");
 	private List<POCollectionCommand> poitemList = new ArrayList();
 	private String remarksPO;
+	private String approvalRemarks;
 	private String refundStatement;
 	private Date todate;
 	private String[] poDetailIndex;
@@ -671,5 +672,13 @@ public class POCommand implements Serializable {
 
 	public void setCustomPOId(String customPOId) {
 		this.customPOId = customPOId;
+	}
+
+	public String getApprovalRemarks() {
+		return approvalRemarks;
+	}
+
+	public void setApprovalRemarks(String approvalRemarks) {
+		this.approvalRemarks = approvalRemarks;
 	}
 }

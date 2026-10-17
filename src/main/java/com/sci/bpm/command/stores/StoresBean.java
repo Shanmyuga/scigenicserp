@@ -107,6 +107,11 @@ public class StoresBean implements Serializable {
 	private String reportFilter;
 	private String addInfoLabel;
 	private String addInfoValue;
+	private String refSize;
+	// additional info drop down filters loaded for the material code (label kept in a hidden field)
+	private List<AddInfoFilter> addInfoFilters = new ArrayList<AddInfoFilter>();
+	// material code the filters were loaded for
+	private String addInfoFiltersMatcode;
 	private Date invoiceDate;
 	private String invoiceNo;
 	private String invoiceValue;
@@ -687,5 +692,29 @@ public class StoresBean implements Serializable {
 
 	public void setAddInfoValue(String addInfoValue) {
 		this.addInfoValue = addInfoValue;
+	}
+
+	public String getRefSize() {
+		return refSize;
+	}
+
+	public void setRefSize(String refSize) {
+		this.refSize = refSize;
+	}
+
+	public List<AddInfoFilter> getAddInfoFilters() {
+		return addInfoFilters;
+	}
+
+	public void setAddInfoFilters(List<AddInfoFilter> addInfoFilters) {
+		this.addInfoFilters = addInfoFilters;
+	}
+
+	public String getAddInfoFiltersMatcode() {
+		return addInfoFiltersMatcode;
+	}
+
+	public void setAddInfoFiltersMatcode(String addInfoFiltersMatcode) {
+		this.addInfoFiltersMatcode = addInfoFiltersMatcode;
 	}
 }

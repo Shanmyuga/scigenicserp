@@ -52,7 +52,7 @@
 <tr>
 <td>Material Code</td>
 <td><form:input path="matcode"  id="matcode"/>
-
+<input type="button" value="Load Additional Info" onclick="eventdirect('loadAddInfoFilters')"/>
 </td>
 <td>MI ID</td>
 <td><form:input path="seqmiid"  id="seqmiid"/>
@@ -83,6 +83,32 @@
   <td>Additional Info Value</td>
   <td><form:input path="addInfoValue" id="addInfoValue"/></td>
  </tr>
+ <tr>
+  <td>REF_SIZE</td>
+  <td><form:input path="refSize" id="refSize"/></td>
+  <td colspan="2">&nbsp;</td>
+ </tr>
+ <c:if test="${addInfoFilterMessage != null}">
+ <tr>
+  <td colspan="4" style="color:red;"><c:out value="${addInfoFilterMessage}"/></td>
+ </tr>
+ </c:if>
+ <c:if test="${not empty storesbean.addInfoFilters}">
+ <tr>
+  <td colspan="4"><b>Additional Info for Material Code <c:out value="${storesbean.addInfoFiltersMatcode}"/></b></td>
+ </tr>
+ <c:forEach items="${storesbean.addInfoFilters}" var="filter" varStatus="fstat">
+  <c:if test="${fstat.index % 2 == 0}"><tr></c:if>
+  <td><c:out value="${filter.label}"/>
+   <form:hidden path="addInfoFilters[${fstat.index}].label"/>
+  </td>
+  <td><form:select path="addInfoFilters[${fstat.index}].value" size="1">
+    <form:option value="">All</form:option>
+    <form:options items="${filter.dropValues}" />
+   </form:select></td>
+  <c:if test="${fstat.index % 2 == 1 || fstat.last}"></tr></c:if>
+ </c:forEach>
+ </c:if>
 <tr>
 <td>Filter by Work Order</td>
 <td colspan="3"><form:input path="reportFilter" size="100" id="reportFilter"/>
