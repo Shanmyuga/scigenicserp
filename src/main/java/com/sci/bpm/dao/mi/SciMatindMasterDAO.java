@@ -8,7 +8,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.sci.bpm.db.model.*;
+import com.sci.bpm.util.MatcodeAddInfoCodeGenerator;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sci.bpm.command.design.DrawingDetailsBean;
@@ -30,6 +32,9 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 
 	@PersistenceContext
 	private EntityManager em;
+
+	@Autowired
+	private MatcodeAddInfoCodeGenerator addInfoCodeGenerator;
 
 	public void delete(SciMatindMaster entity) {
 		// TODO Auto-generated method stub
@@ -91,6 +96,7 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 			String addInfo = view.getAddInfo();
 			SciMatindMaster master = em.find(SciMatindMaster.class, seqMiId);
 			master.setMatcodeAddInfo(addInfo);
+			master.setMatcodeAddInfoCode(addInfoCodeGenerator.generateCode(master.getMatcode(), addInfo));
 			em.merge(master);
 		}
 	}
@@ -573,10 +579,17 @@ public class SciMatindMasterDAO implements ISciMatindMasterDAO {
 
 		}
 		if(!StringUtils.isBlank(master.getMatcodeAddInfo())) {
-			String query = "update SciMatindMaster set isGroupMiId =:isGroupMiId ,matcodeAddInfo = :matcodeAddInfo ,updatedBy=:updatedBy ,updatedDate= :updatedDate "
+			// code is built from the drop down entries only - needs the material code to find its add info master
+			String matcode = master.getMatcode();
+			if (StringUtils.isBlank(matcode)) {
+				SciMatindMaster current = em.find(SciMatindMaster.class, master.getSeqMiId());
+				matcode = current == null ? null : current.getMatcode();
+			}
+			String query = "update SciMatindMaster set isGroupMiId =:isGroupMiId ,matcodeAddInfo = :matcodeAddInfo ,matcodeAddInfoCode = :matcodeAddInfoCode ,updatedBy=:updatedBy ,updatedDate= :updatedDate "
 					+ " where seqMiId = :seqmiid";
 			Query wquery = em.createQuery(query);
 			wquery.setParameter("matcodeAddInfo", master.getMatcodeAddInfo());
+			wquery.setParameter("matcodeAddInfoCode", addInfoCodeGenerator.generateCode(matcode, master.getMatcodeAddInfo()));
 			wquery.setParameter("updatedBy", master.getUpdatedBy());
 			wquery.setParameter("updatedDate", new Date());
 			wquery.setParameter("seqmiid", master.getSeqMiId());

@@ -1003,6 +1003,12 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 		//invoiceDocs.setVendorInvoiceMaster(vInvoice);
 		//vInvoice.addInvoiceDoc(invoiceDocs);
 		BeanUtils.copyProperties(vInvoice, command);
+		// copyProperties turns null Long/Double into 0 - new invoice must have no id, tally fields are optional
+		vInvoice.setSeqInvoiceId(null);
+		InvoiceTallyController.validateTally(command);
+		vInvoice.setTallyVoucherNo(StringUtils.trimToNull(command.getTallyVoucherNo()));
+		vInvoice.setTallyDate(command.getTallyDate());
+		vInvoice.setTallyAmount(command.getTallyAmount());
 		vInvoice.setInsertedBy(getUserPreferences().getUserID());
 		SciVendorMaster master = service.loadSciVendorMaster(command.getSeqVendorId());
 		vInvoice.setSciVendorMaster(master);

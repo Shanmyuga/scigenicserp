@@ -29,6 +29,7 @@ public interface StoreService {
 	public void issueItems(SciStoreissueMaster master,SciAvailableMaterials availdata,SciStoresRequest request);
 	public List getMatItems(SciPurchItemMaster master);
 	public List<SciAvailableMaterials> viewStore(StoresBean command);
+	public List<SciAvailableMaterials> viewStoreAudit(StoresBean command);
 	public List<SciRecdMaterials> viewrecd(StoresBean command);
 	public List<SciQcMiMaster> viewApprovedQCs(StoresBean bean);
 

@@ -81,6 +81,22 @@
 			</map>
 		</property>
 	</bean>
+	<!-- one time back fill of SCI_MATIND_MASTER.MATCODE_ADDINFO_CODE from MATCODE_ADDINFO, run at start up -->
+	<bean name="matcodeAddInfoCodeJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="com.sci.bpm.service.task.MatcodeAddInfoCodeBackfillJob" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="backfillService" value-ref="matcodeAddInfoCodeBackfillService" />
+			</map>
+		</property>
+	</bean>
+	<!-- fires once, 2 minutes after start up (repeatCount 0 = no repeats) -->
+	<bean id="matcodeAddInfoCodeTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="matcodeAddInfoCodeJob" />
+		<property name="startDelay" value="120000" />
+		<property name="repeatCount" value="0" />
+		<property name="repeatInterval" value="0" />
+	</bean>
 	<!--  	<bean name="diskjob" class="com.sci.bpm.service.task.DiskWriterJob">
         <property name="host" value="210.18.138.222"></property>
         <property name="port" value="8055"></property>
@@ -137,6 +153,7 @@
 				<ref bean="dailycronTrigger" />
 				<ref bean="dailycronTriggerStoresRequest" />
 				<ref bean="WeeklycronTrigger" />
+				<ref bean="matcodeAddInfoCodeTrigger" />
 				<!--<ref bean="emailcronTrigger" />-->
 			</list>
 		</property>

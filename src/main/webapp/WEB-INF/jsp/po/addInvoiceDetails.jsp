@@ -9,7 +9,7 @@
 <p style="padding-left:20px" align="center"><font color="#0080ff" size="4" face="Baskerville Old Face"> Add Invoice Details  </font></p>
 <p style="padding-left:20px" align="center"></p>
 <div width="787px"  style="float:left;">
-<form:form  modelAttribute="pocommand" name="pocommand"  enctype="multipart/form-data">
+<form:form  modelAttribute="pocommand" name="pocommand"  enctype="multipart/form-data" onsubmit="return checkTally();">
 
 <table border="0" width="100%" cellpadding="10x" >
 
@@ -61,6 +61,20 @@
 
 
 </td>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+<td align="left" class="datatext">Tally Voucher No</td>
+<td ><form:input path="tallyVoucherNo" maxlength="20" /></td>
+
+<td align="left" class="datatext">Tally Date</td>
+<td ><form:input path="tallyDate" size="10" />
+<a href="javascript:show_calendar('document.pocommand.tallyDate', document.pocommand.tallyDate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
+</td>
+</tr>
+<tr>
+<td align="left" class="datatext">Tally Amount</td>
+<td ><form:input path="tallyAmount" /></td>
 <td colspan="2"><input type="submit" value="Add Invoice Details" /></td>
 </tr>
 <form:errors >
@@ -94,6 +108,12 @@
 <display:column sortable="true" title="Final Due"  property="finalAmount">
 
 </display:column>
+<display:column sortable="true" title="Tally Voucher No"  property="tallyVoucherNo">
+</display:column>
+<display:column sortable="true" title="Tally Date"  property="tallyDate">
+</display:column>
+<display:column sortable="true" title="Tally Amount"  property="tallyAmount">
+</display:column>
 </display:table>
 </div>
 <input type="hidden" name="_flowExecutionKey"  value="<c:out value="${flowExecutionKey}"/>" />
@@ -105,6 +125,20 @@
 </div>
 
 <script language="javascript">
+
+// Tally Voucher No, Tally Date and Tally Amount: all three or none
+function checkTally() {
+var f = document.pocommand;
+var filled = 0;
+if (f.tallyVoucherNo.value.replace(/^\s+|\s+$/g, '') != '') filled++;
+if (f.tallyDate.value.replace(/^\s+|\s+$/g, '') != '') filled++;
+if (f.tallyAmount.value.replace(/^\s+|\s+$/g, '') != '') filled++;
+if (filled > 0 && filled < 3) {
+alert('When any Tally detail is entered, Tally Voucher No, Tally Date and Tally Amount are all required.');
+return false;
+}
+return true;
+}
 
 function eventdirect(event) {
 

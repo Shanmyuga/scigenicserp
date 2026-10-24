@@ -31,6 +31,9 @@ public class SciVendorInvoiceMaster implements java.io.Serializable {
 	private String vatFormRaised;
 	
 	private Date vatFormDate;
+	private String tallyVoucherNo;
+	private Date tallyDate;
+	private Double tallyAmount;
 	// Constructors
 
 	/** default constructor */
@@ -204,4 +207,32 @@ public class SciVendorInvoiceMaster implements java.io.Serializable {
 
 		this.invoiceDocs.add(docs);
 }
+
+	@Column(name = "TALLY_VOUCHER_NO", nullable = true, length = 20)
+	public String getTallyVoucherNo() {
+		return tallyVoucherNo;
+	}
+
+	public void setTallyVoucherNo(String tallyVoucherNo) {
+		this.tallyVoucherNo = tallyVoucherNo;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "TALLY_DATE", nullable = true, length = 7)
+	public Date getTallyDate() {
+		return tallyDate;
+	}
+
+	public void setTallyDate(Date tallyDate) {
+		this.tallyDate = tallyDate;
+	}
+
+	@Column(name = "TALLY_AMOUNT", nullable = true, precision = 9, scale = 2)
+	public Double getTallyAmount() {
+		return tallyAmount;
+	}
+
+	public void setTallyAmount(Double tallyAmount) {
+		this.tallyAmount = tallyAmount;
+	}
 }

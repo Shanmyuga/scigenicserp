@@ -50,7 +50,10 @@
               </tr>
                 <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addinvoice-flow">Add Invoice Details</a></td>
-                
+
+              </tr>
+              <tr>
+                <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=updatetally-flow">Update Invoice Tally Details</a></td>
               </tr>
                <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addVendor-flow">Add New Vendor</a></td>

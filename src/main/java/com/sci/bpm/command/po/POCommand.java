@@ -62,6 +62,14 @@ public class POCommand implements Serializable {
 	private Date billDate;
 	private Double billAmount;
 	private String billNo;
+	// Tally details of a vendor invoice
+	private String tallyVoucherNo;
+	private Date tallyDate;
+	private Double tallyAmount;
+	// Update Invoice Tally Details: search fields and the selected invoice
+	private String searchBillNo;
+	private String searchPONo;
+	private Long seqInvoiceId;
 	private Double poId;
 	private Long seqMaterialId;
 	private Double matCost;
@@ -672,6 +680,54 @@ public class POCommand implements Serializable {
 
 	public void setCustomPOId(String customPOId) {
 		this.customPOId = customPOId;
+	}
+
+	public String getTallyVoucherNo() {
+		return tallyVoucherNo;
+	}
+
+	public void setTallyVoucherNo(String tallyVoucherNo) {
+		this.tallyVoucherNo = tallyVoucherNo;
+	}
+
+	public Date getTallyDate() {
+		return tallyDate;
+	}
+
+	public void setTallyDate(Date tallyDate) {
+		this.tallyDate = tallyDate;
+	}
+
+	public Double getTallyAmount() {
+		return tallyAmount;
+	}
+
+	public void setTallyAmount(Double tallyAmount) {
+		this.tallyAmount = tallyAmount;
+	}
+
+	public String getSearchBillNo() {
+		return searchBillNo;
+	}
+
+	public void setSearchBillNo(String searchBillNo) {
+		this.searchBillNo = searchBillNo;
+	}
+
+	public String getSearchPONo() {
+		return searchPONo;
+	}
+
+	public void setSearchPONo(String searchPONo) {
+		this.searchPONo = searchPONo;
+	}
+
+	public Long getSeqInvoiceId() {
+		return seqInvoiceId;
+	}
+
+	public void setSeqInvoiceId(Long seqInvoiceId) {
+		this.seqInvoiceId = seqInvoiceId;
 	}
 
 	public String getApprovalRemarks() {

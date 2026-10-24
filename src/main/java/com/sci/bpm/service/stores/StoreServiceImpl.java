@@ -61,6 +61,10 @@ public class StoreServiceImpl implements StoreService {
 		return dao.viewStore(command);
 	}
 
+	public List<SciAvailableMaterials> viewStoreAudit(StoresBean command) {
+		return dao.viewStoreAudit(command);
+	}
+
 
 	public List getMatItems(SciPurchItemMaster master) {
 		// TODO Auto-generated method stub

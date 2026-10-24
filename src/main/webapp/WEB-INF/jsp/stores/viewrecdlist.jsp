@@ -75,6 +75,8 @@
 <div style="float:left;width:750px;padding:10px;margin-top:50px">
 
 <display:table export="true" sort="list"   pagesize="10" name="recdlist"  id="row"  requestURI="springtest.htm"  cellpadding="5px" cellspacing="3px" >
+<display:column sortable="true"  title="Recd ID"  property="seqRecdId" >
+</display:column>
 <display:column sortable="true"  title="MI ID"  >
 <c:out value="${row.sciMiMaster.seqMiId}"/>
 </display:column>
@@ -139,6 +141,12 @@
 </display:column>
 <display:column sortable="true"  title="Other Charges" property="otherCharges" >
 
+</display:column>
+<display:column sortable="true"  title="Tally Voucher No" property="tallyVoucherNo" >
+</display:column>
+<display:column sortable="true"  title="Tally Date" property="tallyDate" >
+</display:column>
+<display:column sortable="true"  title="Tally Amount" property="tallyAmount" >
 </display:column>
 <display:column sortable="true"  title="MI WO DESC"  >
 <c:out value='${row.sciMiMaster.sciWorkorderMaster.jobDesc}'/>

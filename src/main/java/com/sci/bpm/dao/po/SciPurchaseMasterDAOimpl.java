@@ -450,6 +450,41 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 		return qry.getResultList();
 	}
 
+	/**
+	 * Vendor invoices by bill no (partial, case insensitive) and/or PO no
+	 * (the PO ID, or the custom PO ID of the purchase order).
+	 */
+	@Override
+	public List<SciVendorInvoiceMaster> searchInvoicesForTally(String billNo, String poNo) {
+		String query = "Select m from SciVendorInvoiceMaster m where 1 = 1 ";
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		if (StringUtils.isNotBlank(billNo)) {
+			query = query + " and UPPER(m.billNo) like UPPER(:billNo) ";
+			parameters.put("billNo", "%" + billNo.trim() + "%");
+		}
+		if (StringUtils.isNotBlank(poNo)) {
+			String po = poNo.trim();
+			if (StringUtils.isNumeric(po)) {
+				query = query + " and (m.poId = :poId or m.poId in (select pm.seqPurchId from SciPurchaseMast pm where UPPER(pm.customPOId) = UPPER(:customPOId))) ";
+				parameters.put("poId", Long.valueOf(po));
+			} else {
+				query = query + " and m.poId in (select pm.seqPurchId from SciPurchaseMast pm where UPPER(pm.customPOId) = UPPER(:customPOId)) ";
+			}
+			parameters.put("customPOId", po);
+		}
+		Query qry = em.createQuery(query + " order by m.insertedDate desc");
+		for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+			qry.setParameter(entry.getKey(), entry.getValue());
+		}
+		qry.setMaxResults(500);
+		return qry.getResultList();
+	}
+
+	@Override
+	public SciVendorInvoiceMaster updateInvoiceDetails(SciVendorInvoiceMaster vmaster) {
+		return em.merge(vmaster);
+	}
+
 	@Override
 	public List<SciVendorInvoiceMaster> loadInvoiceDetails(Long seqVendorId) {
 		Query qry = em.createQuery("Select m from SciVendorInvoiceMaster m where m.sciVendorMaster.seqVendorId =:seqVendorID order by insertedDate desc");

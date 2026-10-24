@@ -33,19 +33,30 @@
 </td>
 </tr>
  <tr>
+<td>Search In</td>
+<td colspan="3"><form:select path="searchSource" size="1" id="searchSource" onchange="toggleAuditDates()">
+<form:option value="STORES">Current Stores</form:option>
+<form:option value="AUDIT">Stores Audit (latest change per MI)</form:option>
+</form:select>
+<span style="font-size:11px;">For Stores Audit the dates below are the audit updated date range (both required).</span>
+</td>
+</tr>
+ <tr>
 
- 
+
 
 <td>Received From date</td>
 <fmt:formatDate pattern="dd-MM-yyyy" value="${storesbean.fromdate}" var="fromdatestr"/>	
-<td><input type="text" name="fromdate" value="<c:out value="${fromdatestr}"/>" size="10"/>
+<td><input type="text" name="fromdate" id="fromdate" value="<c:out value="${fromdatestr}"/>" size="10"/>
 <a href="javascript:show_calendar('document.storesbean.fromdate', document.storesbean.fromdate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
+<span class="auditRequired" style="color:red;display:none;">*</span>
 </td>
 
 <td>Received to date</td>
 <fmt:formatDate pattern="dd-MM-yyyy" value="${storesbean.todate}" var="todatestr"/>	
-<td><input type="text" name="todate" value="<c:out value="${todatestr}"/>" size="10"/>
+<td><input type="text" name="todate" id="todate" value="<c:out value="${todatestr}"/>" size="10"/>
 <a href="javascript:show_calendar('document.storesbean.todate', document.storesbean.todate.value);"><img src="images/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
+<span class="auditRequired" style="color:red;display:none;">*</span>
 </td>
 </tr>
 
@@ -115,7 +126,7 @@
 <input type="button" value="Filter report" onclick="eventdirect('filterReport')"/></td>
 </tr>
 <tr>
- <td colspan="4" align="right"><input type="button" value="Search Stores" onclick="eventdirect('searchStores')"/></td>
+ <td colspan="4" align="right"><input type="button" value="Search Stores" onclick="searchStores()"/></td>
 
 </tr>
 </table>
@@ -169,6 +180,12 @@
 <display:column sortable="true"  title="Stores Received Date" property="insertedDate" >
 
 </display:column>
+<c:if test="${storesbean.auditSearch}">
+<display:column sortable="true"  title="Audit Updated Date" property="updatedDate" >
+</display:column>
+<display:column sortable="true"  title="Audit Updated By" property="updatedBy" >
+</display:column>
+</c:if>
 <display:column sortable="true"  title="QC ID" property="seqQcId" >
 
 </display:column>
@@ -223,6 +240,42 @@ document.getElementById('_eventId').value = event;
 
 document.storesbean.submit();
 }
+
+function isAuditSearch() {
+var source = document.getElementById('searchSource');
+return source != null && source.value == 'AUDIT';
+}
+
+// Stores Audit search: From date and To date are mandatory (also checked on the server)
+function searchStores() {
+if (isAuditSearch()) {
+ var fromdate = document.getElementById('fromdate');
+ var todate = document.getElementById('todate');
+ if (fromdate.value.replace(/^\s+|\s+$/g, '') == '') {
+  alert('From date is mandatory for the Stores Audit search.');
+  fromdate.focus();
+  return;
+ }
+ if (todate.value.replace(/^\s+|\s+$/g, '') == '') {
+  alert('To date is mandatory for the Stores Audit search.');
+  todate.focus();
+  return;
+ }
+}
+eventdirect('searchStores');
+}
+
+// show the red * on the date fields only while Stores Audit is selected
+function toggleAuditDates() {
+var display = isAuditSearch() ? 'inline' : 'none';
+var spans = document.getElementsByTagName('span');
+for (var i = 0; i < spans.length; i++) {
+ if (spans[i].className == 'auditRequired') {
+  spans[i].style.display = display;
+ }
+}
+}
+toggleAuditDates();
 </script>
 <script>
 var temp = "<c:out value='${workorderlistNames}'/>";

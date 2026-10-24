@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import com.sci.bpm.command.mi.MatindCommand;
 import com.sci.bpm.db.model.*;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.sci.bpm.command.stores.AddInfoFilter;
@@ -374,6 +375,196 @@ public class StoreDAOImpl implements StoresDAO {
 		}
 
 		return milist;
+	}
+
+	/**
+	 * View stores "Stores Audit" search: the latest SCI_AVAILABLE_MATERIALS_AUDIT row per MI
+	 * (ROW_NUMBER over SEQ_MI_ID by UPDATED_DATE desc) changed between the from and to dates,
+	 * with the same filters as viewStore. Rows are returned as detached SciAvailableMaterials
+	 * (never saved) so the view stores result table shows them the same way.
+	 */
+	public List<SciAvailableMaterials> viewStoreAudit(StoresBean command) {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		StringBuilder sql = new StringBuilder();
+		sql.append("WITH RankedAuditRecords AS ( ")
+				.append("  SELECT audit_table.*, ")
+				.append("    ROW_NUMBER() OVER (PARTITION BY audit_table.SEQ_MI_ID ORDER BY audit_table.UPDATED_DATE DESC) AS ROW_NUM ")
+				.append("  FROM SCIGENICS.SCI_AVAILABLE_MATERIALS_AUDIT audit_table ")
+				.append("  WHERE audit_table.UPDATED_DATE >= :fromdate AND audit_table.UPDATED_DATE < :todateNextDay ")
+				.append(") ")
+				.append("SELECT r.* FROM RankedAuditRecords r WHERE r.ROW_NUM = 1 ")
+				.append(" AND EXISTS (SELECT 1 FROM SCIGENICS.SCI_MATTYPE_MASTER mt WHERE mt.MAT_CODE = SUBSTR(r.MATCODE,1,2) ");
+		// whole "to" day included, like TO_DATE('... 23:59:59')
+		parameters.put("fromdate", command.getFromdate());
+		parameters.put("todateNextDay", new Date(command.getTodate().getTime() + 24L * 60 * 60 * 1000));
+		if (StringUtils.isNotBlank(command.getMatDept())) {
+			sql.append(" AND mt.MAT_DEPT = :matdept ");
+			parameters.put("matdept", command.getMatDept());
+		}
+		sql.append(") ");
+		if (StringUtils.isNotBlank(command.getMatcode())) {
+			sql.append(" AND r.MATCODE = :matcode ");
+			parameters.put("matcode", command.getMatcode().trim());
+		}
+		if (StringUtils.isNotBlank(command.getMatCategory())) {
+			sql.append(" AND SUBSTR(r.MATCODE,3,2) = :matcat ");
+			parameters.put("matcat", command.getMatCategory());
+		}
+		if (command.getSeqmiid() != null) {
+			sql.append(" AND r.SEQ_MI_ID = :seqmiid ");
+			parameters.put("seqmiid", command.getSeqmiid());
+		}
+		if (command.getSeqWorkId() != null) {
+			sql.append(" AND EXISTS (SELECT 1 FROM SCIGENICS.SCI_MATIND_MASTER mi WHERE mi.SEQ_MI_ID = r.SEQ_MI_ID AND mi.SEQ_WORK_ID = :seqWorkId) ");
+			parameters.put("seqWorkId", command.getSeqWorkId());
+		}
+		if (StringUtils.isNotBlank(command.getWorkOrderKey())) {
+			sql.append(" AND EXISTS (SELECT 1 FROM SCIGENICS.SCI_MATIND_MASTER mi WHERE mi.SEQ_MI_ID = r.SEQ_MI_ID AND mi.SEQ_WORK_ID IN ")
+					.append(" (SELECT b.SEQ_WORK_ID FROM SCIGENICS.SCI_ACTIVE_WORKORDERS_REPORT b WHERE b.SHORT_KEY = :shortKey)) ");
+			parameters.put("shortKey", command.getWorkOrderKey());
+		}
+		boolean hasAddInfoLabel = StringUtils.isNotBlank(command.getAddInfoLabel());
+		boolean hasAddInfoValue = StringUtils.isNotBlank(command.getAddInfoValue());
+		if (hasAddInfoLabel || hasAddInfoValue) {
+			sql.append(" AND EXISTS (SELECT 1 FROM SCIGENICS.SCI_MI_MATERIAL_ADDINFO ai WHERE ai.SEQ_MI_ID = r.SEQ_MI_ID ");
+			if (hasAddInfoLabel) {
+				sql.append(" AND UPPER(ai.ADD_INFO_LABEL) LIKE UPPER(:addInfoLabel) ");
+				parameters.put("addInfoLabel", "%" + command.getAddInfoLabel().trim() + "%");
+			}
+			if (hasAddInfoValue) {
+				sql.append(" AND UPPER(ai.ADD_INFO_VALUE) LIKE UPPER(:addInfoValue) ");
+				parameters.put("addInfoValue", "%" + command.getAddInfoValue().trim() + "%");
+			}
+			sql.append(") ");
+		}
+		if (StringUtils.isNotBlank(command.getRefSize())) {
+			sql.append(" AND EXISTS (SELECT 1 FROM SCIGENICS.SCI_MI_MATERIAL_ADDINFO rs WHERE rs.SEQ_MI_ID = r.SEQ_MI_ID ")
+					.append(" AND UPPER(rs.ADD_INFO_LABEL) = 'REF_SIZE' AND UPPER(TRIM(rs.ADD_INFO_VALUE)) = UPPER(:refSizeValue)) ");
+			parameters.put("refSizeValue", command.getRefSize().trim());
+		}
+		if (command.getAddInfoFilters() != null) {
+			int fidx = 0;
+			for (AddInfoFilter filter : command.getAddInfoFilters()) {
+				if (filter.getLabel() == null || StringUtils.isBlank(filter.getValue())) {
+					continue;
+				}
+				String alias = "af" + fidx;
+				sql.append(" AND EXISTS (SELECT 1 FROM SCIGENICS.SCI_MI_MATERIAL_ADDINFO ").append(alias)
+						.append(" WHERE ").append(alias).append(".SEQ_MI_ID = r.SEQ_MI_ID ")
+						.append(" AND UPPER(").append(alias).append(".ADD_INFO_LABEL) = UPPER(:afLabel").append(fidx).append(") ")
+						.append(" AND UPPER(',' || TRIM(").append(alias).append(".ADD_INFO_VALUE) || ',') LIKE UPPER(:afValue").append(fidx).append(")) ");
+				parameters.put("afLabel" + fidx, filter.getLabel().trim());
+				parameters.put("afValue" + fidx, "%," + filter.getValue().trim() + ",%");
+				fidx++;
+			}
+		}
+		sql.append(" ORDER BY r.UPDATED_DATE DESC");
+
+		Query query = em.createNativeQuery(sql.toString());
+		for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+			query.setParameter(entry.getKey(), entry.getValue());
+		}
+		// read the audit columns by name, so a column the audit table does not have just stays empty
+		query.unwrap(org.hibernate.query.NativeQuery.class)
+				.setResultTransformer(org.hibernate.transform.AliasToEntityMapResultTransformer.INSTANCE);
+		List<Map<String, Object>> rows = query.getResultList();
+		if (rows.isEmpty()) {
+			return new ArrayList<SciAvailableMaterials>();
+		}
+
+		// the MIs (with work order and customer, as the view stores page shows them)
+		Set<Long> miIds = new LinkedHashSet<Long>();
+		for (Map<String, Object> row : rows) {
+			Long miId = toLong(row.get("SEQ_MI_ID"));
+			if (miId != null) {
+				miIds.add(miId);
+			}
+		}
+		Map<Long, SciMatindMaster> miById = new HashMap<Long, SciMatindMaster>();
+		for (List<Long> chunk : partition(new ArrayList<Long>(miIds), 1000)) {
+			List<SciMatindMaster> mis = em.createQuery("select distinct mi from SciMatindMaster mi join fetch mi.sciWorkorderMaster wo "
+					+ " left join fetch wo.sciCustomerMaster where mi.seqMiId in (:miIds)")
+					.setParameter("miIds", chunk).getResultList();
+			for (SciMatindMaster mi : mis) {
+				miById.put(mi.getSeqMiId(), mi);
+			}
+		}
+
+		List<SciAvailableMaterials> result = new ArrayList<SciAvailableMaterials>();
+		for (Map<String, Object> row : rows) {
+			SciMatindMaster mi = miById.get(toLong(row.get("SEQ_MI_ID")));
+			if (mi == null) {
+				continue;
+			}
+			SciAvailableMaterials mat = new SciAvailableMaterials();
+			mat.setSeqAvailId(toLong(row.get("SEQ_AVAIL_ID")));
+			mat.setSciMiMaster(mi);
+			mat.setMatcode((String) row.get("MATCODE"));
+			mat.setAvailQty(toText(row.get("AVAIL_QTY")));
+			mat.setAvailDimension(toText(row.get("AVAIL_DIMENSION")));
+			mat.setRemarks(toText(row.get("REMARKS")));
+			mat.setIssuedFully(toText(row.get("ISSUE_FULLY")));
+			mat.setSeqQcId(toLong(row.get("SEQ_QC_ID")));
+			mat.setSeqStreqId(toLong(row.get("SEQ_STREQ_ID")));
+			mat.setMatType(toText(row.get("MAT_TYPE")));
+			mat.setMatSpec(toText(row.get("MAT_SPEC")));
+			mat.setUpdatedDate((java.util.Date) row.get("UPDATED_DATE"));
+			mat.setUpdatedBy(toText(row.get("UPDATED_BY")));
+			mat.setInsertedDate((java.util.Date) row.get("INSERTED_DATE"));
+			mat.setInsertedBy(toText(row.get("INSERTED_BY")));
+			mat.setInvoiceDate((java.util.Date) row.get("INVOICE_DATE"));
+			mat.setInvoiceNo(toText(row.get("INVOICE_NO")));
+			if (row.get("INVOICE_VALUE") instanceof BigDecimal) {
+				mat.setInvoiceValue((BigDecimal) row.get("INVOICE_VALUE"));
+			}
+			result.add(mat);
+		}
+
+		// stock by matcode + PO / vendor by MI (the audited row may no longer be in SCI_AVAILABLE_MATERIALS)
+		String enrichSql =
+			"SELECT mi.SEQ_MI_ID, " +
+			"  (SELECT MAX(asl.qty)      FROM VW_ASSIGNED_STOCK_MI_LIST asl WHERE asl.matcode = mi.MATCODE) AS assigned_stock, " +
+			"  (SELECT MAX(vam.qty)      FROM VW_AVAIL_MATERIALS        vam WHERE vam.matcode = mi.MATCODE) AS total_stock, " +
+			"  (SELECT MAX(vas.avail_qty) FROM VW_ACTUAL_AVAIL_STOCK    vas WHERE vas.matcode = mi.MATCODE) AS actual_stock, " +
+			"  pwv.SEQ_PURCH_ID, spm.CUSTOM_PO_ID, spm.PURCHASE_CREATED_DT, svm.VENDOR_NAME " +
+			"FROM SCIGENICS.SCI_MATIND_MASTER mi " +
+			"LEFT JOIN ( SELECT SEQ_MI_ID, MAX(SEQ_PURCH_ID) AS SEQ_PURCH_ID FROM SCIGENICS.WORKORDER_MI_PURCHASE_VIEW " +
+			"  WHERE SEQ_PURCH_ID IS NOT NULL GROUP BY SEQ_MI_ID ) pwv ON pwv.SEQ_MI_ID = mi.SEQ_MI_ID " +
+			"LEFT JOIN SCIGENICS.SCI_PURCHASE_MAST spm ON spm.SEQ_PURCH_ID = pwv.SEQ_PURCH_ID " +
+			"LEFT JOIN SCIGENICS.SCI_VENDOR_MASTER svm ON svm.SEQ_VENDOR_ID = spm.SEQ_VENDOR_ID " +
+			"WHERE mi.SEQ_MI_ID IN (:miIds)";
+		Map<Long, Object[]> enrichMap = new HashMap<Long, Object[]>();
+		for (List<Long> chunk : partition(new ArrayList<Long>(miById.keySet()), 1000)) {
+			List<Object[]> chunkRows = em.createNativeQuery(enrichSql).setParameter("miIds", chunk).getResultList();
+			for (Object[] data : chunkRows) {
+				enrichMap.put(((Number) data[0]).longValue(), data);
+			}
+		}
+		for (SciAvailableMaterials mat : result) {
+			Object[] data = enrichMap.get(mat.getSciMiMaster().getSeqMiId());
+			if (data != null) {
+				if (data[1] != null) mat.setAssignedStock((BigDecimal) data[1]);
+				if (data[2] != null) mat.setTotalStockByMatCode((BigDecimal) data[2]);
+				if (data[3] != null) mat.setActualStockMatCode((BigDecimal) data[3]);
+				if (data[4] != null) mat.setSeqPurchId(((Number) data[4]).longValue());
+				if (data[5] != null) mat.setCustomPOId((String) data[5]);
+				if (data[6] != null) mat.setPurchaseCreatedDate((java.util.Date) data[6]);
+				if (data[7] != null) mat.setVendorName((String) data[7]);
+			}
+		}
+		return result;
+	}
+
+	private static String invoiceKey(Long poId, String billNo) {
+		return poId + "|" + StringUtils.trimToEmpty(billNo).toUpperCase();
+	}
+
+	private static Long toLong(Object value) {
+		return value instanceof Number ? Long.valueOf(((Number) value).longValue()) : null;
+	}
+
+	private static String toText(Object value) {
+		return value == null ? null : value.toString();
 	}
 
 	public List getMatItems(SciPurchItemMaster master) {
@@ -749,6 +940,29 @@ public class StoreDAOImpl implements StoresDAO {
 					m.setVendorName(vendor.getVendorName());
 					m.setVendorPan(vendor.getVendorPan());
 					m.setVendorGstn(vendor.getVendorGstn());
+				}
+			}
+
+			// tally details: vendor invoice with BILL_NO = recd INVOICE_NO and PO_ID = recd PO_ID
+			// (bill no compared trimmed, ignoring case; latest invoice wins if more than one matches).
+			// No matching invoice leaves the tally fields empty.
+			Map<String, SciVendorInvoiceMaster> invoiceByPoAndBill = new HashMap<String, SciVendorInvoiceMaster>();
+			for (List<Long> chunk : partition(new ArrayList<Long>(poIds), 1000)) {
+				List<SciVendorInvoiceMaster> invoices = em
+						.createQuery("select vi from SciVendorInvoiceMaster vi where vi.poId in (:poIds) and vi.billNo is not null order by vi.seqInvoiceId")
+						.setParameter("poIds", chunk)
+						.getResultList();
+				for (SciVendorInvoiceMaster vi : invoices) {
+					invoiceByPoAndBill.put(invoiceKey(vi.getPoId(), vi.getBillNo()), vi);
+				}
+			}
+			for (SciRecdMaterials m : milist) {
+				SciVendorInvoiceMaster vi = m.getInvoiceNo() == null ? null
+						: invoiceByPoAndBill.get(invoiceKey(m.getPoId(), m.getInvoiceNo()));
+				if (vi != null) {
+					m.setTallyVoucherNo(vi.getTallyVoucherNo());
+					m.setTallyDate(vi.getTallyDate());
+					m.setTallyAmount(vi.getTallyAmount());
 				}
 			}
 		}

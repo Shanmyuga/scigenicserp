@@ -49,4 +49,6 @@ public interface PurchaseOrderService {
 	public List<SciPurchaseMast> searchPOByStatus(List<Long> purchaseStatuses);
 	public List<SciPurchaseDocs> getPurchaseDocs(Long seqPurchId);
 	public void addPurchaseDocs(SciPurchaseDocs docmaster);
+	public List<SciVendorInvoiceMaster> searchInvoicesForTally(String billNo, String poNo);
+	public SciVendorInvoiceMaster updateInvoiceDetails(SciVendorInvoiceMaster vmaster);
 }

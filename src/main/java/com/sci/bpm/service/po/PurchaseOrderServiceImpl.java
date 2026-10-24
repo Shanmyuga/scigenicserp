@@ -283,5 +283,15 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		dao.addPurchaseDocs(docmaster);
 	}
 
+	@Override
+	public List<SciVendorInvoiceMaster> searchInvoicesForTally(String billNo, String poNo) {
+		return dao.searchInvoicesForTally(billNo, poNo);
+	}
+
+	@Override
+	public SciVendorInvoiceMaster updateInvoiceDetails(SciVendorInvoiceMaster vmaster) {
+		return dao.updateInvoiceDetails(vmaster);
+	}
+
 
 }

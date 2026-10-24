@@ -112,6 +112,8 @@ public class StoresBean implements Serializable {
 	private List<AddInfoFilter> addInfoFilters = new ArrayList<AddInfoFilter>();
 	// material code the filters were loaded for
 	private String addInfoFiltersMatcode;
+	// view stores search source: "STORES" (current stores) or "AUDIT" (latest audit row per MI)
+	private String searchSource = "STORES";
 	private Date invoiceDate;
 	private String invoiceNo;
 	private String invoiceValue;
@@ -708,6 +710,18 @@ public class StoresBean implements Serializable {
 
 	public void setAddInfoFilters(List<AddInfoFilter> addInfoFilters) {
 		this.addInfoFilters = addInfoFilters;
+	}
+
+	public String getSearchSource() {
+		return searchSource;
+	}
+
+	public void setSearchSource(String searchSource) {
+		this.searchSource = searchSource;
+	}
+
+	public boolean isAuditSearch() {
+		return "AUDIT".equals(searchSource);
 	}
 
 	public String getAddInfoFiltersMatcode() {

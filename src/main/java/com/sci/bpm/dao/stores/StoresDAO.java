@@ -27,6 +27,7 @@ public List<SciQcMiMaster> viewApprovedQCs(StoresBean bean);
 public void updateMi(SciMatindMaster mi);
 public void issueItems(SciStoreissueMaster master);
 public List<SciAvailableMaterials> viewStore(StoresBean command);
+public List<SciAvailableMaterials> viewStoreAudit(StoresBean command);
 public List loadissueAcceptance(MatindCommand command);
 public List getMatItems(SciPurchItemMaster master);
 public void updateIssueMaster(SciStoreissueMaster issuemaster);

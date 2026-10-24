@@ -77,6 +77,7 @@ private String miForIssue;
 private Date vendorAgreeDate;
 private String poMatAssign;
 private String matcodeAddInfo;
+private String matcodeAddInfoCode;
 private BigDecimal laborCost;
 	// Constructors
 
@@ -675,6 +676,16 @@ private BigDecimal laborCost;
 
 	public void setMatcodeAddInfo(String matcodeAddInfo) {
 		this.matcodeAddInfo = matcodeAddInfo;
+	}
+
+	/** 7 character Base36 SHA-256 code of the drop down entries of MATCODE_ADDINFO - set by MatcodeAddInfoCodeGenerator. */
+	@Column(name = "MATCODE_ADDINFO_CODE", length = 7)
+	public String getMatcodeAddInfoCode() {
+		return matcodeAddInfoCode;
+	}
+
+	public void setMatcodeAddInfoCode(String matcodeAddInfoCode) {
+		this.matcodeAddInfoCode = matcodeAddInfoCode;
 	}
 
 	@Transient

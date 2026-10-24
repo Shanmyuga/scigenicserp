@@ -347,4 +347,37 @@ private SciMatindMaster sciMiMaster;
 		this.vendorGstn = vendorGstn;
 	}
 
+	// Not persisted on SCI_RECD_MATERIALS - tally details of the matching vendor invoice
+	// (SCI_VENDOR_INVOICE_MASTER: BILL_NO = INVOICE_NO and PO_ID = PO_ID), for the "view recd items" screen.
+	private String tallyVoucherNo;
+	private Date tallyDate;
+	private Double tallyAmount;
+
+	@Transient
+	public String getTallyVoucherNo() {
+		return tallyVoucherNo;
+	}
+
+	public void setTallyVoucherNo(String tallyVoucherNo) {
+		this.tallyVoucherNo = tallyVoucherNo;
+	}
+
+	@Transient
+	public Date getTallyDate() {
+		return tallyDate;
+	}
+
+	public void setTallyDate(Date tallyDate) {
+		this.tallyDate = tallyDate;
+	}
+
+	@Transient
+	public Double getTallyAmount() {
+		return tallyAmount;
+	}
+
+	public void setTallyAmount(Double tallyAmount) {
+		this.tallyAmount = tallyAmount;
+	}
+
 }

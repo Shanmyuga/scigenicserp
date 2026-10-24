@@ -346,7 +346,19 @@ public class StoresManagerController extends SciBaseController {
             context.getFlashScope().put("addInfoFilterMessage", "Material Code changed - additional info filters were cleared. Click Load Additional Info again.");
         }
 
-        List<SciAvailableMaterials> stlist = service.viewStore(bean);
+        List<SciAvailableMaterials> stlist;
+        if (bean.isAuditSearch()) {
+            // latest audit row per MI changed in the date range
+            if (bean.getFromdate() == null || bean.getTodate() == null) {
+                throw new Exception("Enter the From date and To date to search the Stores Audit.");
+            }
+            if (bean.getFromdate().after(bean.getTodate())) {
+                throw new Exception("From date cannot be after the To date.");
+            }
+            stlist = service.viewStoreAudit(bean);
+        } else {
+            stlist = service.viewStore(bean);
+        }
 
         List<Long> miIds = new ArrayList<Long>();
         for (SciAvailableMaterials item : stlist) {
