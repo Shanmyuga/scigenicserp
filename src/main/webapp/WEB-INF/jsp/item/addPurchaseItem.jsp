@@ -47,9 +47,46 @@
 <form:option value=""></form:option>
 <form:options items="${denomlist}" itemValue="lovDescription" itemLabel="lovDescription"/>
 </form:select></td>
-<td align="left" class="datatext">List of Raw MI ID's</td>
-<td ><form:input path="rawmiid"  size="40"/><span style="color:red;">(Give as Comma separated ex - MI1,MI2)</span></td>
+<td colspan="2">&nbsp;</td>
 
+</tr>
+<tr>
+<td align="left" class="datatext" valign="top">Raw MI Details</td>
+<td colspan="3">
+<table id="rawMiTable" border="0" cellpadding="3px">
+<tr>
+<td class="datatext">Raw MI ID</td>
+<td class="datatext">Raw MI Quantity</td>
+<td class="datatext">Raw MI Returnable Quantity</td>
+<td>&nbsp;</td>
+</tr>
+<c:choose>
+<c:when test="${not empty itemcommand.rawMiIds}">
+<c:forEach items="${itemcommand.rawMiIds}" var="rawMiId" varStatus="status">
+<tr>
+<td><input type="text" name="rawMiIds" size="10" value="<c:out value='${rawMiId}'/>"/></td>
+<td><input type="number" step="any" min="0" name="rawMiQty" size="10" value="<c:out value='${itemcommand.rawMiQty[status.index]}'/>"/></td>
+<td><input type="number" step="any" min="0" name="rawMiReturnQty" size="10" value="<c:out value='${itemcommand.rawMiReturnQty[status.index]}'/>"/></td>
+<td><input type="button" value="Remove" onclick="removeRawMiRow(this)"/></td>
+</tr>
+</c:forEach>
+</c:when>
+<c:otherwise>
+<tr>
+<td><input type="text" name="rawMiIds" size="10"/></td>
+<td><input type="number" step="any" min="0" name="rawMiQty" size="10"/></td>
+<td><input type="number" step="any" min="0" name="rawMiReturnQty" size="10"/></td>
+<td><input type="button" value="Remove" onclick="removeRawMiRow(this)"/></td>
+</tr>
+</c:otherwise>
+</c:choose>
+</table>
+<input type="button" value="Add Raw MI" onclick="addRawMiRow()"/>
+<input type="button" value="Load Raw Material Cost" onclick="eventdirect('loadRawMiCost')"/>
+<c:if test="${rawMaterialCost != null}">
+<span class="datatext">Raw Material Cost: <c:out value="${rawMaterialCost}"/></span>
+</c:if>
+</td>
 </tr>
 <tr>
 <td colspan="3" align="right" >&nbsp;</td>
@@ -102,19 +139,20 @@
 <display:column sortable="true"  title="Previous Estimated  Unit Cost" property="tempunitCost" >
 
 </display:column>
+<%-- plain inputs indexed by row, so values loaded by "Load Raw Material Cost" show in their own row --%>
 <display:column sortable="true"  title="Modified Quantity"  >
-<form:input path="miquantity" />
+<input type="text" name="miquantity" value="<c:out value='${itemcommand.miquantity[row_rowNum - 1]}'/>" />
 </display:column>
 <display:column sortable="true"  title="Estimated  Unit Cost"  >
-<form:input path="micost" />
+<input type="text" name="micost" value="<c:out value='${itemcommand.micost[row_rowNum - 1]}'/>" />
 </display:column>
 
 <display:column sortable="true"  title="Labor Cost"  >
-<form:input path="milaborcost" />
+<input type="text" name="milaborcost" value="<c:out value='${itemcommand.milaborcost[row_rowNum - 1]}'/>" />
 </display:column>
 
 <display:column sortable="true"  title="Recommendation"  >
-<form:input path="miremarks" />
+<input type="text" name="miremarks" value="<c:out value='${itemcommand.miremarks[row_rowNum - 1]}'/>" />
 </display:column>
 </display:table>
 
@@ -146,12 +184,12 @@
 
         <display:column sortable="true"  title="Cost Percentage"  >
 
-            <form:input path="miCostPercentage" />
+            <input type="text" name="miCostPercentage" value="<c:out value='${itemcommand.miCostPercentage[row_rowNum - 1]}'/>" />
         </display:column>
 
 
         <display:column sortable="true"  title="Recommendation"  >
-            <form:input path="childMiRemarks" />
+            <input type="text" name="childMiRemarks" value="<c:out value='${itemcommand.childMiRemarks[row_rowNum - 1]}'/>" />
         </display:column>
     </display:table>
 </div>
@@ -175,5 +213,19 @@ function eventdirect(event) {
 document.getElementById('_eventId').value = event;
 
 document.itemcommand.submit();
+}
+
+function addRawMiRow() {
+var table = document.getElementById('rawMiTable');
+var row = table.insertRow(-1);
+row.insertCell(0).innerHTML = '<input type="text" name="rawMiIds" size="10"/>';
+row.insertCell(1).innerHTML = '<input type="number" step="any" min="0" name="rawMiQty" size="10"/>';
+row.insertCell(2).innerHTML = '<input type="number" step="any" min="0" name="rawMiReturnQty" size="10"/>';
+row.insertCell(3).innerHTML = '<input type="button" value="Remove" onclick="removeRawMiRow(this)"/>';
+}
+
+function removeRawMiRow(button) {
+var row = button.parentNode.parentNode;
+row.parentNode.removeChild(row);
 }
 </script>

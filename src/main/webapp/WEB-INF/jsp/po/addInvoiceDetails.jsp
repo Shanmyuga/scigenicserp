@@ -65,7 +65,7 @@
 </tr>
 <tr>
 <td align="left" class="datatext">Tally Voucher No</td>
-<td ><form:input path="tallyVoucherNo" maxlength="20" /></td>
+<td ><form:input path="tallyVoucherNo" maxlength="50" /></td>
 
 <td align="left" class="datatext">Tally Date</td>
 <td ><form:input path="tallyDate" size="10" />

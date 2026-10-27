@@ -140,7 +140,35 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 			}
 
 		}
+		// stages are only kept for subcontract purchase orders with a single item
+		if ("subcontract".equals(master.getPurchaseType()) && itemlist.size() == 1) {
+			addFinalSubstage(master, itemlist);
+		}
 
+	}
+
+	// every subcontract purchase order gets a final stage (stage order 99) for its vendor
+	private static final long FINAL_STAGE_ORDER = 99L;
+
+	private void addFinalSubstage(SciPurchaseMast master, List<SciPurchItemMaster> itemlist) {
+		List<String> itemDescriptions = new java.util.ArrayList<String>();
+		for (SciPurchItemMaster im : itemlist) {
+			if (StringUtils.isNotBlank(im.getItemDescription())) {
+				itemDescriptions.add(im.getItemDescription().trim());
+			}
+		}
+		SciSubstagePos substage = new SciSubstagePos();
+		substage.setPoId(master.getSeqPurchId());
+		substage.setSciVendorMaster(master.getSciVendorMaster());
+		substage.setStageOrder(FINAL_STAGE_ORDER);
+		substage.setStageDesc("Final Stage");
+		// ITEM_DESCRIPTION is VARCHAR2(250)
+		substage.setItemDescription(StringUtils.abbreviate(StringUtils.trimToNull(StringUtils.join(itemDescriptions, ", ")), 250));
+		substage.setInsertedBy(master.getInsertedBy());
+		substage.setInsertedDate(new Date());
+		substage.setUpdatedBy(master.getUpdatedBy());
+		substage.setUpdatedDate(new Date());
+		dao.addSubstage(substage);
 	}
 
 	public void updatePOStatus(SciPurchaseMast master, Long mistatus) {
@@ -291,6 +319,26 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	@Override
 	public SciVendorInvoiceMaster updateInvoiceDetails(SciVendorInvoiceMaster vmaster) {
 		return dao.updateInvoiceDetails(vmaster);
+	}
+
+	@Override
+	public List<SciPurchaseMast> searchSubcontractPOsForStages(String poNo, List<Long> excludedStatuses) {
+		return dao.searchSubcontractPOsForStages(poNo, excludedStatuses);
+	}
+
+	@Override
+	public List<SciSubstagePos> loadSubstages(Long poId) {
+		return dao.loadSubstages(poId);
+	}
+
+	@Override
+	public void addSubstage(SciSubstagePos substage) {
+		dao.addSubstage(substage);
+	}
+
+	@Override
+	public SciSubstagePos updateSubstage(SciSubstagePos substage) {
+		return dao.updateSubstage(substage);
 	}
 
 

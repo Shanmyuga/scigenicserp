@@ -17,8 +17,10 @@ public class ItemCommand implements Serializable {
 	private Date itemOrderDate;
 	private Long itemType;
 	private String itemDenom;
-	private String rawmiid;
-	
+	private String[] rawMiIds;
+	private String[] rawMiQty;
+	private String[] rawMiReturnQty;
+
 	private String[] itemlist;
 	
 	private String[] seqMIids;
@@ -110,11 +112,23 @@ public class ItemCommand implements Serializable {
 	public void setMiremarks(String[] miremarks) {
 		this.miremarks = miremarks;
 	}
-	public String getRawmiid() {
-		return rawmiid;
+	public String[] getRawMiIds() {
+		return rawMiIds;
 	}
-	public void setRawmiid(String rawmiid) {
-		this.rawmiid = rawmiid;
+	public void setRawMiIds(String[] rawMiIds) {
+		this.rawMiIds = rawMiIds;
+	}
+	public String[] getRawMiQty() {
+		return rawMiQty;
+	}
+	public void setRawMiQty(String[] rawMiQty) {
+		this.rawMiQty = rawMiQty;
+	}
+	public String[] getRawMiReturnQty() {
+		return rawMiReturnQty;
+	}
+	public void setRawMiReturnQty(String[] rawMiReturnQty) {
+		this.rawMiReturnQty = rawMiReturnQty;
 	}
 	public String getItemDenom() {
 		return itemDenom;

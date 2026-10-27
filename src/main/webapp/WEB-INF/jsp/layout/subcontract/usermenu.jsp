@@ -80,7 +80,10 @@
               </tr>
                   <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=searchpurch-flow">View Subcontract Purchase Order</a></td>
-                
+
+              </tr>
+              <tr>
+                <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=updatepostages-flow">Update Purchase Order Stages</a></td>
               </tr>
                <tr> 
                 <td><img src="images/arrow.jpg" width="20" height="20"><a href="springtest.htm?_flowId=addreturn-flow">Return Materials</a></td>

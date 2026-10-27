@@ -234,9 +234,21 @@
                     </p>
                 </div>
                 </c:if>
+                <c:if test="${fn:length(pdfStageList) > 0 }" >
+                <div style="padding-left:10px;width:787px;float:left">
+                    <p>This purchase order has subcontract stages. Select the stage to generate the purchase order PDF for:
+                    <form:select path="pdfStageId" id="pdfStageId">
+                        <form:option value=""></form:option>
+                        <c:forEach items="${pdfStageList}" var="pdfStage">
+                            <form:option value="${pdfStage.seqSubstagePoId}"><c:out value="Stage ${pdfStage.stageOrder} - ${pdfStage.stageDesc} - ${pdfStage.sciVendorMaster.vendorName} - Labour Cost ${pdfStage.laborCost}"/></form:option>
+                        </c:forEach>
+                    </form:select>
+                    </p>
+                </div>
+                </c:if>
                 <div style="padding-left:10px;width:787px;float:left">
                     <input type="button"  value="View Purchase Order " onclick="eventdirect('openPurchaseOrder')"/>
-                    <input type="button"  value="Generate Purchase Order PDF" onclick="eventdirect('generatePDF')"/>
+                    <input type="button"  value="Generate Purchase Order PDF" onclick="if (checkPdfStage()) eventdirect('generatePDF')"/>
             <c:if test="${fn:length(rawMiList) > 0 }" >
                     <input type="button"  value="Generate Delivery Challan" onclick="eventdirect('generateChallan')"/>
             </c:if>
@@ -425,6 +437,16 @@
         document.getElementById('_eventId').value = event;
 
         document.pocommand.submit();
+    }
+
+    // a PO with subcontract stages needs a stage selected for its PDF (also checked on the server)
+    function checkPdfStage() {
+        var stage = document.getElementById('pdfStageId');
+        if (stage != null && stage.value == '') {
+            alert('Please select the stage to generate the purchase order PDF.');
+            return false;
+        }
+        return true;
     }
 
     function openpurchdoc(idkeyval) {

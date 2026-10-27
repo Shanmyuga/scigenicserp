@@ -485,6 +485,50 @@ public class SciPurchaseMasterDAOimpl implements ISciPurchaseMastDAO {
 		return em.merge(vmaster);
 	}
 
+	/**
+	 * Subcontract purchase orders not in any of the excluded statuses, optionally narrowed
+	 * to a PO no (the PO ID, or the custom PO ID of the purchase order).
+	 */
+	@Override
+	public List<SciPurchaseMast> searchSubcontractPOsForStages(String poNo, List<Long> excludedStatuses) {
+		String query = "Select m from SciPurchaseMast m where m.purchaseType = 'subcontract' and m.purchaseStatus not in (:excludedStatuses) ";
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("excludedStatuses", excludedStatuses);
+		if (StringUtils.isNotBlank(poNo)) {
+			String po = poNo.trim();
+			if (StringUtils.isNumeric(po)) {
+				query = query + " and (m.seqPurchId = :poId or UPPER(m.customPOId) = UPPER(:customPOId)) ";
+				parameters.put("poId", Long.valueOf(po));
+			} else {
+				query = query + " and UPPER(m.customPOId) = UPPER(:customPOId) ";
+			}
+			parameters.put("customPOId", po);
+		}
+		Query qry = em.createQuery(query + " order by m.seqPurchId desc");
+		for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+			qry.setParameter(entry.getKey(), entry.getValue());
+		}
+		qry.setMaxResults(500);
+		return qry.getResultList();
+	}
+
+	@Override
+	public List<SciSubstagePos> loadSubstages(Long poId) {
+		Query qry = em.createQuery("Select s from SciSubstagePos s where s.poId = :poId order by s.stageOrder, s.seqSubstagePoId");
+		qry.setParameter("poId", poId);
+		return qry.getResultList();
+	}
+
+	@Override
+	public void addSubstage(SciSubstagePos substage) {
+		em.persist(substage);
+	}
+
+	@Override
+	public SciSubstagePos updateSubstage(SciSubstagePos substage) {
+		return em.merge(substage);
+	}
+
 	@Override
 	public List<SciVendorInvoiceMaster> loadInvoiceDetails(Long seqVendorId) {
 		Query qry = em.createQuery("Select m from SciVendorInvoiceMaster m where m.sciVendorMaster.seqVendorId =:seqVendorID order by insertedDate desc");

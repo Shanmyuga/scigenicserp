@@ -393,6 +393,8 @@ public class StoreDAOImpl implements StoresDAO {
 				.append("  WHERE audit_table.UPDATED_DATE >= :fromdate AND audit_table.UPDATED_DATE < :todateNextDay ")
 				.append(") ")
 				.append("SELECT r.* FROM RankedAuditRecords r WHERE r.ROW_NUM = 1 ")
+				// AVAIL_QTY is text: skip MIs whose latest audit row has zero available quantity ('0', '0.0', ...)
+				.append(" AND NVL(TO_NUMBER(TRIM(r.AVAIL_QTY) DEFAULT NULL ON CONVERSION ERROR), -1) <> 0 ")
 				.append(" AND EXISTS (SELECT 1 FROM SCIGENICS.SCI_MATTYPE_MASTER mt WHERE mt.MAT_CODE = SUBSTR(r.MATCODE,1,2) ");
 		// whole "to" day included, like TO_DATE('... 23:59:59')
 		parameters.put("fromdate", command.getFromdate());

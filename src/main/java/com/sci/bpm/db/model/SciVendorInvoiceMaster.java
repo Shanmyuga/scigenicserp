@@ -208,7 +208,7 @@ public class SciVendorInvoiceMaster implements java.io.Serializable {
 		this.invoiceDocs.add(docs);
 }
 
-	@Column(name = "TALLY_VOUCHER_NO", nullable = true, length = 20)
+	@Column(name = "TALLY_VOUCHER_NO", nullable = true, length = 50)
 	public String getTallyVoucherNo() {
 		return tallyVoucherNo;
 	}

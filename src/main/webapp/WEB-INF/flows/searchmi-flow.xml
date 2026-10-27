@@ -49,6 +49,10 @@
             <webflow:evaluate expression="itemcont.setupForm"/>
             <webflow:evaluate expression="itemcont.loadItemDesc"/>
         </webflow:on-entry>
+        <webflow:transition on="loadRawMiCost">
+            <webflow:evaluate expression="itemcont.bind"/>
+            <webflow:evaluate expression="itemcont.loadRawMiCost"/>
+        </webflow:transition>
         <webflow:transition on="addItem" to="addItemsucces">
             <webflow:evaluate expression="itemcont.bind"/>
             <webflow:evaluate expression="itemcont.addNewItem"/>

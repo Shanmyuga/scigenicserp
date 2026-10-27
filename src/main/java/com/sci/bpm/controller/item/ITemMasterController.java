@@ -54,11 +54,12 @@ public class ITemMasterController extends SciBaseController {
 		 double totalCost = 0.000;
 		 List<SciMatindMaster> datalist = new ArrayList<SciMatindMaster>();
 		 List<SciMatindMaster> splitdatalist = new ArrayList<SciMatindMaster>();
-		 boolean checkrawmi = checkRawMI(command.getRawmiid());
-		 if(!checkrawmi) {
-			 throw new Exception("Raw mi are not valid issued MI");
+		 List<RawMiRow> rawMiRows = readRawMiRows(command);
+		 for(RawMiRow row : rawMiRows) {
+			 if(!service.checkRawMI(row.rawMiId)) {
+				 throw new Exception("Raw MI " + row.rawMiId + " is not a valid issued MI");
+			 }
 		 }
-		 itemmaster.setRawmis(command.getRawmiid());
 		 Set<SciAddMatInfoDocsEntity> addMatInfoDocsEntities = new HashSet<SciAddMatInfoDocsEntity>();
 		Set<SciMiMaterialAddinfoEntity> sciMiMaterialAddinfoEntities = new HashSet<SciMiMaterialAddinfoEntity>();
 		for(SciMatindMaster m : milist){
@@ -171,36 +172,92 @@ public class ITemMasterController extends SciBaseController {
 
 
 				service.addNewItem(itemmaster, datalist,splitdatalist,new SciRawMIDetails(),updatedMiList);
-				String rawmis  = itemmaster.getRawmis();
-				
-				String[] rawmisarr = StringUtils.split(rawmis,",");
 				for(SciMatindMaster m: datalist) {
 
-					if(rawmisarr != null) {
-						for(String rawmi:rawmisarr) {
-							SciRawMIDetails rmidetails = new SciRawMIDetails();
-							SciMatindMaster rawMiMaster = miservice.loadMI(Long.parseLong(rawmi));
+					for(RawMiRow row : rawMiRows) {
+						SciRawMIDetails rmidetails = new SciRawMIDetails();
+						SciMatindMaster rawMiMaster = miservice.loadMI(row.rawMiId);
 
-							rmidetails.setRawMIMaster(rawMiMaster);
-							rmidetails.setSubcontractMIMaster(m);
-							SciPurchaseMast rawMiPO = service.loadPurchaseOrderForMi(rawMiMaster.getSeqMiId());
-							if(rawMiPO != null) {
-								rmidetails.setSciVendorMaster(rawMiPO.getSciVendorMaster());
-							}
-							rmidetails.setMatDimension(rawMiMaster.getMatDimesion());
-							rmidetails.setRawMaterialDesc(rawMiMaster.getMatDesc());
-							if(rawMiMaster.getMatQty() != null) {
-								rmidetails.setMatQty(rawMiMaster.getMatQty().floatValue());
-							}
-							service.addRawMI(rmidetails);
-
+						rmidetails.setRawMIMaster(rawMiMaster);
+						rmidetails.setSubcontractMIMaster(m);
+						SciPurchaseMast rawMiPO = service.loadPurchaseOrderForMi(rawMiMaster.getSeqMiId());
+						if(rawMiPO != null) {
+							rmidetails.setSciVendorMaster(rawMiPO.getSciVendorMaster());
 						}
+						rmidetails.setMatDimension(rawMiMaster.getMatDimesion());
+						rmidetails.setRawMaterialDesc(rawMiMaster.getMatDesc());
+						rmidetails.setMatQty(row.quantity.floatValue());
+						if(row.returnableQty != null) {
+							rmidetails.setRetQty(row.returnableQty.floatValue());
 						}
+						service.addRawMI(rmidetails);
+					}
 				}
 				
 		return success();
 	}
 	
+	/**
+	 * "Load Raw Material Cost": raw material cost = sum of (raw MI unit cost * (raw MI quantity - returnable quantity))
+	 * over the raw MI rows.
+	 * A blank modified quantity is filled with the MI quantity, and the estimated unit cost of every MI row is
+	 * raw material cost / total modified quantity.
+	 */
+	public Event loadRawMiCost(RequestContext context) throws Exception {
+		ItemCommand command = (ItemCommand) getFormObject(context);
+		List<SciMatindMaster> milist = (List)context.getFlowScope().get("itemmilist");
+		List<RawMiRow> rawMiRows = readRawMiRows(command);
+		if(rawMiRows.isEmpty()) {
+			throw new Exception("Enter the Raw MI details to load the raw material cost");
+		}
+		BigDecimal rawMaterialCost = BigDecimal.ZERO;
+		for(RawMiRow row : rawMiRows) {
+			SciMatindMaster rawMiMaster = miservice.loadMI(row.rawMiId);
+			if(rawMiMaster == null) {
+				throw new Exception("Raw MI " + row.rawMiId + " does not exist");
+			}
+			if(rawMiMaster.getUnitCost() == null) {
+				throw new Exception("Raw MI " + row.rawMiId + " has no unit cost");
+			}
+			// only the consumed quantity is costed: raw MI quantity less the returnable quantity
+			BigDecimal consumedQty = row.returnableQty == null ? row.quantity : row.quantity.subtract(row.returnableQty);
+			rawMaterialCost = rawMaterialCost.add(rawMiMaster.getUnitCost().multiply(consumedQty));
+		}
+
+		String[] miquantity = new String[milist.size()];
+		String[] micost = new String[milist.size()];
+		BigDecimal totalQuantity = BigDecimal.ZERO;
+		for(int idx = 0; idx < milist.size(); idx++) {
+			String entered = command.getMiquantity() != null && command.getMiquantity().length > idx
+					? StringUtils.trimToEmpty(command.getMiquantity()[idx]) : "";
+			BigDecimal quantity;
+			if(entered.isEmpty()) {
+				quantity = milist.get(idx).getMatQty();
+				if(quantity == null) {
+					throw new Exception("Enter the Modified Quantity for MI " + milist.get(idx).getSeqMiId());
+				}
+			} else {
+				try {
+					quantity = new BigDecimal(entered);
+				} catch (NumberFormatException e) {
+					throw new Exception("Modified Quantity of MI " + milist.get(idx).getSeqMiId() + " is not a valid number");
+				}
+			}
+			miquantity[idx] = quantity.stripTrailingZeros().toPlainString();
+			totalQuantity = totalQuantity.add(quantity);
+		}
+		if(totalQuantity.signum() <= 0) {
+			throw new Exception("Modified Quantity should be greater than zero to derive the estimated unit cost");
+		}
+		BigDecimal unitCost = rawMaterialCost.divide(totalQuantity, 2, BigDecimal.ROUND_HALF_UP);
+		Arrays.fill(micost, unitCost.toPlainString());
+
+		command.setMiquantity(miquantity);
+		command.setMicost(micost);
+		context.getFlowScope().put("rawMaterialCost", rawMaterialCost.setScale(2, BigDecimal.ROUND_HALF_UP));
+		return success();
+	}
+
 	public Event selectPOItem(RequestContext context) throws Exception {
 		ItemCommand command = (ItemCommand) getFormObject(context);
 		List poitemlist = null;
@@ -274,17 +331,60 @@ public class ITemMasterController extends SciBaseController {
 	}
 
 
-	public boolean checkRawMI(String rawMiid) {
-		boolean check = true;
-		String[] rawmis = StringUtils.split(rawMiid,",");
-		for(String rawmi:rawmis) {
-			
-			 check = service.checkRawMI(Long.parseLong(rawmi));
-			if(!check) {
-				break;
-			}
+	private static class RawMiRow {
+		private final Long rawMiId;
+		private final BigDecimal quantity;
+		private final BigDecimal returnableQty;
+
+		private RawMiRow(Long rawMiId, BigDecimal quantity, BigDecimal returnableQty) {
+			this.rawMiId = rawMiId;
+			this.quantity = quantity;
+			this.returnableQty = returnableQty;
 		}
-		return check;
+	}
+
+	private List<RawMiRow> readRawMiRows(ItemCommand command) throws Exception {
+		List<RawMiRow> rows = new ArrayList<RawMiRow>();
+		String[] ids = command.getRawMiIds();
+		String[] qtys = command.getRawMiQty();
+		String[] retQtys = command.getRawMiReturnQty();
+		if(ids == null || ids.length == 0) {
+			return rows;
+		}
+		// a single blank field binds as an empty array, so an empty returnable qty array means no returnable qty was entered
+		boolean noRetQtys = retQtys == null || retQtys.length == 0;
+		if(qtys == null || qtys.length != ids.length || (!noRetQtys && retQtys.length != ids.length)) {
+			throw new Exception("Enter the Raw MI ID and Quantity for every Raw MI row");
+		}
+		for(int idx = 0; idx < ids.length; idx++) {
+			String id = StringUtils.trimToEmpty(ids[idx]);
+			String qty = StringUtils.trimToEmpty(qtys[idx]);
+			String retQty = noRetQtys ? "" : StringUtils.trimToEmpty(retQtys[idx]);
+			if(id.isEmpty() && qty.isEmpty() && retQty.isEmpty()) {
+				continue;
+			}
+			if(id.isEmpty() || qty.isEmpty()) {
+				throw new Exception("Enter the Raw MI ID and Quantity for every Raw MI row");
+			}
+			Long rawMiId;
+			BigDecimal quantity;
+			BigDecimal returnableQty;
+			try {
+				rawMiId = Long.valueOf(id);
+				quantity = new BigDecimal(qty);
+				returnableQty = retQty.isEmpty() ? null : new BigDecimal(retQty);
+			} catch (NumberFormatException e) {
+				throw new Exception("Raw MI row " + (idx + 1) + " has an invalid number");
+			}
+			if(quantity.signum() <= 0) {
+				throw new Exception("Raw MI Quantity should be greater than zero for Raw MI " + rawMiId);
+			}
+			if(returnableQty != null && (returnableQty.signum() < 0 || returnableQty.compareTo(quantity) > 0)) {
+				throw new Exception("Raw MI Returnable Quantity should be between zero and the Raw MI Quantity for Raw MI " + rawMiId);
+			}
+			rows.add(new RawMiRow(rawMiId, quantity, returnableQty));
+		}
+		return rows;
 	}
 
 	

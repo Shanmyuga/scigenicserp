@@ -70,6 +70,20 @@ public class POCommand implements Serializable {
 	private String searchBillNo;
 	private String searchPONo;
 	private Long seqInvoiceId;
+	// Update PO Stages: the selected purchase order and the stage being added
+	private Long stagePOId;
+	private Long stageVendorId;
+	private String stageDesc;
+	private String stageOrder;
+	private String stageItemDesc;
+	private String stageLaborCost;
+	private String stageHasReturns;
+	// Update PO Stages: the existing stage being edited
+	private Long editStageId;
+	private String editLaborCost;
+	private String editHasReturns;
+	// View Purchase Order: the stage the purchase order PDF is generated for
+	private Long pdfStageId;
 	private Double poId;
 	private Long seqMaterialId;
 	private Double matCost;
@@ -728,6 +742,94 @@ public class POCommand implements Serializable {
 
 	public void setSeqInvoiceId(Long seqInvoiceId) {
 		this.seqInvoiceId = seqInvoiceId;
+	}
+
+	public Long getStagePOId() {
+		return stagePOId;
+	}
+
+	public void setStagePOId(Long stagePOId) {
+		this.stagePOId = stagePOId;
+	}
+
+	public Long getStageVendorId() {
+		return stageVendorId;
+	}
+
+	public void setStageVendorId(Long stageVendorId) {
+		this.stageVendorId = stageVendorId;
+	}
+
+	public String getStageDesc() {
+		return stageDesc;
+	}
+
+	public void setStageDesc(String stageDesc) {
+		this.stageDesc = stageDesc;
+	}
+
+	public String getStageOrder() {
+		return stageOrder;
+	}
+
+	public void setStageOrder(String stageOrder) {
+		this.stageOrder = stageOrder;
+	}
+
+	public String getStageItemDesc() {
+		return stageItemDesc;
+	}
+
+	public void setStageItemDesc(String stageItemDesc) {
+		this.stageItemDesc = stageItemDesc;
+	}
+
+	public String getStageLaborCost() {
+		return stageLaborCost;
+	}
+
+	public void setStageLaborCost(String stageLaborCost) {
+		this.stageLaborCost = stageLaborCost;
+	}
+
+	public String getStageHasReturns() {
+		return stageHasReturns;
+	}
+
+	public void setStageHasReturns(String stageHasReturns) {
+		this.stageHasReturns = stageHasReturns;
+	}
+
+	public Long getEditStageId() {
+		return editStageId;
+	}
+
+	public void setEditStageId(Long editStageId) {
+		this.editStageId = editStageId;
+	}
+
+	public String getEditLaborCost() {
+		return editLaborCost;
+	}
+
+	public void setEditLaborCost(String editLaborCost) {
+		this.editLaborCost = editLaborCost;
+	}
+
+	public String getEditHasReturns() {
+		return editHasReturns;
+	}
+
+	public void setEditHasReturns(String editHasReturns) {
+		this.editHasReturns = editHasReturns;
+	}
+
+	public Long getPdfStageId() {
+		return pdfStageId;
+	}
+
+	public void setPdfStageId(Long pdfStageId) {
+		this.pdfStageId = pdfStageId;
 	}
 
 	public String getApprovalRemarks() {

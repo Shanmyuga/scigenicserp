@@ -51,4 +51,8 @@ public interface PurchaseOrderService {
 	public void addPurchaseDocs(SciPurchaseDocs docmaster);
 	public List<SciVendorInvoiceMaster> searchInvoicesForTally(String billNo, String poNo);
 	public SciVendorInvoiceMaster updateInvoiceDetails(SciVendorInvoiceMaster vmaster);
+	public List<SciPurchaseMast> searchSubcontractPOsForStages(String poNo, List<Long> excludedStatuses);
+	public List<SciSubstagePos> loadSubstages(Long poId);
+	public void addSubstage(SciSubstagePos substage);
+	public SciSubstagePos updateSubstage(SciSubstagePos substage);
 }
