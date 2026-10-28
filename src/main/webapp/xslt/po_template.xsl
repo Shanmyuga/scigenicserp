@@ -456,7 +456,7 @@
 											   border-width="1pt" number-columns-spanned="5">
 									<fo:block line-height="12pt" font-size="10pt"
 											  space-before.optimum="1.5pt" space-after.optimum="1.5pt"
-											  keep-together="always" text-align="center">Items total price
+											  keep-together="always" text-align="center"><xsl:choose><xsl:when test="string(/purchaseOrder/itemtotalLabel)"><xsl:value-of select="/purchaseOrder/itemtotalLabel"/></xsl:when><xsl:otherwise>Items total price</xsl:otherwise></xsl:choose>
 									</fo:block>
 								</fo:table-cell>
 

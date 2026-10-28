@@ -147,10 +147,6 @@
 <input type="text" name="micost" value="<c:out value='${itemcommand.micost[row_rowNum - 1]}'/>" />
 </display:column>
 
-<display:column sortable="true"  title="Labor Cost"  >
-<input type="text" name="milaborcost" value="<c:out value='${itemcommand.milaborcost[row_rowNum - 1]}'/>" />
-</display:column>
-
 <display:column sortable="true"  title="Recommendation"  >
 <input type="text" name="miremarks" value="<c:out value='${itemcommand.miremarks[row_rowNum - 1]}'/>" />
 </display:column>

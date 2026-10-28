@@ -78,8 +78,13 @@ public class POCommand implements Serializable {
 	private String stageItemDesc;
 	private String stageLaborCost;
 	private String stageHasReturns;
+	private String stageGst;
+	private String stagePacking;
+	private String editGst;
+	private String editPacking;
 	// Update PO Stages: the existing stage being edited
 	private Long editStageId;
+	private String editStageDesc;
 	private String editLaborCost;
 	private String editHasReturns;
 	// View Purchase Order: the stage the purchase order PDF is generated for
@@ -800,12 +805,52 @@ public class POCommand implements Serializable {
 		this.stageHasReturns = stageHasReturns;
 	}
 
+	public String getStageGst() {
+		return stageGst;
+	}
+
+	public void setStageGst(String stageGst) {
+		this.stageGst = stageGst;
+	}
+
+	public String getStagePacking() {
+		return stagePacking;
+	}
+
+	public void setStagePacking(String stagePacking) {
+		this.stagePacking = stagePacking;
+	}
+
+	public String getEditGst() {
+		return editGst;
+	}
+
+	public void setEditGst(String editGst) {
+		this.editGst = editGst;
+	}
+
+	public String getEditPacking() {
+		return editPacking;
+	}
+
+	public void setEditPacking(String editPacking) {
+		this.editPacking = editPacking;
+	}
+
 	public Long getEditStageId() {
 		return editStageId;
 	}
 
 	public void setEditStageId(Long editStageId) {
 		this.editStageId = editStageId;
+	}
+
+	public String getEditStageDesc() {
+		return editStageDesc;
+	}
+
+	public void setEditStageDesc(String editStageDesc) {
+		this.editStageDesc = editStageDesc;
 	}
 
 	public String getEditLaborCost() {

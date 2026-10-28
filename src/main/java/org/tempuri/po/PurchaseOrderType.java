@@ -88,6 +88,7 @@ import javax.xml.bind.annotation.XmlType;
     "refDate",
     "poCompany",
     "gstnSupplier",
+    "itemtotalLabel",
     "items"
 })
 public class PurchaseOrderType {
@@ -174,6 +175,16 @@ public class PurchaseOrderType {
     protected String poCompany;
     @XmlElement(required = true)
     protected String gstnSupplier;
+    // label of the items total row; empty shows the default "Items total price"
+    protected String itemtotalLabel;
+
+    public String getItemtotalLabel() {
+        return itemtotalLabel;
+    }
+
+    public void setItemtotalLabel(String value) {
+        this.itemtotalLabel = value;
+    }
 
     public String getPoCompany() {
         return poCompany;

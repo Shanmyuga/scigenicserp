@@ -253,7 +253,7 @@
                     <input type="button"  value="Generate Delivery Challan" onclick="eventdirect('generateChallan')"/>
             </c:if>
             <c:if test="${APPROVED != null}">
-                    <input type="button"  value="Send email Purchase Order PDF" onclick="eventdirect('generateEmail')"/>
+                    <input type="button"  value="Send email Purchase Order PDF" onclick="if (checkPdfStage()) eventdirect('generateEmail')"/>
             </c:if>
                     <input type="button"  value="Close Purchase Order " onclick="eventdirect('closePo')"/>
                     <input type="button"  value="Paid Fully " onclick="eventdirect('paidFully')"/>

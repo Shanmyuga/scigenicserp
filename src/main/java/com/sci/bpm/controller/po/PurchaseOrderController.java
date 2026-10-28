@@ -380,69 +380,74 @@ public class PurchaseOrderController extends SciBaseController {
 		return success();
 	}
 	/**
-	 * The stage the purchase order PDF is generated for. Only the "Generate Purchase Order PDF" button
-	 * uses a stage, and it is mandatory there when the PO has stages; other callers (email) get null.
+	 * The stage whose labour cost a subcontract purchase order PDF is priced on: the only stage when the PO
+	 * has one, the selected stage when it has more (mandatory then). A PO with no stages, or a vendor PO,
+	 * gets null and keeps the item cost PDF.
 	 */
-	private SciSubstagePos selectedPdfStage(RequestContext context, POCommand command) throws Exception {
-		List<SciSubstagePos> stages = (List<SciSubstagePos>) context.getFlowScope().get("pdfStageList");
-		if (stages == null || stages.isEmpty() || !"generatePDF".equals(context.getCurrentEvent().getId())) {
+	private SciSubstagePos selectedPdfStage(SciPurchaseMast selected, List<SciSubstagePos> stages, POCommand command) throws Exception {
+		if (!"subcontract".equals(selected.getPurchaseType()) || stages.isEmpty()) {
 			return null;
 		}
-		if (command.getPdfStageId() != null) {
+		SciSubstagePos pdfStage = null;
+		if (stages.size() == 1) {
+			pdfStage = stages.get(0);
+		} else if (command.getPdfStageId() != null) {
 			for (SciSubstagePos stage : stages) {
 				if (stage.getSeqSubstagePoId().equals(command.getPdfStageId())) {
-					if (stage.getLaborCost() == null) {
-						throw new Exception("Stage " + stage.getStageOrder() + " has no Labour Cost. Update the stage before generating the PDF.");
-					}
-					return stage;
+					pdfStage = stage;
 				}
 			}
 		}
-		throw new Exception("Please select the stage to generate the purchase order PDF.");
-	}
-
-	// the single line of a stage PDF: quantity 1 at the stage labour cost
-	private Items stageItem(SciSubstagePos stage) {
-		Items items = new Items();
-		String description = StringUtils.isNotBlank(stage.getItemDescription()) ? stage.getItemDescription() : stage.getStageDesc();
-		items.setDescription(description + " (Stage " + stage.getStageOrder() + ")");
-		items.setQuantity(1f);
-		items.setSno("1");
-		items.setDenom("no");
-		String[] cost = rupeesPaise(stage.getLaborCost().doubleValue());
-		items.setUnitprice(cost[0]);
-		items.setUnitpricepaise(cost[1]);
-		items.setTotalcost(cost[0]);
-		items.setTotalcostpaise(cost[1]);
-		return items;
+		if (pdfStage == null) {
+			throw new Exception("Please select the stage to generate the purchase order PDF.");
+		}
+		if (pdfStage.getLaborCost() == null) {
+			throw new Exception("Stage " + pdfStage.getStageOrder() + " has no Labour Cost. Update the stage before generating the PDF.");
+		}
+		return pdfStage;
 	}
 
 	/**
-	 * Stage PDF: the stage vendor in place of the PO vendor, the PO number suffixed with the stage order,
-	 * and the totals worked out on the labour cost with the PO's packing charges and tax percentages
-	 * (the same order as addNewPO: packing, excise, VAT, GST).
+	 * Subcontract PDF priced on a stage: the items total is the stage labour cost ("Labour charges") with the
+	 * packing charges and tax percentages applied on top (the same order as addNewPO: packing, excise, VAT, GST).
+	 * The stage's own GST % and packing charges are used when entered, else the PO's. For a stage selected out
+	 * of several, the stage vendor replaces the PO vendor and the PO number is suffixed with the stage order.
 	 */
-	private void applyStage(PurchaseOrderType ptype, SciPurchaseMast selected, SciSubstagePos stage) {
-		String poNumber = StringUtils.isNotBlank(selected.getCustomPOId()) ? selected.getCustomPOId() : String.valueOf(selected.getSeqPurchId());
-		ptype.setPonumber(poNumber + "-" + stage.getStageOrder());
+	private void applyStage(PurchaseOrderType ptype, SciPurchaseMast selected, SciSubstagePos stage, boolean selectedStage) {
+		if (selectedStage) {
+			String poNumber = StringUtils.isNotBlank(selected.getCustomPOId()) ? selected.getCustomPOId() : String.valueOf(selected.getSeqPurchId());
+			ptype.setPonumber(poNumber + "-" + stage.getStageOrder());
 
-		SciVendorMaster vendor = stage.getSciVendorMaster();
-		if (vendor != null) {
-			String vendorcity = StringUtils.isNotBlank(vendor.getVendorCity()) ? vendor.getVendorCity() : "";
-			ptype.setVendorDetails(vendor.getVendorName() + " | " + vendor.getVendorAddress() + "   " + vendorcity);
-			ptype.setGstnSupplier(vendor.getVendorGstn());
+			SciVendorMaster vendor = stage.getSciVendorMaster();
+			if (vendor != null) {
+				String vendorcity = StringUtils.isNotBlank(vendor.getVendorCity()) ? vendor.getVendorCity() : "";
+				ptype.setVendorDetails(vendor.getVendorName() + " | " + vendor.getVendorAddress() + "   " + vendorcity);
+				ptype.setGstnSupplier(vendor.getVendorGstn());
+			}
 		}
+		ptype.setItemtotalLabel("Labour charges");
+
+		double packing = stage.getPackingFrwdCharges() != null ? stage.getPackingFrwdCharges().doubleValue()
+				: (selected.getPackingFrwdCharges() == null ? 0 : selected.getPackingFrwdCharges().doubleValue());
+		double gstPercentage = stage.getGstPercentage() != null ? stage.getGstPercentage().doubleValue()
+				: (selected.getGst() == null ? 0 : selected.getGst().doubleValue());
 
 		double itemTotal = stage.getLaborCost().doubleValue();
-		double total = itemTotal + (selected.getPackingFrwdCharges() == null ? 0 : selected.getPackingFrwdCharges().doubleValue());
+		double total = itemTotal + packing;
 		double excise = (selected.getExcisePercent() == null ? 0 : selected.getExcisePercent().doubleValue()) * total / 100;
 		total = total + excise;
 		double vat = (selected.getVatPercentage() == null ? 0 : selected.getVatPercentage().doubleValue()) * total / 100;
 		total = total + vat;
-		double gst = (selected.getGst() == null ? 0 : selected.getGst().doubleValue()) * total / 100;
+		double gst = gstPercentage * total / 100;
 		total = total + gst;
 
-		String[] amount = rupeesPaise(itemTotal);
+		if (stage.getGstPercentage() != null) {
+			ptype.setGst(stage.getGstPercentage().stripTrailingZeros().toPlainString());
+		}
+		String[] amount = rupeesPaise(packing);
+		ptype.setPackingForwarding(amount[0]);
+		ptype.setPackingForwardingpaise(amount[1]);
+		amount = rupeesPaise(itemTotal);
 		ptype.setItemtotal(amount[0]);
 		ptype.setItemtotalpaise(amount[1]);
 		amount = rupeesPaise(excise);
@@ -472,7 +477,16 @@ public class PurchaseOrderController extends SciBaseController {
 				.getFlowScope().get("pomastlist");
 		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
 		List<SciPurchItemMaster> itemlist = service.loadPODetails(selected);
-		SciSubstagePos pdfStage = selectedPdfStage(context, command);
+		List<SciSubstagePos> stages = "subcontract".equals(selected.getPurchaseType())
+				? service.loadSubstages(selected.getSeqPurchId()) : new ArrayList<SciSubstagePos>();
+		SciSubstagePos pdfStage = selectedPdfStage(selected, stages, command);
+		boolean selectedStage = pdfStage != null && stages.size() > 1;
+		// the vendor the PDF is addressed to, used for the email
+		if (selectedStage && pdfStage.getSciVendorMaster() != null) {
+			context.getFlowScope().put("pdfVendor", pdfStage.getSciVendorMaster());
+		} else {
+			context.getFlowScope().remove("pdfVendor");
+		}
 
 		SimpleDateFormat dateformat = new SimpleDateFormat("dd.MM.yyyy");
 		HashMap<String, String> headerkeymap = new HashMap();
@@ -520,24 +534,21 @@ public class PurchaseOrderController extends SciBaseController {
 		HashMap<String, String> itemkeymap = new HashMap();
 		DecimalFormat df = new DecimalFormat("#.##");
 
-		// a stage PDF has a single stage line in place of the PO items
-		int itemCount = itemlist.size();
-		if (pdfStage != null) {
-			ptype.getItems().add(stageItem(pdfStage));
-			itemCount = 0;
-		}
-		for (int count = 1; count <= itemCount; count++) {
+		for (int count = 1; count <= itemlist.size(); count++) {
 			SciPurchItemMaster itemmaster = itemlist.get(count - 1);
 
 			Items items = new Items();
-			
-			items.setDescription("("+itemmaster.getItemCode()+") "+itemmaster.getItemDescription());
+
+			// a PDF priced on a stage labour cost marks the items as labour
+			items.setDescription((pdfStage != null ? "Labour For " : "") + "("+itemmaster.getItemCode()+") "+itemmaster.getItemDescription());
 			items.setQuantity(Float.parseFloat(itemmaster.getItemQty()));
 			items.setSno(String.valueOf(count));
 			items.setDenom(itemmaster.getItemDenom());
 			itemkeymap.put("ITEM.INFO" + String.valueOf(idx),
 					itemmaster.getItemDescription());
 
+			// a subcontract PDF priced on a stage labour cost prints no item cost
+			if (pdfStage == null) {
 			String[] estimatedCost = StringUtils.splitByWholeSeparator(
 					String.valueOf(df.format(itemmaster.getItemEstimatedCost())), ".");
 			System.out.println(estimatedCost.length);
@@ -568,6 +579,7 @@ public class PurchaseOrderController extends SciBaseController {
 			} else if (unitcost.length == 1) {
 				items.setUnitprice(unitcost[0]);
 				items.setUnitpricepaise("00");
+			}
 			}
 
 			if (idx == 3) {
@@ -683,7 +695,7 @@ public class PurchaseOrderController extends SciBaseController {
 			}
 		}
 		if (pdfStage != null) {
-			applyStage(ptype, selected, pdfStage);
+			applyStage(ptype, selected, pdfStage, selectedStage);
 		}
 		System.out.println(poitemlist.size());
 		ByteArrayOutputStream outstream = new ByteArrayOutputStream();
@@ -719,7 +731,9 @@ public class PurchaseOrderController extends SciBaseController {
 		List<SciPurchaseMast> master = (List<SciPurchaseMast>) context
 				.getFlowScope().get("pomastlist");
 		SciPurchaseMast selected = selectedPO(master, command.getScipurchID());
-		String emailId = selected.getSciVendorMaster().getEmailId();
+		// a stage PDF goes to the stage vendor printed on it
+		SciVendorMaster pdfVendor = (SciVendorMaster) context.getFlowScope().get("pdfVendor");
+		String emailId = pdfVendor != null ? pdfVendor.getEmailId() : selected.getSciVendorMaster().getEmailId();
 		if(emailId == null) {
 			throw new Exception("Vendor EMAIL ID is null");
 		}
